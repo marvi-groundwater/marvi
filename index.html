@@ -400,6 +400,39 @@
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.75,.25,1); }
     .reveal.is-visible { opacity: 1; transform: none; }
 
+    .scroll-progress {
+      position: fixed;
+      z-index: 120;
+      inset: 0 0 auto;
+      height: 3px;
+      background: var(--copper);
+      transform: scaleX(0);
+      transform-origin: left center;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .motion-ready .hero-copy > *,
+    .motion-ready .page-head > div > * {
+      opacity: 0;
+      animation: content-rise .9s cubic-bezier(.2,.75,.25,1) forwards;
+    }
+    .motion-ready .hero-copy > :nth-child(2),
+    .motion-ready .page-head > div > :nth-child(2) { animation-delay: .1s; }
+    .motion-ready .hero-copy > :nth-child(3),
+    .motion-ready .page-head > div > :nth-child(3) { animation-delay: .2s; }
+    .motion-ready .hero-copy > :nth-child(4) { animation-delay: .3s; }
+    @keyframes content-rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: none; }
+    }
+    .motion-item {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .7s ease, transform .8s cubic-bezier(.2,.75,.25,1);
+      transition-delay: var(--motion-delay, 0ms);
+    }
+    .motion-item.is-inview { opacity: 1; transform: none; }
+
     .game-frame { padding: 13px; border: 1px solid var(--line); background: var(--ink); }
     .game-frame img { width: 100%; }
     .game-dots { display: flex; gap: 6px; padding: 3px 1px 14px; }
@@ -510,6 +543,8 @@
       gap: 14px;
     }
     .story-card {
+      --spot-x: 50%;
+      --spot-y: 50%;
       position: relative;
       min-height: 500px;
       padding: 0;
@@ -520,6 +555,9 @@
       background: var(--ink);
       cursor: pointer;
       text-align: left;
+      transform-style: preserve-3d;
+      transition: transform .16s ease-out, box-shadow .35s ease;
+      will-change: transform;
     }
     .story-card:nth-child(2) { margin-top: 74px; }
     .story-card img {
@@ -532,14 +570,28 @@
     .story-card::after {
       content: "";
       position: absolute;
+      z-index: 1;
       inset: 0;
       background: linear-gradient(180deg, rgba(8,18,15,.02) 25%, rgba(8,18,15,.86) 100%);
     }
+    .story-card::before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      opacity: 0;
+      background: radial-gradient(circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.22), transparent 34%);
+      transition: opacity .3s ease;
+      pointer-events: none;
+    }
+    .story-card:hover { box-shadow: 0 28px 64px rgba(14,30,24,.2); }
+    .story-card:hover::before { opacity: 1; }
     .story-card:hover img { transform: scale(1.045); filter: saturate(.95); }
     .story-copy {
       position: absolute;
-      z-index: 2;
+      z-index: 3;
       inset: auto 26px 25px;
+      transform: translateZ(28px);
     }
     .story-copy .meta { display: block; margin-bottom: 11px; color: #d7a080; font-size: .58rem; }
     .story-copy strong { display: block; max-width: 360px; font: 500 clamp(1.55rem, 2.4vw, 2.35rem)/1.08 var(--sans); letter-spacing: -.04em; }
@@ -773,11 +825,14 @@
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+      .motion-ready .hero-copy > *, .motion-ready .page-head > div > *, .motion-item { opacity: 1 !important; transform: none !important; }
+      .scroll-progress { display: none; }
     }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
   <div class="mobile-bar">
     <span class="mobile-brand">MARVI</span>
@@ -1051,7 +1106,89 @@
       const panels = [...document.querySelectorAll('[data-panel]')];
       const menuButton = document.querySelector('.menu-toggle');
       const valid = new Set(panels.map(panel => panel.dataset.panel));
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let galleryBuilt = false;
+
+      function setupMotion() {
+        document.body.classList.add('motion-ready');
+        const motionItems = [...document.querySelectorAll('.project-card, .process-step, .media-card, .video-card, .people-card, .metric')];
+        motionItems.forEach((item, index) => {
+          item.classList.add('motion-item');
+          item.style.setProperty('--motion-delay', (index % 4) * 65 + 'ms');
+        });
+
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+          motionItems.forEach(item => item.classList.add('is-inview'));
+        } else {
+          const motionObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('is-inview');
+              motionObserver.unobserve(entry.target);
+            });
+          }, { threshold: .14, rootMargin: '0px 0px -5% 0px' });
+          motionItems.forEach(item => motionObserver.observe(item));
+        }
+
+        const metrics = [...document.querySelectorAll('.metric strong')];
+        metrics.forEach(metric => { metric.dataset.value = metric.textContent.trim(); });
+        const animateMetric = metric => {
+          if (metric.dataset.animated) return;
+          metric.dataset.animated = 'true';
+          const end = Number(metric.dataset.value);
+          if (!Number.isFinite(end) || reduceMotion) return;
+          const start = end >= 1000 ? end - 12 : 0;
+          const started = performance.now();
+          const tick = now => {
+            const progress = Math.min((now - started) / 1100, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            metric.textContent = Math.round(start + (end - start) * eased).toLocaleString();
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+        const metricRow = document.querySelector('.metric-row');
+        if (metricRow && !reduceMotion && 'IntersectionObserver' in window) {
+          const metricObserver = new IntersectionObserver(entries => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            metrics.forEach(animateMetric);
+            metricObserver.disconnect();
+          }, { threshold: .4 });
+          metricObserver.observe(metricRow);
+        }
+
+        if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+          document.querySelectorAll('.story-card').forEach(card => {
+            card.addEventListener('pointermove', event => {
+              const bounds = card.getBoundingClientRect();
+              const x = (event.clientX - bounds.left) / bounds.width;
+              const y = (event.clientY - bounds.top) / bounds.height;
+              card.style.setProperty('--spot-x', (x * 100).toFixed(1) + '%');
+              card.style.setProperty('--spot-y', (y * 100).toFixed(1) + '%');
+              card.style.transform = `perspective(1000px) rotateX(${((.5 - y) * 3.5).toFixed(2)}deg) rotateY(${((x - .5) * 4.5).toFixed(2)}deg) translateY(-4px)`;
+            });
+            card.addEventListener('pointerleave', () => {
+              card.style.transform = '';
+              card.style.removeProperty('--spot-x');
+              card.style.removeProperty('--spot-y');
+            });
+          });
+        }
+
+        const progressBar = document.getElementById('scroll-progress');
+        let progressFrame = 0;
+        const updateProgress = () => {
+          progressFrame = 0;
+          const distance = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = distance > 0 ? Math.min(window.scrollY / distance, 1) : 0;
+          progressBar.style.transform = `scaleX(${progress})`;
+        };
+        window.addEventListener('scroll', () => {
+          if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
+        }, { passive: true });
+        window.addEventListener('resize', updateProgress);
+        updateProgress();
+      }
 
       function showReveals(panel) {
         panel.querySelectorAll('.reveal').forEach((element, index) => {
@@ -1123,7 +1260,7 @@
         menuButton.setAttribute('aria-expanded', 'false');
         menuButton.setAttribute('aria-label', 'Open navigation');
         if (updateHash && location.hash !== '#' + id) history.pushState(null, '', '#' + id);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
         document.title = 'MARVI — ' + tabs.find(tab => tab.dataset.tab === id).querySelector('.nav-name').textContent;
       }
 
@@ -1185,6 +1322,7 @@
       lightbox.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });
       document.addEventListener('keydown', event => { if (event.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
 
+      setupMotion();
       activate(location.hash.slice(1) || 'home', false);
     })();
   </script>
