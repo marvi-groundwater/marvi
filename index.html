@@ -318,7 +318,7 @@
     .data-axis span:nth-child(4) { height: 28%; background: var(--copper); }
 
     .app-shot { position: relative; padding: 14px; border: 1px solid var(--line); background: #d7ddd9; }
-    .app-shot > img { width: 100%; aspect-ratio: 1.15; object-fit: cover; object-position: center; filter: saturate(.8); }
+    .app-shot > img { width: 100%; aspect-ratio: 1.45; object-fit: contain; object-position: center; background: #fff; }
     .app-screen-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
     .app-screen-strip figure { min-height: 155px; margin: 0; padding: 9px; display: grid; place-items: center; border: 1px solid var(--line); background: #dfe3df; }
     .app-screen-strip img { max-height: 150px; width: 100%; object-fit: contain; }
@@ -627,11 +627,13 @@
       }
       .hero-image-label { top: 32px; left: 292px; }
       .hero-image-index { right: 35px; top: 31px; }
+      .hero-image-index { font-size: 1rem; }
       .hero-image-caption { right: 36px; bottom: 34px; }
 
       .panel:not(#panel-home) .content-wrap { width: 100%; }
       .panel:not(#panel-home) .page-head {
         --cover: url("assets/marvi-originals/020-welcome-to-marvi.jpg");
+        --cover-position: center;
         position: relative;
         isolation: isolate;
         min-height: min(76svh, 820px);
@@ -648,7 +650,7 @@
         position: absolute;
         z-index: -2;
         inset: -4%;
-        background: var(--cover) center / cover no-repeat;
+        background: var(--cover) var(--cover-position) / cover no-repeat;
         animation: cover-breathe 16s ease-in-out infinite alternate;
       }
       .panel:not(#panel-home) .page-head::after {
@@ -672,15 +674,15 @@
       }
       .page-head .eyebrow { margin-bottom: 15px; color: #efb389; }
       .page-head .lede { max-width: 680px; color: rgba(255,255,255,.8); }
-      #panel-approach .page-head { --cover: url("assets/marvi-originals/027-about-marvi.jpg"); }
-      #panel-bjs .page-head { --cover: url("assets/marvi-originals/076-bhujal-jankaars-bjs.jpg"); }
-      #panel-groundwater .page-head { --cover: url("assets/marvi-originals/003-home.jpg"); }
-      #panel-mywell .page-head { --cover: url("assets/marvi-originals/079-about-mywell-app.jpg"); }
-      #panel-media .page-head { --cover: url("assets/marvi-originals/020-welcome-to-marvi.jpg"); }
-      #panel-films .page-head { --cover: url("assets/marvi-originals/011-home.jpg"); }
-      #panel-game .page-head { --cover: url("assets/marvi-originals/005-home.jpg"); }
-      #panel-people .page-head { --cover: url("assets/marvi-originals/012-home.jpg"); }
-      #panel-archive .page-head { --cover: url("assets/marvi-originals/028-about-marvi.jpg"); }
+      #panel-approach .page-head { --cover: url("assets/marvi-originals/008-home.jpg"); --cover-position: center 54%; }
+      #panel-bjs .page-head { --cover: url("assets/marvi-originals/076-bhujal-jankaars-bjs.jpg"); --cover-position: center 53%; }
+      #panel-groundwater .page-head { --cover: url("assets/marvi-originals/005-home.jpg"); --cover-position: center 61%; }
+      #panel-mywell .page-head { --cover: url("assets/marvi-originals/079-about-mywell-app.jpg"); --cover-position: center 52%; }
+      #panel-media .page-head { --cover: url("assets/marvi-originals/020-welcome-to-marvi.jpg"); --cover-position: center 48%; }
+      #panel-films .page-head { --cover: url("assets/marvi-originals/007-home.jpg"); --cover-position: center 46%; }
+      #panel-game .page-head { --cover: url("assets/marvi-originals/002-home.jpg"); --cover-position: center 50%; }
+      #panel-people .page-head { --cover: url("assets/marvi-originals/039-about-marvi.jpg"); --cover-position: center 57%; }
+      #panel-archive .page-head { --cover: url("assets/marvi-originals/011-home.jpg"); --cover-position: center 48%; }
       .panel:not(#panel-home) .section-body {
         width: min(1180px, calc(100% - 352px));
         margin: 0 48px 0 304px;
@@ -818,7 +820,7 @@
         <div class="hero-image-stage" aria-label="MARVI team members and farmers standing in a field">
           <img class="hero-image-main" src="assets/marvi-originals/012-home.jpg" alt="MARVI researchers and community members standing together in a green field">
           <div class="hero-image-label">Field note / India<br>Community + science</div>
-          <div class="hero-image-index">01—10</div>
+          <div class="hero-image-index" aria-hidden="true">↓</div>
           <div class="hero-image-caption">A shared resource becomes visible through shared observation.</div>
         </div>
       </div>
@@ -887,7 +889,7 @@
         <header class="page-head"><span class="section-index">03 / 10</span><div><p class="eyebrow">Bhujal Jankaars · भूजल जानकार</p><h1>The village’s own groundwater champions.</h1><p class="lede">“Groundwater informed”: local volunteers who connect careful observation with community knowledge and collective action.</p></div></header>
         <div class="section-body">
           <div class="split">
-            <div class="image-data-panel reveal"><img src="assets/marvi-originals/076-bhujal-jankaars-bjs.jpg" loading="lazy" alt="Bhujal Jankaars training beside a village well"><div class="image-data-overlay"><strong>35</strong><span>Bhujal Jankaars<br>25 Rajasthan · 10 Gujarat</span></div></div>
+            <div class="image-data-panel reveal"><img src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A Bhujal Jankaar measuring a village well"><div class="image-data-overlay"><strong>35</strong><span>Bhujal Jankaars<br>25 Rajasthan · 10 Gujarat</span></div></div>
             <div class="prose"><p class="large">A Bhujal Jankaar makes groundwater science legible—well by well, season by season, village by village.</p><p>These trained volunteers measure wells, rainfall, water quality and check dams. They interpret local patterns, explain them in the community’s own language and help farmers see that groundwater is both limited and shared.</p><div class="feature-list"><div class="feature-item"><span>01</span><div><strong>Measure consistently</strong><small>Build a trustworthy local record through simple, repeated observations.</small></div></div><div class="feature-item"><span>02</span><div><strong>Interpret locally</strong><small>Connect readings with crops, rainfall, pumping and village experience.</small></div></div><div class="feature-item"><span>03</span><div><strong>Communicate openly</strong><small>Take groundwater information into schools, meetings and farm decisions.</small></div></div><div class="feature-item"><span>04</span><div><strong>Support cooperation</strong><small>Help communities discuss recharge, demand and fair use together.</small></div></div></div></div>
           </div>
         </div>
@@ -900,7 +902,7 @@
         <div class="section-body">
           <div class="photo-ribbon reveal">
             <figure><img src="assets/marvi-originals/003-home.jpg" loading="lazy" alt="Village groundwater recharge structure"></figure>
-            <figure><img src="assets/marvi-originals/005-home.jpg" loading="lazy" alt="Water collected in a village recharge structure"></figure>
+            <figure><img src="assets/marvi-originals/010-home.jpg" loading="lazy" alt="A covered community water and recharge structure"></figure>
             <figure><img src="assets/marvi-originals/034-about-marvi.jpg" loading="lazy" alt="Researchers measuring groundwater in the field"></figure>
           </div>
           <div class="dark-block"><p class="eyebrow" style="color:#88b3b8">Then / now</p><h2>From 10–15 metres in the 1960s to 30–40 metres today.</h2><p class="lede">In some places, farmers drill beyond 100 metres chasing a falling watertable. Recharge helps, but sustainable use also requires understanding demand.</p></div>
@@ -919,7 +921,7 @@
         <div class="section-body">
           <div class="split">
             <div class="prose"><p class="large">MyWell turns local observations into clear, visual information for village, regional and wider water management.</p><p>Bhujal Jankaars and community members can report groundwater levels, rainfall, water quality and check-dam levels, then see current status and historical trends.</p><div class="hero-actions"><button class="button primary" type="button" data-open="films">Watch MyWell stories <span>↗</span></button><button class="button" type="button" data-open="game">Try the learning game <span>↗</span></button></div></div>
-            <div class="app-shot reveal"><img src="assets/marvi-originals/079-about-mywell-app.jpg" loading="lazy" alt="A community groundwater monitor taking a field reading"></div>
+            <div class="app-shot reveal"><img src="assets/marvi-originals/080-how-to-use-mywell.png" loading="lazy" alt="MyWell dashboard for selecting and viewing community water resources"></div>
           </div>
           <div class="app-screen-strip reveal">
             <figure><img src="assets/marvi-originals/073-how-to-use-mywell.png" loading="lazy" alt="MyWell registration screen"></figure>
