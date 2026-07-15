@@ -632,8 +632,6 @@
 
       .panel:not(#panel-home) .content-wrap { width: 100%; }
       .panel:not(#panel-home) .page-head {
-        --cover: url("assets/marvi-originals/020-welcome-to-marvi.jpg");
-        --cover-position: center;
         position: relative;
         isolation: isolate;
         min-height: min(76svh, 820px);
@@ -650,7 +648,7 @@
         position: absolute;
         z-index: -2;
         inset: -4%;
-        background: var(--cover) var(--cover-position) / cover no-repeat;
+        background: var(--cover, url("assets/marvi-originals/020-welcome-to-marvi.jpg")) var(--cover-position, center) / cover no-repeat;
         animation: cover-breathe 16s ease-in-out infinite alternate;
       }
       .panel:not(#panel-home) .page-head::after {
