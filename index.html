@@ -477,6 +477,298 @@
       .hero-actions .button { width: 100%; }
     }
 
+    /* Immersive studio direction: image-led pages, a floating navigation dock,
+       and project tiles that feel like a website rather than a report. */
+    .home-explore {
+      padding: clamp(72px, 10vw, 132px) max(44px, 6vw);
+      background: #dfe1d8;
+    }
+    .explore-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 42px;
+    }
+    .explore-head h2 {
+      max-width: 760px;
+      margin-bottom: 0;
+      font-family: var(--sans);
+      font-size: clamp(2.8rem, 6vw, 6.2rem);
+      font-weight: 500;
+      letter-spacing: -.065em;
+    }
+    .explore-head p:last-child {
+      max-width: 310px;
+      margin: 0 0 8px;
+      color: #5d6862;
+      font-size: .88rem;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr .85fr;
+      gap: 14px;
+    }
+    .story-card {
+      position: relative;
+      min-height: 500px;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      border-radius: 3px;
+      color: var(--white);
+      background: var(--ink);
+      cursor: pointer;
+      text-align: left;
+    }
+    .story-card:nth-child(2) { margin-top: 74px; }
+    .story-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.7) contrast(1.04);
+      transition: transform 1s cubic-bezier(.2,.75,.25,1), filter .45s ease;
+    }
+    .story-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8,18,15,.02) 25%, rgba(8,18,15,.86) 100%);
+    }
+    .story-card:hover img { transform: scale(1.045); filter: saturate(.95); }
+    .story-copy {
+      position: absolute;
+      z-index: 2;
+      inset: auto 26px 25px;
+    }
+    .story-copy .meta { display: block; margin-bottom: 11px; color: #d7a080; font-size: .58rem; }
+    .story-copy strong { display: block; max-width: 360px; font: 500 clamp(1.55rem, 2.4vw, 2.35rem)/1.08 var(--sans); letter-spacing: -.04em; }
+    .story-copy i { position: absolute; right: 0; bottom: 1px; font-style: normal; font-size: 1.4rem; }
+
+    @media (min-width: 801px) {
+      :root { --sidebar: 0px; }
+      body { background: #ecebe5; }
+      .sidebar {
+        inset: 16px auto 16px 16px;
+        width: 248px;
+        padding: 25px 20px 20px;
+        border: 1px solid rgba(255,255,255,.14);
+        border-radius: 18px;
+        background: rgba(12, 24, 21, .88);
+        box-shadow: 0 24px 70px rgba(3,12,9,.2);
+        backdrop-filter: blur(18px) saturate(1.1);
+        -webkit-backdrop-filter: blur(18px) saturate(1.1);
+      }
+      .brand { margin-bottom: 32px; }
+      .brand-mark { width: 34px; height: 34px; flex-basis: 34px; }
+      .brand-mark::before { left: 12px; top: 7px; width: 9px; height: 15px; }
+      .brand-word { font-size: .95rem; }
+      .brand-note { font-size: .54rem; }
+      .nav-label { margin-bottom: 8px; }
+      .side-nav { gap: 3px; }
+      .nav-tab {
+        grid-template-columns: 1fr 18px;
+        gap: 8px;
+        min-height: 39px;
+        padding: 8px 11px;
+        border: 0;
+        border-radius: 9px;
+        color: #aab4b0;
+      }
+      .nav-tab:last-child { border: 0; }
+      .nav-tab:hover { padding-left: 15px; background: rgba(255,255,255,.07); }
+      .nav-tab[aria-selected="true"] { color: var(--ink); background: #f1eee7; }
+      .nav-tab[aria-selected="true"]::before { display: none; }
+      .nav-number { display: none; }
+      .nav-name { font-size: .73rem; }
+      .nav-arrow { justify-self: end; }
+      .sidebar-foot { padding-top: 22px; font-size: .54rem; }
+      main, .footer { margin-left: 0; }
+
+      .home-hero {
+        min-height: 100svh;
+        display: block;
+        color: var(--white);
+        background: var(--ink);
+      }
+      .hero-copy {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        min-height: 100svh;
+        padding: 120px max(7vw, 70px) 80px 304px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+      }
+      .hero-copy h1 {
+        max-width: 950px;
+        margin-bottom: 24px;
+        color: var(--white);
+        font-family: var(--sans);
+        font-size: clamp(4.3rem, 8.2vw, 8.8rem);
+        font-weight: 500;
+        line-height: .85;
+        letter-spacing: -.078em;
+      }
+      .hero-copy .eyebrow { color: #f0b68d; }
+      .hero-copy .lede { max-width: 690px; color: rgba(255,255,255,.82); }
+      .hero-copy .button { color: var(--white); border-color: rgba(255,255,255,.58); backdrop-filter: blur(8px); }
+      .hero-copy .button:hover { color: var(--ink); background: var(--white); }
+      .hero-copy .button.primary { color: var(--ink); border-color: var(--white); background: var(--white); }
+      .hero-copy .button.primary:hover { color: var(--white); border-color: var(--copper); background: var(--copper); }
+      .hero-image-stage { position: absolute; inset: 0; min-height: 100svh; }
+      .hero-image-main { min-height: 100svh; object-position: center 47%; }
+      .hero-image-stage::after {
+        background:
+          linear-gradient(90deg, rgba(4,13,10,.78) 0%, rgba(4,13,10,.34) 57%, rgba(4,13,10,.09) 100%),
+          linear-gradient(180deg, rgba(4,13,10,.05) 42%, rgba(4,13,10,.72) 100%);
+      }
+      .hero-image-label { top: 32px; left: 292px; }
+      .hero-image-index { right: 35px; top: 31px; }
+      .hero-image-caption { right: 36px; bottom: 34px; }
+
+      .panel:not(#panel-home) .content-wrap { width: 100%; }
+      .panel:not(#panel-home) .page-head {
+        --cover: url("assets/marvi-originals/020-welcome-to-marvi.jpg");
+        position: relative;
+        isolation: isolate;
+        min-height: min(76svh, 820px);
+        padding: clamp(170px, 25vh, 265px) max(6vw, 64px) 68px 304px;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+        border: 0;
+        color: var(--white);
+        background: #12201d;
+      }
+      .panel:not(#panel-home) .page-head::before {
+        content: "";
+        position: absolute;
+        z-index: -2;
+        inset: -4%;
+        background: var(--cover) center / cover no-repeat;
+        animation: cover-breathe 16s ease-in-out infinite alternate;
+      }
+      .panel:not(#panel-home) .page-head::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(6,16,13,.82), rgba(6,16,13,.38) 68%, rgba(6,16,13,.12)), linear-gradient(180deg, transparent 35%, rgba(6,16,13,.7));
+      }
+      @keyframes cover-breathe { from { transform: scale(1.01); } to { transform: scale(1.07) translate3d(-.7%, -.4%, 0); } }
+      .page-head > div { max-width: 920px; }
+      .page-head .section-index { display: none; }
+      .page-head h1 {
+        margin-bottom: 19px;
+        color: var(--white);
+        font-family: var(--sans);
+        font-size: clamp(3.7rem, 7vw, 7.7rem);
+        font-weight: 500;
+        line-height: .9;
+        letter-spacing: -.072em;
+      }
+      .page-head .eyebrow { margin-bottom: 15px; color: #efb389; }
+      .page-head .lede { max-width: 680px; color: rgba(255,255,255,.8); }
+      #panel-approach .page-head { --cover: url("assets/marvi-originals/027-about-marvi.jpg"); }
+      #panel-bjs .page-head { --cover: url("assets/marvi-originals/076-bhujal-jankaars-bjs.jpg"); }
+      #panel-groundwater .page-head { --cover: url("assets/marvi-originals/003-home.jpg"); }
+      #panel-mywell .page-head { --cover: url("assets/marvi-originals/079-about-mywell-app.jpg"); }
+      #panel-media .page-head { --cover: url("assets/marvi-originals/020-welcome-to-marvi.jpg"); }
+      #panel-films .page-head { --cover: url("assets/marvi-originals/011-home.jpg"); }
+      #panel-game .page-head { --cover: url("assets/marvi-originals/005-home.jpg"); }
+      #panel-people .page-head { --cover: url("assets/marvi-originals/012-home.jpg"); }
+      #panel-archive .page-head { --cover: url("assets/marvi-originals/028-about-marvi.jpg"); }
+      .panel:not(#panel-home) .section-body {
+        width: min(1180px, calc(100% - 352px));
+        margin: 0 48px 0 304px;
+        padding: clamp(78px, 9vw, 126px) 0 110px;
+      }
+
+      .project-card {
+        min-height: 390px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+        border: 0;
+        border-radius: 3px;
+        color: var(--white);
+        background-color: var(--blue-dark);
+        background-position: center;
+        background-size: cover;
+        box-shadow: 0 16px 45px rgba(18,32,27,.08);
+      }
+      .project-card:hover { transform: translateY(-7px); background-color: var(--blue-dark); }
+      .project-card .card-number { margin: 0 0 auto; color: rgba(255,255,255,.72); }
+      .project-card h3 { max-width: 330px; color: var(--white); font-family: var(--sans); font-size: 1.65rem; font-weight: 600; letter-spacing: -.04em; }
+      .project-card p { color: rgba(255,255,255,.76); }
+      #panel-approach .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/022-about-marvi.jpg"); }
+      #panel-approach .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/029-about-marvi.jpg"); }
+      #panel-approach .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/032-about-marvi.jpg"); }
+      #panel-groundwater .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/003-home.jpg"); }
+      #panel-groundwater .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/005-home.jpg"); }
+      #panel-groundwater .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/034-about-marvi.jpg"); }
+      #panel-game .project-card:nth-child(1) { background: #1e4b56; }
+      #panel-game .project-card:nth-child(2) { background: #866146; }
+      #panel-game .project-card:nth-child(3) { background: #31594a; }
+
+      .process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; counter-reset: process; }
+      .process-step { min-height: 260px; padding: 25px; display: block; border: 0; border-radius: 3px; background: #dfe1d8; }
+      .process-step::before { display: block; margin-bottom: 78px; }
+      .process-step h3 { margin-bottom: 12px; font-family: var(--sans); font-size: 1.18rem; font-weight: 650; }
+      .process-step p { font-size: .82rem; }
+      .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; border: 0; }
+      .media-card { min-height: 330px; padding: 28px; border: 0; border-radius: 3px; background: #faf9f4; }
+      .media-card:nth-child(4n + 2), .media-card:nth-child(4n + 3) { background: #dfe1d8; }
+      .media-card h3 { max-width: 540px; font-family: var(--sans); font-size: 1.45rem; font-weight: 600; letter-spacing: -.035em; }
+      .people-grid { gap: 10px; border: 0; }
+      .people-card { min-height: 210px; border: 0; border-radius: 3px; background: #faf9f4; transition: transform .25s ease, color .25s ease, background .25s ease; }
+      .people-card:hover { transform: translateY(-5px); color: var(--white); background: var(--blue-dark); }
+      .people-card h3 { font-family: var(--sans); font-weight: 600; letter-spacing: -.025em; }
+      .dark-block { border-radius: 3px; }
+      .video-image, .app-shot, .game-frame { border-radius: 3px; overflow: hidden; }
+      .photo-ribbon figure { height: 365px; border-radius: 3px; }
+      .editorial-image { border-radius: 3px; }
+      .footer { padding-left: 304px; }
+    }
+
+    @media (min-width: 801px) and (max-width: 1120px) {
+      .hero-copy, .panel:not(#panel-home) .page-head { padding-left: 288px; }
+      .hero-copy h1 { font-size: clamp(4rem, 7.6vw, 6.3rem); }
+      .page-head h1 { font-size: clamp(3.5rem, 6.7vw, 5.5rem); }
+      .panel:not(#panel-home) .section-body { width: calc(100% - 320px); margin-left: 288px; margin-right: 32px; }
+      .split, .grid-3, .media-grid, .video-grid, .people-grid { grid-template-columns: 1fr; }
+      .process { grid-template-columns: repeat(2, 1fr); }
+      .footer { padding-left: 288px; }
+    }
+
+    @media (max-width: 800px) {
+      .home-explore { padding: 68px 20px; }
+      .explore-head { display: block; }
+      .explore-head p:last-child { margin-top: 20px; }
+      .story-grid { grid-template-columns: 1fr; }
+      .story-card, .story-card:nth-child(2) { min-height: 430px; margin-top: 0; }
+      .page-head h1 { font-family: var(--sans); font-weight: 550; letter-spacing: -.065em; }
+      .panel:not(#panel-home) .page-head {
+        margin-inline: -20px;
+        padding: 160px 20px 45px;
+        color: var(--white);
+        background: var(--blue-dark);
+      }
+      .panel:not(#panel-home) .page-head h1 { color: var(--white); }
+      .panel:not(#panel-home) .page-head .eyebrow { color: #f0b68d; }
+      .panel:not(#panel-home) .page-head .lede { color: rgba(255,255,255,.75); }
+    }
+
+    @media (max-width: 580px) {
+      .story-card { min-height: 370px; }
+      .story-copy strong { font-size: 1.65rem; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
     }
@@ -495,7 +787,7 @@
       <span class="brand-mark" aria-hidden="true"></span>
       <span><span class="brand-word">MARVI</span><span class="brand-note">Groundwater · India</span></span>
     </button>
-    <p class="nav-label">Project index</p>
+    <p class="nav-label">Explore MARVI</p>
     <nav class="side-nav" role="tablist" aria-orientation="vertical">
       <button class="nav-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-home" data-tab="home"><span class="nav-number">01</span><span class="nav-name">Overview</span><span class="nav-arrow">↗</span></button>
       <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-approach" data-tab="approach"><span class="nav-number">02</span><span class="nav-name">The approach</span><span class="nav-arrow">↗</span></button>
@@ -541,6 +833,26 @@
           <div class="metric"><strong>1</strong><span>Shared aquifer connecting every local decision</span></div>
         </div>
       </div>
+      <section class="home-explore" aria-labelledby="explore-title">
+        <header class="explore-head">
+          <div><p class="eyebrow">Inside MARVI</p><h2 id="explore-title">A living practice,<br>not a static study.</h2></div>
+          <p>Follow the work from village observation to shared groundwater decisions.</p>
+        </header>
+        <div class="story-grid">
+          <button class="story-card" type="button" data-open="approach">
+            <img src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A groundwater monitor taking a measurement beside a village well">
+            <span class="story-copy"><span class="meta">01 · The method</span><strong>Science becomes useful when it becomes local.</strong><i aria-hidden="true">↗</i></span>
+          </button>
+          <button class="story-card" type="button" data-open="bjs">
+            <img src="assets/marvi-originals/076-bhujal-jankaars-bjs.jpg" loading="lazy" alt="Bhujal Jankaars taking part in field training">
+            <span class="story-copy"><span class="meta">02 · The people</span><strong>Meet the village groundwater champions.</strong><i aria-hidden="true">↗</i></span>
+          </button>
+          <button class="story-card" type="button" data-open="mywell">
+            <img src="assets/marvi-originals/079-about-mywell-app.jpg" loading="lazy" alt="A community member recording a MyWell field observation">
+            <span class="story-copy"><span class="meta">03 · The platform</span><strong>See local knowledge take shape in MyWell.</strong><i aria-hidden="true">↗</i></span>
+          </button>
+        </div>
+      </section>
     </section>
 
     <section class="panel" id="panel-approach" role="tabpanel" tabindex="0" data-panel="approach" hidden>
