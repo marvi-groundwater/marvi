@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "meta": "Australia · Lead partner",
+      "name": "Western Sydney University",
+      "url": "https://www.westernsydney.edu.au/"
+    },
+    {
+      "meta": "Australia · Research",
+      "name": "CSIRO Land & Water",
+      "url": "https://www.csiro.au/"
+    },
+    {
+      "meta": "Sri Lanka · Research",
+      "name": "International Water Management Institute",
+      "url": "https://www.iwmi.cgiar.org/"
+    },
+    {
+      "meta": "Bhuj, India · Field partner",
+      "name": "Arid Communities and Technologies",
+      "url": "https://act-india.org/"
+    },
+    {
+      "meta": "Ahmedabad, India · Field partner",
+      "name": "Development Support Centre",
+      "url": "https://www.dscindia.org/"
+    },
+    {
+      "meta": "Udaipur, India · University",
+      "name": "Maharana Pratap University of Agriculture & Technology",
+      "url": "https://www.mpuat.ac.in/"
+    },
+    {
+      "meta": "Udaipur, India · Education",
+      "name": "Vidya Bhawan Krishi Vigyan Kendra",
+      "url": "https://vidyabhawan.org/"
+    },
+    {
+      "meta": "Laos · Regional futures",
+      "name": "Mekong Region Futures Institute",
+      "url": "https://www.merfi.org/"
+    },
+    {
+      "meta": "The heart of MARVI",
+      "name": "Bhujal Jankaars, farmers, schools and village communities",
+      "url": ""
+    }
+  ]
+}

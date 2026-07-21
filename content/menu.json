@@ -1,0 +1,12 @@
+{
+  "home": { "image": "/assets/marvi-originals/012-home.jpg", "focus": "auto", "fit": "auto" },
+  "approach": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "bjs": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "focus": "auto", "fit": "auto" },
+  "groundwater": { "image": "/assets/marvi-originals/003-home.jpg", "focus": "auto", "fit": "auto" },
+  "mywell": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "focus": "auto", "fit": "auto" },
+  "media": { "image": "/assets/marvi-originals/032-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "films": { "image": "/assets/marvi-originals/034-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "game": { "image": "/assets/mywell-game.png", "focus": "auto", "fit": "auto" },
+  "people": { "image": "/assets/marvi-originals/041-our-people.jpg", "focus": "auto", "fit": "auto" },
+  "archive": { "image": "/assets/marvi-originals/043-our-people.jpg", "focus": "auto", "fit": "auto" }
+}

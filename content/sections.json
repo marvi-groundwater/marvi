@@ -1,0 +1,47 @@
+{
+  "approach": {
+    "eyebrow": "The MARVI approach",
+    "title": "Science becomes useful when it becomes local.",
+    "lede": "MARVI brings technical knowledge, community experience and practical monitoring together at village level."
+  },
+  "bjs": {
+    "eyebrow": "Bhujal Jankaars · भूजल जानकार",
+    "title": "The village’s own groundwater champions.",
+    "lede": "“Groundwater informed”: local volunteers who connect careful observation with community knowledge and collective action."
+  },
+  "groundwater": {
+    "eyebrow": "Groundwater, demystified",
+    "title": "An invisible resource with visible consequences.",
+    "lede": "Rain moves through soil and rock into an aquifer. Wells reveal only a small window into a connected underground system."
+  },
+  "mywell": {
+    "eyebrow": "The MyWell app",
+    "title": "Groundwater, brought to the surface.",
+    "lede": "A public-domain, non-profit tool for collecting, viewing and sharing community water observations."
+  },
+  "media": {
+    "eyebrow": "MARVI in the media",
+    "title": "Stories from the field, the lab and the village.",
+    "lede": "Selected journalism and project coverage from the new MARVI media archive."
+  },
+  "films": {
+    "eyebrow": "Films & field recordings",
+    "title": "See the people behind the measurements.",
+    "lede": "A curated starting point from the new MARVI video archive—introductions, field stories, training and technical talks."
+  },
+  "game": {
+    "eyebrow": "The MARVI groundwater game",
+    "title": "Share a well. Survive the year.",
+    "lede": "A whole village draws from one aquifer. Every crop and every turn reveals why groundwater decisions cannot be made alone."
+  },
+  "people": {
+    "eyebrow": "People & partners",
+    "title": "A transdisciplinary project, built across borders.",
+    "lede": "Researchers, practitioners, institutions and village volunteers in India and Australia working as one team."
+  },
+  "archive": {
+    "eyebrow": "The original MARVI image archive",
+    "title": "Fieldwork, faces and the life of the project.",
+    "lede": "Every publicly accessible image recovered from the original MARVI website, preserved locally and arranged as a living visual archive."
+  }
+}

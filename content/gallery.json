@@ -1,0 +1,508 @@
+{
+  "items": [
+    {
+      "image": "/assets/marvi-originals/001-home.png",
+      "category": "Overview",
+      "title": "Overview 01",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/002-home.jpg",
+      "category": "Overview",
+      "title": "Overview 02",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/003-home.jpg",
+      "category": "Overview",
+      "title": "Overview 03",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/004-home.jpg",
+      "category": "Overview",
+      "title": "Overview 04",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/005-home.jpg",
+      "category": "Overview",
+      "title": "Overview 05",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/006-home.jpg",
+      "category": "Overview",
+      "title": "Overview 06",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/007-home.jpg",
+      "category": "Overview",
+      "title": "Overview 07",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/008-home.jpg",
+      "category": "Overview",
+      "title": "Overview 08",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/009-home.jpg",
+      "category": "Overview",
+      "title": "Overview 09",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/010-home.jpg",
+      "category": "Overview",
+      "title": "Overview 10",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/011-home.jpg",
+      "category": "Overview",
+      "title": "Overview 11",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/012-home.jpg",
+      "category": "Overview",
+      "title": "Overview 12",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/013-home.jpg",
+      "category": "Overview",
+      "title": "Overview 13",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/014-home.jpg",
+      "category": "Overview",
+      "title": "Overview 14",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/015-home.jpg",
+      "category": "Overview",
+      "title": "Overview 15",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/016-home.png",
+      "category": "Overview",
+      "title": "Overview 16",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/017-home.jpg",
+      "category": "Overview",
+      "title": "Overview 17",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/018-home.png",
+      "category": "Overview",
+      "title": "Overview 18",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/019-home.jpg",
+      "category": "Overview",
+      "title": "Overview 19",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/020-welcome-to-marvi.jpg",
+      "category": "Overview",
+      "title": "Overview 20",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/021-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 21",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/022-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 22",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/023-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 23",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/024-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 24",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/025-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 25",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/026-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 26",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/027-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 27",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/028-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 28",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/029-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 29",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/030-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 30",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/031-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 31",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/032-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 32",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/033-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 33",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/034-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 34",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/035-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 35",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/036-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 36",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/037-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 37",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/038-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 38",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/039-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 39",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/040-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 40",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/041-our-people.jpg",
+      "category": "People",
+      "title": "People 41",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/042-our-people.jpg",
+      "category": "People",
+      "title": "People 42",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/043-our-people.jpg",
+      "category": "People",
+      "title": "People 43",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/044-our-people.jpg",
+      "category": "People",
+      "title": "People 44",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/045-our-people.jpg",
+      "category": "People",
+      "title": "People 45",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/046-our-people.jpg",
+      "category": "People",
+      "title": "People 46",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/047-our-people.png",
+      "category": "People",
+      "title": "People 47",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/048-our-people.jpg",
+      "category": "People",
+      "title": "People 48",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/049-our-people.jpg",
+      "category": "People",
+      "title": "People 49",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/050-our-people.jpg",
+      "category": "People",
+      "title": "People 50",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/051-our-people.jpg",
+      "category": "People",
+      "title": "People 51",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/052-our-people.jpg",
+      "category": "People",
+      "title": "People 52",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/053-our-people.jpg",
+      "category": "People",
+      "title": "People 53",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/054-our-people.jpg",
+      "category": "People",
+      "title": "People 54",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/055-our-people.jpg",
+      "category": "People",
+      "title": "People 55",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/056-our-people.jpg",
+      "category": "People",
+      "title": "People 56",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/057-our-people.jpg",
+      "category": "People",
+      "title": "People 57",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/058-our-people.jpg",
+      "category": "People",
+      "title": "People 58",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/059-our-people.jpg",
+      "category": "People",
+      "title": "People 59",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/060-our-people.jpg",
+      "category": "People",
+      "title": "People 60",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/061-our-people.png",
+      "category": "People",
+      "title": "People 61",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/062-our-people.png",
+      "category": "People",
+      "title": "People 62",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/063-our-people.png",
+      "category": "People",
+      "title": "People 63",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/064-our-people.png",
+      "category": "People",
+      "title": "People 64",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/065-our-people.jpg",
+      "category": "People",
+      "title": "People 65",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/066-our-people.jpg",
+      "category": "People",
+      "title": "People 66",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/067-our-people.png",
+      "category": "People",
+      "title": "People 67",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/068-our-people.jpg",
+      "category": "People",
+      "title": "People 68",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/069-our-people.jpg",
+      "category": "People",
+      "title": "People 69",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/070-home.jpg",
+      "category": "Overview",
+      "title": "Overview 70",
+      "source": "https://www.marvi.org.in/"
+    },
+    {
+      "image": "/assets/marvi-originals/071-our-people.jpg",
+      "category": "People",
+      "title": "People 71",
+      "source": "https://www.marvi.org.in/our-people"
+    },
+    {
+      "image": "/assets/marvi-originals/072-our-partners.png",
+      "category": "Partners",
+      "title": "Partners 72",
+      "source": "https://www.marvi.org.in/our-partners"
+    },
+    {
+      "image": "/assets/marvi-originals/073-how-to-use-mywell.png",
+      "category": "MyWell",
+      "title": "MyWell 73",
+      "source": "https://www.marvi.org.in/how-to-use-mywell"
+    },
+    {
+      "image": "/assets/marvi-originals/074-about-marvi.jpg",
+      "category": "Fieldwork",
+      "title": "Fieldwork 74",
+      "source": "https://www.marvi.org.in/about-marvi"
+    },
+    {
+      "image": "/assets/marvi-originals/075-how-to-use-mywell.png",
+      "category": "MyWell",
+      "title": "MyWell 75",
+      "source": "https://www.marvi.org.in/how-to-use-mywell"
+    },
+    {
+      "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg",
+      "category": "Bhujal Jankaars",
+      "title": "Bhujal Jankaars 76",
+      "source": "https://www.marvi.org.in/bhujal-jankaars-bjs"
+    },
+    {
+      "image": "/assets/marvi-originals/077-how-to-use-mywell.png",
+      "category": "MyWell",
+      "title": "MyWell 77",
+      "source": "https://www.marvi.org.in/how-to-use-mywell"
+    },
+    {
+      "image": "/assets/marvi-originals/078-marvi-living-laboratory-and-learning-centre.jpg",
+      "category": "Living laboratory",
+      "title": "Living laboratory 78",
+      "source": "https://www.marvi.org.in/marvi-living-laboratory-and-learning-centre"
+    },
+    {
+      "image": "/assets/marvi-originals/079-about-mywell-app.jpg",
+      "category": "MyWell",
+      "title": "MyWell 79",
+      "source": "https://www.marvi.org.in/about-mywell-app"
+    },
+    {
+      "image": "/assets/marvi-originals/080-how-to-use-mywell.png",
+      "category": "MyWell",
+      "title": "MyWell 80",
+      "source": "https://www.marvi.org.in/how-to-use-mywell"
+    },
+    {
+      "image": "/assets/marvi-originals/081-marvi-living-laboratory-and-learning-centre.jpg",
+      "category": "Living laboratory",
+      "title": "Living laboratory 81",
+      "source": "https://www.marvi.org.in/marvi-living-laboratory-and-learning-centre"
+    },
+    {
+      "image": "/assets/marvi-originals/082-how-to-use-mywell.png",
+      "category": "MyWell",
+      "title": "MyWell 82",
+      "source": "https://www.marvi.org.in/how-to-use-mywell"
+    },
+    {
+      "image": "/assets/marvi-originals/083-contact-us.gif",
+      "category": "Archive",
+      "title": "Archive 83",
+      "source": "https://www.marvi.org.in/contact-us"
+    },
+    {
+      "image": "/assets/marvi-originals/084-learn-about-groundwater.png",
+      "category": "Learning",
+      "title": "Learning 84",
+      "source": "https://www.marvi.org.in/learn-about-groundwater"
+    }
+  ]
+}
