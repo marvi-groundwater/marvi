@@ -137,6 +137,7 @@
     }
     .nav-number { color: #65706c; font: .63rem var(--mono); }
     .nav-name { font-size: .78rem; font-weight: 600; letter-spacing: .01em; }
+    .nav-thumb { display: none; }
     .nav-arrow { opacity: 0; transform: translateX(-5px); transition: .2s ease; }
     .nav-tab:hover .nav-arrow, .nav-tab[aria-selected="true"] .nav-arrow { opacity: 1; transform: none; }
     .sidebar-foot { margin-top: auto; padding-top: 35px; color: #77827e; font: .62rem/1.7 var(--mono); }
@@ -828,6 +829,7 @@
       .side-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
       .nav-tab {
         position: relative;
+        overflow: hidden;
         min-height: 106px;
         padding: 14px;
         display: flex;
@@ -845,6 +847,30 @@
       .nav-number { display: block; margin-bottom: auto; color: #71817b; font-size: .57rem; }
       .nav-name { max-width: 115px; font-size: .76rem; line-height: 1.25; }
       .nav-arrow { position: absolute; right: 13px; bottom: 12px; opacity: 1; transform: none; }
+      /* Editable photo behind each menu card (mobile only) */
+      .nav-tab > span { position: relative; z-index: 2; }
+      .nav-thumb {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: .5;
+        filter: grayscale(.3) brightness(.85);
+        pointer-events: none;
+      }
+      .nav-tab::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(155deg, rgba(16,32,28,.32), rgba(16,32,28,.8));
+        pointer-events: none;
+      }
+      .nav-tab[aria-selected="true"] .nav-thumb,
+      .nav-tab[aria-selected="true"]::after { display: none; }
       .sidebar-foot { margin-top: 23px; padding-top: 0; }
 
       .home-hero {
@@ -1021,16 +1047,16 @@
     </button>
     <p class="nav-label">Explore MARVI</p>
     <nav class="side-nav" role="tablist" aria-orientation="vertical">
-      <button class="nav-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-home" data-tab="home"><span class="nav-number">01</span><span class="nav-name">Overview</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-approach" data-tab="approach"><span class="nav-number">02</span><span class="nav-name">The approach</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-bjs" data-tab="bjs"><span class="nav-number">03</span><span class="nav-name">Bhujal Jankaars</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-groundwater" data-tab="groundwater"><span class="nav-number">04</span><span class="nav-name">Groundwater</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-mywell" data-tab="mywell"><span class="nav-number">05</span><span class="nav-name">MyWell app</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-media" data-tab="media"><span class="nav-number">06</span><span class="nav-name">In the media</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-films" data-tab="films"><span class="nav-number">07</span><span class="nav-name">Films</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-game" data-tab="game"><span class="nav-number">08</span><span class="nav-name">Groundwater game</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-people" data-tab="people"><span class="nav-number">09</span><span class="nav-name">People & partners</span><span class="nav-arrow">↗</span></button>
-      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-archive" data-tab="archive"><span class="nav-number">10</span><span class="nav-name">Image archive</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-home" data-tab="home"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">01</span><span class="nav-name">Overview</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-approach" data-tab="approach"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">02</span><span class="nav-name">The approach</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-bjs" data-tab="bjs"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">03</span><span class="nav-name">Bhujal Jankaars</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-groundwater" data-tab="groundwater"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">04</span><span class="nav-name">Groundwater</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-mywell" data-tab="mywell"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">05</span><span class="nav-name">MyWell app</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-media" data-tab="media"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">06</span><span class="nav-name">In the media</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-films" data-tab="films"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">07</span><span class="nav-name">Films</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-game" data-tab="game"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">08</span><span class="nav-name">Groundwater game</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-people" data-tab="people"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">09</span><span class="nav-name">People & partners</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-archive" data-tab="archive"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">10</span><span class="nav-name">Image archive</span><span class="nav-arrow">↗</span></button>
     </nav>
     <div class="sidebar-foot">Rajasthan + Gujarat<br>India / Australia<br><a href="https://www.marvi.org.in/" target="_blank" rel="noopener">marvi.org.in ↗</a></div>
   </aside>
@@ -1072,15 +1098,15 @@
         </header>
         <div class="story-grid">
           <button class="story-card" type="button" data-open="approach">
-            <img src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A groundwater monitor taking a measurement beside a village well">
+            <img data-img="homeStoryApproach" src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A groundwater monitor taking a measurement beside a village well">
             <span class="story-copy"><span class="meta">01 · The method</span><strong>Science becomes useful when it becomes local.</strong><i aria-hidden="true">↗</i></span>
           </button>
           <button class="story-card" type="button" data-open="bjs">
-            <img src="assets/marvi-originals/076-bhujal-jankaars-bjs.jpg" loading="lazy" alt="Bhujal Jankaars taking part in field training">
+            <img data-img="homeStoryBjs" src="assets/marvi-originals/076-bhujal-jankaars-bjs.jpg" loading="lazy" alt="Bhujal Jankaars taking part in field training">
             <span class="story-copy"><span class="meta">02 · The people</span><strong>Meet the village groundwater champions.</strong><i aria-hidden="true">↗</i></span>
           </button>
           <button class="story-card" type="button" data-open="mywell">
-            <img src="assets/marvi-originals/079-about-mywell-app.jpg" loading="lazy" alt="A community member recording a MyWell field observation">
+            <img data-img="homeStoryMywell" src="assets/marvi-originals/079-about-mywell-app.jpg" loading="lazy" alt="A community member recording a MyWell field observation">
             <span class="story-copy"><span class="meta">03 · The platform</span><strong>See local knowledge take shape in MyWell.</strong><i aria-hidden="true">↗</i></span>
           </button>
         </div>
@@ -1101,8 +1127,8 @@
             <article class="project-card"><span class="card-number">A / 03</span><h3>Decisions made together</h3><p>Turn readings into conversations about crops, pumping, sharing and long-term water security.</p></article>
           </div>
           <div class="editorial-images reveal">
-            <figure class="editorial-image"><img src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A Bhujal Jankaar standing beside a monitored well"><figcaption class="image-note">Monitoring a dug well · Village fieldwork</figcaption></figure>
-            <figure class="editorial-image"><img src="assets/marvi-originals/032-about-marvi.jpg" loading="lazy" alt="Community members and researchers discussing a groundwater map"><figcaption class="image-note">Ideas mapped together</figcaption></figure>
+            <figure class="editorial-image"><img data-img="approachEditorial1" src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A Bhujal Jankaar standing beside a monitored well"><figcaption class="image-note">Monitoring a dug well · Village fieldwork</figcaption></figure>
+            <figure class="editorial-image"><img data-img="approachEditorial2" src="assets/marvi-originals/032-about-marvi.jpg" loading="lazy" alt="Community members and researchers discussing a groundwater map"><figcaption class="image-note">Ideas mapped together</figcaption></figure>
           </div>
           <div class="process">
             <div class="process-step"><h3>Observe</h3><p>Measure groundwater levels, rainfall, water quality and recharge structures with simple field tools.</p></div>
@@ -1119,7 +1145,7 @@
         <header class="page-head"><span class="section-index">03 / 10</span><div><p class="eyebrow">Bhujal Jankaars · भूजल जानकार</p><h1>The village’s own groundwater champions.</h1><p class="lede">“Groundwater informed”: local volunteers who connect careful observation with community knowledge and collective action.</p></div></header>
         <div class="section-body">
           <div class="split">
-            <div class="image-data-panel reveal"><img src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A Bhujal Jankaar measuring a village well"><div class="image-data-overlay"><strong>35</strong><span>Bhujal Jankaars<br>25 Rajasthan · 10 Gujarat</span></div></div>
+            <div class="image-data-panel reveal"><img data-img="approachDataPanel" src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A Bhujal Jankaar measuring a village well"><div class="image-data-overlay"><strong>35</strong><span>Bhujal Jankaars<br>25 Rajasthan · 10 Gujarat</span></div></div>
             <div class="prose"><p class="large">A Bhujal Jankaar makes groundwater science legible—well by well, season by season, village by village.</p><p>These trained volunteers measure wells, rainfall, water quality and check dams. They interpret local patterns, explain them in the community’s own language and help farmers see that groundwater is both limited and shared.</p><div class="feature-list"><div class="feature-item"><span>01</span><div><strong>Measure consistently</strong><small>Build a trustworthy local record through simple, repeated observations.</small></div></div><div class="feature-item"><span>02</span><div><strong>Interpret locally</strong><small>Connect readings with crops, rainfall, pumping and village experience.</small></div></div><div class="feature-item"><span>03</span><div><strong>Communicate openly</strong><small>Take groundwater information into schools, meetings and farm decisions.</small></div></div><div class="feature-item"><span>04</span><div><strong>Support cooperation</strong><small>Help communities discuss recharge, demand and fair use together.</small></div></div></div></div>
           </div>
         </div>
@@ -1131,9 +1157,9 @@
         <header class="page-head"><span class="section-index">04 / 10</span><div><p class="eyebrow">Groundwater, demystified</p><h1>An invisible resource with visible consequences.</h1><p class="lede">Rain moves through soil and rock into an aquifer. Wells reveal only a small window into a connected underground system.</p></div></header>
         <div class="section-body">
           <div class="photo-ribbon reveal">
-            <figure><img src="assets/marvi-originals/003-home.jpg" loading="lazy" alt="Village groundwater recharge structure"></figure>
-            <figure><img src="assets/marvi-originals/010-home.jpg" loading="lazy" alt="A covered community water and recharge structure"></figure>
-            <figure><img src="assets/marvi-originals/034-about-marvi.jpg" loading="lazy" alt="Researchers measuring groundwater in the field"></figure>
+            <figure><img data-img="groundwaterRibbon1" src="assets/marvi-originals/003-home.jpg" loading="lazy" alt="Village groundwater recharge structure"></figure>
+            <figure><img data-img="groundwaterRibbon2" src="assets/marvi-originals/010-home.jpg" loading="lazy" alt="A covered community water and recharge structure"></figure>
+            <figure><img data-img="groundwaterRibbon3" src="assets/marvi-originals/034-about-marvi.jpg" loading="lazy" alt="Researchers measuring groundwater in the field"></figure>
           </div>
           <div class="dark-block"><p class="eyebrow" style="color:#88b3b8">Then / now</p><h2>From 10–15 metres in the 1960s to 30–40 metres today.</h2><p class="lede">In some places, farmers drill beyond 100 metres chasing a falling watertable. Recharge helps, but sustainable use also requires understanding demand.</p></div>
           <div class="grid-3" style="margin-top:22px">
@@ -1151,13 +1177,13 @@
         <div class="section-body">
           <div class="split">
             <div class="prose"><p class="large">MyWell turns local observations into clear, visual information for village, regional and wider water management.</p><p>Bhujal Jankaars and community members can report groundwater levels, rainfall, water quality and check-dam levels, then see current status and historical trends.</p><div class="hero-actions"><button class="button primary" type="button" data-open="films">Watch MyWell stories <span>↗</span></button><button class="button" type="button" data-open="game">Try the learning game <span>↗</span></button></div></div>
-            <div class="app-shot reveal"><img src="assets/marvi-originals/080-how-to-use-mywell.png" loading="lazy" alt="MyWell dashboard for selecting and viewing community water resources"></div>
+            <div class="app-shot reveal"><img data-img="mywellMain" src="assets/marvi-originals/080-how-to-use-mywell.png" loading="lazy" alt="MyWell dashboard for selecting and viewing community water resources"></div>
           </div>
           <div class="app-screen-strip reveal">
-            <figure><img src="assets/marvi-originals/073-how-to-use-mywell.png" loading="lazy" alt="MyWell registration screen"></figure>
-            <figure><img src="assets/marvi-originals/075-how-to-use-mywell.png" loading="lazy" alt="MyWell data-entry interface"></figure>
-            <figure><img src="assets/marvi-originals/077-how-to-use-mywell.png" loading="lazy" alt="MyWell chart interface"></figure>
-            <figure><img src="assets/marvi-originals/082-how-to-use-mywell.png" loading="lazy" alt="MyWell station map"></figure>
+            <figure><img data-img="mywellStrip1" src="assets/marvi-originals/073-how-to-use-mywell.png" loading="lazy" alt="MyWell registration screen"></figure>
+            <figure><img data-img="mywellStrip2" src="assets/marvi-originals/075-how-to-use-mywell.png" loading="lazy" alt="MyWell data-entry interface"></figure>
+            <figure><img data-img="mywellStrip3" src="assets/marvi-originals/077-how-to-use-mywell.png" loading="lazy" alt="MyWell chart interface"></figure>
+            <figure><img data-img="mywellStrip4" src="assets/marvi-originals/082-how-to-use-mywell.png" loading="lazy" alt="MyWell station map"></figure>
           </div>
           <div class="process">
             <div class="process-step"><h3>Register</h3><p>Create a MyWell account before recording or managing observations.</p></div>
@@ -1216,7 +1242,7 @@
       <div class="content-wrap">
         <header class="page-head"><span class="section-index">08 / 10</span><div><p class="eyebrow">The MARVI groundwater game</p><h1>Share a well. Survive the year.</h1><p class="lede">A whole village draws from one aquifer. Every crop and every turn reveals why groundwater decisions cannot be made alone.</p></div></header>
         <div class="section-body">
-          <div class="game-frame"><div class="game-dots"><span></span><span></span><span></span></div><img src="assets/mywell-game.png" alt="MARVI groundwater game with a shared village well and crop-watering decisions"></div>
+          <div class="game-frame"><div class="game-dots"><span></span><span></span><span></span></div><img data-img="game" src="assets/mywell-game.png" alt="MARVI groundwater game with a shared village well and crop-watering decisions"></div>
           <div class="grid-3" style="margin-top:22px"><article class="project-card"><span class="card-number">PLAY / 01</span><h3>One shared well</h3><p>Every player’s choices affect everyone else drawing from the same groundwater store.</p></article><article class="project-card"><span class="card-number">PLAY / 02</span><h3>Choose the crop</h3><p>Balance high-, moderate- and low-water crops across repeated watering turns.</p></article><article class="project-card"><span class="card-number">PLAY / 03</span><h3>Watch the watertable</h3><p>Start after the monsoon and see whether the village can make its water last five years.</p></article></div>
         </div>
       </div>
@@ -1372,16 +1398,30 @@
         });
       }
 
-      function buildGallery() {
-        if (galleryBuilt || !window.MARVI_GALLERY) return;
+      async function buildGallery() {
+        if (galleryBuilt) return;
         galleryBuilt = true;
+        // Prefer the editable CMS file; fall back to the bundled gallery.js data.
+        let data = null;
+        try {
+          const res = await fetch('content/gallery.json', { cache: 'no-store' });
+          if (res.ok) {
+            const json = await res.json();
+            data = Array.isArray(json) ? json : json.items;
+          }
+        } catch (err) { /* fall back below */ }
+        if (!data) data = window.MARVI_GALLERY;
+        if (!data || !data.length) { galleryBuilt = false; return; }
+        window.MARVI_GALLERY = data; // keep indices aligned for the lightbox
+        const srcOf = (item) => item.image || ('assets/marvi-originals/' + item.file);
+
         const grid = document.getElementById('gallery-grid');
         const filterWrap = document.getElementById('archive-filters');
         const count = document.getElementById('gallery-count');
-        const categories = ['All', ...new Set(window.MARVI_GALLERY.map(item => item.category))];
+        const categories = ['All', ...new Set(data.map(item => item.category))];
         const fragment = document.createDocumentFragment();
 
-        window.MARVI_GALLERY.forEach((item, index) => {
+        data.forEach((item, index) => {
           const button = document.createElement('button');
           button.type = 'button';
           button.className = 'gallery-item';
@@ -1391,14 +1431,20 @@
           const image = document.createElement('img');
           image.loading = 'lazy';
           image.decoding = 'async';
-          image.src = 'assets/marvi-originals/' + item.file;
+          image.src = srcOf(item);
           image.alt = item.title;
           const label = document.createElement('span');
-          label.textContent = item.category + ' · ' + item.width + '×' + item.height;
+          label.textContent = item.category;
+          image.addEventListener('load', () => {
+            if (image.naturalWidth && image.naturalHeight) {
+              label.textContent = item.category + ' · ' + image.naturalWidth + '×' + image.naturalHeight;
+            }
+          });
           button.append(image, label);
           fragment.appendChild(button);
         });
         grid.appendChild(fragment);
+        if (count) count.textContent = data.length + (data.length === 1 ? ' archived image' : ' archived images');
 
         categories.forEach(category => {
           const filter = document.createElement('button');
@@ -1487,9 +1533,12 @@
         const button = event.target.closest('.gallery-item');
         if (!button) return;
         const item = window.MARVI_GALLERY[Number(button.dataset.index)];
-        lightboxImage.src = 'assets/marvi-originals/' + item.file;
+        lightboxImage.src = item.image || ('assets/marvi-originals/' + item.file);
         lightboxImage.alt = item.title;
-        lightboxCaption.textContent = item.category + ' · ' + item.width + '×' + item.height;
+        lightboxCaption.textContent = item.category + ' · ' + item.title;
+        lightboxImage.onload = () => {
+          lightboxCaption.textContent = item.category + ' · ' + lightboxImage.naturalWidth + '×' + lightboxImage.naturalHeight;
+        };
         lightbox.hidden = false;
         lightboxClose.focus();
       });
@@ -1499,6 +1548,232 @@
 
       setupMotion();
       activate(location.hash.slice(1) || 'home', false);
+    })();
+  </script>
+
+  <!-- Load editable content from the CMS content/ files. Every section
+       falls back to the hardcoded HTML above if its file is missing or the
+       fetch fails, so the page still works with no JS and no content files. -->
+  <script>
+    (async () => {
+      const load = async (path) => {
+        try {
+          const res = await fetch(path, { cache: 'no-store' });
+          return res.ok ? await res.json() : null;
+        } catch (err) { return null; }
+      };
+
+      // --- tiny DOM helpers ---
+      const el = (tag, opts = {}) => {
+        const node = document.createElement(tag);
+        if (opts.class) node.className = opts.class;
+        if (opts.text != null) node.textContent = opts.text;
+        return node;
+      };
+      const setText = (root, sel, value) => {
+        const node = root && root.querySelector(sel);
+        if (node && value != null) node.textContent = value;
+      };
+      const setMultiline = (root, sel, value) => {
+        const node = root && root.querySelector(sel);
+        if (!node || value == null) return;
+        node.textContent = '';
+        String(value).split('\n').forEach((line, i) => {
+          if (i > 0) node.appendChild(document.createElement('br'));
+          node.appendChild(document.createTextNode(line));
+        });
+      };
+      const ytId = (url) => {
+        const m = String(url || '').match(/[?&]v=([^&]+)/) || String(url || '').match(/youtu\.be\/([^?&]+)/);
+        return m ? m[1] : '';
+      };
+      // Apply optional per-image crop controls. 'auto'/blank = leave the CSS default.
+      const applyFit = (img, focus, fit) => {
+        if (focus && focus !== 'auto') img.style.objectPosition = focus;
+        if (fit && fit !== 'auto') img.style.objectFit = fit;
+      };
+
+      const [home, sections, media, films, partners, images, portraits, menu] = await Promise.all([
+        load('content/homepage.json'),
+        load('content/sections.json'),
+        load('content/media.json'),
+        load('content/films.json'),
+        load('content/partners.json'),
+        load('content/images.json'),
+        load('content/portraits.json'),
+        load('content/menu.json')
+      ]);
+
+      // --- Hero (homepage.json) ---
+      if (home) {
+        const hero = document.querySelector('#panel-home .hero-copy');
+        if (hero) {
+          setText(hero, '.eyebrow', home.eyebrow);
+          setMultiline(hero, 'h1', home.heroTitle);
+          setText(hero, '.lede', home.heroBody);
+          if (home.heroImage) {
+            const heroImg = document.querySelector('#panel-home .hero-image-main');
+            if (heroImg) {
+              heroImg.src = home.heroImage;
+              applyFit(heroImg, home.heroImageFocus, home.heroImageFit);
+            }
+          }
+          [['approach', home.primaryButtonLabel], ['mywell', home.secondaryButtonLabel]].forEach(([key, label]) => {
+            const btn = hero.querySelector('button[data-open="' + key + '"]');
+            if (btn && label != null) {
+              const arrow = btn.querySelector('span');
+              btn.textContent = label + ' ';
+              if (arrow) btn.appendChild(arrow);
+            }
+          });
+        }
+      }
+
+      // --- Section intros (sections.json) ---
+      if (sections) {
+        Object.keys(sections).forEach((key) => {
+          const head = document.querySelector('#panel-' + key + ' .page-head');
+          const data = sections[key];
+          if (!head || !data) return;
+          setText(head, '.eyebrow', data.eyebrow);
+          setText(head, 'h1', data.title);
+          setText(head, '.lede', data.lede);
+        });
+      }
+
+      // --- Media stories (media.json) ---
+      if (media && Array.isArray(media.items)) {
+        const grid = document.getElementById('media-grid');
+        const count = document.getElementById('media-count');
+        if (grid) {
+          grid.textContent = '';
+          media.items.forEach((item) => {
+            const a = el('a', { class: 'media-card' });
+            a.href = item.url || '#';
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.dataset.search = [item.meta, item.title, item.description].filter(Boolean).join(' ').toLowerCase();
+            a.appendChild(el('span', { class: 'meta', text: item.meta }));
+            a.appendChild(el('h3', { text: item.title }));
+            a.appendChild(el('p', { text: item.description }));
+            a.appendChild(el('span', { class: 'read', text: 'Read story ↗' }));
+            grid.appendChild(a);
+          });
+          const n = media.items.length;
+          if (count) count.textContent = n + (n === 1 ? ' selected story' : ' selected stories');
+
+          // Re-wire search over the freshly rendered cards. Cloning the input
+          // drops the stale listener the page's own script bound to old cards.
+          const oldSearch = document.getElementById('media-search');
+          if (oldSearch) {
+            const search = oldSearch.cloneNode(true);
+            oldSearch.replaceWith(search);
+            const cards = [...grid.querySelectorAll('.media-card')];
+            search.addEventListener('input', () => {
+              const query = search.value.trim().toLowerCase();
+              let visible = 0;
+              cards.forEach((card) => {
+                const match = !query || card.textContent.toLowerCase().includes(query) || card.dataset.search.includes(query);
+                card.hidden = !match;
+                if (match) visible++;
+              });
+              if (count) count.textContent = visible + (visible === 1 ? ' story' : ' stories');
+            });
+          }
+        }
+      }
+
+      // --- Films (films.json) ---
+      if (films && Array.isArray(films.items)) {
+        const grid = document.querySelector('#panel-films .video-grid');
+        if (grid) {
+          grid.textContent = '';
+          films.items.forEach((item) => {
+            const a = el('a', { class: 'video-card' });
+            a.href = item.url || '#';
+            a.target = '_blank';
+            a.rel = 'noopener';
+            const wrap = el('div', { class: 'video-image' });
+            const img = el('img');
+            img.loading = 'lazy';
+            const id = ytId(item.url);
+            if (id) img.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
+            img.alt = item.title || '';
+            const play = el('span', { class: 'play' });
+            play.setAttribute('aria-hidden', 'true');
+            wrap.appendChild(img);
+            wrap.appendChild(play);
+            a.appendChild(wrap);
+            a.appendChild(el('span', { class: 'meta', text: item.meta }));
+            a.appendChild(el('h3', { text: item.title }));
+            grid.appendChild(a);
+          });
+        }
+      }
+
+      // --- People & partners (partners.json) ---
+      if (partners && Array.isArray(partners.items)) {
+        const grid = document.querySelector('#panel-people .people-grid');
+        if (grid) {
+          grid.textContent = '';
+          partners.items.forEach((item) => {
+            const card = el('article', { class: 'people-card' });
+            card.appendChild(el('span', { class: 'meta', text: item.meta }));
+            const h3 = el('h3');
+            if (item.url) {
+              const a = el('a', { text: (item.name || '') + ' ↗' });
+              a.href = item.url;
+              a.target = '_blank';
+              a.rel = 'noopener';
+              h3.appendChild(a);
+            } else {
+              h3.textContent = item.name || '';
+            }
+            card.appendChild(h3);
+            grid.appendChild(card);
+          });
+        }
+      }
+
+      // --- Section images (images.json → any element with data-img) ---
+      if (images) {
+        document.querySelectorAll('[data-img]').forEach((img) => {
+          const entry = images[img.dataset.img];
+          if (!entry) return;
+          const src = typeof entry === 'string' ? entry : entry.image;
+          if (src) img.src = src;
+          if (entry && typeof entry === 'object') applyFit(img, entry.focus, entry.fit);
+        });
+      }
+
+      // --- Menu card photos (menu.json → nav tabs, shown on mobile) ---
+      if (menu) {
+        document.querySelectorAll('.nav-tab').forEach((tab) => {
+          const entry = menu[tab.dataset.tab];
+          const thumb = tab.querySelector('.nav-thumb');
+          if (entry && thumb) {
+            thumb.src = entry.image;
+            applyFit(thumb, entry.focus, entry.fit);
+          }
+        });
+      }
+
+      // --- People portrait band (portraits.json) ---
+      if (portraits && Array.isArray(portraits.items)) {
+        const band = document.querySelector('#panel-people .portrait-band');
+        if (band) {
+          band.textContent = '';
+          portraits.items.forEach((item) => {
+            if (!item || !item.image) return;
+            const img = el('img');
+            img.loading = 'lazy';
+            img.src = item.image;
+            img.alt = 'MARVI team member portrait';
+            applyFit(img, item.focus, item.fit);
+            band.appendChild(img);
+          });
+        }
+      }
     })();
   </script>
 </body>

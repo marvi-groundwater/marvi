@@ -1,0 +1,17 @@
+{
+  "homeStoryApproach": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "homeStoryBjs": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "focus": "auto", "fit": "auto" },
+  "homeStoryMywell": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "focus": "auto", "fit": "auto" },
+  "approachEditorial1": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "approachEditorial2": { "image": "/assets/marvi-originals/032-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "approachDataPanel": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "groundwaterRibbon1": { "image": "/assets/marvi-originals/003-home.jpg", "focus": "auto", "fit": "auto" },
+  "groundwaterRibbon2": { "image": "/assets/marvi-originals/010-home.jpg", "focus": "auto", "fit": "auto" },
+  "groundwaterRibbon3": { "image": "/assets/marvi-originals/034-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "mywellMain": { "image": "/assets/marvi-originals/080-how-to-use-mywell.png", "focus": "auto", "fit": "auto" },
+  "mywellStrip1": { "image": "/assets/marvi-originals/073-how-to-use-mywell.png", "focus": "auto", "fit": "auto" },
+  "mywellStrip2": { "image": "/assets/marvi-originals/075-how-to-use-mywell.png", "focus": "auto", "fit": "auto" },
+  "mywellStrip3": { "image": "/assets/marvi-originals/077-how-to-use-mywell.png", "focus": "auto", "fit": "auto" },
+  "mywellStrip4": { "image": "/assets/marvi-originals/082-how-to-use-mywell.png", "focus": "auto", "fit": "auto" },
+  "game": { "image": "/assets/mywell-game.png", "focus": "auto", "fit": "auto" }
+}

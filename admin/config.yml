@@ -1,0 +1,251 @@
+backend:
+  name: github
+  repo: marvi-groundwater/marvi
+  branch: main
+
+local_backend: true
+
+media_folder: "assets/marvi-originals"
+public_folder: "/assets/marvi-originals"
+
+collections:
+  - name: "homepage"
+    label: "Homepage"
+    files:
+      - file: "content/homepage.json"
+        label: "Homepage Hero"
+        name: "homepage"
+        fields:
+          - { label: "Hero Image", name: "heroImage", widget: "image", hint: "The large photo beside the headline. Click to choose from the library or upload a new one." }
+          - label: "Hero Image — Focus"
+            name: "heroImageFocus"
+            widget: "select"
+            default: "auto"
+            hint: "Which part of the photo to keep when it is cropped to fit."
+            options: &focusOptions
+              - { label: "Auto (recommended)", value: "auto" }
+              - { label: "Center", value: "center center" }
+              - { label: "Top", value: "center top" }
+              - { label: "Bottom", value: "center bottom" }
+              - { label: "Left", value: "left center" }
+              - { label: "Right", value: "right center" }
+          - label: "Hero Image — Fit"
+            name: "heroImageFit"
+            widget: "select"
+            default: "auto"
+            hint: "Fill crops to the slot; Show whole never crops."
+            options: &fitOptions
+              - { label: "Auto (recommended)", value: "auto" }
+              - { label: "Fill (crop to slot)", value: "cover" }
+              - { label: "Show whole photo", value: "contain" }
+          - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+          - { label: "Hero Title", name: "heroTitle", widget: "text", hint: "Line break = where the headline wraps to a second line" }
+          - { label: "Hero Body", name: "heroBody", widget: "text" }
+          - { label: "Primary Button Label", name: "primaryButtonLabel", widget: "string" }
+          - { label: "Secondary Button Label", name: "secondaryButtonLabel", widget: "string" }
+
+  - name: "sections"
+    label: "Section intros"
+    files:
+      - file: "content/sections.json"
+        label: "All section intros"
+        name: "sections"
+        fields:
+          - label: "The approach"
+            name: "approach"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+          - label: "Bhujal Jankaars"
+            name: "bjs"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+          - label: "Groundwater"
+            name: "groundwater"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+          - label: "MyWell app"
+            name: "mywell"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+          - label: "In the media"
+            name: "media"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+          - label: "Films"
+            name: "films"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+          - label: "Groundwater game"
+            name: "game"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+          - label: "People & partners"
+            name: "people"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+          - label: "Image archive"
+            name: "archive"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Intro line", name: "lede", widget: "text" }
+
+  - name: "media"
+    label: "Media stories"
+    files:
+      - file: "content/media.json"
+        label: "Media stories list"
+        name: "media"
+        fields:
+          - label: "Stories"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Label (source · date)", name: "meta", widget: "string", hint: "e.g. ACIAR · 17 Sep 2024" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Link URL", name: "url", widget: "string" }
+
+  - name: "films"
+    label: "Films"
+    files:
+      - file: "content/films.json"
+        label: "Films list"
+        name: "films"
+        fields:
+          - label: "Videos"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Label (category · source)", name: "meta", widget: "string", hint: "e.g. Documentary · Deutsche Welle" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "YouTube URL", name: "url", widget: "string", hint: "Paste the full YouTube link — the thumbnail is generated automatically" }
+
+  - name: "partners"
+    label: "People & partners"
+    files:
+      - file: "content/partners.json"
+        label: "Partners list"
+        name: "partners"
+        fields:
+          - label: "Partners"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Label (place · role)", name: "meta", widget: "string", hint: "e.g. Australia · Lead partner" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Link URL (optional)", name: "url", widget: "string", required: false }
+
+  - name: "images"
+    label: "Section images"
+    files:
+      - file: "content/images.json"
+        label: "All section images"
+        name: "images"
+        fields:
+          - label: "Home · Story card 1 (The method)"
+            name: "homeStoryApproach"
+            widget: "object"
+            collapsed: true
+            fields: &photoFields
+              - { label: "Photo", name: "image", widget: "image" }
+              - { label: "Focus", name: "focus", widget: "select", default: "auto", options: *focusOptions }
+              - { label: "Fit", name: "fit", widget: "select", default: "auto", options: *fitOptions }
+          - { label: "Home · Story card 2 (The people)", name: "homeStoryBjs", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "Home · Story card 3 (The platform)", name: "homeStoryMywell", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "Approach · Editorial photo 1", name: "approachEditorial1", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "Approach · Editorial photo 2", name: "approachEditorial2", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "Approach · Data panel photo", name: "approachDataPanel", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "Groundwater · Ribbon photo 1", name: "groundwaterRibbon1", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "Groundwater · Ribbon photo 2", name: "groundwaterRibbon2", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "Groundwater · Ribbon photo 3", name: "groundwaterRibbon3", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "MyWell · Main screenshot", name: "mywellMain", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "MyWell · Strip screenshot 1", name: "mywellStrip1", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "MyWell · Strip screenshot 2", name: "mywellStrip2", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "MyWell · Strip screenshot 3", name: "mywellStrip3", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "MyWell · Strip screenshot 4", name: "mywellStrip4", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "Game · Screenshot", name: "game", widget: "object", collapsed: true, fields: *photoFields }
+
+  - name: "menu"
+    label: "Menu photos"
+    files:
+      - file: "content/menu.json"
+        label: "Menu card photos"
+        name: "menu"
+        fields:
+          - { label: "01 · Overview", name: "home", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "02 · The approach", name: "approach", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "03 · Bhujal Jankaars", name: "bjs", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "04 · Groundwater", name: "groundwater", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "05 · MyWell app", name: "mywell", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "06 · In the media", name: "media", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "07 · Films", name: "films", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "08 · Groundwater game", name: "game", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "09 · People & partners", name: "people", widget: "object", collapsed: true, fields: *photoFields }
+          - { label: "10 · Image archive", name: "archive", widget: "object", collapsed: true, fields: *photoFields }
+
+  - name: "portraits"
+    label: "People portraits"
+    files:
+      - file: "content/portraits.json"
+        label: "Portrait band"
+        name: "portraits"
+        fields:
+          - label: "Portraits"
+            name: "items"
+            widget: "list"
+            fields: *photoFields
+
+  - name: "gallery"
+    label: "Image archive"
+    files:
+      - file: "content/gallery.json"
+        label: "Archive gallery"
+        name: "gallery"
+        fields:
+          - label: "Images"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Photo", name: "image", widget: "image" }
+              - { label: "Category", name: "category", widget: "string", hint: "Groups the image under a filter tab, e.g. Overview" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Source URL (optional)", name: "source", widget: "string", required: false }
