@@ -2,6 +2,7 @@ backend:
   name: github
   repo: marvi-groundwater/marvi
   branch: main
+  base_url: https://sveltia-cms-auth.marvi-groundwater.workers.dev
 
 local_backend: true
 
