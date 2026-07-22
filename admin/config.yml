@@ -200,8 +200,6 @@ collections:
           - { label: "MyWell · Main screenshot", name: "mywellMain", widget: "object", collapsed: true, fields: *photoFields }
           - { label: "MyWell · Strip screenshot 1", name: "mywellStrip1", widget: "object", collapsed: true, fields: *photoFields }
           - { label: "MyWell · Strip screenshot 2", name: "mywellStrip2", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "MyWell · Strip screenshot 3", name: "mywellStrip3", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "MyWell · Strip screenshot 4", name: "mywellStrip4", widget: "object", collapsed: true, fields: *photoFields }
           - { label: "Game · Screenshot", name: "game", widget: "object", collapsed: true, fields: *photoFields }
 
   - name: "menu"

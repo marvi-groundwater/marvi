@@ -332,7 +332,8 @@
 
     .app-shot { position: relative; padding: 14px; border: 1px solid var(--line); background: #d7ddd9; }
     .app-shot > img { width: 100%; aspect-ratio: 1.45; object-fit: contain; object-position: center; background: #fff; }
-    .app-screen-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+    .app-logo { width: 78px; height: 78px; border-radius: 18px; box-shadow: 0 6px 22px rgba(23,32,30,.14); margin-bottom: 18px; }
+    .app-screen-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 190px)); justify-content: start; gap: 12px; margin-top: 20px; }
     .app-screen-strip figure { min-height: 155px; margin: 0; padding: 9px; display: grid; place-items: center; border: 1px solid var(--line); background: #dfe3df; }
     .app-screen-strip img { max-height: 150px; width: 100%; object-fit: contain; }
     .feature-list { display: grid; margin-top: 38px; }
@@ -1206,20 +1207,18 @@
         <header class="page-head"><span class="section-index">05 / 10</span><div><p class="eyebrow">The MyWell app</p><h1>Groundwater, brought to the surface.</h1><p class="lede">A public-domain, non-profit tool for collecting, viewing and sharing community water observations.</p></div></header>
         <div class="section-body">
           <div class="split">
-            <div class="prose"><p class="large">MyWell turns local observations into clear, visual information for village, regional and wider water management.</p><p>Bhujal Jankaars and community members can report groundwater levels, rainfall, water quality and check-dam levels, then see current status and historical trends.</p><div class="hero-actions"><button class="button primary" type="button" data-open="films">Watch MyWell stories <span>↗</span></button><button class="button" type="button" data-open="game">Try the learning game <span>↗</span></button></div></div>
-            <div class="app-shot reveal"><img data-img="mywellMain" src="assets/marvi-originals/080-how-to-use-mywell.png" loading="lazy" alt="MyWell dashboard for selecting and viewing community water resources"></div>
+            <div class="prose"><img class="app-logo" src="assets/marvi-originals/mywell-app-icon.png" loading="lazy" alt="MyWell for Groundwater app icon" width="78" height="78"><p class="large">MyWell is now a modern, rebuilt app — turning local observations into clear, visual information for village, regional and wider water management.</p><p>Bhujal Jankaars and community members record groundwater levels, rainfall, water quality and check-dam readings against a station, import data from sensors, browse a shared map, and follow current status and long-term trends.</p><div class="hero-actions"><button class="button primary" type="button" data-open="films">Watch MyWell stories <span>↗</span></button><button class="button" type="button" data-open="game">Try the learning game <span>↗</span></button></div></div>
+            <div class="app-shot reveal"><img data-img="mywellMain" src="assets/marvi-originals/mywell-app-record.png" loading="lazy" alt="MyWell screen for importing and recording water-quality readings"></div>
           </div>
           <div class="app-screen-strip reveal">
-            <figure><img data-img="mywellStrip1" src="assets/marvi-originals/073-how-to-use-mywell.png" loading="lazy" alt="MyWell registration screen"></figure>
-            <figure><img data-img="mywellStrip2" src="assets/marvi-originals/075-how-to-use-mywell.png" loading="lazy" alt="MyWell data-entry interface"></figure>
-            <figure><img data-img="mywellStrip3" src="assets/marvi-originals/077-how-to-use-mywell.png" loading="lazy" alt="MyWell chart interface"></figure>
-            <figure><img data-img="mywellStrip4" src="assets/marvi-originals/082-how-to-use-mywell.png" loading="lazy" alt="MyWell station map"></figure>
+            <figure><img data-img="mywellStrip1" src="assets/marvi-originals/mywell-app-login.png" loading="lazy" alt="MyWell sign-in screen"></figure>
+            <figure><img data-img="mywellStrip2" src="assets/marvi-originals/mywell-app-register.png" loading="lazy" alt="MyWell account registration screen"></figure>
           </div>
           <div class="process">
-            <div class="process-step"><h3>Register</h3><p>Create a MyWell account before recording or managing observations.</p></div>
-            <div class="process-step"><h3>Add a reading</h3><p>Choose a well or station, scan its QR code where available, and enter the field measurement.</p></div>
-            <div class="process-step"><h3>Explore the map</h3><p>Browse community stations and filter the water resources relevant to your area.</p></div>
-            <div class="process-step"><h3>Read the trend</h3><p>Plot observations through time to see seasonal recharge, depletion and longer-term change.</p></div>
+            <div class="process-step"><h3>Sign in</h3><p>Create an account or sign in to record and manage observations.</p></div>
+            <div class="process-step"><h3>Record a reading</h3><p>Log a groundwater level, rainfall, water quality or check-dam reading against a station.</p></div>
+            <div class="process-step"><h3>Import &amp; connect</h3><p>Bring in water-quality data (pH, EC, TDS) from a file, or connect a YINMIK Bluetooth pen for live readings.</p></div>
+            <div class="process-step"><h3>Map &amp; trends</h3><p>Browse the station map and plot readings over time to see recharge, depletion and seasonal change.</p></div>
           </div>
         </div>
       </div>
