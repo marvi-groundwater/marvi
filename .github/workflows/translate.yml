@@ -1,0 +1,51 @@
+name: Auto-translate content
+
+# When the site's English content changes (CMS edits to content/*.json, or
+# body edits in index.html), translate any new/changed string into every
+# language with GitHub Models and commit the result. Only the delta is
+# translated — existing translations are left untouched.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**.json'
+      - 'index.html'
+      - '!content/i18n.json'   # the bot's own output — never re-trigger on it
+  workflow_dispatch: {}          # allow manual runs from the Actions tab
+
+permissions:
+  contents: write   # to commit updated translations
+  models: read      # to call GitHub Models (free AI)
+
+concurrency:
+  group: auto-translate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Translate new / changed strings
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/auto-translate.mjs
+
+      - name: Commit updated translations
+        run: |
+          if ! git diff --quiet -- content/i18n.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add content/i18n.json
+            git commit -m "Update translations for changed content"
+            git push
+            echo "Pushed updated translations."
+          else
+            echo "No translation changes to commit."
+          fi
