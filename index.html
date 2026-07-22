@@ -106,6 +106,18 @@
       letter-spacing: .12em;
     }
     .nav-label { margin: 0 0 13px; color: #77827e; font-size: .62rem; }
+    .lang-switch { margin: 0 0 22px; }
+    .lang-switch select {
+      width: 100%; padding: 9px 30px 9px 11px; cursor: pointer;
+      color: var(--paper); background-color: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.18); border-radius: 9px;
+      font: 500 .72rem/1 var(--mono); letter-spacing: .04em;
+      -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%23a9b3af' stroke-width='1.4'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 11px center;
+    }
+    .lang-switch select:hover { background-color: rgba(255,255,255,.1); border-color: rgba(255,255,255,.28); }
+    .lang-switch option { color: #17201e; background: #fff; }
     .side-nav { display: grid; }
     .nav-tab {
       position: relative;
@@ -837,15 +849,15 @@
         align-items: flex-start;
         border: 1px solid rgba(255,255,255,.13);
         border-radius: 14px;
-        color: #bdc7c3;
+        color: #f4f2ec;
         background: rgba(255,255,255,.035);
       }
       .nav-tab:last-child { border-bottom: 1px solid rgba(255,255,255,.13); }
       .nav-tab:hover { padding-left: 14px; color: var(--white); background: rgba(255,255,255,.08); }
       .nav-tab[aria-selected="true"] { color: var(--ink); border-color: var(--paper); background: var(--paper); }
       .nav-tab[aria-selected="true"]::before { display: none; }
-      .nav-number { display: block; margin-bottom: auto; color: #71817b; font-size: .57rem; }
-      .nav-name { max-width: 115px; font-size: .76rem; line-height: 1.25; }
+      .nav-number { display: block; margin-bottom: auto; color: #d3dad5; font-size: .57rem; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+      .nav-name { max-width: 115px; font-size: .78rem; font-weight: 650; line-height: 1.25; color: #fff; text-shadow: 0 1px 7px rgba(0,0,0,.65); }
       .nav-arrow { position: absolute; right: 13px; bottom: 12px; opacity: 1; transform: none; }
       /* Editable photo behind each menu card (mobile only) */
       .nav-tab > span { position: relative; z-index: 2; }
@@ -866,7 +878,7 @@
         position: absolute;
         inset: 0;
         z-index: 1;
-        background: linear-gradient(155deg, rgba(16,32,28,.32), rgba(16,32,28,.8));
+        background: linear-gradient(155deg, rgba(10,20,17,.5), rgba(10,20,17,.92));
         pointer-events: none;
       }
       .nav-tab[aria-selected="true"] .nav-thumb,
@@ -1045,6 +1057,17 @@
       <span class="brand-mark" aria-hidden="true"></span>
       <span><span class="brand-word">MARVI</span><span class="brand-note">Groundwater · India</span></span>
     </button>
+    <div class="lang-switch">
+      <select id="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="hi">हिन्दी</option>
+        <option value="lo">ລາວ</option>
+        <option value="zh-Hant">繁體中文</option>
+        <option value="th">ไทย</option>
+        <option value="jv">Basa Jawa</option>
+      </select>
+    </div>
     <p class="nav-label">Explore MARVI</p>
     <nav class="side-nav" role="tablist" aria-orientation="vertical">
       <button class="nav-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-home" data-tab="home"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">01</span><span class="nav-name">Overview</span><span class="nav-arrow">↗</span></button>
@@ -1774,6 +1797,72 @@
           });
         }
       }
+
+      // --- Language switcher (content/i18n.json) ---
+      // English is captured live from the page, so it always matches the
+      // current CMS content; other languages override the "spine" strings.
+      const I18N = (await load('content/i18n.json')) || {};
+      const SECTION_KEYS = ['approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'];
+      const SLOTS = [
+        { key: 'ui.explore', sel: '.sidebar .nav-label' },
+        ...['home', ...SECTION_KEYS].map((t) => ({ key: 'nav.' + t, sel: '.nav-tab[data-tab="' + t + '"] .nav-name' })),
+        { key: 'hero.eyebrow', sel: '#panel-home .hero-copy .eyebrow' },
+        { key: 'hero.title', sel: '#panel-home .hero-copy h1', multiline: true },
+        { key: 'hero.body', sel: '#panel-home .hero-copy .lede' },
+        { key: 'hero.btn1', sel: '#panel-home .hero-copy button[data-open="approach"]', button: true },
+        { key: 'hero.btn2', sel: '#panel-home .hero-copy button[data-open="mywell"]', button: true },
+        ...SECTION_KEYS.flatMap((k) => [
+          { key: 'sec.' + k + '.eyebrow', sel: '#panel-' + k + ' .page-head .eyebrow' },
+          { key: 'sec.' + k + '.title', sel: '#panel-' + k + ' .page-head h1' },
+          { key: 'sec.' + k + '.lede', sel: '#panel-' + k + ' .page-head .lede' }
+        ])
+      ];
+      const readSlot = (slot) => {
+        const node = document.querySelector(slot.sel);
+        if (!node) return null;
+        if (slot.multiline) return Array.from(node.childNodes).map((n) => (n.nodeName === 'BR' ? '\n' : n.textContent)).join('');
+        if (slot.button) return (node.childNodes[0] ? node.childNodes[0].textContent : '').trim();
+        return node.textContent;
+      };
+      const writeSlot = (slot, value) => {
+        const node = document.querySelector(slot.sel);
+        if (!node || value == null) return;
+        if (slot.multiline) {
+          node.textContent = '';
+          String(value).split('\n').forEach((line, i) => {
+            if (i > 0) node.appendChild(document.createElement('br'));
+            node.appendChild(document.createTextNode(line));
+          });
+          return;
+        }
+        if (slot.button) {
+          const arrow = node.querySelector('span');
+          node.textContent = value + ' ';
+          if (arrow) node.appendChild(arrow);
+          return;
+        }
+        node.textContent = value;
+      };
+      const EN = {};
+      SLOTS.forEach((s) => { const v = readSlot(s); if (v != null) EN[s.key] = v; });
+      const applyLanguage = (lang) => {
+        document.documentElement.lang = lang;
+        SLOTS.forEach((s) => {
+          const t = (lang !== 'en' && I18N[lang] && I18N[lang][s.key] != null) ? I18N[lang][s.key] : EN[s.key];
+          writeSlot(s, t);
+        });
+      };
+      let savedLang = 'en';
+      try { savedLang = localStorage.getItem('marvi-lang') || 'en'; } catch (e) {}
+      const langSelect = document.getElementById('lang-select');
+      if (langSelect) {
+        langSelect.value = savedLang;
+        langSelect.addEventListener('change', () => {
+          applyLanguage(langSelect.value);
+          try { localStorage.setItem('marvi-lang', langSelect.value); } catch (e) {}
+        });
+      }
+      if (savedLang !== 'en') applyLanguage(savedLang);
     })();
   </script>
 </body>
