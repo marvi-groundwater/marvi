@@ -24,6 +24,26 @@
       --serif: "Newsreader", Georgia, serif;
       --sans: "Manrope", Arial, sans-serif;
       --mono: "DM Mono", monospace;
+      /* Photo scrims. Legibility is bought locally — a pool anchored under the
+         text block (--scrim-pool) plus a light global wash (--scrim-base) — rather
+         than by darkening the whole frame, which crushed shadow detail on
+         uncalibrated Windows displays without helping text over bright sky.
+         --pool-stops approximates a square falloff; keep the percentages if you
+         retune --scrim-pool. */
+      --scrim-rgb: 5 14 11;
+      --scrim-pool: .78;
+      --scrim-base: .2;
+      --scrim-deep: .6;
+      --scrim-mid: .34;
+      --scrim-soft: .06;
+      --pool-stops:
+        rgb(var(--scrim-rgb) / var(--scrim-pool)) 0%,
+        rgb(var(--scrim-rgb) / calc(var(--scrim-pool) * .94)) 25%,
+        rgb(var(--scrim-rgb) / calc(var(--scrim-pool) * .75)) 50%,
+        rgb(var(--scrim-rgb) / calc(var(--scrim-pool) * .51)) 70%,
+        rgb(var(--scrim-rgb) / calc(var(--scrim-pool) * .28)) 85%,
+        rgb(var(--scrim-rgb) / 0) 100%;
+      --text-shade: 0 1px 2px rgb(4 12 10 / .6), 0 3px 14px rgb(4 12 10 / .55), 0 14px 44px rgb(4 12 10 / .4);
     }
 
     * { box-sizing: border-box; }
@@ -226,7 +246,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(9,18,16,.05) 36%, rgba(9,18,16,.78) 100%);
+      background: linear-gradient(180deg, rgb(var(--scrim-rgb) / var(--scrim-soft)) 36%, rgb(var(--scrim-rgb) / var(--scrim-deep)) 100%);
       pointer-events: none;
     }
     .hero-image-main {
@@ -235,10 +255,11 @@
       min-height: 600px;
       object-fit: cover;
       object-position: 52% center;
-      filter: saturate(.8) contrast(1.05);
+      filter: saturate(.82) brightness(1.05);
       animation: image-drift 18s ease-in-out infinite alternate;
     }
     @keyframes image-drift { from { transform: scale(1.01); } to { transform: scale(1.075) translateX(-1.5%); } }
+    .hero-image-label, .hero-image-index, .hero-image-caption { text-shadow: var(--text-shade); }
     .hero-image-label { position: absolute; z-index: 2; top: 27px; left: 28px; font: .6rem/1.6 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
     .hero-image-index { position: absolute; z-index: 2; right: 25px; top: 26px; width: 63px; height: 63px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.65); border-radius: 50%; font: .6rem var(--mono); }
     .hero-image-caption { position: absolute; z-index: 2; right: 28px; bottom: 28px; max-width: 240px; text-align: right; font: .62rem/1.55 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
@@ -283,11 +304,11 @@
     .editorial-image:last-child { aspect-ratio: .82; margin-bottom: -38px; }
     .editorial-image img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72); transition: transform 1s cubic-bezier(.2,.75,.25,1), filter .5s ease; }
     .editorial-image:hover img { transform: scale(1.035); filter: saturate(1); }
-    .image-note { position: absolute; inset: auto 0 0; padding: 25px 19px 15px; color: var(--white); background: linear-gradient(transparent, rgba(10,19,17,.8)); font: .58rem/1.45 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .image-note { position: absolute; inset: auto 0 0; padding: 25px 19px 15px; color: var(--white); background: linear-gradient(transparent, rgb(var(--scrim-rgb) / var(--scrim-deep))); font: .58rem/1.45 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 
     .image-data-panel { position: relative; min-height: 500px; overflow: hidden; color: var(--white); background: var(--blue-dark); }
-    .image-data-panel img { width: 100%; height: 500px; object-fit: cover; filter: saturate(.75) contrast(1.02); }
-    .image-data-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16,36,34,.03), rgba(16,36,34,.82)); }
+    .image-data-panel img { width: 100%; height: 500px; object-fit: cover; filter: saturate(.78) brightness(1.04); }
+    .image-data-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(var(--scrim-rgb) / 0), rgb(var(--scrim-rgb) / var(--scrim-deep))); }
     .image-data-overlay { position: absolute; z-index: 2; inset: auto 28px 26px; display: flex; align-items: end; justify-content: space-between; gap: 25px; }
     .image-data-overlay strong { font: 400 clamp(4rem, 8vw, 7rem)/.8 var(--serif); }
     .image-data-overlay span { max-width: 165px; text-align: right; font: .59rem/1.55 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
@@ -377,7 +398,7 @@
     .video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 20px; }
     .video-card { color: inherit; text-decoration: none; }
     .video-image { position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: #c7c5bd; }
-    .video-image img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) contrast(1.05); transition: transform .5s ease, filter .3s ease; }
+    .video-image img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.76) brightness(1.04); transition: transform .5s ease, filter .3s ease; }
     .video-card:hover img { transform: scale(1.025); filter: none; }
     .play { position: absolute; right: 17px; bottom: 17px; width: 52px; height: 52px; border-radius: 50%; background: var(--white); }
     .play::before { content: ""; position: absolute; left: 21px; top: 17px; border-left: 14px solid var(--ink); border-top: 9px solid transparent; border-bottom: 9px solid transparent; }
@@ -403,7 +424,7 @@
     .gallery-item { position: relative; width: 100%; margin: 0 0 10px; padding: 0; display: inline-block; overflow: hidden; border: 0; color: var(--white); background: #ccc7bc; cursor: zoom-in; text-align: left; }
     .gallery-item img { width: 100%; height: auto; filter: saturate(.76); transition: transform .8s cubic-bezier(.2,.75,.25,1), filter .35s ease; }
     .gallery-item:hover img { transform: scale(1.035); filter: saturate(1); }
-    .gallery-item span { position: absolute; inset: auto 0 0; padding: 30px 12px 10px; opacity: 0; background: linear-gradient(transparent, rgba(8,16,14,.82)); font: .56rem/1.4 var(--mono); letter-spacing: .07em; text-transform: uppercase; transition: opacity .25s ease; }
+    .gallery-item span { position: absolute; inset: auto 0 0; padding: 30px 12px 10px; opacity: 0; background: linear-gradient(transparent, rgb(var(--scrim-rgb) / var(--scrim-deep))); font: .56rem/1.4 var(--mono); letter-spacing: .07em; text-transform: uppercase; transition: opacity .25s ease; }
     .gallery-item:hover span, .gallery-item:focus-visible span { opacity: 1; }
     .lightbox { position: fixed; z-index: 90; inset: 0; padding: 35px; display: grid; place-items: center; color: var(--white); background: rgba(8,14,13,.95); }
     .lightbox[hidden] { display: none; }
@@ -582,7 +603,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: saturate(.7) contrast(1.04);
+      filter: saturate(.74) brightness(1.04);
       transition: transform 1s cubic-bezier(.2,.75,.25,1), filter .45s ease;
     }
     .story-card::after {
@@ -590,7 +611,7 @@
       position: absolute;
       z-index: 1;
       inset: 0;
-      background: linear-gradient(180deg, rgba(8,18,15,.02) 25%, rgba(8,18,15,.86) 100%);
+      background: linear-gradient(180deg, rgb(var(--scrim-rgb) / 0) 25%, rgb(var(--scrim-rgb) / var(--scrim-deep)) 100%);
     }
     .story-card::before {
       content: "";
@@ -682,9 +703,10 @@
         line-height: .85;
         letter-spacing: -.078em;
       }
+      .hero-copy { text-shadow: var(--text-shade); }
       .hero-copy .eyebrow { color: #f0b68d; }
-      .hero-copy .lede { max-width: 690px; color: rgba(255,255,255,.82); }
-      .hero-copy .button { color: var(--white); border-color: rgba(255,255,255,.58); backdrop-filter: blur(8px); }
+      .hero-copy .lede { max-width: 690px; color: rgba(255,255,255,.88); }
+      .hero-copy .button { color: var(--white); border-color: rgba(255,255,255,.58); backdrop-filter: blur(8px); text-shadow: none; }
       .hero-copy .button:hover { color: var(--ink); background: var(--white); }
       .hero-copy .button.primary { color: var(--ink); border-color: var(--white); background: var(--white); }
       .hero-copy .button.primary:hover { color: var(--white); border-color: var(--copper); background: var(--copper); }
@@ -692,8 +714,8 @@
       .hero-image-main { min-height: 100svh; object-position: center 47%; }
       .hero-image-stage::after {
         background:
-          linear-gradient(90deg, rgba(4,13,10,.78) 0%, rgba(4,13,10,.34) 57%, rgba(4,13,10,.09) 100%),
-          linear-gradient(180deg, rgba(4,13,10,.05) 42%, rgba(4,13,10,.72) 100%);
+          radial-gradient(85% 45% at 28% 66%, var(--pool-stops)),
+          linear-gradient(180deg, rgb(var(--scrim-rgb) / 0) 45%, rgb(var(--scrim-rgb) / var(--scrim-base)) 100%);
       }
       .hero-image-label { top: 32px; left: 292px; }
       .hero-image-index { right: 35px; top: 31px; }
@@ -727,7 +749,7 @@
         position: absolute;
         z-index: -1;
         inset: 0;
-        background: linear-gradient(90deg, rgba(6,16,13,.82), rgba(6,16,13,.38) 68%, rgba(6,16,13,.12)), linear-gradient(180deg, transparent 35%, rgba(6,16,13,.7));
+        background: radial-gradient(88% 52% at 30% 72%, var(--pool-stops)), linear-gradient(180deg, rgb(var(--scrim-rgb) / 0) 45%, rgb(var(--scrim-rgb) / var(--scrim-base)));
       }
       .page-head > div { max-width: 920px; }
       .page-head .section-index { display: none; }
@@ -740,8 +762,9 @@
         line-height: .9;
         letter-spacing: -.072em;
       }
+      .panel:not(#panel-home) .page-head { text-shadow: var(--text-shade); }
       .page-head .eyebrow { margin-bottom: 15px; color: #efb389; }
-      .page-head .lede { max-width: 680px; color: rgba(255,255,255,.8); }
+      .page-head .lede { max-width: 680px; color: rgba(255,255,255,.86); }
       #panel-approach .page-head { --cover: url("assets/marvi-originals/008-home.jpg"); --cover-position: center 54%; }
       #panel-bjs .page-head { --cover: url("assets/marvi-originals/076-bhujal-jankaars-bjs.jpg"); --cover-position: center 53%; }
       #panel-groundwater .page-head { --cover: url("assets/marvi-originals/005-home.jpg"); --cover-position: center 61%; }
@@ -776,12 +799,12 @@
       .project-card .card-number { margin: 0 0 auto; color: rgba(255,255,255,.72); }
       .project-card h3 { max-width: 330px; color: var(--white); font-family: var(--sans); font-size: 1.65rem; font-weight: 600; letter-spacing: -.04em; }
       .project-card p { color: rgba(255,255,255,.76); }
-      #panel-approach .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/022-about-marvi.jpg"); }
-      #panel-approach .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/029-about-marvi.jpg"); }
-      #panel-approach .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/032-about-marvi.jpg"); }
-      #panel-groundwater .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/003-home.jpg"); }
-      #panel-groundwater .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/005-home.jpg"); }
-      #panel-groundwater .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgba(8,17,14,.12), rgba(8,17,14,.84)), url("assets/marvi-originals/034-about-marvi.jpg"); }
+      #panel-approach .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/022-about-marvi.jpg"); }
+      #panel-approach .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/029-about-marvi.jpg"); }
+      #panel-approach .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/032-about-marvi.jpg"); }
+      #panel-groundwater .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/003-home.jpg"); }
+      #panel-groundwater .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/005-home.jpg"); }
+      #panel-groundwater .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/034-about-marvi.jpg"); }
       #panel-game .project-card:nth-child(1) { background: #1e4b56; }
       #panel-game .project-card:nth-child(2) { background: #866146; }
       #panel-game .project-card:nth-child(3) { background: #31594a; }
@@ -856,9 +879,13 @@
       .nav-tab:last-child { border-bottom: 1px solid rgba(255,255,255,.13); }
       .nav-tab:hover { padding-left: 14px; color: var(--white); background: rgba(255,255,255,.08); }
       .nav-tab[aria-selected="true"] { color: var(--ink); border-color: var(--paper); background: var(--paper); }
+      /* .nav-number/.nav-name colour their own spans, so they win over the
+         selected tab's inherited ink and would leave white-on-paper. */
+      .nav-tab[aria-selected="true"] .nav-number { color: var(--muted); text-shadow: none; }
+      .nav-tab[aria-selected="true"] .nav-name { color: var(--ink); text-shadow: none; }
       .nav-tab[aria-selected="true"]::before { display: none; }
       .nav-number { display: block; margin-bottom: auto; color: #d3dad5; font-size: .57rem; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
-      .nav-name { max-width: 115px; font-size: .78rem; font-weight: 650; line-height: 1.25; color: #fff; text-shadow: 0 1px 7px rgba(0,0,0,.65); }
+      .nav-name { max-width: 115px; font-size: .78rem; font-weight: 650; line-height: 1.25; color: #fff; text-shadow: var(--text-shade); }
       .nav-arrow { position: absolute; right: 13px; bottom: 12px; opacity: 1; transform: none; }
       /* Editable photo behind each menu card (mobile only) */
       .nav-tab > span { position: relative; z-index: 2; }
@@ -870,8 +897,8 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        opacity: .5;
-        filter: grayscale(.3) brightness(.85);
+        opacity: .62;
+        filter: grayscale(.2) brightness(1.02);
         pointer-events: none;
       }
       .nav-tab::after {
@@ -879,7 +906,11 @@
         position: absolute;
         inset: 0;
         z-index: 1;
-        background: linear-gradient(155deg, rgba(10,20,17,.5), rgba(10,20,17,.92));
+        /* Tile art ranges from dark field photos to a near-white app screenshot,
+           so the label side carries its own wash sized for the lightest case. */
+        background:
+          linear-gradient(90deg, rgb(var(--scrim-rgb) / .58), rgb(var(--scrim-rgb) / .08) 64%),
+          linear-gradient(155deg, rgb(var(--scrim-rgb) / .34), rgb(var(--scrim-rgb) / .6));
         pointer-events: none;
       }
       .nav-tab[aria-selected="true"] .nav-thumb,
@@ -913,13 +944,14 @@
         line-height: .87;
         letter-spacing: -.075em;
       }
+      .hero-copy { text-shadow: var(--text-shade); }
       .hero-copy .eyebrow { color: #f0b68d; }
-      .hero-copy .lede { color: rgba(255,255,255,.82); font-size: 1rem; }
-      .hero-copy .button { color: var(--white); border-color: rgba(255,255,255,.6); background: rgba(8,18,15,.18); }
+      .hero-copy .lede { color: rgba(255,255,255,.88); font-size: 1rem; }
+      .hero-copy .button { color: var(--white); border-color: rgba(255,255,255,.6); background: rgba(8,18,15,.18); text-shadow: none; }
       .hero-copy .button.primary { color: var(--ink); border-color: var(--white); background: var(--white); }
       .hero-image-stage { position: absolute; inset: 0; min-height: 100%; }
       .hero-image-main { width: 100%; height: 100%; min-height: 100%; object-position: 54% center; }
-      .hero-image-stage::after { background: linear-gradient(180deg, rgba(5,14,11,.08) 18%, rgba(5,14,11,.38) 48%, rgba(5,14,11,.91) 100%); }
+      .hero-image-stage::after { background: radial-gradient(125% 46% at 45% 80%, var(--pool-stops)), linear-gradient(180deg, rgb(var(--scrim-rgb) / 0) 40%, rgb(var(--scrim-rgb) / var(--scrim-base)) 100%); }
       .hero-image-label, .hero-image-index, .hero-image-caption { display: none; }
 
       .home-explore { padding: 68px 20px; }
@@ -954,13 +986,14 @@
         position: absolute;
         z-index: -1;
         inset: 0;
-        background: linear-gradient(180deg, rgba(5,14,11,.1) 10%, rgba(5,14,11,.38) 46%, rgba(5,14,11,.9) 100%);
+        background: radial-gradient(125% 50% at 45% 80%, var(--pool-stops)), linear-gradient(180deg, rgb(var(--scrim-rgb) / 0) 40%, rgb(var(--scrim-rgb) / var(--scrim-base)) 100%);
       }
       .panel:not(#panel-home) .page-head > div { max-width: 100%; }
       .panel:not(#panel-home) .page-head .section-index { display: none; }
       .panel:not(#panel-home) .page-head h1 { margin-bottom: 16px; color: var(--white); font-size: clamp(3rem, 14vw, 4.5rem); line-height: .9; }
+      .panel:not(#panel-home) .page-head { text-shadow: var(--text-shade); }
       .panel:not(#panel-home) .page-head .eyebrow { color: #f0b68d; }
-      .panel:not(#panel-home) .page-head .lede { color: rgba(255,255,255,.78); font-size: 1rem; }
+      .panel:not(#panel-home) .page-head .lede { color: rgba(255,255,255,.86); font-size: 1rem; }
       #panel-approach .page-head { --cover: url("assets/marvi-originals/008-home.jpg"); --cover-position: center 54%; }
       #panel-bjs .page-head { --cover: url("assets/marvi-originals/076-bhujal-jankaars-bjs.jpg"); --cover-position: center 53%; }
       #panel-groundwater .page-head { --cover: url("assets/marvi-originals/005-home.jpg"); --cover-position: center 61%; }
@@ -989,12 +1022,12 @@
       .project-card .card-number { margin: 0 0 auto; color: rgba(255,255,255,.72); }
       .project-card h3 { color: var(--white); font-family: var(--sans); font-size: 1.55rem; font-weight: 600; letter-spacing: -.035em; }
       .project-card p { color: rgba(255,255,255,.77); }
-      #panel-approach .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgba(8,17,14,.1), rgba(8,17,14,.86)), url("assets/marvi-originals/022-about-marvi.jpg"); }
-      #panel-approach .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgba(8,17,14,.1), rgba(8,17,14,.86)), url("assets/marvi-originals/029-about-marvi.jpg"); }
-      #panel-approach .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgba(8,17,14,.1), rgba(8,17,14,.86)), url("assets/marvi-originals/032-about-marvi.jpg"); }
-      #panel-groundwater .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgba(8,17,14,.1), rgba(8,17,14,.86)), url("assets/marvi-originals/003-home.jpg"); }
-      #panel-groundwater .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgba(8,17,14,.1), rgba(8,17,14,.86)), url("assets/marvi-originals/005-home.jpg"); }
-      #panel-groundwater .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgba(8,17,14,.1), rgba(8,17,14,.86)), url("assets/marvi-originals/034-about-marvi.jpg"); }
+      #panel-approach .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/022-about-marvi.jpg"); }
+      #panel-approach .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/029-about-marvi.jpg"); }
+      #panel-approach .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/032-about-marvi.jpg"); }
+      #panel-groundwater .project-card:nth-child(1) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/003-home.jpg"); }
+      #panel-groundwater .project-card:nth-child(2) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/005-home.jpg"); }
+      #panel-groundwater .project-card:nth-child(3) { background-image: linear-gradient(180deg, rgb(var(--scrim-rgb) / .1), rgb(var(--scrim-rgb) / var(--scrim-deep))), url("assets/marvi-originals/034-about-marvi.jpg"); }
       #panel-game .project-card:nth-child(1) { background: #1e4b56; }
       #panel-game .project-card:nth-child(2) { background: #866146; }
       #panel-game .project-card:nth-child(3) { background: #31594a; }
