@@ -38,6 +38,9 @@
     if (key === 'home' && data.heroImage && data.heroImage.image) {
       return assetUrl(props, data.heroImage.image);
     }
+    if (data.menuImage && data.menuImage.image) {
+      return assetUrl(props, data.menuImage.image);
+    }
     return pageMeta[key].image;
   };
   var contentSummary = function (key, data) {
