@@ -67,10 +67,13 @@ for (const field of ['eyebrowSize', 'titleSize', 'ledeSize', 'textAlign', 'textP
 
 if (preview) {
   const templates = {};
+  const previewStyles = [];
   const element = (type, props, ...children) => ({ type, props: props || {}, children });
   const context = {
     CMS: {
-      registerPreviewStyle() {},
+      registerPreviewStyle(path) {
+        previewStyles.push(path);
+      },
       registerPreviewTemplate(name, component) {
         templates[name] = component;
       },
@@ -84,10 +87,13 @@ if (preview) {
   if (Object.keys(templates).sort().join(',') !== pageKeys.slice().sort().join(',')) {
     failures.push('all ten page files must register individual preview templates');
   }
+  if (previewStyles.join(',') !== 'preview.css') {
+    failures.push('the custom previews must register preview.css');
+  }
 
   const previewProps = (data) => ({
     entry: { get: () => ({ toJS: () => data }) },
-    getAsset: (path) => ({ toString: () => path }),
+    getAsset: (path) => ({ toString: () => `resolved:${path}` }),
   });
   const walk = (node, type, results = []) => {
     if (Array.isArray(node)) {
@@ -100,48 +106,51 @@ if (preview) {
     return results;
   };
 
-  try {
-    const homepage = templates.home.render.call({
-      props: previewProps({
-        heroImage: { image: '/hero.jpg' },
-        intro: {
-          title: 'Numeric title',
-          lede: 'Numeric intro',
-          eyebrow: 'Numeric eyebrow',
-          eyebrowSize: 75,
-          titleSize: 50,
-          ledeSize: 125,
-          textAlign: 'center',
-          textPosition: 'middle',
-        },
-      }),
-    });
-    const homepageTitle = walk(homepage, 'h1')[0];
-    if (homepageTitle?.props?.style?.fontSize !== '2.5rem') {
-      failures.push('the Homepage preview must apply numeric title percentages');
+  const titleBases = { home: 5, ...Object.fromEntries(pageKeys.slice(1).map((key) => [key, 3.4])) };
+  for (const [index, key] of pageKeys.entries()) {
+    try {
+      const data = JSON.parse(read(`content/pages/${key}.json`));
+      const titleSize = 40 + index * 10;
+      data.intro = {
+        ...data.intro,
+        eyebrowSize: 75,
+        titleSize,
+        ledeSize: 125,
+        textAlign: 'center',
+        textPosition: 'middle',
+      };
+      const rendered = templates[key].render.call({ props: previewProps(data) });
+      const titles = walk(rendered, 'h1');
+      const title = titles.find((node) => node.children.includes(data.intro.title));
+      if (titles.length !== 1 || !title) {
+        failures.push(`${key} preview must render its page title exactly once`);
+      }
+      const expectedTitleSize = `${Number((titleBases[key] * titleSize / 100).toFixed(3))}rem`;
+      if (title?.props?.style?.fontSize !== expectedTitleSize) {
+        failures.push(`${key} preview must apply its numeric title percentage`);
+      }
+      const intro = walk(rendered, 'div').find((node) => node.props.className === 'preview-intro');
+      if (
+        intro?.props?.style?.alignItems !== 'center' ||
+        intro?.props?.style?.justifyContent !== 'center' ||
+        intro?.props?.style?.textAlign !== 'center'
+      ) {
+        failures.push(`${key} preview must apply alignment and position controls`);
+      }
+      const hero = walk(rendered, 'section').find((node) => node.props.className === 'preview-hero');
+      const expectedImage = key === 'home' ? data.heroImage?.image : data.menuImage?.image;
+      if (!hero?.props?.style?.backgroundImage?.includes(`resolved:${expectedImage}`)) {
+        failures.push(`${key} preview must resolve and render its editable page image`);
+      }
+      const summaries = walk(rendered, 'span').filter(
+        (node) => node.props.className === 'preview-content-count',
+      );
+      if (summaries.length !== 1 || typeof summaries[0].children[0] !== 'string') {
+        failures.push(`${key} preview must render its page-content summary`);
+      }
+    } catch (error) {
+      failures.push(`${key} custom preview must render with its real page data: ${error.message}`);
     }
-
-    const mywell = templates.mywell.render.call({
-      props: previewProps({
-        menuImage: { image: '/menu.jpg' },
-        intro: {
-          title: 'MyWell title',
-          lede: 'MyWell intro',
-          eyebrow: 'MyWell',
-          eyebrowSize: 100,
-          titleSize: 150,
-          ledeSize: 100,
-          textAlign: 'right',
-          textPosition: 'top',
-        },
-      }),
-    });
-    const mywellTitle = walk(mywell, 'h1').find((node) => node.children.includes('MyWell title'));
-    if (mywellTitle?.props?.style?.fontSize !== '5.1rem') {
-      failures.push('the Section preview must apply numeric title percentages');
-    }
-  } catch (error) {
-    failures.push(`the custom previews must render without errors: ${error.message}`);
   }
 }
 
@@ -150,4 +159,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('CMS numeric controls and live previews are configured.');
+console.log('All ten CMS page previews render with real content and editable controls.');
