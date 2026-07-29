@@ -43,26 +43,35 @@ collections:
           - { label: "Hero Title", name: "heroTitle", widget: "text", hint: "Line break = where the headline wraps to a second line" }
           - { label: "Hero Body", name: "heroBody", widget: "text" }
           - &eyebrowSizeField
-            label: "Eyebrow Text Size"
+            label: "Eyebrow Text Size (%)"
             name: "eyebrowSize"
-            widget: "select"
-            default: "medium"
-            options: &textSizeOptions
-              - { label: "Small", value: "small" }
-              - { label: "Medium (recommended)", value: "medium" }
-              - { label: "Large", value: "large" }
+            widget: "number"
+            default: 100
+            value_type: "int"
+            min: 0
+            max: 200
+            step: 5
+            hint: "100% is the current design. Use 0% to hide it, or up to 200% for twice the size."
           - &titleSizeField
-            label: "Title Size"
+            label: "Title Size (%)"
             name: "titleSize"
-            widget: "select"
-            default: "medium"
-            options: *textSizeOptions
+            widget: "number"
+            default: 70
+            value_type: "int"
+            min: 0
+            max: 200
+            step: 5
+            hint: "70% is the default. Use 100% for the original responsive title size."
           - &ledeSizeField
-            label: "Intro Text Size"
+            label: "Intro Text Size (%)"
             name: "ledeSize"
-            widget: "select"
-            default: "medium"
-            options: *textSizeOptions
+            widget: "number"
+            default: 100
+            value_type: "int"
+            min: 0
+            max: 200
+            step: 5
+            hint: "100% is the current responsive intro size."
           - &textAlignField
             label: "Text Alignment"
             name: "textAlign"

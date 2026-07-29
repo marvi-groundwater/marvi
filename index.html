@@ -1076,8 +1076,9 @@
       .scroll-progress { display: none; }
     }
 
-    /* CMS-controlled intro typography and placement. Presets remain responsive
-       at every breakpoint, unlike a fixed pixel-size field. */
+    /* CMS-controlled intro alignment and placement. Numeric font percentages
+       are applied in the content loader so the existing responsive sizes remain
+       the 100% baseline in every browser and at every breakpoint. */
     .hero-copy[data-text-align="center"] { align-items: center; text-align: center; }
     .hero-copy[data-text-align="right"] { align-items: flex-end; text-align: right; }
     .hero-copy[data-text-position="top"] { justify-content: flex-start; }
@@ -1096,26 +1097,6 @@
     .panel:not(#panel-home) .page-head[data-text-position="middle"] { align-items: center; }
     .panel:not(#panel-home) .page-head[data-text-position="bottom"] { align-items: flex-end; }
 
-    [data-eyebrow-size="small"] .eyebrow { font-size: .56rem; }
-    [data-eyebrow-size="large"] .eyebrow { font-size: .82rem; }
-    [data-lede-size="small"] .lede { font-size: clamp(.9rem, 1.15vw, 1.02rem); }
-    [data-lede-size="large"] .lede { font-size: clamp(1.22rem, 1.8vw, 1.58rem); }
-
-    @media (min-width: 801px) {
-      .hero-copy[data-title-size="small"] h1 { font-size: clamp(3.35rem, 6.2vw, 6.6rem); }
-      .hero-copy[data-title-size="large"] h1 { font-size: clamp(5.15rem, 9.5vw, 10.4rem); }
-      .page-head[data-title-size="small"] h1 { font-size: clamp(2.9rem, 5.5vw, 5.8rem); }
-      .page-head[data-title-size="large"] h1 { font-size: clamp(4.5rem, 8.5vw, 9.2rem); }
-    }
-
-    @media (max-width: 800px) {
-      .hero-copy[data-title-size="small"] h1 { font-size: clamp(2.75rem, 12.5vw, 4.2rem); }
-      .hero-copy[data-title-size="large"] h1 { font-size: clamp(3.9rem, 17.5vw, 5.85rem); }
-      .page-head[data-title-size="small"] h1 { font-size: clamp(2.45rem, 11.5vw, 3.8rem); }
-      .page-head[data-title-size="large"] h1 { font-size: clamp(3.45rem, 16vw, 5.2rem); }
-      [data-lede-size="small"] .lede { font-size: .88rem; }
-      [data-lede-size="large"] .lede { font-size: 1.22rem; }
-    }
   </style>
 </head>
 <body>
@@ -1697,15 +1678,24 @@
       };
       const applyTextLayout = (root, data) => {
         if (!root || !data) return;
-        const allowed = {
-          eyebrowSize: ['small', 'medium', 'large'],
-          titleSize: ['small', 'medium', 'large'],
-          ledeSize: ['small', 'medium', 'large'],
-          textAlign: ['left', 'center', 'right'],
-          textPosition: ['top', 'middle', 'bottom']
+        const scaleText = (selector, value) => {
+          const node = root.querySelector(selector);
+          if (!node) return;
+          const percentage = Math.min(200, Math.max(0, Number(value)));
+          node.dataset.cmsTextScale = Number.isFinite(percentage) ? percentage : 100;
         };
-        Object.keys(allowed).forEach((key) => {
-          if (allowed[key].includes(data[key])) root.dataset[key] = data[key];
+        scaleText('.eyebrow', data.eyebrowSize);
+        scaleText('h1', data.titleSize);
+        scaleText('.lede', data.ledeSize);
+        if (['left', 'center', 'right'].includes(data.textAlign)) root.dataset.textAlign = data.textAlign;
+        if (['top', 'middle', 'bottom'].includes(data.textPosition)) root.dataset.textPosition = data.textPosition;
+      };
+      const refreshTextScales = () => {
+        document.querySelectorAll('[data-cms-text-scale]').forEach((node) => {
+          const percentage = Number(node.dataset.cmsTextScale) || 0;
+          node.style.fontSize = '';
+          const baseline = Number.parseFloat(getComputedStyle(node).fontSize);
+          if (Number.isFinite(baseline)) node.style.fontSize = (baseline * percentage / 100) + 'px';
         });
       };
 
@@ -1972,6 +1962,15 @@
         });
       }
       if (savedLang !== 'en') applyLanguage(savedLang);
+      refreshTextScales();
+      let resizeFrame = 0;
+      window.addEventListener('resize', () => {
+        if (resizeFrame) cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(() => {
+          resizeFrame = 0;
+          refreshTextScales();
+        });
+      });
     })();
   </script>
 </body>
