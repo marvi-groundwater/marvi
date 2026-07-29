@@ -446,16 +446,16 @@
       pointer-events: none;
       will-change: transform;
     }
-    .motion-ready .hero-copy > *,
+    .motion-ready .hero-copy-inner > *,
     .motion-ready .page-head > div > * {
       opacity: 0;
       animation: content-rise .9s cubic-bezier(.2,.75,.25,1) forwards;
     }
-    .motion-ready .hero-copy > :nth-child(2),
+    .motion-ready .hero-copy-inner > :nth-child(2),
     .motion-ready .page-head > div > :nth-child(2) { animation-delay: .1s; }
-    .motion-ready .hero-copy > :nth-child(3),
+    .motion-ready .hero-copy-inner > :nth-child(3),
     .motion-ready .page-head > div > :nth-child(3) { animation-delay: .2s; }
-    .motion-ready .hero-copy > :nth-child(4) { animation-delay: .3s; }
+    .motion-ready .hero-copy-inner > :nth-child(4) { animation-delay: .3s; }
     @keyframes content-rise {
       from { opacity: 0; transform: translateY(28px); }
       to { opacity: 1; transform: none; }
@@ -1072,7 +1072,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
-      .motion-ready .hero-copy > *, .motion-ready .page-head > div > *, .motion-item { opacity: 1 !important; transform: none !important; }
+      .motion-ready .hero-copy-inner > *, .motion-ready .page-head > div > *, .motion-item { opacity: 1 !important; transform: none !important; }
       .scroll-progress { display: none; }
     }
 
@@ -1096,6 +1096,85 @@
     .panel:not(#panel-home) .page-head[data-text-position="top"] { align-items: flex-start; }
     .panel:not(#panel-home) .page-head[data-text-position="middle"] { align-items: center; }
     .panel:not(#panel-home) .page-head[data-text-position="bottom"] { align-items: flex-end; }
+
+    /* One CMS layout model drives the real heroes and their admin previews.
+       Individual `scale` composes with decorative hover transforms elsewhere. */
+    .hero-image-main {
+      animation: none;
+      scale: var(--cms-photo-scale, 1);
+    }
+    .panel:not(#panel-home) .page-head::before {
+      animation: none;
+      background-position: var(--cms-photo-position, var(--cover-position, center));
+      background-size: var(--cms-photo-fit, cover);
+      transform: scale(var(--cms-photo-scale, 1));
+    }
+    .hero-copy-inner,
+    .panel:not(#panel-home) .page-head > div {
+      width: var(--cms-text-width, 100%);
+      transform: translate(
+        var(--cms-text-offset-x, 0%),
+        var(--cms-text-offset-y, 0%)
+      );
+    }
+    .hero-copy-inner { max-width: 100%; }
+
+    .cms-sections {
+      padding: clamp(72px, 9vw, 120px) max(6vw, 64px) 110px 304px;
+      display: grid;
+      gap: clamp(54px, 7vw, 96px);
+      background: var(--paper);
+    }
+    .cms-block { max-width: 1120px; }
+    .cms-block-copy { max-width: 760px; }
+    .cms-block-copy[data-align="center"] { margin-inline: auto; text-align: center; }
+    .cms-block-copy[data-align="right"] { margin-left: auto; text-align: right; }
+    .cms-block-copy h2 { margin-bottom: 20px; }
+    .cms-block-copy p { color: #555e5a; font-size: 1.03rem; }
+    .cms-block-image-text {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+      gap: clamp(36px, 7vw, 90px);
+      align-items: center;
+    }
+    .cms-block-image-text[data-photo-side="right"] .cms-block-photo { order: 2; }
+    .cms-block-photo {
+      min-height: 480px;
+      overflow: hidden;
+      background: var(--paper-2);
+    }
+    .cms-block-photo img,
+    .cms-block-gallery img { width: 100%; height: 100%; object-fit: cover; }
+    .cms-block-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .cms-block-gallery figure {
+      height: 340px;
+      margin: 0;
+      overflow: hidden;
+      background: var(--paper-2);
+    }
+    .cms-block-callout {
+      padding: clamp(38px, 6vw, 72px);
+      color: var(--white);
+      background: var(--blue-dark);
+    }
+    .cms-block-callout[data-tone="green"] { background: #31594a; }
+    .cms-block-callout[data-tone="copper"] { background: #866146; }
+    .cms-block-callout h2 { max-width: 900px; }
+    .cms-block-callout p { max-width: 900px; margin: 0; font: 400 clamp(1.45rem, 2.5vw, 2.35rem)/1.2 var(--serif); }
+    .cms-block-button { padding-block: 12px; }
+
+    @media (max-width: 800px) {
+      .cms-sections { padding: 68px 20px 76px; gap: 58px; }
+      .cms-block-image-text { grid-template-columns: 1fr; gap: 28px; }
+      .cms-block-image-text[data-photo-side="right"] .cms-block-photo { order: 0; }
+      .cms-block-photo { min-height: 360px; }
+      .cms-block-gallery { grid-template-columns: 1fr 1fr; }
+      .cms-block-gallery figure { height: 250px; }
+    }
 
   </style>
 </head>
@@ -1151,12 +1230,14 @@
     <section class="panel" id="panel-home" role="tabpanel" tabindex="0" data-panel="home">
       <div class="home-hero">
         <div class="hero-copy">
-          <p class="eyebrow">Managing Aquifer Recharge &amp; Sustaining Groundwater Use</p>
-          <h1>Water beneath us.<br>Knowledge between us.</h1>
-          <p class="lede">MARVI puts groundwater science in the hands of the people who depend on it—farmers, schools, researchers and communities working together for water that lasts.</p>
-          <div class="hero-actions">
-            <button class="button primary" type="button" data-open="approach">Explore the approach <span>↗</span></button>
-            <button class="button" type="button" data-open="mywell">Discover MyWell <span>↗</span></button>
+          <div class="hero-copy-inner">
+            <p class="eyebrow">Managing Aquifer Recharge &amp; Sustaining Groundwater Use</p>
+            <h1>Water beneath us.<br>Knowledge between us.</h1>
+            <p class="lede">MARVI puts groundwater science in the hands of the people who depend on it—farmers, schools, researchers and communities working together for water that lasts.</p>
+            <div class="hero-actions">
+              <button class="button primary" type="button" data-open="approach">Explore the approach <span>↗</span></button>
+              <button class="button" type="button" data-open="mywell">Discover MyWell <span>↗</span></button>
+            </div>
           </div>
         </div>
         <div class="hero-image-stage" aria-label="MARVI team members and farmers standing in a field">
@@ -1385,6 +1466,7 @@
   <footer class="footer"><span>© 2026 MARVI Project</span><span>Groundwater knowledge · Community action</span><a href="https://www.marvi.org.in/" target="_blank" rel="noopener">Original MARVI site ↗</a></footer>
 
   <script src="assets/marvi-originals/gallery.js"></script>
+  <script src="layout-model.js"></script>
   <script>
     (() => {
       const tabs = [...document.querySelectorAll('[data-tab]')];
@@ -1517,6 +1599,10 @@
           image.decoding = 'async';
           image.src = srcOf(item);
           image.alt = item.title;
+          const photoLayout = MarviLayout.photo(item);
+          image.style.objectPosition = photoLayout.x + '% ' + photoLayout.y + '%';
+          image.style.objectFit = item.fit && item.fit !== 'auto' ? photoLayout.fit : '';
+          image.style.scale = photoLayout.scale;
           const label = document.createElement('span');
           label.textContent = item.category;
           image.addEventListener('load', () => {
@@ -1671,10 +1757,22 @@
         const m = String(url || '').match(/[?&]v=([^&]+)/) || String(url || '').match(/youtu\.be\/([^?&]+)/);
         return m ? m[1] : '';
       };
-      // Apply optional per-image crop controls. 'auto'/blank = leave the CSS default.
-      const applyFit = (img, focus, fit) => {
-        if (focus && focus !== 'auto') img.style.objectPosition = focus;
-        if (fit && fit !== 'auto') img.style.objectFit = fit;
+      // The same numeric photo model is used for every editable <img>.
+      const applyPhotoLayout = (img, data = {}) => {
+        const layout = MarviLayout.photo(data);
+        img.style.objectPosition = layout.x + '% ' + layout.y + '%';
+        img.style.scale = layout.scale;
+        if (data.fit && data.fit !== 'auto') img.style.objectFit = layout.fit;
+      };
+      // Section heroes use a pseudo-element so their layout is expressed as
+      // shared CSS variables instead of duplicating per-page rules.
+      const applyHeroLayout = (root, data = {}) => {
+        if (!root || !data.image) return;
+        const layout = MarviLayout.photo(data);
+        root.style.setProperty('--cover', 'url("' + String(data.image).replaceAll('"', '%22') + '")');
+        root.style.setProperty('--cms-photo-position', layout.x + '% ' + layout.y + '%');
+        root.style.setProperty('--cms-photo-scale', layout.scale);
+        root.style.setProperty('--cms-photo-fit', layout.fit);
       };
       const applyTextLayout = (root, data) => {
         if (!root || !data) return;
@@ -1689,6 +1787,10 @@
         scaleText('.lede', data.ledeSize);
         if (['left', 'center', 'right'].includes(data.textAlign)) root.dataset.textAlign = data.textAlign;
         if (['top', 'middle', 'bottom'].includes(data.textPosition)) root.dataset.textPosition = data.textPosition;
+        const layout = MarviLayout.text(data);
+        root.style.setProperty('--cms-text-width', layout.width + '%');
+        root.style.setProperty('--cms-text-offset-x', layout.offsetX + '%');
+        root.style.setProperty('--cms-text-offset-y', layout.offsetY + '%');
       };
       const refreshTextScales = () => {
         document.querySelectorAll('[data-cms-text-scale]').forEach((node) => {
@@ -1720,7 +1822,7 @@
             const heroImg = document.querySelector('#panel-home .hero-image-main');
             if (heroImg) {
               heroImg.src = home.heroImage.image;
-              applyFit(heroImg, home.heroImage.focus, home.heroImage.fit);
+              applyPhotoLayout(heroImg, home.heroImage);
             }
           }
           [['approach', home.primaryButtonLabel], ['mywell', home.secondaryButtonLabel]].forEach(([key, label]) => {
@@ -1743,6 +1845,7 @@
         setText(head, 'h1', intro.title);
         setText(head, '.lede', intro.lede);
         applyTextLayout(head, intro);
+        applyHeroLayout(head, pages[key].heroImage);
       });
 
       // --- Media stories ---
@@ -1855,7 +1958,7 @@
           const entry = images[imageKey];
           if (!img || !entry) return;
           if (entry.image) img.src = entry.image;
-          applyFit(img, entry.focus, entry.fit);
+          applyPhotoLayout(img, entry);
         });
       });
 
@@ -1866,7 +1969,7 @@
         const thumb = tab.querySelector('.nav-thumb');
         if (entry && thumb) {
           thumb.src = entry.image;
-          applyFit(thumb, entry.focus, entry.fit);
+          applyPhotoLayout(thumb, entry);
         }
       });
 
@@ -1881,11 +1984,83 @@
             img.loading = 'lazy';
             img.src = item.image;
             img.alt = 'MARVI team member portrait';
-            applyFit(img, item.focus, item.fit);
+            applyPhotoLayout(img, item);
             band.appendChild(img);
           });
         }
       }
+
+      // --- Addable page sections ---
+      const appendParagraphs = (root, value) => {
+        String(value || '').split(/\n\s*\n/).filter(Boolean).forEach((paragraph) => {
+          root.appendChild(el('p', { text: paragraph.trim() }));
+        });
+      };
+      const addBlockCopy = (block, item) => {
+        const copy = el('div', { class: 'cms-block-copy' });
+        copy.dataset.align = item.align || 'left';
+        if (item.eyebrow) copy.appendChild(el('p', { class: 'eyebrow', text: item.eyebrow }));
+        if (item.heading) copy.appendChild(el('h2', { text: item.heading }));
+        appendParagraphs(copy, item.body);
+        block.appendChild(copy);
+        return copy;
+      };
+      const addBlockPhoto = (block, photo) => {
+        const frame = el('div', { class: 'cms-block-photo' });
+        const img = el('img');
+        img.loading = 'lazy';
+        img.alt = '';
+        if (photo && photo.image) img.src = photo.image;
+        applyPhotoLayout(img, photo);
+        frame.appendChild(img);
+        block.appendChild(frame);
+        return frame;
+      };
+      const renderFlexibleSections = (key, page) => {
+        if (!page || !Array.isArray(page.sections) || !page.sections.length) return;
+        const panel = document.getElementById('panel-' + key);
+        const parent = panel && (panel.querySelector('.content-wrap') || panel);
+        if (!parent) return;
+        const wrap = el('div', { class: 'cms-sections' });
+        page.sections.forEach((item) => {
+          const type = item && item.type;
+          if (!type) return;
+          const block = el('section', { class: 'cms-block cms-block-' + type });
+          if (type === 'text') {
+            addBlockCopy(block, item);
+          } else if (type === 'imageText') {
+            block.dataset.photoSide = item.photoSide || 'left';
+            addBlockPhoto(block, item.photo || {});
+            addBlockCopy(block, item);
+          } else if (type === 'gallery') {
+            if (item.heading) block.appendChild(el('h2', { text: item.heading }));
+            const gallery = el('div', { class: 'cms-block-gallery' });
+            (item.photos || []).forEach((photo) => {
+              const figure = el('figure');
+              const img = el('img');
+              img.loading = 'lazy';
+              img.alt = '';
+              if (photo.image) img.src = photo.image;
+              applyPhotoLayout(img, photo);
+              figure.appendChild(img);
+              gallery.appendChild(figure);
+            });
+            block.appendChild(gallery);
+          } else if (type === 'callout') {
+            block.dataset.tone = item.tone || 'blue';
+            if (item.heading) block.appendChild(el('h2', { text: item.heading }));
+            appendParagraphs(block, item.body);
+          } else if (type === 'button') {
+            if (item.heading) block.appendChild(el('h2', { text: item.heading }));
+            const link = el('a', { class: 'button primary', text: (item.label || 'Learn more') + ' ↗' });
+            link.href = item.url || '#';
+            block.appendChild(link);
+          }
+          wrap.appendChild(block);
+        });
+        parent.appendChild(wrap);
+      };
+      PAGE_KEYS.forEach((key) => renderFlexibleSections(key, pages[key]));
 
       // --- Language switcher (content/i18n.json) ---
       // English is captured live from the page, so it always matches the
