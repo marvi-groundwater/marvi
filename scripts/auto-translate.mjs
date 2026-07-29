@@ -4,7 +4,7 @@
  *
  * Runs in CI (see .github/workflows/translate.yml). It:
  *  1. Gathers the English source for every translatable key
- *     (nav + hero + section intros from the CMS content files and index.html,
+ *     (nav + hero + section intros from the CMS page files and index.html,
  *      plus the body prose tagged with data-i18n in index.html).
  *  2. Compares against the hidden `en` block stored in content/i18n.json —
  *     the English each existing translation was made from.
@@ -39,23 +39,28 @@ const decode = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&g
 // ---- 1. gather the English source for every key ----
 function collectEnglish() {
   const en = {};
-  const home = JSON.parse(readFileSync(ROOT + 'content/homepage.json', 'utf8'));
-  const sections = JSON.parse(readFileSync(ROOT + 'content/sections.json', 'utf8'));
+  const pageKeys = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'];
+  const pages = Object.fromEntries(pageKeys.map((key) => [
+    key,
+    JSON.parse(readFileSync(ROOT + `content/pages/${key}.json`, 'utf8'))
+  ]));
+  const home = pages.home;
   let html = readFileSync(ROOT + 'index.html', 'utf8');
   const body = html.slice(0, html.indexOf('<!-- Load editable content'));
 
-  // hero (from the CMS homepage file)
-  en['hero.eyebrow'] = home.eyebrow;
-  en['hero.title'] = home.heroTitle;
-  en['hero.body'] = home.heroBody;
+  // hero (from the CMS Homepage page file)
+  en['hero.eyebrow'] = home.intro.eyebrow;
+  en['hero.title'] = home.intro.title;
+  en['hero.body'] = home.intro.lede;
   en['hero.btn1'] = home.primaryButtonLabel;
   en['hero.btn2'] = home.secondaryButtonLabel;
 
-  // section intros (from the CMS sections file)
-  for (const [k, v] of Object.entries(sections)) {
-    en[`sec.${k}.eyebrow`] = v.eyebrow;
-    en[`sec.${k}.title`] = v.title;
-    en[`sec.${k}.lede`] = v.lede;
+  // section intros (from their individual CMS page files)
+  for (const key of pageKeys.filter((key) => key !== 'home')) {
+    const intro = pages[key].intro;
+    en[`sec.${key}.eyebrow`] = intro.eyebrow;
+    en[`sec.${key}.title`] = intro.title;
+    en[`sec.${key}.lede`] = intro.lede;
   }
 
   // ui.explore label

@@ -1,4 +1,15 @@
 {
+  "intro": {
+    "eyebrow": "MARVI in the media",
+    "title": "Stories from the field, the lab and the village.",
+    "lede": "Selected journalism and project coverage from the new MARVI media archive.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "menuImage": { "image": "/assets/marvi-originals/032-about-marvi.jpg", "focus": "auto", "fit": "auto" },
   "items": [
     {
       "meta": "The Brilliant · 02 Jul 2024",

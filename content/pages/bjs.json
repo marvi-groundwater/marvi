@@ -1,0 +1,13 @@
+{
+  "intro": {
+    "eyebrow": "Bhujal Jankaars · भूजल जानकार",
+    "title": "The village’s own groundwater champions.",
+    "lede": "“Groundwater informed”: local volunteers who connect careful observation with community knowledge and collective action.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "menuImage": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "focus": "auto", "fit": "auto" }
+}

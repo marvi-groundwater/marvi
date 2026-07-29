@@ -1,4 +1,15 @@
 {
+  "intro": {
+    "eyebrow": "Films & field recordings",
+    "title": "See the people behind the measurements.",
+    "lede": "A curated starting point from the new MARVI video archive—introductions, field stories, training and technical talks.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "menuImage": { "image": "/assets/marvi-originals/034-about-marvi.jpg", "focus": "auto", "fit": "auto" },
   "items": [
     {
       "meta": "Featured · Western Sydney University",

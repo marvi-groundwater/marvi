@@ -1,0 +1,18 @@
+{
+  "intro": {
+    "eyebrow": "The MARVI approach",
+    "title": "Science becomes useful when it becomes local.",
+    "lede": "MARVI brings technical knowledge, community experience and practical monitoring together at village level.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "menuImage": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "images": {
+    "editorial1": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+    "editorial2": { "image": "/assets/marvi-originals/032-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+    "dataPanel": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" }
+  }
+}

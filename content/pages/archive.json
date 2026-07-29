@@ -1,4 +1,15 @@
 {
+  "intro": {
+    "eyebrow": "The original MARVI image archive",
+    "title": "Fieldwork, faces and the life of the project.",
+    "lede": "Every publicly accessible image recovered from the original MARVI website, preserved locally and arranged as a living visual archive.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "menuImage": { "image": "/assets/marvi-originals/043-our-people.jpg", "focus": "auto", "fit": "auto" },
   "items": [
     {
       "image": "/assets/marvi-originals/001-home.png",

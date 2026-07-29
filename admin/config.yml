@@ -10,160 +10,174 @@ media_folder: "assets/marvi-originals"
 public_folder: "/assets/marvi-originals"
 
 collections:
-  - name: "homepage"
-    label: "Homepage"
+  - name: "pages"
+    label: "Pages"
     files:
-      - file: "content/homepage.json"
-        label: "Homepage Hero"
-        name: "homepage"
+      - file: "content/pages/home.json"
+        label: "01 · Homepage"
+        name: "home"
         fields:
-          - { label: "Hero Image", name: "heroImage", widget: "image", hint: "The large photo beside the headline. Click to choose from the library or upload a new one." }
-          - label: "Hero Image — Focus"
-            name: "heroImageFocus"
-            widget: "select"
-            default: "auto"
-            hint: "Which part of the photo to keep when it is cropped to fit."
-            options: &focusOptions
-              - { label: "Auto (recommended)", value: "auto" }
-              - { label: "Center", value: "center center" }
-              - { label: "Top", value: "center top" }
-              - { label: "Bottom", value: "center bottom" }
-              - { label: "Left", value: "left center" }
-              - { label: "Right", value: "right center" }
-          - label: "Hero Image — Fit"
-            name: "heroImageFit"
-            widget: "select"
-            default: "auto"
-            hint: "Fill crops to the slot; Show whole never crops."
-            options: &fitOptions
-              - { label: "Auto (recommended)", value: "auto" }
-              - { label: "Fill (crop to slot)", value: "cover" }
-              - { label: "Show whole photo", value: "contain" }
-          - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-          - { label: "Hero Title", name: "heroTitle", widget: "text", hint: "Line break = where the headline wraps to a second line" }
-          - { label: "Hero Body", name: "heroBody", widget: "text" }
-          - &eyebrowSizeField
-            label: "Eyebrow Text Size (%)"
-            name: "eyebrowSize"
-            widget: "number"
-            default: 100
-            value_type: "int"
-            min: 0
-            max: 200
-            step: 5
-            hint: "100% is the current design. Use 0% to hide it, or up to 200% for twice the size."
-          - &titleSizeField
-            label: "Title Size (%)"
-            name: "titleSize"
-            widget: "number"
-            default: 70
-            value_type: "int"
-            min: 0
-            max: 200
-            step: 5
-            hint: "70% is the default. Use 100% for the original responsive title size."
-          - &ledeSizeField
-            label: "Intro Text Size (%)"
-            name: "ledeSize"
-            widget: "number"
-            default: 100
-            value_type: "int"
-            min: 0
-            max: 200
-            step: 5
-            hint: "100% is the current responsive intro size."
-          - &textAlignField
-            label: "Text Alignment"
-            name: "textAlign"
-            widget: "select"
-            default: "left"
-            hint: "Moves the whole text block horizontally."
-            options: &textAlignOptions
-              - { label: "Left", value: "left" }
-              - { label: "Centre", value: "center" }
-              - { label: "Right", value: "right" }
-          - &textPositionField
-            label: "Text Position"
-            name: "textPosition"
-            widget: "select"
-            default: "bottom"
-            hint: "Moves the whole text block vertically over the image."
-            options: &textPositionOptions
-              - { label: "Top", value: "top" }
-              - { label: "Middle", value: "middle" }
-              - { label: "Bottom (recommended)", value: "bottom" }
+          - label: "Title & introduction"
+            name: "intro"
+            widget: "object"
+            collapsed: false
+            fields: &introFields
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Title", name: "title", widget: "text", hint: "Line break = where the title wraps to a new line." }
+              - { label: "Introduction", name: "lede", widget: "text" }
+              - &eyebrowSizeField
+                label: "Eyebrow Text Size (%)"
+                name: "eyebrowSize"
+                widget: "number"
+                default: 100
+                value_type: "int"
+                min: 0
+                max: 200
+                step: 5
+                hint: "100% is the current design. Use 0% to hide it, or up to 200% for twice the size."
+              - &titleSizeField
+                label: "Title Size (%)"
+                name: "titleSize"
+                widget: "number"
+                default: 70
+                value_type: "int"
+                min: 0
+                max: 200
+                step: 5
+                hint: "70% is the default. Use 100% for the original responsive title size."
+              - &ledeSizeField
+                label: "Intro Text Size (%)"
+                name: "ledeSize"
+                widget: "number"
+                default: 100
+                value_type: "int"
+                min: 0
+                max: 200
+                step: 5
+                hint: "100% is the current responsive intro size."
+              - &textAlignField
+                label: "Text Alignment"
+                name: "textAlign"
+                widget: "select"
+                default: "left"
+                hint: "Moves the whole text block horizontally."
+                options: &textAlignOptions
+                  - { label: "Left", value: "left" }
+                  - { label: "Centre", value: "center" }
+                  - { label: "Right", value: "right" }
+              - &textPositionField
+                label: "Text Position"
+                name: "textPosition"
+                widget: "select"
+                default: "bottom"
+                hint: "Moves the whole text block vertically over the image."
+                options: &textPositionOptions
+                  - { label: "Top", value: "top" }
+                  - { label: "Middle", value: "middle" }
+                  - { label: "Bottom (recommended)", value: "bottom" }
+          - label: "Hero image"
+            name: "heroImage"
+            widget: "object"
+            collapsed: true
+            fields: &photoFields
+              - { label: "Photo", name: "image", widget: "image" }
+              - label: "Focus"
+                name: "focus"
+                widget: "select"
+                default: "auto"
+                hint: "Which part of the photo to keep when it is cropped."
+                options: &focusOptions
+                  - { label: "Auto (recommended)", value: "auto" }
+                  - { label: "Center", value: "center center" }
+                  - { label: "Top", value: "center top" }
+                  - { label: "Bottom", value: "center bottom" }
+                  - { label: "Left", value: "left center" }
+                  - { label: "Right", value: "right center" }
+              - label: "Fit"
+                name: "fit"
+                widget: "select"
+                default: "auto"
+                hint: "Fill crops to the slot; Show whole never crops."
+                options: &fitOptions
+                  - { label: "Auto (recommended)", value: "auto" }
+                  - { label: "Fill (crop to slot)", value: "cover" }
+                  - { label: "Show whole photo", value: "contain" }
+          - &menuImageField
+            label: "Menu image"
+            name: "menuImage"
+            widget: "object"
+            collapsed: true
+            fields: *photoFields
           - { label: "Primary Button Label", name: "primaryButtonLabel", widget: "string" }
           - { label: "Secondary Button Label", name: "secondaryButtonLabel", widget: "string" }
+          - label: "Story-card images"
+            name: "images"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "The method", name: "storyApproach", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "The people", name: "storyBjs", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "The platform", name: "storyMywell", widget: "object", collapsed: true, fields: *photoFields }
 
-  - name: "sections"
-    label: "Section intros"
-    files:
-      - file: "content/sections.json"
-        label: "All section intros"
-        name: "sections"
+      - file: "content/pages/approach.json"
+        label: "02 · The approach"
+        name: "approach"
         fields:
-          - label: "The approach"
-            name: "approach"
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
+          - label: "Page images"
+            name: "images"
             widget: "object"
             collapsed: true
-            fields: &sectionIntroFields
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
-              - *eyebrowSizeField
-              - *titleSizeField
-              - *ledeSizeField
-              - *textAlignField
-              - *textPositionField
-          - label: "Bhujal Jankaars"
-            name: "bjs"
-            widget: "object"
-            collapsed: true
-            fields: *sectionIntroFields
-          - label: "Groundwater"
-            name: "groundwater"
-            widget: "object"
-            collapsed: true
-            fields: *sectionIntroFields
-          - label: "MyWell app"
-            name: "mywell"
-            widget: "object"
-            collapsed: true
-            fields: *sectionIntroFields
-          - label: "In the media"
-            name: "media"
-            widget: "object"
-            collapsed: true
-            fields: *sectionIntroFields
-          - label: "Films"
-            name: "films"
-            widget: "object"
-            collapsed: true
-            fields: *sectionIntroFields
-          - label: "Groundwater game"
-            name: "game"
-            widget: "object"
-            collapsed: true
-            fields: *sectionIntroFields
-          - label: "People & partners"
-            name: "people"
-            widget: "object"
-            collapsed: true
-            fields: *sectionIntroFields
-          - label: "Image archive"
-            name: "archive"
-            widget: "object"
-            collapsed: true
-            fields: *sectionIntroFields
+            fields:
+              - { label: "Editorial photo 1", name: "editorial1", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "Editorial photo 2", name: "editorial2", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "Data panel photo", name: "dataPanel", widget: "object", collapsed: true, fields: *photoFields }
 
-  - name: "media"
-    label: "Media stories"
-    files:
-      - file: "content/media.json"
-        label: "Media stories list"
+      - file: "content/pages/bjs.json"
+        label: "03 · Bhujal Jankaars"
+        name: "bjs"
+        fields:
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
+
+      - file: "content/pages/groundwater.json"
+        label: "04 · Groundwater"
+        name: "groundwater"
+        fields:
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
+          - label: "Ribbon images"
+            name: "images"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Ribbon photo 1", name: "ribbon1", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "Ribbon photo 2", name: "ribbon2", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "Ribbon photo 3", name: "ribbon3", widget: "object", collapsed: true, fields: *photoFields }
+
+      - file: "content/pages/mywell.json"
+        label: "05 · MyWell app"
+        name: "mywell"
+        fields:
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
+          - label: "App screenshots"
+            name: "images"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Main screenshot", name: "main", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "Strip screenshot 1", name: "strip1", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "Strip screenshot 2", name: "strip2", widget: "object", collapsed: true, fields: *photoFields }
+
+      - file: "content/pages/media.json"
+        label: "06 · In the media"
         name: "media"
         fields:
-          - label: "Stories"
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
+          - label: "Media stories"
             name: "items"
             widget: "list"
             summary: "{{fields.title}}"
@@ -173,13 +187,12 @@ collections:
               - { label: "Description", name: "description", widget: "text" }
               - { label: "Link URL", name: "url", widget: "string" }
 
-  - name: "films"
-    label: "Films"
-    files:
-      - file: "content/films.json"
-        label: "Films list"
+      - file: "content/pages/films.json"
+        label: "07 · Films"
         name: "films"
         fields:
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
           - label: "Videos"
             name: "items"
             widget: "list"
@@ -187,90 +200,47 @@ collections:
             fields:
               - { label: "Label (category · source)", name: "meta", widget: "string", hint: "e.g. Documentary · Deutsche Welle" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "YouTube URL", name: "url", widget: "string", hint: "Paste the full YouTube link — the thumbnail is generated automatically" }
+              - { label: "YouTube URL", name: "url", widget: "string", hint: "Paste the full YouTube link — the thumbnail is generated automatically." }
 
-  - name: "partners"
-    label: "People & partners"
-    files:
-      - file: "content/partners.json"
-        label: "Partners list"
-        name: "partners"
+      - file: "content/pages/game.json"
+        label: "08 · Groundwater game"
+        name: "game"
         fields:
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
+          - label: "Game image"
+            name: "images"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Screenshot", name: "game", widget: "object", collapsed: true, fields: *photoFields }
+
+      - file: "content/pages/people.json"
+        label: "09 · People & partners"
+        name: "people"
+        fields:
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
           - label: "Partners"
-            name: "items"
+            name: "partners"
             widget: "list"
             summary: "{{fields.name}}"
             fields:
               - { label: "Label (place · role)", name: "meta", widget: "string", hint: "e.g. Australia · Lead partner" }
               - { label: "Name", name: "name", widget: "string" }
               - { label: "Link URL (optional)", name: "url", widget: "string", required: false }
-
-  - name: "images"
-    label: "Section images"
-    files:
-      - file: "content/images.json"
-        label: "All section images"
-        name: "images"
-        fields:
-          - label: "Home · Story card 1 (The method)"
-            name: "homeStoryApproach"
-            widget: "object"
-            collapsed: true
-            fields: &photoFields
-              - { label: "Photo", name: "image", widget: "image" }
-              - { label: "Focus", name: "focus", widget: "select", default: "auto", options: *focusOptions }
-              - { label: "Fit", name: "fit", widget: "select", default: "auto", options: *fitOptions }
-          - { label: "Home · Story card 2 (The people)", name: "homeStoryBjs", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "Home · Story card 3 (The platform)", name: "homeStoryMywell", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "Approach · Editorial photo 1", name: "approachEditorial1", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "Approach · Editorial photo 2", name: "approachEditorial2", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "Approach · Data panel photo", name: "approachDataPanel", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "Groundwater · Ribbon photo 1", name: "groundwaterRibbon1", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "Groundwater · Ribbon photo 2", name: "groundwaterRibbon2", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "Groundwater · Ribbon photo 3", name: "groundwaterRibbon3", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "MyWell · Main screenshot", name: "mywellMain", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "MyWell · Strip screenshot 1", name: "mywellStrip1", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "MyWell · Strip screenshot 2", name: "mywellStrip2", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "Game · Screenshot", name: "game", widget: "object", collapsed: true, fields: *photoFields }
-
-  - name: "menu"
-    label: "Menu photos"
-    files:
-      - file: "content/menu.json"
-        label: "Menu card photos"
-        name: "menu"
-        fields:
-          - { label: "01 · Overview", name: "home", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "02 · The approach", name: "approach", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "03 · Bhujal Jankaars", name: "bjs", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "04 · Groundwater", name: "groundwater", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "05 · MyWell app", name: "mywell", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "06 · In the media", name: "media", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "07 · Films", name: "films", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "08 · Groundwater game", name: "game", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "09 · People & partners", name: "people", widget: "object", collapsed: true, fields: *photoFields }
-          - { label: "10 · Image archive", name: "archive", widget: "object", collapsed: true, fields: *photoFields }
-
-  - name: "portraits"
-    label: "People portraits"
-    files:
-      - file: "content/portraits.json"
-        label: "Portrait band"
-        name: "portraits"
-        fields:
           - label: "Portraits"
-            name: "items"
+            name: "portraits"
             widget: "list"
             fields: *photoFields
 
-  - name: "gallery"
-    label: "Image archive"
-    files:
-      - file: "content/gallery.json"
-        label: "Archive gallery"
-        name: "gallery"
+      - file: "content/pages/archive.json"
+        label: "10 · Image archive"
+        name: "archive"
         fields:
-          - label: "Images"
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *menuImageField
+          - label: "Archive images"
             name: "items"
             widget: "list"
             summary: "{{fields.title}}"

@@ -1,0 +1,18 @@
+{
+  "intro": {
+    "eyebrow": "The MyWell app",
+    "title": "Groundwater, brought to the surface.",
+    "lede": "A public-domain, non-profit tool for collecting, viewing and sharing community water observations.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "menuImage": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "focus": "auto", "fit": "auto" },
+  "images": {
+    "main": { "image": "/assets/marvi-originals/mywell-app-record.png", "focus": "auto", "fit": "auto" },
+    "strip1": { "image": "/assets/marvi-originals/mywell-app-login.png", "focus": "auto", "fit": "auto" },
+    "strip2": { "image": "/assets/marvi-originals/mywell-app-register.png", "focus": "auto", "fit": "auto" }
+  }
+}
