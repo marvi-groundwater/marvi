@@ -55,6 +55,16 @@ const peoplePage = JSON.parse(read('content/pages/people.json'));
 if (!Array.isArray(peoplePage.partners) || !Array.isArray(peoplePage.portraits)) {
   failures.push('people.json must own both partners and portraits');
 }
+if (peoplePage.partners.some((partner) => !partner.name || !partner.url)) {
+  failures.push('every partner must have a name and clickable website URL');
+}
+if (
+  peoplePage.portraits.some(
+    (person) => !person.name || !person.title || !person.affiliation || !person.url || !person.image,
+  )
+) {
+  failures.push('every portrait must have editable identity, affiliation, link, and photo data');
+}
 
 for (const field of ['eyebrowSize', 'titleSize', 'ledeSize']) {
   const block = config.match(new RegExp(`name: "${field}"[\\s\\S]{0,220}`))?.[0] ?? '';
@@ -77,6 +87,8 @@ expectMatch(site, /src="layout-model\.js"/, 'the website must load the shared la
 expectMatch(site, /MarviLayout\.photo/, 'the website must apply the shared numeric photo model');
 expectMatch(site, /MarviLayout\.text/, 'the website must apply the shared numeric text model');
 expectMatch(site, /renderFlexibleSections/, 'the website must render addable page sections');
+expectMatch(site, /portrait-card-info/, 'the website must render hover details for each portrait');
+expectMatch(site, /Visit.*partner.*website/, 'the website must make configured partner cards clickable');
 for (const type of ['text', 'imageText', 'gallery', 'callout', 'button']) {
   expectMatch(config, new RegExp(`name: "${type}"`), `the CMS must offer the ${type} page-section type`);
 }
@@ -223,6 +235,17 @@ if (preview) {
         flexibleImage?.props?.style?.scale !== 1.2
       ) {
         failures.push(`${key} preview must apply numeric controls to photos in added sections`);
+      }
+      if (key === 'people') {
+        const links = walk(rendered, 'a');
+        const firstPerson = data.portraits[0];
+        const personLink = links.find((node) => node.props.href === firstPerson.url);
+        const partnerLink = links.find((node) => node.props.href === data.partners[0].url);
+        const personNames = walk(rendered, 'strong').map((node) => node.children[0]);
+        if (!personLink || !personNames.includes(firstPerson.name)) {
+          failures.push('the People preview must show linked portrait identity details');
+        }
+        if (!partnerLink) failures.push('the People preview must show clickable partner cards');
       }
     } catch (error) {
       failures.push(`${key} custom preview must render with its real page data: ${error.message}`);

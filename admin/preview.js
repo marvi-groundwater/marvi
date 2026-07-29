@@ -135,13 +135,27 @@
     }
     if (key === 'people') {
       (data.partners || []).forEach(function (item) {
-        children.push(h('article', { className: 'preview-content-card' },
+        children.push(h(item.url ? 'a' : 'article', {
+          className: 'preview-content-card preview-partner-card',
+          href: item.url || undefined,
+          target: item.url ? '_blank' : undefined,
+          rel: item.url ? 'noopener' : undefined
+        },
           h('small', null, item.meta || ''),
-          h('h3', null, item.name || 'Unnamed partner')));
+          h('h3', null, item.name || 'Unnamed partner', item.url ? ' ↗' : '')));
       });
       (data.portraits || []).forEach(function (photo) {
-        children.push(h('figure', { className: 'preview-content-photo preview-content-portrait' },
-          photoElement(props, photo)));
+        children.push(h(photo.url ? 'a' : 'article', {
+          className: 'preview-content-photo preview-content-portrait preview-person-card',
+          href: photo.url || undefined,
+          target: photo.url ? '_blank' : undefined,
+          rel: photo.url ? 'noopener' : undefined
+        },
+        photoElement(props, photo),
+        h('span', { className: 'preview-person-info' },
+          h('strong', null, photo.name || 'MARVI team member'),
+          photo.title ? h('span', null, photo.title) : null,
+          photo.affiliation ? h('small', null, photo.affiliation) : null)));
       });
     }
     if (key === 'archive') {
