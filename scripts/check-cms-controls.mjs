@@ -5,6 +5,8 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const config = read('admin/config.yml');
 const admin = read('admin/index.html');
+const site = read('index.html');
+const layoutModel = read('layout-model.js');
 const failures = [];
 const expectMatch = (value, pattern, message) => {
   if (!pattern.test(value)) failures.push(message);
@@ -26,8 +28,19 @@ for (const key of pageKeys) {
   );
   try {
     const page = JSON.parse(read(`content/pages/${key}.json`));
-    if (!page.intro || !page.menuImage) failures.push(`${key}.json must own its intro and menu image`);
+    if (!page.intro || !page.heroImage || !page.menuImage) {
+      failures.push(`${key}.json must own its intro, hero image, and menu image`);
+    }
+    if (!Array.isArray(page.sections)) failures.push(`${key}.json must expose addable page sections`);
     if (page.intro?.titleSize !== 70) failures.push(`${key}.json must default its title to 70%`);
+    for (const field of ['textWidth', 'textOffsetX', 'textOffsetY']) {
+      if (!Number.isFinite(page.intro?.[field])) failures.push(`${key}.json must define numeric ${field}`);
+    }
+    for (const field of ['zoom', 'positionX', 'positionY']) {
+      if (!Number.isFinite(page.heroImage?.[field])) {
+        failures.push(`${key}.json hero image must define numeric ${field}`);
+      }
+    }
   } catch (error) {
     failures.push(`${key}.json must be valid JSON: ${error.message}`);
   }
@@ -53,8 +66,20 @@ for (const field of ['eyebrowSize', 'titleSize', 'ledeSize']) {
     `${field} must default to ${expectedDefault}%`,
   );
 }
+for (const field of ['textWidth', 'textOffsetX', 'textOffsetY', 'zoom', 'positionX', 'positionY']) {
+  const block = config.match(new RegExp(`name: "${field}"[\\s\\S]{0,240}`))?.[0] ?? '';
+  expectMatch(block, /widget: "number"/, `${field} must use a numeric CMS widget`);
+}
 
 expectMatch(admin, /preview\.js/, 'the CMS admin must load its custom preview integration');
+expectMatch(admin, /\.\.\/layout-model\.js/, 'the CMS preview must load the shared layout model');
+expectMatch(site, /src="layout-model\.js"/, 'the website must load the shared layout model');
+expectMatch(site, /MarviLayout\.photo/, 'the website must apply the shared numeric photo model');
+expectMatch(site, /MarviLayout\.text/, 'the website must apply the shared numeric text model');
+expectMatch(site, /renderFlexibleSections/, 'the website must render addable page sections');
+for (const type of ['text', 'imageText', 'gallery', 'callout', 'button']) {
+  expectMatch(config, new RegExp(`name: "${type}"`), `the CMS must offer the ${type} page-section type`);
+}
 expectMatch(
   preview,
   /CMS\.registerPreviewTemplate\(key, createPagePreview\(key\)\)/,
@@ -83,6 +108,7 @@ if (preview) {
     },
     h: element,
   };
+  vm.runInNewContext(layoutModel, context, { filename: 'layout-model.js' });
   vm.runInNewContext(preview, context, { filename: 'admin/preview.js' });
   if (Object.keys(templates).sort().join(',') !== pageKeys.slice().sort().join(',')) {
     failures.push('all ten page files must register individual preview templates');
@@ -118,7 +144,34 @@ if (preview) {
         ledeSize: 125,
         textAlign: 'center',
         textPosition: 'middle',
+        textWidth: 65,
+        textOffsetX: -20,
+        textOffsetY: 15,
       };
+      data.heroImage = {
+        ...data.heroImage,
+        zoom: 135,
+        positionX: 27,
+        positionY: 68,
+        fit: 'contain',
+      };
+      data.sections = [
+        { type: 'text', eyebrow: 'Added', heading: 'Text section', body: 'First paragraph.\\n\\nSecond paragraph.', align: 'center' },
+        {
+          type: 'imageText',
+          heading: 'Image and text',
+          body: 'Flexible image copy.',
+          photo: { image: '/flexible.jpg', zoom: 120, positionX: 25, positionY: 75, fit: 'cover' },
+          photoSide: 'right',
+        },
+        {
+          type: 'gallery',
+          heading: 'Gallery',
+          photos: [{ image: '/gallery.jpg', zoom: 100, positionX: 50, positionY: 50, fit: 'cover' }],
+        },
+        { type: 'callout', heading: 'Callout', body: 'Important message.', tone: 'green' },
+        { type: 'button', heading: 'Next step', label: 'Learn more', url: 'https://example.com' },
+      ];
       const rendered = templates[key].render.call({ props: previewProps(data) });
       const titles = walk(rendered, 'h1');
       const title = titles.find((node) => node.children.includes(data.intro.title));
@@ -133,20 +186,43 @@ if (preview) {
       if (
         intro?.props?.style?.alignItems !== 'center' ||
         intro?.props?.style?.justifyContent !== 'center' ||
-        intro?.props?.style?.textAlign !== 'center'
+        intro?.props?.style?.textAlign !== 'center' ||
+        intro?.props?.style?.width !== '65%' ||
+        intro?.props?.style?.transform !== 'translate(-20%, 15%)'
       ) {
-        failures.push(`${key} preview must apply alignment and position controls`);
+        failures.push(`${key} preview must apply numeric text layout controls`);
       }
-      const hero = walk(rendered, 'section').find((node) => node.props.className === 'preview-hero');
-      const expectedImage = key === 'home' ? data.heroImage?.image : data.menuImage?.image;
-      if (!hero?.props?.style?.backgroundImage?.includes(`resolved:${expectedImage}`)) {
-        failures.push(`${key} preview must resolve and render its editable page image`);
+      const stage = walk(rendered, 'div').find((node) => node.props.className === 'preview-copy-stage');
+      if (stage?.props?.style?.alignItems !== 'center' || stage?.props?.style?.justifyContent !== 'center') {
+        failures.push(`${key} preview stage must match the real page alignment`);
       }
-      const summaries = walk(rendered, 'span').filter(
-        (node) => node.props.className === 'preview-content-count',
-      );
+      const image = walk(rendered, 'div').find((node) => node.props.className === 'preview-hero-image');
+      if (
+        !image?.props?.style?.backgroundImage?.includes(`resolved:${data.heroImage.image}`) ||
+        image?.props?.style?.backgroundPosition !== '27% 68%' ||
+        image?.props?.style?.backgroundSize !== 'contain' ||
+        image?.props?.style?.transform !== 'scale(1.35)'
+      ) {
+        failures.push(`${key} preview must match the real numeric photo layout model`);
+      }
+      const summaries = walk(rendered, 'p').filter((node) => node.props.className === 'preview-note');
       if (summaries.length !== 1 || typeof summaries[0].children[0] !== 'string') {
-        failures.push(`${key} preview must render its page-content summary`);
+        failures.push(`${key} preview must mark the end of its full-page preview`);
+      }
+      for (const type of ['text', 'image-text', 'gallery-wrap', 'callout', 'button']) {
+        const blocks = walk(rendered, 'section').filter(
+          (node) => String(node.props.className || '').includes(`preview-block-${type}`),
+        );
+        if (blocks.length !== 1) failures.push(`${key} preview must render its added ${type} section`);
+      }
+      const flexibleImage = walk(rendered, 'img').find(
+        (node) => node.props.src === 'resolved:/flexible.jpg',
+      );
+      if (
+        flexibleImage?.props?.style?.objectPosition !== '25% 75%' ||
+        flexibleImage?.props?.style?.scale !== 1.2
+      ) {
+        failures.push(`${key} preview must apply numeric controls to photos in added sections`);
       }
     } catch (error) {
       failures.push(`${key} custom preview must render with its real page data: ${error.message}`);

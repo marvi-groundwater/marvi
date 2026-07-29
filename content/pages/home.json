@@ -7,15 +7,19 @@
     "titleSize": 70,
     "ledeSize": 100,
     "textAlign": "left",
-    "textPosition": "bottom"
+    "textPosition": "bottom",
+    "textWidth": 100,
+    "textOffsetX": 0,
+    "textOffsetY": 0
   },
-  "heroImage": { "image": "/assets/marvi-originals/012-home.jpg", "focus": "auto", "fit": "auto" },
-  "menuImage": { "image": "/assets/marvi-originals/012-home.jpg", "focus": "auto", "fit": "auto" },
+  "heroImage": { "image": "/assets/marvi-originals/012-home.jpg", "zoom": 100, "positionX": 52, "positionY": 47, "fit": "cover" },
+  "menuImage": { "image": "/assets/marvi-originals/012-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
   "primaryButtonLabel": "Explore the approach",
   "secondaryButtonLabel": "Discover MyWell",
   "images": {
-    "storyApproach": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" },
-    "storyBjs": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "focus": "auto", "fit": "auto" },
-    "storyMywell": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "focus": "auto", "fit": "auto" }
-  }
+    "storyApproach": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    "storyBjs": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    "storyMywell": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  },
+  "sections": []
 }

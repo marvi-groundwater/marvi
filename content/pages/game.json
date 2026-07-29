@@ -7,10 +7,15 @@
     "titleSize": 70,
     "ledeSize": 100,
     "textAlign": "left",
-    "textPosition": "bottom"
+    "textPosition": "bottom",
+    "textWidth": 100,
+    "textOffsetX": 0,
+    "textOffsetY": 0
   },
-  "menuImage": { "image": "/assets/mywell-game.png", "focus": "auto", "fit": "auto" },
+  "heroImage": { "image": "/assets/marvi-originals/002-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "cover" },
+  "menuImage": { "image": "/assets/mywell-game.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
   "images": {
-    "game": { "image": "/assets/mywell-game.png", "focus": "auto", "fit": "auto" }
-  }
+    "game": { "image": "/assets/mywell-game.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  },
+  "sections": []
 }

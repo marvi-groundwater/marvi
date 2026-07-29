@@ -7,12 +7,17 @@
     "titleSize": 70,
     "ledeSize": 100,
     "textAlign": "left",
-    "textPosition": "bottom"
+    "textPosition": "bottom",
+    "textWidth": 100,
+    "textOffsetX": 0,
+    "textOffsetY": 0
   },
-  "menuImage": { "image": "/assets/marvi-originals/003-home.jpg", "focus": "auto", "fit": "auto" },
+  "heroImage": { "image": "/assets/marvi-originals/005-home.jpg", "zoom": 100, "positionX": 50, "positionY": 61, "fit": "cover" },
+  "menuImage": { "image": "/assets/marvi-originals/003-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
   "images": {
-    "ribbon1": { "image": "/assets/marvi-originals/003-home.jpg", "focus": "auto", "fit": "auto" },
-    "ribbon2": { "image": "/assets/marvi-originals/010-home.jpg", "focus": "auto", "fit": "auto" },
-    "ribbon3": { "image": "/assets/marvi-originals/034-about-marvi.jpg", "focus": "auto", "fit": "auto" }
-  }
+    "ribbon1": { "image": "/assets/marvi-originals/003-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    "ribbon2": { "image": "/assets/marvi-originals/010-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    "ribbon3": { "image": "/assets/marvi-originals/034-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  },
+  "sections": []
 }

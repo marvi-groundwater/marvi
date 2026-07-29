@@ -75,24 +75,70 @@ collections:
                   - { label: "Top", value: "top" }
                   - { label: "Middle", value: "middle" }
                   - { label: "Bottom (recommended)", value: "bottom" }
-          - label: "Hero image"
+              - &textWidthField
+                label: "Text Block Width (%)"
+                name: "textWidth"
+                widget: "number"
+                default: 100
+                value_type: "int"
+                min: 30
+                max: 100
+                step: 5
+                hint: "100% uses the normal page width. Reduce this to make the title and introduction wrap sooner."
+              - &textOffsetXField
+                label: "Text Horizontal Shift (%)"
+                name: "textOffsetX"
+                widget: "number"
+                default: 0
+                value_type: "int"
+                min: -100
+                max: 100
+                step: 5
+                hint: "0% is the designed position. Negative moves left; positive moves right."
+              - &textOffsetYField
+                label: "Text Vertical Shift (%)"
+                name: "textOffsetY"
+                widget: "number"
+                default: 0
+                value_type: "int"
+                min: -100
+                max: 100
+                step: 5
+                hint: "0% is the designed position. Negative moves up; positive moves down."
+          - &heroImageField
+            label: "Hero image"
             name: "heroImage"
             widget: "object"
-            collapsed: true
+            collapsed: false
             fields: &photoFields
               - { label: "Photo", name: "image", widget: "image" }
-              - label: "Focus"
-                name: "focus"
-                widget: "select"
-                default: "auto"
-                hint: "Which part of the photo to keep when it is cropped."
-                options: &focusOptions
-                  - { label: "Auto (recommended)", value: "auto" }
-                  - { label: "Center", value: "center center" }
-                  - { label: "Top", value: "center top" }
-                  - { label: "Bottom", value: "center bottom" }
-                  - { label: "Left", value: "left center" }
-                  - { label: "Right", value: "right center" }
+              - label: "Photo Zoom (%)"
+                name: "zoom"
+                widget: "number"
+                default: 100
+                value_type: "int"
+                min: 50
+                max: 200
+                step: 5
+                hint: "100% is normal. Increase to crop closer; reduce to show more of the photo."
+              - label: "Photo Horizontal Position (%)"
+                name: "positionX"
+                widget: "number"
+                default: 50
+                value_type: "int"
+                min: 0
+                max: 100
+                step: 1
+                hint: "0% keeps the left side; 50% centres; 100% keeps the right side."
+              - label: "Photo Vertical Position (%)"
+                name: "positionY"
+                widget: "number"
+                default: 50
+                value_type: "int"
+                min: 0
+                max: 100
+                step: 1
+                hint: "0% keeps the top; 50% centres; 100% keeps the bottom."
               - label: "Fit"
                 name: "fit"
                 widget: "select"
@@ -118,12 +164,59 @@ collections:
               - { label: "The method", name: "storyApproach", widget: "object", collapsed: true, fields: *photoFields }
               - { label: "The people", name: "storyBjs", widget: "object", collapsed: true, fields: *photoFields }
               - { label: "The platform", name: "storyMywell", widget: "object", collapsed: true, fields: *photoFields }
+          - &sectionsField
+            label: "Add page sections"
+            name: "sections"
+            widget: "list"
+            collapsed: false
+            required: false
+            summary: "{{fields.heading}}"
+            hint: "Add and reorder content below the page's existing sections."
+            types:
+              - label: "Text section"
+                name: "text"
+                widget: "object"
+                fields:
+                  - { label: "Small label (optional)", name: "eyebrow", widget: "string", required: false }
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Text", name: "body", widget: "text", hint: "Use a blank line between paragraphs." }
+                  - { label: "Text alignment", name: "align", widget: "select", default: "left", options: ["left", "center", "right"] }
+              - label: "Image + text section"
+                name: "imageText"
+                widget: "object"
+                fields:
+                  - { label: "Small label (optional)", name: "eyebrow", widget: "string", required: false }
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Text", name: "body", widget: "text" }
+                  - { label: "Photo", name: "photo", widget: "object", collapsed: false, fields: *photoFields }
+                  - { label: "Photo side", name: "photoSide", widget: "select", default: "left", options: ["left", "right"] }
+              - label: "Image gallery"
+                name: "gallery"
+                widget: "object"
+                fields:
+                  - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
+                  - { label: "Photos", name: "photos", widget: "list", fields: *photoFields }
+              - label: "Callout / quote"
+                name: "callout"
+                widget: "object"
+                fields:
+                  - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
+                  - { label: "Callout text", name: "body", widget: "text" }
+                  - { label: "Style", name: "tone", widget: "select", default: "blue", options: ["blue", "green", "copper"] }
+              - label: "Button link"
+                name: "button"
+                widget: "object"
+                fields:
+                  - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
+                  - { label: "Button label", name: "label", widget: "string" }
+                  - { label: "Link URL", name: "url", widget: "string" }
 
       - file: "content/pages/approach.json"
         label: "02 · The approach"
         name: "approach"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
           - label: "Page images"
             name: "images"
@@ -133,19 +226,23 @@ collections:
               - { label: "Editorial photo 1", name: "editorial1", widget: "object", collapsed: true, fields: *photoFields }
               - { label: "Editorial photo 2", name: "editorial2", widget: "object", collapsed: true, fields: *photoFields }
               - { label: "Data panel photo", name: "dataPanel", widget: "object", collapsed: true, fields: *photoFields }
+          - *sectionsField
 
       - file: "content/pages/bjs.json"
         label: "03 · Bhujal Jankaars"
         name: "bjs"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
+          - *sectionsField
 
       - file: "content/pages/groundwater.json"
         label: "04 · Groundwater"
         name: "groundwater"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
           - label: "Ribbon images"
             name: "images"
@@ -155,12 +252,14 @@ collections:
               - { label: "Ribbon photo 1", name: "ribbon1", widget: "object", collapsed: true, fields: *photoFields }
               - { label: "Ribbon photo 2", name: "ribbon2", widget: "object", collapsed: true, fields: *photoFields }
               - { label: "Ribbon photo 3", name: "ribbon3", widget: "object", collapsed: true, fields: *photoFields }
+          - *sectionsField
 
       - file: "content/pages/mywell.json"
         label: "05 · MyWell app"
         name: "mywell"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
           - label: "App screenshots"
             name: "images"
@@ -170,12 +269,14 @@ collections:
               - { label: "Main screenshot", name: "main", widget: "object", collapsed: true, fields: *photoFields }
               - { label: "Strip screenshot 1", name: "strip1", widget: "object", collapsed: true, fields: *photoFields }
               - { label: "Strip screenshot 2", name: "strip2", widget: "object", collapsed: true, fields: *photoFields }
+          - *sectionsField
 
       - file: "content/pages/media.json"
         label: "06 · In the media"
         name: "media"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
           - label: "Media stories"
             name: "items"
@@ -186,12 +287,14 @@ collections:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
               - { label: "Link URL", name: "url", widget: "string" }
+          - *sectionsField
 
       - file: "content/pages/films.json"
         label: "07 · Films"
         name: "films"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
           - label: "Videos"
             name: "items"
@@ -201,12 +304,14 @@ collections:
               - { label: "Label (category · source)", name: "meta", widget: "string", hint: "e.g. Documentary · Deutsche Welle" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "YouTube URL", name: "url", widget: "string", hint: "Paste the full YouTube link — the thumbnail is generated automatically." }
+          - *sectionsField
 
       - file: "content/pages/game.json"
         label: "08 · Groundwater game"
         name: "game"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
           - label: "Game image"
             name: "images"
@@ -214,12 +319,14 @@ collections:
             collapsed: true
             fields:
               - { label: "Screenshot", name: "game", widget: "object", collapsed: true, fields: *photoFields }
+          - *sectionsField
 
       - file: "content/pages/people.json"
         label: "09 · People & partners"
         name: "people"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
           - label: "Partners"
             name: "partners"
@@ -233,12 +340,14 @@ collections:
             name: "portraits"
             widget: "list"
             fields: *photoFields
+          - *sectionsField
 
       - file: "content/pages/archive.json"
         label: "10 · Image archive"
         name: "archive"
         fields:
           - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
           - *menuImageField
           - label: "Archive images"
             name: "items"
@@ -246,6 +355,11 @@ collections:
             summary: "{{fields.title}}"
             fields:
               - { label: "Photo", name: "image", widget: "image" }
+              - { label: "Photo Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5 }
+              - { label: "Photo Horizontal Position (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1 }
+              - { label: "Photo Vertical Position (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1 }
+              - { label: "Fit", name: "fit", widget: "select", default: "auto", options: *fitOptions }
               - { label: "Category", name: "category", widget: "string", hint: "Groups the image under a filter tab, e.g. Overview" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Source URL (optional)", name: "source", widget: "string", required: false }
+          - *sectionsField

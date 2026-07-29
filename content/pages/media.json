@@ -7,9 +7,13 @@
     "titleSize": 70,
     "ledeSize": 100,
     "textAlign": "left",
-    "textPosition": "bottom"
+    "textPosition": "bottom",
+    "textWidth": 100,
+    "textOffsetX": 0,
+    "textOffsetY": 0
   },
-  "menuImage": { "image": "/assets/marvi-originals/032-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+  "heroImage": { "image": "/assets/marvi-originals/020-welcome-to-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 48, "fit": "cover" },
+  "menuImage": { "image": "/assets/marvi-originals/032-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
   "items": [
     {
       "meta": "The Brilliant · 02 Jul 2024",
@@ -83,5 +87,6 @@
       "description": "The MARVI approach, Bhujal Jankaars and resources in English, Hindi and Gujarati.",
       "url": "https://www.indiawaterportal.org/governance-and-policy/governance/developing-effective-participatory-groundwater-monitoring-program-village-level"
     }
-  ]
+  ],
+  "sections": []
 }

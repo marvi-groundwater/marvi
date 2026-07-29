@@ -7,9 +7,13 @@
     "titleSize": 70,
     "ledeSize": 100,
     "textAlign": "left",
-    "textPosition": "bottom"
+    "textPosition": "bottom",
+    "textWidth": 100,
+    "textOffsetX": 0,
+    "textOffsetY": 0
   },
-  "menuImage": { "image": "/assets/marvi-originals/041-our-people.jpg", "focus": "auto", "fit": "auto" },
+  "heroImage": { "image": "/assets/marvi-originals/039-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 57, "fit": "cover" },
+  "menuImage": { "image": "/assets/marvi-originals/041-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
   "partners": [
     {
       "meta": "Australia · Lead partner",
@@ -62,13 +66,14 @@
     }
   ],
   "portraits": [
-    { "image": "/assets/marvi-originals/041-our-people.jpg", "focus": "auto", "fit": "auto" },
-    { "image": "/assets/marvi-originals/042-our-people.jpg", "focus": "auto", "fit": "auto" },
-    { "image": "/assets/marvi-originals/043-our-people.jpg", "focus": "auto", "fit": "auto" },
-    { "image": "/assets/marvi-originals/048-our-people.jpg", "focus": "auto", "fit": "auto" },
-    { "image": "/assets/marvi-originals/052-our-people.jpg", "focus": "auto", "fit": "auto" },
-    { "image": "/assets/marvi-originals/060-our-people.jpg", "focus": "auto", "fit": "auto" },
-    { "image": "/assets/marvi-originals/067-our-people.png", "focus": "auto", "fit": "auto" },
-    { "image": "/assets/marvi-originals/lsiyer.jpg", "focus": "auto", "fit": "auto" }
-  ]
+    { "image": "/assets/marvi-originals/041-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "image": "/assets/marvi-originals/042-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "image": "/assets/marvi-originals/043-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "image": "/assets/marvi-originals/048-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "image": "/assets/marvi-originals/052-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "image": "/assets/marvi-originals/060-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "image": "/assets/marvi-originals/067-our-people.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "image": "/assets/marvi-originals/lsiyer.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  ],
+  "sections": []
 }
