@@ -406,15 +406,55 @@
     .video-card h3 { margin-bottom: 0; font: 500 1.25rem/1.3 var(--serif); }
 
     .people-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-    .people-card { min-height: 180px; padding: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .people-card { min-height: 180px; padding: 22px; display: block; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; }
     .people-card .meta { color: var(--copper); font-size: .58rem; }
     .people-card h3 { margin: 30px 0 0; font: 500 1.14rem/1.35 var(--serif); }
-    .people-card a { text-decoration: none; }
-    .people-card a:hover { color: var(--blue); }
+    .people-card[href] { cursor: pointer; }
+    .people-card[href]:focus-visible { outline: 3px solid var(--copper); outline-offset: -3px; }
 
-    .portrait-band { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; margin-bottom: 26px; background: var(--line); }
-    .portrait-band img { width: 100%; aspect-ratio: .78; object-fit: cover; object-position: center top; filter: grayscale(1) contrast(1.03); transition: filter .35s ease, transform .5s ease; background: var(--paper-2); }
-    .portrait-band img:hover { filter: grayscale(0); transform: scale(.96); }
+    .portrait-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-bottom: 26px; background: var(--line); }
+    .portrait-card {
+      position: relative;
+      min-width: 0;
+      aspect-ratio: .78;
+      display: block;
+      overflow: hidden;
+      color: var(--white);
+      background: var(--paper-2);
+      text-decoration: none;
+    }
+    .portrait-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(1) contrast(1.03);
+      transition: filter .35s ease, scale .55s cubic-bezier(.2,.75,.25,1);
+    }
+    .portrait-card-info {
+      position: absolute;
+      z-index: 2;
+      inset: auto 0 0;
+      padding: 54px 15px 16px;
+      opacity: 0;
+      background: linear-gradient(transparent, rgba(8,18,15,.92));
+      transform: translateY(12px);
+      transition: opacity .28s ease, transform .28s ease;
+      pointer-events: none;
+    }
+    .portrait-card-info strong { display: block; margin-bottom: 5px; font-size: .88rem; line-height: 1.2; }
+    .portrait-card-info span,
+    .portrait-card-info small { display: block; color: rgba(255,255,255,.82); font: .55rem/1.45 var(--mono); letter-spacing: .04em; }
+    .portrait-card:hover img,
+    .portrait-card:focus-visible img { filter: grayscale(0); scale: 1.035; }
+    .portrait-card:hover .portrait-card-info,
+    .portrait-card:focus-visible .portrait-card-info { opacity: 1; transform: none; }
+    .portrait-card:focus-visible { outline: 3px solid var(--copper); outline-offset: -3px; }
+
+    @media (hover: none), (max-width: 800px) {
+      .portrait-card-info { opacity: 1; transform: none; }
+      .portrait-card img { filter: grayscale(.25); }
+    }
 
     .archive-tools { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin-bottom: 28px; }
     .archive-filters { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -540,7 +580,7 @@
       .photo-ribbon { grid-template-columns: 1fr; }
       .photo-ribbon figure, .photo-ribbon figure:nth-child(2) { height: 230px; margin-top: 0; }
       .app-screen-strip { grid-template-columns: repeat(2, 1fr); }
-      .portrait-band { grid-template-columns: repeat(3, 1fr); }
+      .portrait-band { grid-template-columns: repeat(2, 1fr); }
       .archive-tools { align-items: flex-start; flex-direction: column; }
       .metric-row { grid-template-columns: 1fr; }
       .metric, .metric:nth-child(2), .metric:last-child { padding: 18px 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
@@ -1924,19 +1964,15 @@
         if (grid) {
           grid.textContent = '';
           people.partners.forEach((item) => {
-            const card = el('article', { class: 'people-card' });
-            card.appendChild(el('span', { class: 'meta', text: item.meta }));
-            const h3 = el('h3');
+            const card = el(item.url ? 'a' : 'article', { class: 'people-card' });
             if (item.url) {
-              const a = el('a', { text: (item.name || '') + ' ↗' });
-              a.href = item.url;
-              a.target = '_blank';
-              a.rel = 'noopener';
-              h3.appendChild(a);
-            } else {
-              h3.textContent = item.name || '';
+              card.href = item.url;
+              card.target = '_blank';
+              card.rel = 'noopener';
+              card.setAttribute('aria-label', 'Visit ' + (item.name || 'partner') + ' website');
             }
-            card.appendChild(h3);
+            card.appendChild(el('span', { class: 'meta', text: item.meta }));
+            card.appendChild(el('h3', { text: (item.name || '') + (item.url ? ' ↗' : '') }));
             grid.appendChild(card);
           });
         }
@@ -1980,12 +2016,26 @@
           band.textContent = '';
           people.portraits.forEach((item) => {
             if (!item || !item.image) return;
+            const card = el(item.url ? 'a' : 'article', { class: 'portrait-card' });
+            if (item.url) {
+              card.href = item.url;
+              card.target = '_blank';
+              card.rel = 'noopener';
+            }
+            const details = [item.name, item.title, item.affiliation].filter(Boolean).join(', ');
+            card.setAttribute('aria-label', details + (item.url ? ' — open profile' : ''));
             const img = el('img');
             img.loading = 'lazy';
             img.src = item.image;
-            img.alt = 'MARVI team member portrait';
+            img.alt = item.name ? 'Portrait of ' + item.name : 'MARVI team member portrait';
             applyPhotoLayout(img, item);
-            band.appendChild(img);
+            const info = el('span', { class: 'portrait-card-info' });
+            info.appendChild(el('strong', { text: item.name || 'MARVI team member' }));
+            if (item.title) info.appendChild(el('span', { text: item.title }));
+            if (item.affiliation) info.appendChild(el('small', { text: item.affiliation }));
+            card.appendChild(img);
+            card.appendChild(info);
+            band.appendChild(card);
           });
         }
       }

@@ -58,22 +58,23 @@
     {
       "meta": "The heart of MARVI",
       "name": "Bhujal Jankaars, farmers, schools and village communities",
-      "url": ""
+      "url": "https://www.marvi.org.in/our-partners"
     },
     {
       "meta": "Test",
-      "name": "Test parter"
+      "name": "Test parter",
+      "url": "https://www.marvi.org.in/our-partners"
     }
   ],
   "portraits": [
-    { "image": "/assets/marvi-originals/041-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    { "image": "/assets/marvi-originals/042-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    { "image": "/assets/marvi-originals/043-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    { "image": "/assets/marvi-originals/048-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    { "image": "/assets/marvi-originals/052-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    { "image": "/assets/marvi-originals/060-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    { "image": "/assets/marvi-originals/067-our-people.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    { "image": "/assets/marvi-originals/lsiyer.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+    { "name": "Basant Maheshwari", "title": "Professor", "affiliation": "Western Sydney University", "url": "https://www.westernsydney.edu.au/", "image": "/assets/marvi-originals/041-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "name": "Maria Varua", "title": "Associate Professor", "affiliation": "Western Sydney University", "url": "https://www.westernsydney.edu.au/", "image": "/assets/marvi-originals/042-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "name": "Roger Packham", "title": "Adjunct Associate Professor", "affiliation": "Western Sydney University", "url": "https://www.westernsydney.edu.au/", "image": "/assets/marvi-originals/043-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "name": "Lewis Daley", "title": "Project team member", "affiliation": "Western Sydney University", "url": "https://www.westernsydney.edu.au/", "image": "/assets/marvi-originals/048-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "name": "S. Prathapar", "title": "Researcher", "affiliation": "International Water Management Institute", "url": "https://www.iwmi.cgiar.org/", "image": "/assets/marvi-originals/052-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "name": "Nandlal Menat", "title": "Field partner", "affiliation": "Development Support Centre", "url": "https://www.dscindia.org/", "image": "/assets/marvi-originals/060-our-people.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "name": "Prahlad Soni", "title": "Field partner", "affiliation": "Vidya Bhawan Krishi Vigyan Kendra", "url": "https://vidyabhawan.org/", "image": "/assets/marvi-originals/067-our-people.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+    { "name": "L. S. Iyer", "title": "MARVI contributor", "affiliation": "MARVI", "url": "https://www.marvi.org.in/our-people", "image": "/assets/marvi-originals/lsiyer.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
   ],
   "sections": []
 }

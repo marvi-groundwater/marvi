@@ -335,11 +335,22 @@ collections:
             fields:
               - { label: "Label (place · role)", name: "meta", widget: "string", hint: "e.g. Australia · Lead partner" }
               - { label: "Name", name: "name", widget: "string" }
-              - { label: "Link URL (optional)", name: "url", widget: "string", required: false }
+              - { label: "Partner website URL", name: "url", widget: "string", hint: "The whole partner card is clickable and opens this website." }
           - label: "Portraits"
             name: "portraits"
             widget: "list"
-            fields: *photoFields
+            summary: "{{fields.name}} · {{fields.affiliation}}"
+            hint: "Hovering or focusing a portrait reveals these details; clicking opens the profile URL."
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Title / role", name: "title", widget: "string" }
+              - { label: "Affiliation", name: "affiliation", widget: "string" }
+              - { label: "Profile URL", name: "url", widget: "string", hint: "Clicking the portrait opens this profile or organisation page." }
+              - { label: "Photo", name: "image", widget: "image" }
+              - { label: "Photo Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5 }
+              - { label: "Photo Horizontal Position (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1 }
+              - { label: "Photo Vertical Position (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1 }
+              - { label: "Fit", name: "fit", widget: "select", default: "auto", options: *fitOptions }
           - *sectionsField
 
       - file: "content/pages/archive.json"
