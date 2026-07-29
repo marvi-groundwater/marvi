@@ -98,9 +98,26 @@ expectMatch(
   'each page file must register its own custom preview',
 );
 
-for (const field of ['eyebrowSize', 'titleSize', 'ledeSize', 'textAlign', 'textPosition']) {
-  expectMatch(preview, new RegExp(field), `the preview must render changes to ${field}`);
-}
+expectMatch(
+  preview,
+  /marvi:cms-preview/,
+  'the CMS preview must send unsaved page data to the live site renderer',
+);
+expectMatch(
+  site,
+  /marvi:cms-preview/,
+  'the live site renderer must accept unsaved CMS preview data',
+);
+expectMatch(
+  preview,
+  /marvi:cms-preview-ready/,
+  'the CMS preview must wait until the live site renderer is ready',
+);
+expectMatch(
+  site,
+  /marvi:cms-preview-ready/,
+  'the live site renderer must announce when it can accept preview data',
+);
 
 if (preview) {
   const templates = {};
@@ -119,6 +136,7 @@ if (preview) {
       return definition;
     },
     h: element,
+    window: { location: { origin: 'https://preview.example' } },
   };
   vm.runInNewContext(layoutModel, context, { filename: 'layout-model.js' });
   vm.runInNewContext(preview, context, { filename: 'admin/preview.js' });
@@ -144,7 +162,6 @@ if (preview) {
     return results;
   };
 
-  const titleBases = { home: 5, ...Object.fromEntries(pageKeys.slice(1).map((key) => [key, 3.4])) };
   for (const [index, key] of pageKeys.entries()) {
     try {
       const data = JSON.parse(read(`content/pages/${key}.json`));
@@ -184,68 +201,70 @@ if (preview) {
         { type: 'callout', heading: 'Callout', body: 'Important message.', tone: 'green' },
         { type: 'button', heading: 'Next step', label: 'Learn more', url: 'https://example.com' },
       ];
-      const rendered = templates[key].render.call({ props: previewProps(data) });
-      const titles = walk(rendered, 'h1');
-      const title = titles.find((node) => node.children.includes(data.intro.title));
-      if (titles.length !== 1 || !title) {
-        failures.push(`${key} preview must render its page title exactly once`);
-      }
-      const expectedTitleSize = `${Number((titleBases[key] * titleSize / 100).toFixed(3))}rem`;
-      if (title?.props?.style?.fontSize !== expectedTitleSize) {
-        failures.push(`${key} preview must apply its numeric title percentage`);
-      }
-      const intro = walk(rendered, 'div').find((node) => node.props.className === 'preview-intro');
+      const component = templates[key];
+      const instance = { ...component, props: previewProps(data), previewFrame: null };
       if (
-        intro?.props?.style?.alignItems !== 'center' ||
-        intro?.props?.style?.justifyContent !== 'center' ||
-        intro?.props?.style?.textAlign !== 'center' ||
-        intro?.props?.style?.width !== '65%' ||
-        intro?.props?.style?.transform !== 'translate(-20%, 15%)'
+        typeof component.componentDidMount !== 'function' ||
+        typeof component.componentWillUnmount !== 'function'
       ) {
-        failures.push(`${key} preview must apply numeric text layout controls`);
+        failures.push(`${key} preview must manage its live-renderer readiness listener`);
       }
-      const stage = walk(rendered, 'div').find((node) => node.props.className === 'preview-copy-stage');
-      if (stage?.props?.style?.alignItems !== 'center' || stage?.props?.style?.justifyContent !== 'center') {
-        failures.push(`${key} preview stage must match the real page alignment`);
-      }
-      const image = walk(rendered, 'div').find((node) => node.props.className === 'preview-hero-image');
-      if (
-        !image?.props?.style?.backgroundImage?.includes(`resolved:${data.heroImage.image}`) ||
-        image?.props?.style?.backgroundPosition !== '27% 68%' ||
-        image?.props?.style?.backgroundSize !== 'contain' ||
-        image?.props?.style?.transform !== 'scale(1.35)'
-      ) {
-        failures.push(`${key} preview must match the real numeric photo layout model`);
-      }
-      const summaries = walk(rendered, 'p').filter((node) => node.props.className === 'preview-note');
-      if (summaries.length !== 1 || typeof summaries[0].children[0] !== 'string') {
-        failures.push(`${key} preview must mark the end of its full-page preview`);
-      }
-      for (const type of ['text', 'image-text', 'gallery-wrap', 'callout', 'button']) {
-        const blocks = walk(rendered, 'section').filter(
-          (node) => String(node.props.className || '').includes(`preview-block-${type}`),
-        );
-        if (blocks.length !== 1) failures.push(`${key} preview must render its added ${type} section`);
-      }
-      const flexibleImage = walk(rendered, 'img').find(
-        (node) => node.props.src === 'resolved:/flexible.jpg',
+      const rendered = component.render.call(instance);
+      const frame = walk(rendered, 'iframe').find(
+        (node) => node.props.className === 'preview-live-frame',
       );
+      if (frame?.props?.src !== `../?cms-preview=1#${key}`) {
+        failures.push(`${key} preview must load the matching real website page`);
+      }
+
+      const posted = [];
+      instance.previewFrame = {
+        contentWindow: {
+          postMessage(message, origin) {
+            posted.push({ message, origin });
+          },
+        },
+      };
+      component.sendPreviewData.call(instance);
+      const delivery = posted[0];
+      const payload = delivery?.message;
       if (
-        flexibleImage?.props?.style?.objectPosition !== '25% 75%' ||
-        flexibleImage?.props?.style?.scale !== 1.2
+        delivery?.origin !== 'https://preview.example' ||
+        payload?.type !== 'marvi:cms-preview' ||
+        payload?.key !== key
       ) {
-        failures.push(`${key} preview must apply numeric controls to photos in added sections`);
+        failures.push(`${key} preview must deliver its unsaved entry to the live renderer`);
+      }
+      if (
+        payload?.data?.intro?.title !== data.intro.title ||
+        payload?.data?.intro?.titleSize !== titleSize ||
+        payload?.data?.intro?.textWidth !== 65 ||
+        payload?.data?.intro?.textOffsetX !== -20 ||
+        payload?.data?.intro?.textOffsetY !== 15
+      ) {
+        failures.push(`${key} preview must preserve all unsaved numeric text controls`);
+      }
+      if (
+        payload?.data?.heroImage?.image !== `resolved:${data.heroImage.image}` ||
+        payload?.data?.heroImage?.zoom !== 135 ||
+        payload?.data?.heroImage?.positionX !== 27 ||
+        payload?.data?.heroImage?.positionY !== 68 ||
+        payload?.data?.heroImage?.fit !== 'contain'
+      ) {
+        failures.push(`${key} preview must preserve and resolve numeric hero photo controls`);
+      }
+      if (payload?.data?.sections?.[1]?.photo?.image !== 'resolved:/flexible.jpg') {
+        failures.push(`${key} preview must resolve photos in added sections`);
       }
       if (key === 'people') {
-        const links = walk(rendered, 'a');
         const firstPerson = data.portraits[0];
-        const personLink = links.find((node) => node.props.href === firstPerson.url);
-        const partnerLink = links.find((node) => node.props.href === data.partners[0].url);
-        const personNames = walk(rendered, 'strong').map((node) => node.children[0]);
-        if (!personLink || !personNames.includes(firstPerson.name)) {
-          failures.push('the People preview must show linked portrait identity details');
+        if (
+          payload?.data?.portraits?.[0]?.name !== firstPerson.name ||
+          payload?.data?.portraits?.[0]?.url !== firstPerson.url ||
+          payload?.data?.partners?.[0]?.url !== data.partners[0].url
+        ) {
+          failures.push('the People preview must deliver editable identity and link data');
         }
-        if (!partnerLink) failures.push('the People preview must show clickable partner cards');
       }
     } catch (error) {
       failures.push(`${key} custom preview must render with its real page data: ${error.message}`);
@@ -258,4 +277,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('All ten CMS page previews render with real content and editable controls.');
+console.log('All ten CMS page previews use the live site renderer with editable controls.');
