@@ -1604,18 +1604,20 @@
         });
       }
 
-      async function buildGallery() {
-        if (galleryBuilt) return;
+      async function buildGallery(overrideData) {
+        if (galleryBuilt && !overrideData) return;
         galleryBuilt = true;
         // Prefer the editable Archive page file; fall back to gallery.js data.
-        let data = null;
-        try {
-          const res = await fetch('content/pages/archive.json', { cache: 'no-store' });
-          if (res.ok) {
-            const json = await res.json();
-            data = Array.isArray(json) ? json : json.items;
-          }
-        } catch (err) { /* fall back below */ }
+        let data = Array.isArray(overrideData) ? overrideData : null;
+        if (!data) {
+          try {
+            const res = await fetch('content/pages/archive.json', { cache: 'no-store' });
+            if (res.ok) {
+              const json = await res.json();
+              data = Array.isArray(json) ? json : json.items;
+            }
+          } catch (err) { /* fall back below */ }
+        }
         if (!data) data = window.MARVI_GALLERY;
         if (!data || !data.length) { galleryBuilt = false; return; }
         window.MARVI_GALLERY = data; // keep indices aligned for the lightbox
@@ -1626,6 +1628,8 @@
         const count = document.getElementById('gallery-count');
         const categories = ['All', ...new Set(data.map(item => item.category))];
         const fragment = document.createDocumentFragment();
+        grid.textContent = '';
+        filterWrap.textContent = '';
 
         data.forEach((item, index) => {
           const button = document.createElement('button');
@@ -1675,6 +1679,7 @@
           filterWrap.appendChild(filter);
         });
       }
+      window.renderMarviArchive = (items) => buildGallery(items);
 
       function activate(id, updateHash = true) {
         if (!valid.has(id)) id = 'home';
@@ -2110,6 +2115,188 @@
         });
         parent.appendChild(wrap);
       };
+
+      // The CMS preview embeds this exact page and sends the current unsaved
+      // entry over postMessage. Update the same DOM used by visitors so preview
+      // markup, responsive rules and image cropping cannot drift from the site.
+      const renderCmsPage = (key, page) => {
+        if (!PAGE_KEYS.includes(key) || !page) return;
+        pages[key] = page;
+
+        if (key === 'home') {
+          const hero = document.querySelector('#panel-home .hero-copy');
+          const intro = page.intro || {};
+          if (hero) {
+            setText(hero, '.eyebrow', intro.eyebrow);
+            setMultiline(hero, 'h1', intro.title);
+            setText(hero, '.lede', intro.lede);
+            applyTextLayout(hero, intro);
+            if (page.heroImage && page.heroImage.image) {
+              const heroImg = document.querySelector('#panel-home .hero-image-main');
+              if (heroImg) {
+                heroImg.src = page.heroImage.image;
+                applyPhotoLayout(heroImg, page.heroImage);
+              }
+            }
+            [['approach', page.primaryButtonLabel], ['mywell', page.secondaryButtonLabel]].forEach(([target, label]) => {
+              const button = hero.querySelector('button[data-open="' + target + '"]');
+              if (!button || label == null) return;
+              const arrow = button.querySelector('span');
+              button.textContent = label + ' ';
+              if (arrow) button.appendChild(arrow);
+            });
+          }
+        } else {
+          const head = document.querySelector('#panel-' + key + ' .page-head');
+          const intro = page.intro || {};
+          if (head) {
+            setText(head, '.eyebrow', intro.eyebrow);
+            setText(head, 'h1', intro.title);
+            setText(head, '.lede', intro.lede);
+            applyTextLayout(head, intro);
+            applyHeroLayout(head, page.heroImage);
+          }
+        }
+
+        if (key === 'media' && Array.isArray(page.items)) {
+          const grid = document.getElementById('media-grid');
+          const count = document.getElementById('media-count');
+          if (grid) {
+            grid.textContent = '';
+            page.items.forEach((item) => {
+              const link = el('a', { class: 'media-card' });
+              link.href = item.url || '#';
+              link.target = '_blank';
+              link.rel = 'noopener';
+              link.dataset.search = [item.meta, item.title, item.description].filter(Boolean).join(' ').toLowerCase();
+              link.appendChild(el('span', { class: 'meta', text: item.meta }));
+              link.appendChild(el('h3', { text: item.title }));
+              link.appendChild(el('p', { text: item.description }));
+              link.appendChild(el('span', { class: 'read', text: 'Read story ↗' }));
+              grid.appendChild(link);
+            });
+            if (count) {
+              const total = page.items.length;
+              count.textContent = total + (total === 1 ? ' selected story' : ' selected stories');
+            }
+          }
+        }
+
+        if (key === 'films' && Array.isArray(page.items)) {
+          const grid = document.querySelector('#panel-films .video-grid');
+          if (grid) {
+            grid.textContent = '';
+            page.items.forEach((item) => {
+              const link = el('a', { class: 'video-card' });
+              link.href = item.url || '#';
+              link.target = '_blank';
+              link.rel = 'noopener';
+              const wrap = el('div', { class: 'video-image' });
+              const img = el('img');
+              img.loading = 'lazy';
+              const id = ytId(item.url);
+              if (id) img.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
+              img.alt = item.title || '';
+              const play = el('span', { class: 'play' });
+              play.setAttribute('aria-hidden', 'true');
+              wrap.appendChild(img);
+              wrap.appendChild(play);
+              link.appendChild(wrap);
+              link.appendChild(el('span', { class: 'meta', text: item.meta }));
+              link.appendChild(el('h3', { text: item.title }));
+              grid.appendChild(link);
+            });
+          }
+        }
+
+        if (key === 'people') {
+          const partnerGrid = document.querySelector('#panel-people .people-grid');
+          if (partnerGrid && Array.isArray(page.partners)) {
+            partnerGrid.textContent = '';
+            page.partners.forEach((item) => {
+              const card = el(item.url ? 'a' : 'article', { class: 'people-card' });
+              if (item.url) {
+                card.href = item.url;
+                card.target = '_blank';
+                card.rel = 'noopener';
+                card.setAttribute('aria-label', 'Visit ' + (item.name || 'partner') + ' website');
+              }
+              card.appendChild(el('span', { class: 'meta', text: item.meta }));
+              card.appendChild(el('h3', { text: (item.name || '') + (item.url ? ' ↗' : '') }));
+              partnerGrid.appendChild(card);
+            });
+          }
+
+          const portraitBand = document.querySelector('#panel-people .portrait-band');
+          if (portraitBand && Array.isArray(page.portraits)) {
+            portraitBand.textContent = '';
+            page.portraits.forEach((item) => {
+              if (!item || !item.image) return;
+              const card = el(item.url ? 'a' : 'article', { class: 'portrait-card' });
+              if (item.url) {
+                card.href = item.url;
+                card.target = '_blank';
+                card.rel = 'noopener';
+              }
+              const details = [item.name, item.title, item.affiliation].filter(Boolean).join(', ');
+              card.setAttribute('aria-label', details + (item.url ? ' — open profile' : ''));
+              const img = el('img');
+              img.loading = 'lazy';
+              img.src = item.image;
+              img.alt = item.name ? 'Portrait of ' + item.name : 'MARVI team member portrait';
+              applyPhotoLayout(img, item);
+              const info = el('span', { class: 'portrait-card-info' });
+              info.appendChild(el('strong', { text: item.name || 'MARVI team member' }));
+              if (item.title) info.appendChild(el('span', { text: item.title }));
+              if (item.affiliation) info.appendChild(el('small', { text: item.affiliation }));
+              card.appendChild(img);
+              card.appendChild(info);
+              portraitBand.appendChild(card);
+            });
+          }
+        }
+
+        const slots = imageSlots[key];
+        if (slots && page.images) {
+          Object.entries(slots).forEach(([imageKey, slot]) => {
+            const img = document.querySelector('[data-img="' + slot + '"]');
+            const entry = page.images[imageKey];
+            if (!img || !entry) return;
+            if (entry.image) img.src = entry.image;
+            applyPhotoLayout(img, entry);
+          });
+        }
+
+        const navThumb = document.querySelector('.nav-tab[data-tab="' + key + '"] .nav-thumb');
+        if (navThumb && page.menuImage) {
+          if (page.menuImage.image) navThumb.src = page.menuImage.image;
+          applyPhotoLayout(navThumb, page.menuImage);
+        }
+
+        const panel = document.getElementById('panel-' + key);
+        if (panel) panel.querySelectorAll('.cms-sections').forEach((section) => section.remove());
+        renderFlexibleSections(key, page);
+        if (key === 'archive' && Array.isArray(page.items) && window.renderMarviArchive) {
+          window.renderMarviArchive(page.items);
+        }
+        refreshTextScales();
+      };
+
+      const isCmsPreview = new URLSearchParams(window.location.search).get('cms-preview') === '1';
+      if (isCmsPreview) {
+        window.addEventListener('message', (event) => {
+          if (
+            event.origin !== window.location.origin ||
+            !event.data ||
+            event.data.type !== 'marvi:cms-preview'
+          ) return;
+          renderCmsPage(event.data.key, event.data.data);
+        });
+        if (window.parent !== window) {
+          window.parent.postMessage({ type: 'marvi:cms-preview-ready' }, window.location.origin);
+        }
+      }
+
       PAGE_KEYS.forEach((key) => renderFlexibleSections(key, pages[key]));
 
       // --- Language switcher (content/i18n.json) ---
@@ -2181,7 +2368,9 @@
         });
       };
       let savedLang = 'en';
-      try { savedLang = localStorage.getItem('marvi-lang') || 'en'; } catch (e) {}
+      if (!isCmsPreview) {
+        try { savedLang = localStorage.getItem('marvi-lang') || 'en'; } catch (e) {}
+      }
       const langSelect = document.getElementById('lang-select');
       if (langSelect) {
         langSelect.value = savedLang;
