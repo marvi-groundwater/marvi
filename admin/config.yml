@@ -42,6 +42,47 @@ collections:
           - { label: "Eyebrow", name: "eyebrow", widget: "string" }
           - { label: "Hero Title", name: "heroTitle", widget: "text", hint: "Line break = where the headline wraps to a second line" }
           - { label: "Hero Body", name: "heroBody", widget: "text" }
+          - &eyebrowSizeField
+            label: "Eyebrow Text Size"
+            name: "eyebrowSize"
+            widget: "select"
+            default: "medium"
+            options: &textSizeOptions
+              - { label: "Small", value: "small" }
+              - { label: "Medium (recommended)", value: "medium" }
+              - { label: "Large", value: "large" }
+          - &titleSizeField
+            label: "Title Size"
+            name: "titleSize"
+            widget: "select"
+            default: "medium"
+            options: *textSizeOptions
+          - &ledeSizeField
+            label: "Intro Text Size"
+            name: "ledeSize"
+            widget: "select"
+            default: "medium"
+            options: *textSizeOptions
+          - &textAlignField
+            label: "Text Alignment"
+            name: "textAlign"
+            widget: "select"
+            default: "left"
+            hint: "Moves the whole text block horizontally."
+            options: &textAlignOptions
+              - { label: "Left", value: "left" }
+              - { label: "Centre", value: "center" }
+              - { label: "Right", value: "right" }
+          - &textPositionField
+            label: "Text Position"
+            name: "textPosition"
+            widget: "select"
+            default: "bottom"
+            hint: "Moves the whole text block vertically over the image."
+            options: &textPositionOptions
+              - { label: "Top", value: "top" }
+              - { label: "Middle", value: "middle" }
+              - { label: "Bottom (recommended)", value: "bottom" }
           - { label: "Primary Button Label", name: "primaryButtonLabel", widget: "string" }
           - { label: "Secondary Button Label", name: "secondaryButtonLabel", widget: "string" }
 
@@ -56,74 +97,55 @@ collections:
             name: "approach"
             widget: "object"
             collapsed: true
-            fields:
+            fields: &sectionIntroFields
               - { label: "Eyebrow", name: "eyebrow", widget: "string" }
               - { label: "Headline", name: "title", widget: "string" }
               - { label: "Intro line", name: "lede", widget: "text" }
+              - *eyebrowSizeField
+              - *titleSizeField
+              - *ledeSizeField
+              - *textAlignField
+              - *textPositionField
           - label: "Bhujal Jankaars"
             name: "bjs"
             widget: "object"
             collapsed: true
-            fields:
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
+            fields: *sectionIntroFields
           - label: "Groundwater"
             name: "groundwater"
             widget: "object"
             collapsed: true
-            fields:
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
+            fields: *sectionIntroFields
           - label: "MyWell app"
             name: "mywell"
             widget: "object"
             collapsed: true
-            fields:
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
+            fields: *sectionIntroFields
           - label: "In the media"
             name: "media"
             widget: "object"
             collapsed: true
-            fields:
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
+            fields: *sectionIntroFields
           - label: "Films"
             name: "films"
             widget: "object"
             collapsed: true
-            fields:
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
+            fields: *sectionIntroFields
           - label: "Groundwater game"
             name: "game"
             widget: "object"
             collapsed: true
-            fields:
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
+            fields: *sectionIntroFields
           - label: "People & partners"
             name: "people"
             widget: "object"
             collapsed: true
-            fields:
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
+            fields: *sectionIntroFields
           - label: "Image archive"
             name: "archive"
             widget: "object"
             collapsed: true
-            fields:
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Headline", name: "title", widget: "string" }
-              - { label: "Intro line", name: "lede", widget: "text" }
+            fields: *sectionIntroFields
 
   - name: "media"
     label: "Media stories"

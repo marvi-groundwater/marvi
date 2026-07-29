@@ -1075,6 +1075,47 @@
       .motion-ready .hero-copy > *, .motion-ready .page-head > div > *, .motion-item { opacity: 1 !important; transform: none !important; }
       .scroll-progress { display: none; }
     }
+
+    /* CMS-controlled intro typography and placement. Presets remain responsive
+       at every breakpoint, unlike a fixed pixel-size field. */
+    .hero-copy[data-text-align="center"] { align-items: center; text-align: center; }
+    .hero-copy[data-text-align="right"] { align-items: flex-end; text-align: right; }
+    .hero-copy[data-text-position="top"] { justify-content: flex-start; }
+    .hero-copy[data-text-position="middle"] { justify-content: center; }
+    .hero-copy[data-text-position="bottom"] { justify-content: flex-end; }
+
+    .page-head[data-text-align="center"] { text-align: center; }
+    .page-head[data-text-align="center"] > div { margin-inline: auto; }
+    .page-head[data-text-align="center"] h1,
+    .page-head[data-text-align="center"] .lede { margin-left: auto; margin-right: auto; }
+    .page-head[data-text-align="right"] { text-align: right; }
+    .page-head[data-text-align="right"] > div,
+    .page-head[data-text-align="right"] h1,
+    .page-head[data-text-align="right"] .lede { margin-left: auto; }
+    .panel:not(#panel-home) .page-head[data-text-position="top"] { align-items: flex-start; }
+    .panel:not(#panel-home) .page-head[data-text-position="middle"] { align-items: center; }
+    .panel:not(#panel-home) .page-head[data-text-position="bottom"] { align-items: flex-end; }
+
+    [data-eyebrow-size="small"] .eyebrow { font-size: .56rem; }
+    [data-eyebrow-size="large"] .eyebrow { font-size: .82rem; }
+    [data-lede-size="small"] .lede { font-size: clamp(.9rem, 1.15vw, 1.02rem); }
+    [data-lede-size="large"] .lede { font-size: clamp(1.22rem, 1.8vw, 1.58rem); }
+
+    @media (min-width: 801px) {
+      .hero-copy[data-title-size="small"] h1 { font-size: clamp(3.35rem, 6.2vw, 6.6rem); }
+      .hero-copy[data-title-size="large"] h1 { font-size: clamp(5.15rem, 9.5vw, 10.4rem); }
+      .page-head[data-title-size="small"] h1 { font-size: clamp(2.9rem, 5.5vw, 5.8rem); }
+      .page-head[data-title-size="large"] h1 { font-size: clamp(4.5rem, 8.5vw, 9.2rem); }
+    }
+
+    @media (max-width: 800px) {
+      .hero-copy[data-title-size="small"] h1 { font-size: clamp(2.75rem, 12.5vw, 4.2rem); }
+      .hero-copy[data-title-size="large"] h1 { font-size: clamp(3.9rem, 17.5vw, 5.85rem); }
+      .page-head[data-title-size="small"] h1 { font-size: clamp(2.45rem, 11.5vw, 3.8rem); }
+      .page-head[data-title-size="large"] h1 { font-size: clamp(3.45rem, 16vw, 5.2rem); }
+      [data-lede-size="small"] .lede { font-size: .88rem; }
+      [data-lede-size="large"] .lede { font-size: 1.22rem; }
+    }
   </style>
 </head>
 <body>
@@ -1654,6 +1695,19 @@
         if (focus && focus !== 'auto') img.style.objectPosition = focus;
         if (fit && fit !== 'auto') img.style.objectFit = fit;
       };
+      const applyTextLayout = (root, data) => {
+        if (!root || !data) return;
+        const allowed = {
+          eyebrowSize: ['small', 'medium', 'large'],
+          titleSize: ['small', 'medium', 'large'],
+          ledeSize: ['small', 'medium', 'large'],
+          textAlign: ['left', 'center', 'right'],
+          textPosition: ['top', 'middle', 'bottom']
+        };
+        Object.keys(allowed).forEach((key) => {
+          if (allowed[key].includes(data[key])) root.dataset[key] = data[key];
+        });
+      };
 
       const [home, sections, media, films, partners, images, portraits, menu] = await Promise.all([
         load('content/homepage.json'),
@@ -1673,6 +1727,7 @@
           setText(hero, '.eyebrow', home.eyebrow);
           setMultiline(hero, 'h1', home.heroTitle);
           setText(hero, '.lede', home.heroBody);
+          applyTextLayout(hero, home);
           if (home.heroImage) {
             const heroImg = document.querySelector('#panel-home .hero-image-main');
             if (heroImg) {
@@ -1700,6 +1755,7 @@
           setText(head, '.eyebrow', data.eyebrow);
           setText(head, 'h1', data.title);
           setText(head, '.lede', data.lede);
+          applyTextLayout(head, data);
         });
       }
 
