@@ -1485,10 +1485,10 @@
       async function buildGallery() {
         if (galleryBuilt) return;
         galleryBuilt = true;
-        // Prefer the editable CMS file; fall back to the bundled gallery.js data.
+        // Prefer the editable Archive page file; fall back to gallery.js data.
         let data = null;
         try {
-          const res = await fetch('content/gallery.json', { cache: 'no-store' });
+          const res = await fetch('content/pages/archive.json', { cache: 'no-store' });
           if (res.ok) {
             const json = await res.json();
             data = Array.isArray(json) ? json : json.items;
@@ -1635,7 +1635,7 @@
     })();
   </script>
 
-  <!-- Load editable content from the CMS content/ files. Every section
+  <!-- Load editable content from the CMS page files. Every section
        falls back to the hardcoded HTML above if its file is missing or the
        fetch fails, so the page still works with no JS and no content files. -->
   <script>
@@ -1699,30 +1699,28 @@
         });
       };
 
-      const [home, sections, media, films, partners, images, portraits, menu] = await Promise.all([
-        load('content/homepage.json'),
-        load('content/sections.json'),
-        load('content/media.json'),
-        load('content/films.json'),
-        load('content/partners.json'),
-        load('content/images.json'),
-        load('content/portraits.json'),
-        load('content/menu.json')
-      ]);
+      const PAGE_KEYS = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'];
+      const pageEntries = await Promise.all(PAGE_KEYS.map((key) => load('content/pages/' + key + '.json')));
+      const pages = Object.fromEntries(PAGE_KEYS.map((key, index) => [key, pageEntries[index]]));
+      const home = pages.home;
+      const media = pages.media;
+      const films = pages.films;
+      const people = pages.people;
 
-      // --- Hero (homepage.json) ---
+      // --- Homepage hero ---
       if (home) {
         const hero = document.querySelector('#panel-home .hero-copy');
+        const intro = home.intro || {};
         if (hero) {
-          setText(hero, '.eyebrow', home.eyebrow);
-          setMultiline(hero, 'h1', home.heroTitle);
-          setText(hero, '.lede', home.heroBody);
-          applyTextLayout(hero, home);
-          if (home.heroImage) {
+          setText(hero, '.eyebrow', intro.eyebrow);
+          setMultiline(hero, 'h1', intro.title);
+          setText(hero, '.lede', intro.lede);
+          applyTextLayout(hero, intro);
+          if (home.heroImage && home.heroImage.image) {
             const heroImg = document.querySelector('#panel-home .hero-image-main');
             if (heroImg) {
-              heroImg.src = home.heroImage;
-              applyFit(heroImg, home.heroImageFocus, home.heroImageFit);
+              heroImg.src = home.heroImage.image;
+              applyFit(heroImg, home.heroImage.focus, home.heroImage.fit);
             }
           }
           [['approach', home.primaryButtonLabel], ['mywell', home.secondaryButtonLabel]].forEach(([key, label]) => {
@@ -1736,20 +1734,18 @@
         }
       }
 
-      // --- Section intros (sections.json) ---
-      if (sections) {
-        Object.keys(sections).forEach((key) => {
-          const head = document.querySelector('#panel-' + key + ' .page-head');
-          const data = sections[key];
-          if (!head || !data) return;
-          setText(head, '.eyebrow', data.eyebrow);
-          setText(head, 'h1', data.title);
-          setText(head, '.lede', data.lede);
-          applyTextLayout(head, data);
-        });
-      }
+      // --- Section intros ---
+      PAGE_KEYS.filter((key) => key !== 'home').forEach((key) => {
+        const head = document.querySelector('#panel-' + key + ' .page-head');
+        const intro = pages[key] && pages[key].intro;
+        if (!head || !intro) return;
+        setText(head, '.eyebrow', intro.eyebrow);
+        setText(head, 'h1', intro.title);
+        setText(head, '.lede', intro.lede);
+        applyTextLayout(head, intro);
+      });
 
-      // --- Media stories (media.json) ---
+      // --- Media stories ---
       if (media && Array.isArray(media.items)) {
         const grid = document.getElementById('media-grid');
         const count = document.getElementById('media-count');
@@ -1791,7 +1787,7 @@
         }
       }
 
-      // --- Films (films.json) ---
+      // --- Films ---
       if (films && Array.isArray(films.items)) {
         const grid = document.querySelector('#panel-films .video-grid');
         if (grid) {
@@ -1819,12 +1815,12 @@
         }
       }
 
-      // --- People & partners (partners.json) ---
-      if (partners && Array.isArray(partners.items)) {
+      // --- People & partners ---
+      if (people && Array.isArray(people.partners)) {
         const grid = document.querySelector('#panel-people .people-grid');
         if (grid) {
           grid.textContent = '';
-          partners.items.forEach((item) => {
+          people.partners.forEach((item) => {
             const card = el('article', { class: 'people-card' });
             card.appendChild(el('span', { class: 'meta', text: item.meta }));
             const h3 = el('h3');
@@ -1843,35 +1839,43 @@
         }
       }
 
-      // --- Section images (images.json → any element with data-img) ---
-      if (images) {
-        document.querySelectorAll('[data-img]').forEach((img) => {
-          const entry = images[img.dataset.img];
-          if (!entry) return;
-          const src = typeof entry === 'string' ? entry : entry.image;
-          if (src) img.src = src;
-          if (entry && typeof entry === 'object') applyFit(img, entry.focus, entry.fit);
+      // --- Page-owned images ---
+      const imageSlots = {
+        home: { storyApproach: 'homeStoryApproach', storyBjs: 'homeStoryBjs', storyMywell: 'homeStoryMywell' },
+        approach: { editorial1: 'approachEditorial1', editorial2: 'approachEditorial2', dataPanel: 'approachDataPanel' },
+        groundwater: { ribbon1: 'groundwaterRibbon1', ribbon2: 'groundwaterRibbon2', ribbon3: 'groundwaterRibbon3' },
+        mywell: { main: 'mywellMain', strip1: 'mywellStrip1', strip2: 'mywellStrip2' },
+        game: { game: 'game' }
+      };
+      Object.entries(imageSlots).forEach(([pageKey, slots]) => {
+        const images = pages[pageKey] && pages[pageKey].images;
+        if (!images) return;
+        Object.entries(slots).forEach(([imageKey, slot]) => {
+          const img = document.querySelector('[data-img="' + slot + '"]');
+          const entry = images[imageKey];
+          if (!img || !entry) return;
+          if (entry.image) img.src = entry.image;
+          applyFit(img, entry.focus, entry.fit);
         });
-      }
+      });
 
-      // --- Menu card photos (menu.json → nav tabs, shown on mobile) ---
-      if (menu) {
-        document.querySelectorAll('.nav-tab').forEach((tab) => {
-          const entry = menu[tab.dataset.tab];
-          const thumb = tab.querySelector('.nav-thumb');
-          if (entry && thumb) {
-            thumb.src = entry.image;
-            applyFit(thumb, entry.focus, entry.fit);
-          }
-        });
-      }
+      // --- Page-owned menu card photos (shown on mobile) ---
+      document.querySelectorAll('.nav-tab').forEach((tab) => {
+        const page = pages[tab.dataset.tab];
+        const entry = page && page.menuImage;
+        const thumb = tab.querySelector('.nav-thumb');
+        if (entry && thumb) {
+          thumb.src = entry.image;
+          applyFit(thumb, entry.focus, entry.fit);
+        }
+      });
 
-      // --- People portrait band (portraits.json) ---
-      if (portraits && Array.isArray(portraits.items)) {
+      // --- People portrait band ---
+      if (people && Array.isArray(people.portraits)) {
         const band = document.querySelector('#panel-people .portrait-band');
         if (band) {
           band.textContent = '';
-          portraits.items.forEach((item) => {
+          people.portraits.forEach((item) => {
             if (!item || !item.image) return;
             const img = el('img');
             img.loading = 'lazy';

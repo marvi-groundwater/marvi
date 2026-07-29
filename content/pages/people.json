@@ -1,5 +1,16 @@
 {
-  "items": [
+  "intro": {
+    "eyebrow": "People & partners",
+    "title": "A transdisciplinary project, built across borders.",
+    "lede": "Researchers, practitioners, institutions and village volunteers in India and Australia working as one team.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "menuImage": { "image": "/assets/marvi-originals/041-our-people.jpg", "focus": "auto", "fit": "auto" },
+  "partners": [
     {
       "meta": "Australia · Lead partner",
       "name": "Western Sydney University",
@@ -49,5 +60,15 @@
       "meta": "Test",
       "name": "Test parter"
     }
+  ],
+  "portraits": [
+    { "image": "/assets/marvi-originals/041-our-people.jpg", "focus": "auto", "fit": "auto" },
+    { "image": "/assets/marvi-originals/042-our-people.jpg", "focus": "auto", "fit": "auto" },
+    { "image": "/assets/marvi-originals/043-our-people.jpg", "focus": "auto", "fit": "auto" },
+    { "image": "/assets/marvi-originals/048-our-people.jpg", "focus": "auto", "fit": "auto" },
+    { "image": "/assets/marvi-originals/052-our-people.jpg", "focus": "auto", "fit": "auto" },
+    { "image": "/assets/marvi-originals/060-our-people.jpg", "focus": "auto", "fit": "auto" },
+    { "image": "/assets/marvi-originals/067-our-people.png", "focus": "auto", "fit": "auto" },
+    { "image": "/assets/marvi-originals/lsiyer.jpg", "focus": "auto", "fit": "auto" }
   ]
 }

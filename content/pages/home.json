@@ -1,0 +1,21 @@
+{
+  "intro": {
+    "eyebrow": "Managing Aquifer Recharge & Sustaining Groundwater Use",
+    "title": "Water beneath us.\nKnowledge between us.",
+    "lede": "MARVI puts groundwater science in the hands of the people who depend on it—farmers, schools, researchers and communities working together for water that lasts!",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "heroImage": { "image": "/assets/marvi-originals/012-home.jpg", "focus": "auto", "fit": "auto" },
+  "menuImage": { "image": "/assets/marvi-originals/012-home.jpg", "focus": "auto", "fit": "auto" },
+  "primaryButtonLabel": "Explore the approach",
+  "secondaryButtonLabel": "Discover MyWell",
+  "images": {
+    "storyApproach": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "focus": "auto", "fit": "auto" },
+    "storyBjs": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "focus": "auto", "fit": "auto" },
+    "storyMywell": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "focus": "auto", "fit": "auto" }
+  }
+}

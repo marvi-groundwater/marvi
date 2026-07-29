@@ -1,0 +1,16 @@
+{
+  "intro": {
+    "eyebrow": "The MARVI groundwater game",
+    "title": "Share a well. Survive the year.",
+    "lede": "A whole village draws from one aquifer. Every crop and every turn reveals why groundwater decisions cannot be made alone.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom"
+  },
+  "menuImage": { "image": "/assets/mywell-game.png", "focus": "auto", "fit": "auto" },
+  "images": {
+    "game": { "image": "/assets/mywell-game.png", "focus": "auto", "fit": "auto" }
+  }
+}
