@@ -374,3 +374,62 @@ collections:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Source URL (optional)", name: "source", widget: "string", required: false }
           - *sectionsField
+
+      - file: "content/pages/publications.json"
+        label: "11 · Publications"
+        name: "publications"
+        fields:
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
+          - *menuImageField
+          - label: "Publications"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Kind", name: "kind", widget: "string", hint: "Groups the publication under a filter tab, e.g. Book or Brochure" }
+              - { label: "Label (kind · languages)", name: "meta", widget: "string", hint: "e.g. Book · English, Hindi, Gujarati" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - label: "Download links"
+                name: "editions"
+                widget: "list"
+                summary: "{{fields.label}}"
+                hint: "One link per language edition — the card shows a button for each."
+                fields:
+                  - { label: "Language label", name: "label", widget: "string", hint: "e.g. English, हिन्दी, ગુજરાતી" }
+                  - { label: "Link URL", name: "url", widget: "string", hint: "A Google Drive share link or any other public file URL." }
+          - *sectionsField
+
+      - file: "content/pages/tools.json"
+        label: "12 · Tools"
+        name: "tools"
+        fields:
+          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
+          - *heroImageField
+          - *menuImageField
+          - label: "Tools"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Label (kind · what it does)", name: "meta", widget: "string", hint: "e.g. App · Record, map and compare" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Photo", name: "photo", widget: "object", collapsed: false, fields: *photoFields }
+              - { label: "Button label", name: "linkLabel", widget: "string", hint: "e.g. Explore MyWell" }
+              - label: "Button opens this page"
+                name: "target"
+                widget: "select"
+                default: "mywell"
+                hint: "Which section of this website the button opens. Ignored when an external link is set below."
+                options:
+                  - { label: "MyWell app", value: "mywell" }
+                  - { label: "Groundwater game", value: "game" }
+                  - { label: "The approach", value: "approach" }
+                  - { label: "Bhujal Jankaars", value: "bjs" }
+                  - { label: "Groundwater", value: "groundwater" }
+                  - { label: "Films", value: "films" }
+                  - { label: "Publications", value: "publications" }
+              - { label: "External link (optional)", name: "url", widget: "string", required: false, hint: "Set this to send the button to another website instead of a page above." }
+          - *sectionsField

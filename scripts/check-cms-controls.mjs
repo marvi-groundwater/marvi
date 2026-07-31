@@ -11,7 +11,7 @@ const failures = [];
 const expectMatch = (value, pattern, message) => {
   if (!pattern.test(value)) failures.push(message);
 };
-const pageKeys = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'];
+const pageKeys = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive', 'publications', 'tools'];
 let preview = '';
 try {
   preview = read('admin/preview.js');
@@ -141,7 +141,7 @@ if (preview) {
   vm.runInNewContext(layoutModel, context, { filename: 'layout-model.js' });
   vm.runInNewContext(preview, context, { filename: 'admin/preview.js' });
   if (Object.keys(templates).sort().join(',') !== pageKeys.slice().sort().join(',')) {
-    failures.push('all ten page files must register individual preview templates');
+    failures.push('every page file must register an individual preview template');
   }
   if (previewStyles.join(',') !== 'preview.css') {
     failures.push('the custom previews must register preview.css');
@@ -277,4 +277,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('All ten CMS page previews use the live site renderer with editable controls.');
+console.log(`All ${pageKeys.length} CMS page previews use the live site renderer with editable controls.`);

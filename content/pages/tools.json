@@ -1,0 +1,38 @@
+{
+  "intro": {
+    "eyebrow": "MARVI tools",
+    "title": "Two ways to put groundwater in your hands.",
+    "lede": "An app for recording what a village actually observes, and a game for understanding what those observations mean together.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom",
+    "textWidth": 100,
+    "textOffsetX": 0,
+    "textOffsetY": 0
+  },
+  "heroImage": { "image": "/assets/marvi-originals/006-home.jpg", "zoom": 100, "positionX": 50, "positionY": 32, "fit": "cover" },
+  "menuImage": { "image": "/assets/mywell-game.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
+  "items": [
+    {
+      "name": "MyWell",
+      "meta": "App · Record, map and compare",
+      "description": "Bhujal Jankaars and community members record groundwater levels, rainfall, water quality and check-dam readings against a station, then browse the shared map and watch the trends build up over seasons.",
+      "photo": { "image": "/assets/marvi-originals/mywell-app-record.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "contain" },
+      "linkLabel": "Explore MyWell",
+      "target": "mywell",
+      "url": ""
+    },
+    {
+      "name": "MARVI Groundwater Game",
+      "meta": "Game · Learn by deciding together",
+      "description": "A whole village draws from one shared well. Choose crops, take watering turns and watch the watertable answer back — the fastest way to feel why groundwater cannot be managed one farm at a time.",
+      "photo": { "image": "/assets/mywell-game.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "contain" },
+      "linkLabel": "Try the game",
+      "target": "game",
+      "url": ""
+    }
+  ],
+  "sections": []
+}
