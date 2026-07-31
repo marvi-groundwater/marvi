@@ -412,6 +412,51 @@
     .people-card[href] { cursor: pointer; }
     .people-card[href]:focus-visible { outline: 3px solid var(--copper); outline-offset: -3px; }
 
+    /* Publications reuse the bordered media grid, but a card holds several
+       edition links (English / Hindi / Gujarati) so it is an <article>, not a
+       single <a>, and never inverts on hover — that would fight the links. */
+    .pub-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+    .pub-card {
+      min-height: 310px;
+      display: flex;
+      flex-direction: column;
+      padding: 23px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(251,250,246,.32);
+      transition: background .22s;
+    }
+    .pub-card:hover { background: rgba(251,250,246,.92); }
+    .pub-card .meta { margin-bottom: 34px; color: var(--copper); font-size: .59rem; }
+    .pub-card h3 { margin-bottom: 12px; font: 500 1.3rem/1.2 var(--serif); }
+    .pub-card p { color: var(--muted); font-size: .82rem; }
+    .pub-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 20px; }
+    .pub-links a {
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      text-decoration: none;
+      font: .6rem var(--mono);
+      letter-spacing: .07em;
+      transition: color .2s, background .2s, border-color .2s;
+    }
+    .pub-links a:hover { color: var(--white); border-color: var(--ink); background: var(--ink); }
+    .pub-links a:focus-visible { outline: 3px solid var(--copper); outline-offset: 2px; }
+
+    .tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+    .tool-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); background: rgba(251,250,246,.42); }
+    /* The card is a column flex container, so an in-flow image would make the
+       shot as tall as the screenshot and defeat the aspect ratio. Taking the
+       image out of flow keeps the slot a clean 16:10 and leaves object-fit
+       free to honour the CMS "Fit" control. */
+    .tool-shot { position: relative; flex: none; aspect-ratio: 16 / 10; overflow: hidden; background: #dfe3df; }
+    .tool-shot img { position: absolute; inset: 18px; width: calc(100% - 36px); height: calc(100% - 36px); object-fit: contain; }
+    .tool-copy { flex: 1; display: flex; flex-direction: column; padding: 26px; }
+    .tool-copy .meta { color: var(--copper); font-size: .59rem; }
+    .tool-copy h3 { margin: 14px 0 11px; font: 500 1.55rem/1.15 var(--serif); }
+    .tool-copy p { color: var(--muted); font-size: .84rem; }
+    .tool-copy .button { align-self: flex-start; margin-top: auto; }
+
     .portrait-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-bottom: 26px; background: var(--line); }
     .portrait-card {
       position: relative;
@@ -526,7 +571,7 @@
       .sidebar { padding-inline: 23px; }
       .nav-tab[aria-selected="true"]::before { left: -23px; }
       .home-hero { grid-template-columns: 1fr .72fr; }
-      .media-grid, .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .media-grid, .people-grid, .pub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .portrait-band { grid-template-columns: repeat(4, 1fr); }
     }
@@ -575,7 +620,7 @@
     @media (max-width: 580px) {
       h1 { font-size: clamp(3rem, 15vw, 4.6rem); }
       h2 { font-size: clamp(2.4rem, 12vw, 3.6rem); }
-      .grid-2, .grid-3, .media-grid, .people-grid, .video-grid, .editorial-images { grid-template-columns: 1fr; }
+      .grid-2, .grid-3, .media-grid, .people-grid, .video-grid, .editorial-images, .pub-grid, .tool-grid { grid-template-columns: 1fr; }
       .editorial-image:last-child { margin: 0; aspect-ratio: 1.25; }
       .photo-ribbon { grid-template-columns: 1fr; }
       .photo-ribbon figure, .photo-ribbon figure:nth-child(2) { height: 230px; margin-top: 0; }
@@ -585,7 +630,7 @@
       .metric-row { grid-template-columns: 1fr; }
       .metric, .metric:nth-child(2), .metric:last-child { padding: 18px 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
       .filter-bar { align-items: flex-start; flex-direction: column; }
-      .media-card { min-height: 260px; }
+      .media-card, .pub-card { min-height: 260px; }
       .hero-actions .button { width: 100%; }
     }
 
@@ -814,6 +859,8 @@
       #panel-game .page-head { --cover: url("assets/marvi-originals/002-home.jpg"); --cover-position: center 50%; }
       #panel-people .page-head { --cover: url("assets/marvi-originals/039-about-marvi.jpg"); --cover-position: center 57%; }
       #panel-archive .page-head { --cover: url("assets/marvi-originals/011-home.jpg"); --cover-position: center 48%; }
+      #panel-publications .page-head { --cover: url("assets/marvi-originals/013-home.jpg"); --cover-position: center 55%; }
+      #panel-tools .page-head { --cover: url("assets/marvi-originals/006-home.jpg"); --cover-position: center 32%; }
       .panel:not(#panel-home) .section-body {
         width: min(1180px, calc(100% - 352px));
         margin: 0 48px 0 304px;
@@ -858,6 +905,15 @@
       .media-card { min-height: 330px; padding: 28px; border: 0; border-radius: 3px; background: #faf9f4; }
       .media-card:nth-child(4n + 2), .media-card:nth-child(4n + 3) { background: #dfe1d8; }
       .media-card h3 { max-width: 540px; font-family: var(--sans); font-size: 1.45rem; font-weight: 600; letter-spacing: -.035em; }
+      .pub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; border: 0; }
+      .pub-card { min-height: 330px; padding: 28px; border: 0; border-radius: 3px; background: #faf9f4; }
+      .pub-card:nth-child(4n + 2), .pub-card:nth-child(4n + 3) { background: #dfe1d8; }
+      .pub-card:hover { background: #f4f2ea; }
+      .pub-card:nth-child(4n + 2):hover, .pub-card:nth-child(4n + 3):hover { background: #d6d9cd; }
+      .pub-card h3 { max-width: 540px; font-family: var(--sans); font-size: 1.45rem; font-weight: 600; letter-spacing: -.035em; }
+      .pub-links a { border-radius: 3px; border-color: rgba(24,36,32,.2); }
+      .tool-card { border: 0; border-radius: 3px; background: #faf9f4; }
+      .tool-copy h3 { font-family: var(--sans); font-size: 1.6rem; font-weight: 600; letter-spacing: -.035em; }
       .people-grid { gap: 10px; border: 0; }
       .people-card { min-height: 210px; border: 0; border-radius: 3px; background: #faf9f4; transition: transform .25s ease, color .25s ease, background .25s ease; }
       .people-card:hover { transform: translateY(-5px); color: var(--white); background: var(--blue-dark); }
@@ -875,7 +931,7 @@
       .hero-copy h1 { font-size: clamp(4rem, 7.6vw, 6.3rem); }
       .page-head h1 { font-size: clamp(3.5rem, 6.7vw, 5.5rem); }
       .panel:not(#panel-home) .section-body { width: calc(100% - 320px); margin-left: 288px; margin-right: 32px; }
-      .split, .grid-3, .media-grid, .video-grid, .people-grid { grid-template-columns: 1fr; }
+      .split, .grid-3, .media-grid, .video-grid, .people-grid, .pub-grid, .tool-grid { grid-template-columns: 1fr; }
       .process { grid-template-columns: repeat(2, 1fr); }
       .footer { padding-left: 288px; }
     }
@@ -1043,6 +1099,8 @@
       #panel-game .page-head { --cover: url("assets/marvi-originals/002-home.jpg"); --cover-position: center 50%; }
       #panel-people .page-head { --cover: url("assets/marvi-originals/039-about-marvi.jpg"); --cover-position: center 57%; }
       #panel-archive .page-head { --cover: url("assets/marvi-originals/011-home.jpg"); --cover-position: center 48%; }
+      #panel-publications .page-head { --cover: url("assets/marvi-originals/013-home.jpg"); --cover-position: center 55%; }
+      #panel-tools .page-head { --cover: url("assets/marvi-originals/006-home.jpg"); --cover-position: center 32%; }
 
       .section-body { padding-top: 52px; padding-bottom: 72px; }
       .project-card {
@@ -1102,6 +1160,17 @@
       .media-card:nth-child(even) { background: #dfe1d8; }
       .media-card h3, .people-card h3 { font-family: var(--sans); font-weight: 600; letter-spacing: -.03em; }
       .people-card { min-height: 175px; }
+      .pub-grid { gap: 10px; border: 0; }
+      .pub-card { min-height: 285px; padding: 23px; border: 0; border-radius: 16px; background: #faf9f4; }
+      .pub-card:nth-child(even) { background: #dfe1d8; }
+      .pub-card:nth-child(even):hover { background: #d6d9cd; }
+      .pub-card:hover { background: #f4f2ea; }
+      .pub-card h3 { font-family: var(--sans); font-weight: 600; letter-spacing: -.03em; }
+      .pub-links a { border-radius: 999px; border-color: rgba(24,36,32,.2); }
+      .tool-grid { gap: 12px; }
+      .tool-card { border: 0; border-radius: 16px; background: #faf9f4; }
+      .tool-copy { padding: 23px; }
+      .tool-copy h3 { font-family: var(--sans); font-weight: 600; letter-spacing: -.03em; }
       .dark-block, .image-data-panel, .editorial-image, .photo-ribbon figure, .video-image, .app-shot, .game-frame, .app-screen-strip figure { border-radius: 16px; overflow: hidden; }
     }
 
@@ -1262,6 +1331,8 @@
       <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-game" data-tab="game"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">08</span><span class="nav-name">Groundwater game</span><span class="nav-arrow">↗</span></button>
       <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-people" data-tab="people"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">09</span><span class="nav-name">People & partners</span><span class="nav-arrow">↗</span></button>
       <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-archive" data-tab="archive"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">10</span><span class="nav-name">Image archive</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-publications" data-tab="publications"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">11</span><span class="nav-name">Publications</span><span class="nav-arrow">↗</span></button>
+      <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-tools" data-tab="tools"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">12</span><span class="nav-name">Tools</span><span class="nav-arrow">↗</span></button>
     </nav>
     <div class="sidebar-foot">Rajasthan + Gujarat<br>India / Australia<br><a href="https://www.marvi.org.in/" target="_blank" rel="noopener">marvi.org.in ↗</a></div>
   </aside>
@@ -1322,7 +1393,7 @@
 
     <section class="panel" id="panel-approach" role="tabpanel" tabindex="0" data-panel="approach" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">02 / 10</span><div><p class="eyebrow">The MARVI approach</p><h1>Science becomes useful when it becomes local.</h1><p class="lede">MARVI brings technical knowledge, community experience and practical monitoring together at village level.</p></div></header>
+        <header class="page-head"><span class="section-index">02 / 12</span><div><p class="eyebrow">The MARVI approach</p><h1>Science becomes useful when it becomes local.</h1><p class="lede">MARVI brings technical knowledge, community experience and practical monitoring together at village level.</p></div></header>
         <div class="section-body">
           <div class="split">
             <div class="prose"><p class="large" data-i18n="approach.aim">The aim is to improve irrigation-water security and rural livelihoods by making the invisible visible.</p></div>
@@ -1349,7 +1420,7 @@
 
     <section class="panel" id="panel-bjs" role="tabpanel" tabindex="0" data-panel="bjs" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">03 / 10</span><div><p class="eyebrow">Bhujal Jankaars · भूजल जानकार</p><h1>The village’s own groundwater champions.</h1><p class="lede">“Groundwater informed”: local volunteers who connect careful observation with community knowledge and collective action.</p></div></header>
+        <header class="page-head"><span class="section-index">03 / 12</span><div><p class="eyebrow">Bhujal Jankaars · भूजल जानकार</p><h1>The village’s own groundwater champions.</h1><p class="lede">“Groundwater informed”: local volunteers who connect careful observation with community knowledge and collective action.</p></div></header>
         <div class="section-body">
           <div class="split">
             <div class="image-data-panel reveal"><img data-img="approachDataPanel" src="assets/marvi-originals/022-about-marvi.jpg" loading="lazy" alt="A Bhujal Jankaar measuring a village well"><div class="image-data-overlay"><strong>35</strong><span data-i18n="bjs.data.caption">Bhujal Jankaars — 25 Rajasthan · 10 Gujarat</span></div></div>
@@ -1361,7 +1432,7 @@
 
     <section class="panel" id="panel-groundwater" role="tabpanel" tabindex="0" data-panel="groundwater" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">04 / 10</span><div><p class="eyebrow">Groundwater, demystified</p><h1>An invisible resource with visible consequences.</h1><p class="lede">Rain moves through soil and rock into an aquifer. Wells reveal only a small window into a connected underground system.</p></div></header>
+        <header class="page-head"><span class="section-index">04 / 12</span><div><p class="eyebrow">Groundwater, demystified</p><h1>An invisible resource with visible consequences.</h1><p class="lede">Rain moves through soil and rock into an aquifer. Wells reveal only a small window into a connected underground system.</p></div></header>
         <div class="section-body">
           <div class="photo-ribbon reveal">
             <figure><img data-img="groundwaterRibbon1" src="assets/marvi-originals/003-home.jpg" loading="lazy" alt="Village groundwater recharge structure"></figure>
@@ -1380,7 +1451,7 @@
 
     <section class="panel" id="panel-mywell" role="tabpanel" tabindex="0" data-panel="mywell" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">05 / 10</span><div><p class="eyebrow">The MyWell app</p><h1>Groundwater, brought to the surface.</h1><p class="lede">A public-domain, non-profit tool for collecting, viewing and sharing community water observations.</p></div></header>
+        <header class="page-head"><span class="section-index">05 / 12</span><div><p class="eyebrow">The MyWell app</p><h1>Groundwater, brought to the surface.</h1><p class="lede">A public-domain, non-profit tool for collecting, viewing and sharing community water observations.</p></div></header>
         <div class="section-body">
           <div class="split">
             <div class="prose"><img class="app-logo" src="assets/marvi-originals/mywell-app-icon.png" loading="lazy" alt="MyWell for Groundwater app icon" width="78" height="78"><p class="large" data-i18n="mywell.intro">MyWell is now a modern, rebuilt app — turning local observations into clear, visual information for village, regional and wider water management.</p><p data-i18n="mywell.desc">Bhujal Jankaars and community members record groundwater levels, rainfall, water quality and check-dam readings against a station, import data from sensors, browse a shared map, and follow current status and long-term trends.</p><div class="hero-actions"><button class="button primary" type="button" data-open="films">Watch MyWell stories <span>↗</span></button><button class="button" type="button" data-open="game">Try the learning game <span>↗</span></button></div></div>
@@ -1402,7 +1473,7 @@
 
     <section class="panel" id="panel-media" role="tabpanel" tabindex="0" data-panel="media" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">06 / 10</span><div><p class="eyebrow">MARVI in the media</p><h1>Stories from the field, the lab and the village.</h1><p class="lede">Selected journalism and project coverage from the new MARVI media archive.</p></div></header>
+        <header class="page-head"><span class="section-index">06 / 12</span><div><p class="eyebrow">MARVI in the media</p><h1>Stories from the field, the lab and the village.</h1><p class="lede">Selected journalism and project coverage from the new MARVI media archive.</p></div></header>
         <div class="section-body">
           <div class="filter-bar"><span class="filter-label" id="media-count">12 selected stories</span><input class="search" id="media-search" type="search" placeholder="Search stories or publishers…" aria-label="Search media stories"></div>
           <div class="media-grid" id="media-grid">
@@ -1426,7 +1497,7 @@
 
     <section class="panel" id="panel-films" role="tabpanel" tabindex="0" data-panel="films" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">07 / 10</span><div><p class="eyebrow">Films &amp; field recordings</p><h1>See the people behind the measurements.</h1><p class="lede">A curated starting point from the new MARVI video archive—introductions, field stories, training and technical talks.</p></div></header>
+        <header class="page-head"><span class="section-index">07 / 12</span><div><p class="eyebrow">Films &amp; field recordings</p><h1>See the people behind the measurements.</h1><p class="lede">A curated starting point from the new MARVI video archive—introductions, field stories, training and technical talks.</p></div></header>
         <div class="section-body">
           <div class="video-grid">
             <a class="video-card" href="https://www.youtube.com/watch?v=LM2Pt0fmEVk" target="_blank" rel="noopener"><div class="video-image"><img src="https://i.ytimg.com/vi/LM2Pt0fmEVk/hqdefault.jpg" alt="MARVI participatory groundwater video thumbnail"><span class="play" aria-hidden="true"></span></div><span class="meta">Featured · Western Sydney University</span><h3>MARVI: A participatory and citizen-science approach</h3></a>
@@ -1445,7 +1516,7 @@
 
     <section class="panel" id="panel-game" role="tabpanel" tabindex="0" data-panel="game" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">08 / 10</span><div><p class="eyebrow">The MARVI groundwater game</p><h1>Share a well. Survive the year.</h1><p class="lede">A whole village draws from one aquifer. Every crop and every turn reveals why groundwater decisions cannot be made alone.</p></div></header>
+        <header class="page-head"><span class="section-index">08 / 12</span><div><p class="eyebrow">The MARVI groundwater game</p><h1>Share a well. Survive the year.</h1><p class="lede">A whole village draws from one aquifer. Every crop and every turn reveals why groundwater decisions cannot be made alone.</p></div></header>
         <div class="section-body">
           <div class="game-frame"><div class="game-dots"><span></span><span></span><span></span></div><img data-img="game" src="assets/mywell-game.png" alt="MARVI groundwater game with a shared village well and crop-watering decisions"></div>
           <div class="grid-3" style="margin-top:22px"><article class="project-card"><span class="card-number">PLAY / 01</span><h3 data-i18n="game.card1.title">One shared well</h3><p data-i18n="game.card1.desc">Every player’s choices affect everyone else drawing from the same groundwater store.</p></article><article class="project-card"><span class="card-number">PLAY / 02</span><h3 data-i18n="game.card2.title">Choose the crop</h3><p data-i18n="game.card2.desc">Balance high-, moderate- and low-water crops across repeated watering turns.</p></article><article class="project-card"><span class="card-number">PLAY / 03</span><h3 data-i18n="game.card3.title">Watch the watertable</h3><p data-i18n="game.card3.desc">Start after the monsoon and see whether the village can make its water last five years.</p></article></div>
@@ -1455,7 +1526,7 @@
 
     <section class="panel" id="panel-people" role="tabpanel" tabindex="0" data-panel="people" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">09 / 10</span><div><p class="eyebrow">People &amp; partners</p><h1>A transdisciplinary project, built across borders.</h1><p class="lede">Researchers, practitioners, institutions and village volunteers in India and Australia working as one team.</p></div></header>
+        <header class="page-head"><span class="section-index">09 / 12</span><div><p class="eyebrow">People &amp; partners</p><h1>A transdisciplinary project, built across borders.</h1><p class="lede">Researchers, practitioners, institutions and village volunteers in India and Australia working as one team.</p></div></header>
         <div class="section-body">
           <div class="portrait-band reveal" aria-label="Selected portraits from the MARVI team archive">
             <img src="assets/marvi-originals/041-our-people.jpg" loading="lazy" alt="MARVI team member portrait">
@@ -1484,7 +1555,7 @@
 
     <section class="panel" id="panel-archive" role="tabpanel" tabindex="0" data-panel="archive" hidden>
       <div class="content-wrap">
-        <header class="page-head"><span class="section-index">10 / 10</span><div><p class="eyebrow">The original MARVI image archive</p><h1>Fieldwork, faces and the life of the project.</h1><p class="lede">Every publicly accessible image recovered from the original MARVI website, preserved locally and arranged as a living visual archive.</p></div></header>
+        <header class="page-head"><span class="section-index">10 / 12</span><div><p class="eyebrow">The original MARVI image archive</p><h1>Fieldwork, faces and the life of the project.</h1><p class="lede">Every publicly accessible image recovered from the original MARVI website, preserved locally and arranged as a living visual archive.</p></div></header>
         <div class="section-body">
           <div class="archive-tools">
             <span class="filter-label" id="gallery-count">84 archived images</span>
@@ -1492,6 +1563,56 @@
           </div>
           <div class="gallery-grid" id="gallery-grid" aria-live="polite"></div>
           <p style="margin-top:35px;color:var(--muted);font-size:.78rem">Original source: <a href="https://www.marvi.org.in/" target="_blank" rel="noopener">marvi.org.in ↗</a> · Local source and dimensions are recorded in <a href="assets/marvi-originals/manifest.json">the image manifest</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-publications" role="tabpanel" tabindex="0" data-panel="publications" hidden>
+      <div class="content-wrap">
+        <header class="page-head"><span class="section-index">11 / 12</span><div><p class="eyebrow">MARVI publications</p><h1>Read the work, in your own language.</h1><p class="lede">Brochures and books from the project—free to download in English, Hindi and Gujarati.</p></div></header>
+        <div class="section-body">
+          <div class="archive-tools">
+            <span class="filter-label" id="publication-count">7 publications</span>
+            <div class="archive-filters" id="publication-filters" aria-label="Filter publications by kind"></div>
+          </div>
+          <div class="pub-grid" id="publication-grid">
+            <article class="pub-card" data-kind="Brochure"><span class="meta">Brochure · English</span><h3>MARVI - An Introduction</h3><p>A short introduction to the MARVI approach: what the project does, where it works and how villages take part.</p><span class="pub-links"><a href="https://drive.google.com/file/d/1Qb6h6tiYg2RCMFRw-4XruBokpEzafn2w/view?usp=sharing" target="_blank" rel="noopener">English ↗</a></span></article>
+            <article class="pub-card" data-kind="Brochure"><span class="meta">Brochure · English</span><h3>Bhujal Jaankaar</h3><p>Who the Bhujal Jankaars are, how they are trained and what they measure in their own villages.</p><span class="pub-links"><a href="https://drive.google.com/file/d/1xcExvmC7-1beBcnrXzhXQrkANwbWgBFn/view?usp=sharing" target="_blank" rel="noopener">English ↗</a></span></article>
+            <article class="pub-card" data-kind="Brochure"><span class="meta">Brochure · English</span><h3>MyWell app</h3><p>A quick guide to the MyWell app—recording groundwater, rainfall, water quality and check-dam readings.</p><span class="pub-links"><a href="https://drive.google.com/file/d/1sk-Sl9UC36lDybfF4XVe7bWo7Vs7sBnY/view?usp=sharing" target="_blank" rel="noopener">English ↗</a></span></article>
+            <article class="pub-card" data-kind="Book"><span class="meta">Book · English, Hindi, Gujarati</span><h3>MARVI – An Innovative Approach for Village Level Groundwater Management</h3><p>The main MARVI book: the approach, the methods and what village-level groundwater management looks like in practice.</p><span class="pub-links"><a href="https://drive.google.com/file/d/1O_Od4h-F5Lz7WUJEmdBJgOsz5zZ7F-Vj/view?usp=sharing" target="_blank" rel="noopener">English ↗</a><a href="https://drive.google.com/file/d/1fnZIoFNqqnVWg_urlkHimHCG5puyGYOt/view?usp=sharing" target="_blank" rel="noopener">Hindi ↗</a><a href="https://drive.google.com/file/d/10r-uA2u2zMGnI39UEhc28hnoWSFUbft1/view?usp=sharing" target="_blank" rel="noopener">Gujarati ↗</a></span></article>
+            <article class="pub-card" data-kind="Book"><span class="meta">Book · English, Hindi, Gujarati</span><h3>Our Groundwater: A Resource Book for Water Literacy</h3><p>A resource book for water literacy—written for villages, schools and anyone learning how groundwater behaves.</p><span class="pub-links"><a href="https://drive.google.com/file/d/1nYHhpX5tZbhSeGjgcceQpK0HNPcB2igT/view?usp=sharing" target="_blank" rel="noopener">English ↗</a><a href="https://drive.google.com/file/d/1tI730K_G6WQ1q0i-VPE8NOMV74p1cE0l/view?usp=sharing" target="_blank" rel="noopener">Hindi ↗</a><a href="https://drive.google.com/file/d/1cBRcOMTUlrH3K41G9tbFHqllud609FNg/view?usp=sharing" target="_blank" rel="noopener">Gujarati ↗</a></span></article>
+            <article class="pub-card" data-kind="Book"><span class="meta">Book · English, Hindi, Gujarati</span><h3>Groundwater Stories: Villagers share their Voices</h3><p>Villagers describe their own wells, seasons and water decisions in their own words.</p><span class="pub-links"><a href="https://drive.google.com/file/d/1C738YIMDHXhTZxv4saUrYz4CwH2KQVwZ/view?usp=sharing" target="_blank" rel="noopener">English ↗</a><a href="https://drive.google.com/file/d/1PoLt2UnPr6jevhktuz2HA-6rCHE-eGFt/view?usp=sharing" target="_blank" rel="noopener">Hindi ↗</a><a href="https://drive.google.com/file/d/1QKfnN5cdM6iyZNleP_0N1t2fQsjyBfSM/view?usp=sharing" target="_blank" rel="noopener">Gujarati ↗</a></span></article>
+            <article class="pub-card" data-kind="Book"><span class="meta">Book · English, Hindi</span><h3>Jaldoot (Water Messenger)</h3><p>Jaldoot—the water messenger—carries groundwater knowledge into everyday village life.</p><span class="pub-links"><a href="https://drive.google.com/file/d/1agckHORZgdSQ_LSLMEU3BJ8uV8GpjNhm/view?usp=sharing" target="_blank" rel="noopener">English ↗</a><a href="https://drive.google.com/file/d/1SNe6P5iNBQWKIbds0R6uer1QOTx_ur1N/view?usp=drive_link" target="_blank" rel="noopener">Hindi ↗</a></span></article>
+          </div>
+          <p style="margin-top:35px;color:var(--muted);font-size:.78rem">Every file opens on Google Drive. Original source: <a href="https://www.marvi.org.in/marvi-publications" target="_blank" rel="noopener">the MARVI publications page ↗</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-tools" role="tabpanel" tabindex="0" data-panel="tools" hidden>
+      <div class="content-wrap">
+        <header class="page-head"><span class="section-index">12 / 12</span><div><p class="eyebrow">MARVI tools</p><h1>Two ways to put groundwater in your hands.</h1><p class="lede">An app for recording what a village actually observes, and a game for understanding what those observations mean together.</p></div></header>
+        <div class="section-body">
+          <div class="tool-grid" id="tool-grid">
+            <article class="tool-card reveal">
+              <div class="tool-shot"><img src="assets/marvi-originals/mywell-app-record.png" loading="lazy" alt="The MyWell screen for recording a water-quality reading"></div>
+              <div class="tool-copy">
+                <span class="meta">App · Record, map and compare</span>
+                <h3>MyWell</h3>
+                <p>Bhujal Jankaars and community members record groundwater levels, rainfall, water quality and check-dam readings against a station, then browse the shared map and watch the trends build up over seasons.</p>
+                <button class="button primary" type="button" data-open="mywell">Explore MyWell <span>↗</span></button>
+              </div>
+            </article>
+            <article class="tool-card reveal">
+              <div class="tool-shot"><img src="assets/mywell-game.png" loading="lazy" alt="The MARVI groundwater game showing a shared village well and crop-watering decisions"></div>
+              <div class="tool-copy">
+                <span class="meta">Game · Learn by deciding together</span>
+                <h3>MARVI Groundwater Game</h3>
+                <p>A whole village draws from one shared well. Choose crops, take watering turns and watch the watertable answer back—the fastest way to feel why groundwater cannot be managed one farm at a time.</p>
+                <button class="button primary" type="button" data-open="game">Try the game <span>↗</span></button>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -1681,6 +1802,42 @@
       }
       window.renderMarviArchive = (items) => buildGallery(items);
 
+      // Publication filter chips are derived from whichever cards are in the
+      // grid, so the same code serves the hardcoded fallback markup and the
+      // cards the CMS renders over the top of it.
+      function buildPublicationFilters() {
+        const grid = document.getElementById('publication-grid');
+        const filterWrap = document.getElementById('publication-filters');
+        const count = document.getElementById('publication-count');
+        if (!grid || !filterWrap) return;
+        const cards = [...grid.querySelectorAll('.pub-card')];
+        const kinds = ['All', ...new Set(cards.map(card => card.dataset.kind).filter(Boolean))];
+        const label = total => total + (total === 1 ? ' publication' : ' publications');
+        filterWrap.textContent = '';
+        cards.forEach(card => { card.hidden = false; });
+        if (count) count.textContent = label(cards.length);
+        if (kinds.length < 3) return; // one kind only — a filter row would say nothing
+        kinds.forEach(kind => {
+          const filter = document.createElement('button');
+          filter.type = 'button';
+          filter.className = 'archive-filter';
+          filter.textContent = kind;
+          filter.setAttribute('aria-pressed', String(kind === 'All'));
+          filter.addEventListener('click', () => {
+            filterWrap.querySelectorAll('.archive-filter').forEach(item => item.setAttribute('aria-pressed', String(item === filter)));
+            let visible = 0;
+            cards.forEach(card => {
+              const match = kind === 'All' || card.dataset.kind === kind;
+              card.hidden = !match;
+              if (match) visible++;
+            });
+            if (count) count.textContent = label(visible);
+          });
+          filterWrap.appendChild(filter);
+        });
+      }
+      window.renderMarviPublicationFilters = buildPublicationFilters;
+
       function activate(id, updateHash = true) {
         if (!valid.has(id)) id = 'home';
         tabs.forEach(tab => {
@@ -1714,7 +1871,12 @@
           activate(tabs[next].dataset.tab);
         });
       });
-      document.querySelectorAll('[data-open]').forEach(button => button.addEventListener('click', () => activate(button.dataset.open)));
+      // Delegated so buttons rendered later from the CMS page files (the Tools
+      // cards) open their panel just like the hardcoded ones.
+      document.addEventListener('click', event => {
+        const opener = event.target.closest('[data-open]');
+        if (opener) activate(opener.dataset.open);
+      });
       menuButton.addEventListener('click', () => {
         const open = document.body.classList.toggle('menu-open');
         menuButton.setAttribute('aria-expanded', String(open));
@@ -1762,6 +1924,7 @@
       document.addEventListener('keydown', event => { if (event.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
 
       setupMotion();
+      buildPublicationFilters();
       activate(location.hash.slice(1) || 'home', false);
     })();
   </script>
@@ -1846,7 +2009,72 @@
         });
       };
 
-      const PAGE_KEYS = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'];
+      // Publications and Tools each render through one helper, shared by the
+      // first page load and the CMS preview, so the two can never drift.
+      const renderPublications = (items) => {
+        const grid = document.getElementById('publication-grid');
+        if (!grid || !Array.isArray(items)) return;
+        grid.textContent = '';
+        items.forEach((item) => {
+          const card = el('article', { class: 'pub-card' });
+          if (item.kind) card.dataset.kind = item.kind;
+          card.appendChild(el('span', { class: 'meta', text: item.meta }));
+          card.appendChild(el('h3', { text: item.title }));
+          if (item.description) card.appendChild(el('p', { text: item.description }));
+          const links = el('span', { class: 'pub-links' });
+          (item.editions || []).forEach((edition) => {
+            if (!edition || !edition.url) return;
+            const link = el('a', { text: (edition.label || 'Download') + ' ↗' });
+            link.href = edition.url;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.setAttribute('aria-label', [item.title, edition.label].filter(Boolean).join(' — '));
+            links.appendChild(link);
+          });
+          if (links.childNodes.length) card.appendChild(links);
+          grid.appendChild(card);
+        });
+        if (window.renderMarviPublicationFilters) window.renderMarviPublicationFilters();
+      };
+
+      const renderTools = (items) => {
+        const grid = document.getElementById('tool-grid');
+        if (!grid || !Array.isArray(items)) return;
+        grid.textContent = '';
+        items.forEach((item) => {
+          // Already visible: these arrive after the panel's reveal pass has run.
+          const card = el('article', { class: 'tool-card reveal is-visible' });
+          const shot = el('div', { class: 'tool-shot' });
+          const img = el('img');
+          img.loading = 'lazy';
+          img.alt = item.name ? item.name + ' screenshot' : '';
+          const photo = item.photo || {};
+          if (photo.image) img.src = photo.image;
+          applyPhotoLayout(img, photo);
+          shot.appendChild(img);
+          const copy = el('div', { class: 'tool-copy' });
+          copy.appendChild(el('span', { class: 'meta', text: item.meta }));
+          copy.appendChild(el('h3', { text: item.name }));
+          if (item.description) copy.appendChild(el('p', { text: item.description }));
+          // An external URL wins; otherwise the card opens another tab of this
+          // site, which the delegated [data-open] handler picks up.
+          const action = el(item.url ? 'a' : 'button', { class: 'button primary', text: (item.linkLabel || 'Open') + ' ' });
+          if (item.url) {
+            action.href = item.url;
+            action.target = '_blank';
+            action.rel = 'noopener';
+          } else {
+            action.type = 'button';
+            action.dataset.open = item.target || 'home';
+          }
+          action.appendChild(el('span', { text: '↗' }));
+          copy.appendChild(action);
+          card.append(shot, copy);
+          grid.appendChild(card);
+        });
+      };
+
+      const PAGE_KEYS = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive', 'publications', 'tools'];
       const pageEntries = await Promise.all(PAGE_KEYS.map((key) => load('content/pages/' + key + '.json')));
       const pages = Object.fromEntries(PAGE_KEYS.map((key, index) => [key, pageEntries[index]]));
       const home = pages.home;
@@ -1982,6 +2210,10 @@
           });
         }
       }
+
+      // --- Publications & Tools ---
+      if (pages.publications) renderPublications(pages.publications.items);
+      if (pages.tools) renderTools(pages.tools.items);
 
       // --- Page-owned images ---
       const imageSlots = {
@@ -2256,6 +2488,9 @@
           }
         }
 
+        if (key === 'publications') renderPublications(page.items);
+        if (key === 'tools') renderTools(page.items);
+
         const slots = imageSlots[key];
         if (slots && page.images) {
           Object.entries(slots).forEach(([imageKey, slot]) => {
@@ -2303,7 +2538,7 @@
       // English is captured live from the page, so it always matches the
       // current CMS content; other languages override the "spine" strings.
       const I18N = (await load('content/i18n.json')) || {};
-      const SECTION_KEYS = ['approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'];
+      const SECTION_KEYS = ['approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive', 'publications', 'tools'];
       const SLOTS = [
         { key: 'ui.explore', sel: '.sidebar .nav-label' },
         ...['home', ...SECTION_KEYS].map((t) => ({ key: 'nav.' + t, sel: '.nav-tab[data-tab="' + t + '"] .nav-name' })),

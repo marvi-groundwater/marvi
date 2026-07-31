@@ -9,7 +9,9 @@
     films: 'Films',
     game: 'Groundwater game',
     people: 'People & partners',
-    archive: 'Image archive'
+    archive: 'Image archive',
+    publications: 'Publications',
+    tools: 'Tools'
   };
 
   var assetUrl = function (props, value) {

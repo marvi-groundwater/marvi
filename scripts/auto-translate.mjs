@@ -39,7 +39,7 @@ const decode = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&g
 // ---- 1. gather the English source for every key ----
 function collectEnglish() {
   const en = {};
-  const pageKeys = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'];
+  const pageKeys = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive', 'publications', 'tools'];
   const pages = Object.fromEntries(pageKeys.map((key) => [
     key,
     JSON.parse(readFileSync(ROOT + `content/pages/${key}.json`, 'utf8'))
