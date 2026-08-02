@@ -97,6 +97,7 @@
       background: none;
       cursor: pointer;
       text-align: left;
+      text-decoration: none;
     }
     .brand-mark {
       position: relative;
@@ -153,12 +154,13 @@
       background: transparent;
       cursor: pointer;
       text-align: left;
+      text-decoration: none;
       transition: color .2s ease, padding-left .2s ease;
     }
     .nav-tab:last-child { border-bottom: 1px solid rgba(255,255,255,.12); }
     .nav-tab:hover { color: var(--white); padding-left: 5px; }
-    .nav-tab[aria-selected="true"] { color: var(--white); }
-    .nav-tab[aria-selected="true"]::before {
+    .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"] { color: var(--white); }
+    .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"]::before {
       content: "";
       position: absolute;
       left: -28px;
@@ -171,7 +173,7 @@
     .nav-name { font-size: .78rem; font-weight: 600; letter-spacing: .01em; }
     .nav-thumb { display: none; }
     .nav-arrow { opacity: 0; transform: translateX(-5px); transition: .2s ease; }
-    .nav-tab:hover .nav-arrow, .nav-tab[aria-selected="true"] .nav-arrow { opacity: 1; transform: none; }
+    .nav-tab:hover .nav-arrow, .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"] .nav-arrow { opacity: 1; transform: none; }
     .sidebar-foot { margin-top: auto; padding-top: 35px; color: #77827e; font: .62rem/1.7 var(--mono); }
     .sidebar-foot a { color: #b2bcb8; text-decoration: none; }
 
@@ -569,7 +571,7 @@
     @media (max-width: 1080px) {
       :root { --sidebar: 238px; }
       .sidebar { padding-inline: 23px; }
-      .nav-tab[aria-selected="true"]::before { left: -23px; }
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"]::before { left: -23px; }
       .home-hero { grid-template-columns: 1fr .72fr; }
       .media-grid, .people-grid, .pub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -753,8 +755,8 @@
       }
       .nav-tab:last-child { border: 0; }
       .nav-tab:hover { padding-left: 15px; background: rgba(255,255,255,.07); }
-      .nav-tab[aria-selected="true"] { color: var(--ink); background: #f1eee7; }
-      .nav-tab[aria-selected="true"]::before { display: none; }
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"] { color: var(--ink); background: #f1eee7; }
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"]::before { display: none; }
       .nav-number { display: none; }
       .nav-name { font-size: .73rem; }
       .nav-arrow { justify-self: end; }
@@ -974,12 +976,12 @@
       }
       .nav-tab:last-child { border-bottom: 1px solid rgba(255,255,255,.13); }
       .nav-tab:hover { padding-left: 14px; color: var(--white); background: rgba(255,255,255,.08); }
-      .nav-tab[aria-selected="true"] { color: var(--ink); border-color: var(--paper); background: var(--paper); }
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"] { color: var(--ink); border-color: var(--paper); background: var(--paper); }
       /* .nav-number/.nav-name colour their own spans, so they win over the
          selected tab's inherited ink and would leave white-on-paper. */
-      .nav-tab[aria-selected="true"] .nav-number { color: var(--muted); text-shadow: none; }
-      .nav-tab[aria-selected="true"] .nav-name { color: var(--ink); text-shadow: none; }
-      .nav-tab[aria-selected="true"]::before { display: none; }
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"] .nav-number { color: var(--muted); text-shadow: none; }
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"] .nav-name { color: var(--ink); text-shadow: none; }
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"]::before { display: none; }
       .nav-number { display: block; margin-bottom: auto; color: #d3dad5; font-size: .57rem; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
       .nav-name { max-width: 115px; font-size: .78rem; font-weight: 650; line-height: 1.25; color: #fff; text-shadow: var(--text-shade); }
       .nav-arrow { position: absolute; right: 13px; bottom: 12px; opacity: 1; transform: none; }
@@ -1009,8 +1011,8 @@
           linear-gradient(155deg, rgb(var(--scrim-rgb) / .34), rgb(var(--scrim-rgb) / .6));
         pointer-events: none;
       }
-      .nav-tab[aria-selected="true"] .nav-thumb,
-      .nav-tab[aria-selected="true"]::after { display: none; }
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"] .nav-thumb,
+      .nav-tab[aria-selected="true"], .nav-tab[aria-current="page"]::after { display: none; }
       .sidebar-foot { margin-top: 23px; padding-top: 0; }
 
       .home-hero {
@@ -2074,7 +2076,10 @@
         });
       };
 
-      const PAGE_KEYS = ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive', 'publications', 'tools'];
+      // The build sets window.MARVI_PAGES from the files in content/pages/, so
+      // a page added in the CMS is picked up without editing this list. The
+      // literal below is the fallback when the page is opened unbuilt.
+      const PAGE_KEYS = window.MARVI_PAGES || ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive', 'publications', 'tools'];
       const pageEntries = await Promise.all(PAGE_KEYS.map((key) => load('content/pages/' + key + '.json')));
       const pages = Object.fromEntries(PAGE_KEYS.map((key, index) => [key, pageEntries[index]]));
       const home = pages.home;
@@ -2538,7 +2543,9 @@
       // English is captured live from the page, so it always matches the
       // current CMS content; other languages override the "spine" strings.
       const I18N = (await load('content/i18n.json')) || {};
-      const SECTION_KEYS = ['approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive', 'publications', 'tools'];
+      // Same source as PAGE_KEYS (minus home) so a CMS-created page gets its
+      // nav label and intro translated like any other section.
+      const SECTION_KEYS = (window.MARVI_PAGES || ['home', 'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive', 'publications', 'tools']).filter((k) => k !== 'home');
       const SLOTS = [
         { key: 'ui.explore', sel: '.sidebar .nav-label' },
         ...['home', ...SECTION_KEYS].map((t) => ({ key: 'nav.' + t, sel: '.nav-tab[data-tab="' + t + '"] .nav-name' })),
