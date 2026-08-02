@@ -216,8 +216,11 @@ const chunk = (arr, n) => Array.from({ length: Math.ceil(arr.length / n) }, (_, 
       }
     }
   } catch (err) {
-    console.error(`Auto-translate failed (site keeps existing translations): ${err.message}`);
-    process.exit(1);
+    // Fail soft: a provider outage (e.g. GitHub Models retirement brownouts)
+    // must not redden the pipeline — untranslated strings stay English and
+    // retry automatically on the next run.
+    console.warn(`Auto-translate skipped (provider error, will retry next run): ${err.message}`);
+    process.exit(0);
   }
 
   // Refresh the baseline only for keys that fully translated, so a partial

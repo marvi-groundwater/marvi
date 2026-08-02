@@ -4,9 +4,10 @@ name: Auto-translate content
 # into every language and commit the result. Only the delta is translated —
 # existing translations are left untouched.
 #
-# Provider: the ANTHROPIC_API_KEY repo secret (Claude, claude-opus-5).
-# Without the secret the run is a clean no-op — the site falls back to
-# English for untranslated strings, nothing breaks.
+# Provider: the ANTHROPIC_API_KEY repo secret (Claude, claude-opus-5) when
+# set; otherwise GitHub Models via the built-in token — free, but being
+# retired by GitHub with intermittent brownouts, so treat it as best-effort.
+# Provider outages fail soft: strings stay English and retry next run.
 #
 # The translate commit itself triggers a second deploy carrying the new
 # translations; that is intentional (the first deploy ships the English edit
@@ -24,6 +25,7 @@ on:
 
 permissions:
   contents: write   # to commit updated translations
+  models: read      # GitHub Models fallback (free, being retired)
 
 concurrency:
   group: auto-translate-${{ github.ref }}
@@ -45,6 +47,9 @@ jobs:
       - name: Translate new / changed strings
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MODELS_ENDPOINT: https://models.github.ai/inference/chat/completions
+          MODELS_MODEL: openai/gpt-4o-mini
+          MODELS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/auto-translate.mjs
 
       - name: Commit updated translations
