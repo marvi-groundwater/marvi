@@ -1,0 +1,12 @@
+{
+  "name": "marvi-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/build.mjs && npx --yes http-server _site -p 8899 -c-1"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.5"
+  }
+}

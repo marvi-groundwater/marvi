@@ -97,6 +97,7 @@
       background: none;
       cursor: pointer;
       text-align: left;
+      text-decoration: none;
     }
     .brand-mark {
       position: relative;
@@ -153,12 +154,13 @@
       background: transparent;
       cursor: pointer;
       text-align: left;
+      text-decoration: none;
       transition: color .2s ease, padding-left .2s ease;
     }
     .nav-tab:last-child { border-bottom: 1px solid rgba(255,255,255,.12); }
     .nav-tab:hover { color: var(--white); padding-left: 5px; }
-    .nav-tab[aria-selected="true"] { color: var(--white); }
-    .nav-tab[aria-selected="true"]::before {
+    .nav-tab[aria-current="page"] { color: var(--white); }
+    .nav-tab[aria-current="page"]::before {
       content: "";
       position: absolute;
       left: -28px;
@@ -171,7 +173,7 @@
     .nav-name { font-size: .78rem; font-weight: 600; letter-spacing: .01em; }
     .nav-thumb { display: none; }
     .nav-arrow { opacity: 0; transform: translateX(-5px); transition: .2s ease; }
-    .nav-tab:hover .nav-arrow, .nav-tab[aria-selected="true"] .nav-arrow { opacity: 1; transform: none; }
+    .nav-tab:hover .nav-arrow, .nav-tab[aria-current="page"] .nav-arrow { opacity: 1; transform: none; }
     .sidebar-foot { margin-top: auto; padding-top: 35px; color: #77827e; font: .62rem/1.7 var(--mono); }
     .sidebar-foot a { color: #b2bcb8; text-decoration: none; }
 
@@ -484,7 +486,7 @@
     @media (max-width: 1080px) {
       :root { --sidebar: 238px; }
       .sidebar { padding-inline: 23px; }
-      .nav-tab[aria-selected="true"]::before { left: -23px; }
+      .nav-tab[aria-current="page"]::before { left: -23px; }
       .home-hero { grid-template-columns: 1fr .72fr; }
       .media-grid, .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -668,8 +670,8 @@
       }
       .nav-tab:last-child { border: 0; }
       .nav-tab:hover { padding-left: 15px; background: rgba(255,255,255,.07); }
-      .nav-tab[aria-selected="true"] { color: var(--ink); background: #f1eee7; }
-      .nav-tab[aria-selected="true"]::before { display: none; }
+      .nav-tab[aria-current="page"] { color: var(--ink); background: #f1eee7; }
+      .nav-tab[aria-current="page"]::before { display: none; }
       .nav-number { display: none; }
       .nav-name { font-size: .73rem; }
       .nav-arrow { justify-self: end; }
@@ -878,12 +880,12 @@
       }
       .nav-tab:last-child { border-bottom: 1px solid rgba(255,255,255,.13); }
       .nav-tab:hover { padding-left: 14px; color: var(--white); background: rgba(255,255,255,.08); }
-      .nav-tab[aria-selected="true"] { color: var(--ink); border-color: var(--paper); background: var(--paper); }
+      .nav-tab[aria-current="page"] { color: var(--ink); border-color: var(--paper); background: var(--paper); }
       /* .nav-number/.nav-name colour their own spans, so they win over the
          selected tab's inherited ink and would leave white-on-paper. */
-      .nav-tab[aria-selected="true"] .nav-number { color: var(--muted); text-shadow: none; }
-      .nav-tab[aria-selected="true"] .nav-name { color: var(--ink); text-shadow: none; }
-      .nav-tab[aria-selected="true"]::before { display: none; }
+      .nav-tab[aria-current="page"] .nav-number { color: var(--muted); text-shadow: none; }
+      .nav-tab[aria-current="page"] .nav-name { color: var(--ink); text-shadow: none; }
+      .nav-tab[aria-current="page"]::before { display: none; }
       .nav-number { display: block; margin-bottom: auto; color: #d3dad5; font-size: .57rem; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
       .nav-name { max-width: 115px; font-size: .78rem; font-weight: 650; line-height: 1.25; color: #fff; text-shadow: var(--text-shade); }
       .nav-arrow { position: absolute; right: 13px; bottom: 12px; opacity: 1; transform: none; }
@@ -913,8 +915,8 @@
           linear-gradient(155deg, rgb(var(--scrim-rgb) / .34), rgb(var(--scrim-rgb) / .6));
         pointer-events: none;
       }
-      .nav-tab[aria-selected="true"] .nav-thumb,
-      .nav-tab[aria-selected="true"]::after { display: none; }
+      .nav-tab[aria-current="page"] .nav-thumb,
+      .nav-tab[aria-current="page"]::after { display: none; }
       .sidebar-foot { margin-top: 23px; padding-top: 0; }
 
       .home-hero {
@@ -1363,560 +1365,9 @@
   <footer class="footer"><span>© 2026 MARVI Project</span><span>Groundwater knowledge · Community action</span><a href="https://www.marvi.org.in/" target="_blank" rel="noopener">Original MARVI site ↗</a></footer>
 
   <script src="assets/marvi-originals/gallery.js"></script>
-  <script>
-    (() => {
-      const tabs = [...document.querySelectorAll('[data-tab]')];
-      const panels = [...document.querySelectorAll('[data-panel]')];
-      const menuButton = document.querySelector('.menu-toggle');
-      const valid = new Set(panels.map(panel => panel.dataset.panel));
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let galleryBuilt = false;
-
-      function setupMotion() {
-        document.body.classList.add('motion-ready');
-        const motionItems = [...document.querySelectorAll('.project-card, .process-step, .media-card, .video-card, .people-card, .metric')];
-        motionItems.forEach((item, index) => {
-          item.classList.add('motion-item');
-          item.style.setProperty('--motion-delay', (index % 4) * 65 + 'ms');
-        });
-
-        if (reduceMotion || !('IntersectionObserver' in window)) {
-          motionItems.forEach(item => item.classList.add('is-inview'));
-        } else {
-          const motionObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-              if (!entry.isIntersecting) return;
-              entry.target.classList.add('is-inview');
-              motionObserver.unobserve(entry.target);
-            });
-          }, { threshold: .14, rootMargin: '0px 0px -5% 0px' });
-          motionItems.forEach(item => motionObserver.observe(item));
-        }
-
-        const metrics = [...document.querySelectorAll('.metric strong')];
-        metrics.forEach(metric => { metric.dataset.value = metric.textContent.trim(); });
-        const animateMetric = metric => {
-          if (metric.dataset.animated) return;
-          metric.dataset.animated = 'true';
-          const end = Number(metric.dataset.value);
-          if (!Number.isFinite(end) || reduceMotion) return;
-          const start = end >= 1000 ? end - 12 : 0;
-          const started = performance.now();
-          const tick = now => {
-            const progress = Math.min((now - started) / 1100, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            metric.textContent = Math.round(start + (end - start) * eased).toLocaleString();
-            if (progress < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        };
-        const metricRow = document.querySelector('.metric-row');
-        if (metricRow && !reduceMotion && 'IntersectionObserver' in window) {
-          const metricObserver = new IntersectionObserver(entries => {
-            if (!entries.some(entry => entry.isIntersecting)) return;
-            metrics.forEach(animateMetric);
-            metricObserver.disconnect();
-          }, { threshold: .4 });
-          metricObserver.observe(metricRow);
-        }
-
-        if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
-          document.querySelectorAll('.story-card').forEach(card => {
-            card.addEventListener('pointermove', event => {
-              const bounds = card.getBoundingClientRect();
-              const x = (event.clientX - bounds.left) / bounds.width;
-              const y = (event.clientY - bounds.top) / bounds.height;
-              card.style.setProperty('--spot-x', (x * 100).toFixed(1) + '%');
-              card.style.setProperty('--spot-y', (y * 100).toFixed(1) + '%');
-              card.style.transform = `perspective(1000px) rotateX(${((.5 - y) * 3.5).toFixed(2)}deg) rotateY(${((x - .5) * 4.5).toFixed(2)}deg) translateY(-4px)`;
-            });
-            card.addEventListener('pointerleave', () => {
-              card.style.transform = '';
-              card.style.removeProperty('--spot-x');
-              card.style.removeProperty('--spot-y');
-            });
-          });
-        }
-
-        const progressBar = document.getElementById('scroll-progress');
-        let progressFrame = 0;
-        const updateProgress = () => {
-          progressFrame = 0;
-          const distance = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = distance > 0 ? Math.min(window.scrollY / distance, 1) : 0;
-          progressBar.style.transform = `scaleX(${progress})`;
-        };
-        window.addEventListener('scroll', () => {
-          if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
-        }, { passive: true });
-        window.addEventListener('resize', updateProgress);
-        updateProgress();
-      }
-
-      function showReveals(panel) {
-        panel.querySelectorAll('.reveal').forEach((element, index) => {
-          element.classList.remove('is-visible');
-          window.setTimeout(() => element.classList.add('is-visible'), Math.min(index * 90, 420) + 60);
-        });
-      }
-
-      async function buildGallery() {
-        if (galleryBuilt) return;
-        galleryBuilt = true;
-        // Prefer the editable CMS file; fall back to the bundled gallery.js data.
-        let data = null;
-        try {
-          const res = await fetch('content/gallery.json', { cache: 'no-store' });
-          if (res.ok) {
-            const json = await res.json();
-            data = Array.isArray(json) ? json : json.items;
-          }
-        } catch (err) { /* fall back below */ }
-        if (!data) data = window.MARVI_GALLERY;
-        if (!data || !data.length) { galleryBuilt = false; return; }
-        window.MARVI_GALLERY = data; // keep indices aligned for the lightbox
-        const srcOf = (item) => item.image || ('assets/marvi-originals/' + item.file);
-
-        const grid = document.getElementById('gallery-grid');
-        const filterWrap = document.getElementById('archive-filters');
-        const count = document.getElementById('gallery-count');
-        const categories = ['All', ...new Set(data.map(item => item.category))];
-        const fragment = document.createDocumentFragment();
-
-        data.forEach((item, index) => {
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.className = 'gallery-item';
-          button.dataset.category = item.category;
-          button.dataset.index = index;
-          button.setAttribute('aria-label', 'Open ' + item.title);
-          const image = document.createElement('img');
-          image.loading = 'lazy';
-          image.decoding = 'async';
-          image.src = srcOf(item);
-          image.alt = item.title;
-          const label = document.createElement('span');
-          label.textContent = item.category;
-          image.addEventListener('load', () => {
-            if (image.naturalWidth && image.naturalHeight) {
-              label.textContent = item.category + ' · ' + image.naturalWidth + '×' + image.naturalHeight;
-            }
-          });
-          button.append(image, label);
-          fragment.appendChild(button);
-        });
-        grid.appendChild(fragment);
-        if (count) count.textContent = data.length + (data.length === 1 ? ' archived image' : ' archived images');
-
-        categories.forEach(category => {
-          const filter = document.createElement('button');
-          filter.type = 'button';
-          filter.className = 'archive-filter';
-          filter.textContent = category;
-          filter.setAttribute('aria-pressed', String(category === 'All'));
-          filter.addEventListener('click', () => {
-            document.querySelectorAll('.archive-filter').forEach(item => item.setAttribute('aria-pressed', String(item === filter)));
-            let visible = 0;
-            grid.querySelectorAll('.gallery-item').forEach(item => {
-              const match = category === 'All' || item.dataset.category === category;
-              item.hidden = !match;
-              if (match) visible++;
-            });
-            count.textContent = visible + (visible === 1 ? ' archived image' : ' archived images');
-          });
-          filterWrap.appendChild(filter);
-        });
-      }
-
-      function activate(id, updateHash = true) {
-        if (!valid.has(id)) id = 'home';
-        tabs.forEach(tab => {
-          const active = tab.dataset.tab === id;
-          tab.setAttribute('aria-selected', String(active));
-          tab.tabIndex = active ? 0 : -1;
-        });
-        panels.forEach(panel => { panel.hidden = panel.dataset.panel !== id; });
-        const activePanel = panels.find(panel => panel.dataset.panel === id);
-        if (id === 'archive') buildGallery();
-        showReveals(activePanel);
-        document.body.classList.remove('menu-open');
-        menuButton.setAttribute('aria-expanded', 'false');
-        menuButton.setAttribute('aria-label', 'Open navigation');
-        if (updateHash && location.hash !== '#' + id) history.pushState(null, '', '#' + id);
-        window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-        document.title = 'MARVI — ' + tabs.find(tab => tab.dataset.tab === id).querySelector('.nav-name').textContent;
-      }
-
-      tabs.forEach((tab, index) => {
-        tab.addEventListener('click', () => activate(tab.dataset.tab));
-        tab.addEventListener('keydown', event => {
-          if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
-          event.preventDefault();
-          let next = index;
-          if (event.key === 'ArrowDown') next = (index + 1) % tabs.length;
-          if (event.key === 'ArrowUp') next = (index - 1 + tabs.length) % tabs.length;
-          if (event.key === 'Home') next = 0;
-          if (event.key === 'End') next = tabs.length - 1;
-          tabs[next].focus();
-          activate(tabs[next].dataset.tab);
-        });
-      });
-      document.querySelectorAll('[data-open]').forEach(button => button.addEventListener('click', () => activate(button.dataset.open)));
-      menuButton.addEventListener('click', () => {
-        const open = document.body.classList.toggle('menu-open');
-        menuButton.setAttribute('aria-expanded', String(open));
-        menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-      });
-      window.addEventListener('popstate', () => activate(location.hash.slice(1) || 'home', false));
-
-      const search = document.getElementById('media-search');
-      const mediaCards = [...document.querySelectorAll('.media-card')];
-      const mediaCount = document.getElementById('media-count');
-      search.addEventListener('input', () => {
-        const query = search.value.trim().toLowerCase();
-        let visible = 0;
-        mediaCards.forEach(card => {
-          const match = !query || card.textContent.toLowerCase().includes(query) || card.dataset.search.includes(query);
-          card.hidden = !match;
-          if (match) visible++;
-        });
-        mediaCount.textContent = visible + (visible === 1 ? ' story' : ' stories');
-      });
-
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImage = document.getElementById('lightbox-image');
-      const lightboxCaption = document.getElementById('lightbox-caption');
-      const lightboxClose = document.getElementById('lightbox-close');
-      function closeLightbox() {
-        lightbox.hidden = true;
-        lightboxImage.removeAttribute('src');
-      }
-      document.getElementById('gallery-grid').addEventListener('click', event => {
-        const button = event.target.closest('.gallery-item');
-        if (!button) return;
-        const item = window.MARVI_GALLERY[Number(button.dataset.index)];
-        lightboxImage.src = item.image || ('assets/marvi-originals/' + item.file);
-        lightboxImage.alt = item.title;
-        lightboxCaption.textContent = item.category + ' · ' + item.title;
-        lightboxImage.onload = () => {
-          lightboxCaption.textContent = item.category + ' · ' + lightboxImage.naturalWidth + '×' + lightboxImage.naturalHeight;
-        };
-        lightbox.hidden = false;
-        lightboxClose.focus();
-      });
-      lightboxClose.addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });
-      document.addEventListener('keydown', event => { if (event.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
-
-      setupMotion();
-      activate(location.hash.slice(1) || 'home', false);
-    })();
-  </script>
-
-  <!-- Load editable content from the CMS content/ files. Every section
-       falls back to the hardcoded HTML above if its file is missing or the
-       fetch fails, so the page still works with no JS and no content files. -->
-  <script>
-    (async () => {
-      const load = async (path) => {
-        try {
-          const res = await fetch(path, { cache: 'no-store' });
-          return res.ok ? await res.json() : null;
-        } catch (err) { return null; }
-      };
-
-      // --- tiny DOM helpers ---
-      const el = (tag, opts = {}) => {
-        const node = document.createElement(tag);
-        if (opts.class) node.className = opts.class;
-        if (opts.text != null) node.textContent = opts.text;
-        return node;
-      };
-      const setText = (root, sel, value) => {
-        const node = root && root.querySelector(sel);
-        if (node && value != null) node.textContent = value;
-      };
-      const setMultiline = (root, sel, value) => {
-        const node = root && root.querySelector(sel);
-        if (!node || value == null) return;
-        node.textContent = '';
-        String(value).split('\n').forEach((line, i) => {
-          if (i > 0) node.appendChild(document.createElement('br'));
-          node.appendChild(document.createTextNode(line));
-        });
-      };
-      const ytId = (url) => {
-        const m = String(url || '').match(/[?&]v=([^&]+)/) || String(url || '').match(/youtu\.be\/([^?&]+)/);
-        return m ? m[1] : '';
-      };
-      // Apply optional per-image crop controls. 'auto'/blank = leave the CSS default.
-      const applyFit = (img, focus, fit) => {
-        if (focus && focus !== 'auto') img.style.objectPosition = focus;
-        if (fit && fit !== 'auto') img.style.objectFit = fit;
-      };
-
-      const [home, sections, media, films, partners, images, portraits, menu] = await Promise.all([
-        load('content/homepage.json'),
-        load('content/sections.json'),
-        load('content/media.json'),
-        load('content/films.json'),
-        load('content/partners.json'),
-        load('content/images.json'),
-        load('content/portraits.json'),
-        load('content/menu.json')
-      ]);
-
-      // --- Hero (homepage.json) ---
-      if (home) {
-        const hero = document.querySelector('#panel-home .hero-copy');
-        if (hero) {
-          setText(hero, '.eyebrow', home.eyebrow);
-          setMultiline(hero, 'h1', home.heroTitle);
-          setText(hero, '.lede', home.heroBody);
-          if (home.heroImage) {
-            const heroImg = document.querySelector('#panel-home .hero-image-main');
-            if (heroImg) {
-              heroImg.src = home.heroImage;
-              applyFit(heroImg, home.heroImageFocus, home.heroImageFit);
-            }
-          }
-          [['approach', home.primaryButtonLabel], ['mywell', home.secondaryButtonLabel]].forEach(([key, label]) => {
-            const btn = hero.querySelector('button[data-open="' + key + '"]');
-            if (btn && label != null) {
-              const arrow = btn.querySelector('span');
-              btn.textContent = label + ' ';
-              if (arrow) btn.appendChild(arrow);
-            }
-          });
-        }
-      }
-
-      // --- Section intros (sections.json) ---
-      if (sections) {
-        Object.keys(sections).forEach((key) => {
-          const head = document.querySelector('#panel-' + key + ' .page-head');
-          const data = sections[key];
-          if (!head || !data) return;
-          setText(head, '.eyebrow', data.eyebrow);
-          setText(head, 'h1', data.title);
-          setText(head, '.lede', data.lede);
-        });
-      }
-
-      // --- Media stories (media.json) ---
-      if (media && Array.isArray(media.items)) {
-        const grid = document.getElementById('media-grid');
-        const count = document.getElementById('media-count');
-        if (grid) {
-          grid.textContent = '';
-          media.items.forEach((item) => {
-            const a = el('a', { class: 'media-card' });
-            a.href = item.url || '#';
-            a.target = '_blank';
-            a.rel = 'noopener';
-            a.dataset.search = [item.meta, item.title, item.description].filter(Boolean).join(' ').toLowerCase();
-            a.appendChild(el('span', { class: 'meta', text: item.meta }));
-            a.appendChild(el('h3', { text: item.title }));
-            a.appendChild(el('p', { text: item.description }));
-            a.appendChild(el('span', { class: 'read', text: 'Read story ↗' }));
-            grid.appendChild(a);
-          });
-          const n = media.items.length;
-          if (count) count.textContent = n + (n === 1 ? ' selected story' : ' selected stories');
-
-          // Re-wire search over the freshly rendered cards. Cloning the input
-          // drops the stale listener the page's own script bound to old cards.
-          const oldSearch = document.getElementById('media-search');
-          if (oldSearch) {
-            const search = oldSearch.cloneNode(true);
-            oldSearch.replaceWith(search);
-            const cards = [...grid.querySelectorAll('.media-card')];
-            search.addEventListener('input', () => {
-              const query = search.value.trim().toLowerCase();
-              let visible = 0;
-              cards.forEach((card) => {
-                const match = !query || card.textContent.toLowerCase().includes(query) || card.dataset.search.includes(query);
-                card.hidden = !match;
-                if (match) visible++;
-              });
-              if (count) count.textContent = visible + (visible === 1 ? ' story' : ' stories');
-            });
-          }
-        }
-      }
-
-      // --- Films (films.json) ---
-      if (films && Array.isArray(films.items)) {
-        const grid = document.querySelector('#panel-films .video-grid');
-        if (grid) {
-          grid.textContent = '';
-          films.items.forEach((item) => {
-            const a = el('a', { class: 'video-card' });
-            a.href = item.url || '#';
-            a.target = '_blank';
-            a.rel = 'noopener';
-            const wrap = el('div', { class: 'video-image' });
-            const img = el('img');
-            img.loading = 'lazy';
-            const id = ytId(item.url);
-            if (id) img.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
-            img.alt = item.title || '';
-            const play = el('span', { class: 'play' });
-            play.setAttribute('aria-hidden', 'true');
-            wrap.appendChild(img);
-            wrap.appendChild(play);
-            a.appendChild(wrap);
-            a.appendChild(el('span', { class: 'meta', text: item.meta }));
-            a.appendChild(el('h3', { text: item.title }));
-            grid.appendChild(a);
-          });
-        }
-      }
-
-      // --- People & partners (partners.json) ---
-      if (partners && Array.isArray(partners.items)) {
-        const grid = document.querySelector('#panel-people .people-grid');
-        if (grid) {
-          grid.textContent = '';
-          partners.items.forEach((item) => {
-            const card = el('article', { class: 'people-card' });
-            card.appendChild(el('span', { class: 'meta', text: item.meta }));
-            const h3 = el('h3');
-            if (item.url) {
-              const a = el('a', { text: (item.name || '') + ' ↗' });
-              a.href = item.url;
-              a.target = '_blank';
-              a.rel = 'noopener';
-              h3.appendChild(a);
-            } else {
-              h3.textContent = item.name || '';
-            }
-            card.appendChild(h3);
-            grid.appendChild(card);
-          });
-        }
-      }
-
-      // --- Section images (images.json → any element with data-img) ---
-      if (images) {
-        document.querySelectorAll('[data-img]').forEach((img) => {
-          const entry = images[img.dataset.img];
-          if (!entry) return;
-          const src = typeof entry === 'string' ? entry : entry.image;
-          if (src) img.src = src;
-          if (entry && typeof entry === 'object') applyFit(img, entry.focus, entry.fit);
-        });
-      }
-
-      // --- Menu card photos (menu.json → nav tabs, shown on mobile) ---
-      if (menu) {
-        document.querySelectorAll('.nav-tab').forEach((tab) => {
-          const entry = menu[tab.dataset.tab];
-          const thumb = tab.querySelector('.nav-thumb');
-          if (entry && thumb) {
-            thumb.src = entry.image;
-            applyFit(thumb, entry.focus, entry.fit);
-          }
-        });
-      }
-
-      // --- People portrait band (portraits.json) ---
-      if (portraits && Array.isArray(portraits.items)) {
-        const band = document.querySelector('#panel-people .portrait-band');
-        if (band) {
-          band.textContent = '';
-          portraits.items.forEach((item) => {
-            if (!item || !item.image) return;
-            const img = el('img');
-            img.loading = 'lazy';
-            img.src = item.image;
-            img.alt = 'MARVI team member portrait';
-            applyFit(img, item.focus, item.fit);
-            band.appendChild(img);
-          });
-        }
-      }
-
-      // --- Language switcher (content/i18n.json) ---
-      // English is captured live from the page, so it always matches the
-      // current CMS content; other languages override the "spine" strings.
-      const I18N = (await load('content/i18n.json')) || {};
-      const SECTION_KEYS = ['approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'];
-      const SLOTS = [
-        { key: 'ui.explore', sel: '.sidebar .nav-label' },
-        ...['home', ...SECTION_KEYS].map((t) => ({ key: 'nav.' + t, sel: '.nav-tab[data-tab="' + t + '"] .nav-name' })),
-        { key: 'hero.eyebrow', sel: '#panel-home .hero-copy .eyebrow' },
-        { key: 'hero.title', sel: '#panel-home .hero-copy h1', multiline: true },
-        { key: 'hero.body', sel: '#panel-home .hero-copy .lede' },
-        { key: 'hero.btn1', sel: '#panel-home .hero-copy button[data-open="approach"]', button: true },
-        { key: 'hero.btn2', sel: '#panel-home .hero-copy button[data-open="mywell"]', button: true },
-        ...SECTION_KEYS.flatMap((k) => [
-          { key: 'sec.' + k + '.eyebrow', sel: '#panel-' + k + ' .page-head .eyebrow' },
-          { key: 'sec.' + k + '.title', sel: '#panel-' + k + ' .page-head h1' },
-          { key: 'sec.' + k + '.lede', sel: '#panel-' + k + ' .page-head .lede' }
-        ])
-      ];
-      const readSlot = (slot) => {
-        const node = document.querySelector(slot.sel);
-        if (!node) return null;
-        if (slot.multiline) return Array.from(node.childNodes).map((n) => (n.nodeName === 'BR' ? '\n' : n.textContent)).join('');
-        if (slot.button) return (node.childNodes[0] ? node.childNodes[0].textContent : '').trim();
-        return node.textContent;
-      };
-      const writeSlot = (slot, value, rtl) => {
-        const node = document.querySelector(slot.sel);
-        if (!node) return;
-        node.setAttribute('dir', rtl ? 'rtl' : 'ltr');
-        if (value == null) return;
-        if (slot.multiline) {
-          node.textContent = '';
-          String(value).split('\n').forEach((line, i) => {
-            if (i > 0) node.appendChild(document.createElement('br'));
-            node.appendChild(document.createTextNode(line));
-          });
-          return;
-        }
-        if (slot.button) {
-          const arrow = node.querySelector('span');
-          node.textContent = value + ' ';
-          if (arrow) node.appendChild(arrow);
-          return;
-        }
-        node.textContent = value;
-      };
-      const EN = {};
-      SLOTS.forEach((s) => { const v = readSlot(s); if (v != null) EN[s.key] = v; });
-      // Generic body content: any element tagged with data-i18n="key".
-      const bodyNodes = [...document.querySelectorAll('[data-i18n]')];
-      const EN_BODY = {};
-      bodyNodes.forEach((n) => { EN_BODY[n.getAttribute('data-i18n')] = n.textContent; });
-      const RTL_LANGS = ['ar'];
-      const applyLanguage = (lang) => {
-        const rtl = RTL_LANGS.indexOf(lang) !== -1;
-        document.documentElement.lang = lang;
-        SLOTS.forEach((s) => {
-          const t = (lang !== 'en' && I18N[lang] && I18N[lang][s.key] != null) ? I18N[lang][s.key] : EN[s.key];
-          writeSlot(s, t, rtl);
-        });
-        bodyNodes.forEach((n) => {
-          const key = n.getAttribute('data-i18n');
-          const t = (lang !== 'en' && I18N[lang] && I18N[lang][key] != null) ? I18N[lang][key] : EN_BODY[key];
-          if (t != null) n.textContent = t;
-          n.setAttribute('dir', rtl ? 'rtl' : 'ltr');
-        });
-      };
-      let savedLang = 'en';
-      try { savedLang = localStorage.getItem('marvi-lang') || 'en'; } catch (e) {}
-      const langSelect = document.getElementById('lang-select');
-      if (langSelect) {
-        langSelect.value = savedLang;
-        langSelect.addEventListener('change', () => {
-          applyLanguage(langSelect.value);
-          try { localStorage.setItem('marvi-lang', langSelect.value); } catch (e) {}
-        });
-      }
-      if (savedLang !== 'en') applyLanguage(savedLang);
-    })();
-  </script>
+  <!-- Behaviour is built to /assets/app.mjs; content and translation are
+       baked in at build time by scripts/build.mjs. This file is the
+       template, not a served page — open the built _site/ instead. -->
+  <script type="module" src="src/app.mjs"></script>
 </body>
 </html>
