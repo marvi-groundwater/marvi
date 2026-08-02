@@ -17,6 +17,7 @@
  * translations — English is always the runtime fallback.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { translatableStrings, isBuiltin } from '../src/templates.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const I18N_PATH = ROOT + 'content/i18n.json';
@@ -41,8 +42,11 @@ function collectEnglish() {
   const en = {};
   const home = JSON.parse(readFileSync(ROOT + 'content/homepage.json', 'utf8'));
   const sections = JSON.parse(readFileSync(ROOT + 'content/sections.json', 'utf8'));
-  let html = readFileSync(ROOT + 'index.html', 'utf8');
-  const body = html.slice(0, html.indexOf('<!-- Load editable content'));
+  const html = readFileSync(ROOT + 'index.html', 'utf8');
+  // index.html is now the build template and carries no inline script, so the
+  // whole file is source. (It used to be sliced at a marker comment that the
+  // scripts sat below; that comment no longer exists.)
+  const body = html;
 
   // hero (from the CMS homepage file)
   en['hero.eyebrow'] = home.eyebrow;
@@ -70,6 +74,25 @@ function collectEnglish() {
   // body prose tagged with data-i18n
   const bodyRe = /data-i18n="([^"]+)"[^>]*>([^<]+)</g;
   while ((m = bodyRe.exec(body))) en[m[1]] = decode(m[2].trim());
+
+  // Pages created in the CMS. Their markup does not exist until build time, so
+  // the strings come from the registry via the same helper the renderer uses —
+  // scraping index.html would miss them entirely and leave new pages English.
+  let registry = null;
+  try {
+    registry = JSON.parse(readFileSync(ROOT + 'content/pages.json', 'utf8'));
+  } catch { /* no registry yet */ }
+  for (const page of registry?.pages || []) {
+    if (!page || !page.id) continue;
+    if (isBuiltin(page)) {
+      // The registry owns menu names for every page, including the authored
+      // ones — renaming a builtin section there must retranslate its nav label
+      // rather than silently keeping the name baked into index.html.
+      if (page.name) en[`nav.${page.id}`] = page.name;
+      continue;
+    }
+    for (const { key, english } of translatableStrings(page)) en[key] = english;
+  }
 
   return en;
 }

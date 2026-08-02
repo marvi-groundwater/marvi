@@ -15,7 +15,8 @@ import { readFileSync, writeFileSync, mkdirSync, cpSync, existsSync, rmSync } fr
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseHTML } from 'linkedom';
-import { hydrate, captureEnglish, applyLanguage, RTL_LANGS } from '../src/hydrate.mjs';
+import { hydrate, captureEnglish, applyLanguage } from '../src/hydrate.mjs';
+import { renderPage, applyCover, isBuiltin } from '../src/templates.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, '_site');
@@ -50,12 +51,25 @@ const probe = parseHTML(template).document;
 
 const LANGS = [...probe.querySelectorAll('#lang-select option')].map((o) => o.value);
 
-// Panel order is nav order; the nav is the source of truth for both.
-const PAGES = [...probe.querySelectorAll('.nav-tab')].map((tab) => ({
-  id: tab.getAttribute('data-tab'),
-  slug: tab.getAttribute('data-tab') === 'home' ? '' : tab.getAttribute('data-tab') + '/',
-  name: tab.querySelector('.nav-name').textContent.trim()
-}));
+// content/pages.json is the registry: it decides which pages exist, in what
+// order, and whether each is a hand-authored section from index.html
+// ("builtin") or one an editor created in the CMS. Falling back to the nav in
+// the template keeps the build working if the file is ever missing.
+const registry = readJSON('content/pages.json');
+const registryPages =
+  registry && Array.isArray(registry.pages) && registry.pages.length
+    ? registry.pages
+    : [...probe.querySelectorAll('.nav-tab')].map((tab) => ({
+        id: tab.getAttribute('data-tab'),
+        name: tab.querySelector('.nav-name').textContent.trim(),
+        template: 'builtin'
+      }));
+
+const PAGES = registryPages
+  .filter((p) => p && p.id && p.published !== false)
+  .map((p) => ({ ...p, slug: p.id === 'home' ? '' : p.id + '/' }));
+
+const SECTION_IDS = PAGES.filter((p) => p.id !== 'home').map((p) => p.id);
 
 const urlFor = (lang, slug) => (lang === 'en' ? '/' + slug : '/' + lang + '/' + slug);
 
@@ -74,13 +88,95 @@ const describeIn = (document, page) => {
   return node ? node.textContent.trim() : '';
 };
 
-/** Per-page social image, reusing the menu thumbnails the CMS already manages. */
+/**
+ * Per-page social image. Builtin sections use the menu thumbnails the CMS
+ * already manages; CMS-created pages fall back to their own cover photo, so a
+ * new page still gets a proper card when shared.
+ */
 const imageFor = (page) => {
   const entry = content.menu?.[page.id];
-  const src = entry && (typeof entry === 'string' ? entry : entry.image);
+  const src = (entry && (typeof entry === 'string' ? entry : entry.image)) || page.cover;
   if (!src) return null;
   return SITE_URL + (src.startsWith('/') ? src : '/' + src);
 };
+
+/* ---------- registry → document ---------- */
+
+/**
+ * Reshape the template to match content/pages.json: render any CMS-created
+ * page, rebuild the nav in registry order, and renumber the section counters.
+ *
+ * Runs once, before English is captured, so new pages are picked up by the
+ * translation pass like any other section.
+ */
+function applyRegistry(document) {
+  const panels = document.querySelectorAll('[data-panel]');
+  const lastPanel = panels[panels.length - 1];
+  const byId = new Map([...panels].map((p) => [p.getAttribute('data-panel'), p]));
+
+  // 1. Drop panels the registry no longer lists (unpublished or removed).
+  const wanted = new Set(PAGES.map((p) => p.id));
+  panels.forEach((panel) => {
+    if (!wanted.has(panel.getAttribute('data-panel'))) panel.remove();
+  });
+
+  // 2. Render CMS pages that have no authored markup.
+  PAGES.forEach((page, i) => {
+    if (byId.has(page.id)) return;
+    if (isBuiltin(page)) {
+      console.warn(`warning: page "${page.id}" is marked builtin but has no panel in index.html`);
+      return;
+    }
+    const section = renderPage(document, page, { index: i + 1, total: PAGES.length });
+    applyCover(section, page);
+    lastPanel.after(section);
+    byId.set(page.id, section);
+  });
+
+  // 3. Rebuild the nav in registry order. Regenerating rather than reordering
+  //    keeps the numbering, thumbnails and markup consistent for every entry,
+  //    authored or created.
+  const nav = document.querySelector('.side-nav');
+  if (nav) {
+    nav.textContent = '';
+    PAGES.forEach((page, i) => {
+      const tab = document.createElement('button');
+      tab.className = 'nav-tab';
+      tab.setAttribute('type', 'button');
+      tab.setAttribute('data-tab', page.id);
+      const thumb = document.createElement('img');
+      thumb.className = 'nav-thumb';
+      thumb.setAttribute('alt', '');
+      thumb.setAttribute('aria-hidden', 'true');
+      // menu.json wins for the builtin sections (hydrate fills those in
+      // later); a CMS page falls back to its own cover so its mobile tile
+      // is not blank.
+      if (page.cover) thumb.setAttribute('src', page.cover);
+      const number = document.createElement('span');
+      number.className = 'nav-number';
+      number.textContent = String(i + 1).padStart(2, '0');
+      const name = document.createElement('span');
+      name.className = 'nav-name';
+      name.textContent = page.name || page.id;
+      const arrow = document.createElement('span');
+      arrow.className = 'nav-arrow';
+      arrow.textContent = '↗';
+      tab.append(thumb, number, name, arrow);
+      nav.appendChild(tab);
+    });
+  }
+
+  // 4. Renumber "03 / 10" counters — the total changes when pages are added.
+  PAGES.forEach((page, i) => {
+    const index = byId.get(page.id)?.querySelector('.section-index');
+    if (index) {
+      index.textContent =
+        String(i + 1).padStart(2, '0') + ' / ' + String(PAGES.length).padStart(2, '0');
+    }
+  });
+
+  return document;
+}
 
 /* ---------- URL rewriting ---------- */
 
@@ -236,13 +332,14 @@ mkdirSync(OUT, { recursive: true });
 // Hydrate once, capture English once — English is read live off the hydrated
 // DOM so it always matches the current CMS content.
 const base = parseHTML(template).document;
+applyRegistry(base);
 hydrate(base, content);
-const englishBase = captureEnglish(base);
+const englishBase = captureEnglish(base, SECTION_IDS);
 
 let count = 0;
 for (const lang of LANGS) {
   const { document } = parseHTML(base.documentElement.outerHTML);
-  const localBase = captureEnglish(document);
+  const localBase = captureEnglish(document, SECTION_IDS);
   // Reuse the English snapshot taken before any translation was applied.
   localBase.EN = englishBase.EN;
   localBase.EN_BODY = englishBase.EN_BODY;

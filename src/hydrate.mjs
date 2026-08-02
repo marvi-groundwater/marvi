@@ -219,26 +219,32 @@ export function hydrate(document, content = {}) {
 
 /* ---------- translation ---------- */
 
+// The sections that shipped with the site. Pages created in the CMS are added
+// to this at build time, which is why the slot list below is derived from a
+// page list rather than hardcoded — a new page must pick up translations too.
 export const SECTION_KEYS = [
   'approach', 'bjs', 'groundwater', 'mywell', 'media', 'films', 'game', 'people', 'archive'
 ];
 
 export const RTL_LANGS = ['ar'];
 
-// The "spine": strings that live in known places rather than being tagged
-// with data-i18n. Keys match the ones auto-translate.mjs writes into i18n.json.
-const buildSlots = () => [
+/**
+ * The "spine": strings that live in known places rather than being tagged with
+ * data-i18n. Keys match the ones auto-translate.mjs writes into i18n.json.
+ * `sectionIds` is every page except home, in nav order.
+ */
+export const buildSlots = (sectionIds = SECTION_KEYS) => [
   { key: 'ui.explore', sel: '.sidebar .nav-label' },
-  ...['home', ...SECTION_KEYS].map((t) => ({
+  ...['home', ...sectionIds].map((t) => ({
     key: 'nav.' + t,
     sel: '.nav-tab[data-tab="' + t + '"] .nav-name'
   })),
   { key: 'hero.eyebrow', sel: '#panel-home .hero-copy .eyebrow' },
   { key: 'hero.title', sel: '#panel-home .hero-copy h1', multiline: true },
   { key: 'hero.body', sel: '#panel-home .hero-copy .lede' },
-  { key: 'hero.btn1', sel: '#panel-home .hero-copy button[data-open="approach"]', button: true },
-  { key: 'hero.btn2', sel: '#panel-home .hero-copy button[data-open="mywell"]', button: true },
-  ...SECTION_KEYS.flatMap((k) => [
+  { key: 'hero.btn1', sel: '#panel-home .hero-copy [data-open="approach"]', button: true },
+  { key: 'hero.btn2', sel: '#panel-home .hero-copy [data-open="mywell"]', button: true },
+  ...sectionIds.flatMap((k) => [
     { key: 'sec.' + k + '.eyebrow', sel: '#panel-' + k + ' .page-head .eyebrow' },
     { key: 'sec.' + k + '.title', sel: '#panel-' + k + ' .page-head h1' },
     { key: 'sec.' + k + '.lede', sel: '#panel-' + k + ' .page-head .lede' }
@@ -286,8 +292,8 @@ const writeSlot = (document, slot, value, rtl) => {
  * hydrate() and before any applyLanguage(), because English is read live from
  * the page rather than stored — that way it always matches the CMS content.
  */
-export function captureEnglish(document) {
-  const slots = buildSlots();
+export function captureEnglish(document, sectionIds) {
+  const slots = buildSlots(sectionIds);
   const EN = {};
   slots.forEach((s) => {
     const v = readSlot(document, s);
@@ -298,12 +304,18 @@ export function captureEnglish(document) {
   bodyNodes.forEach((n) => {
     EN_BODY[n.getAttribute('data-i18n')] = n.textContent;
   });
-  return { slots, EN, EN_BODY };
+  // Alt text is a string a reader can hear, so it gets translated too — but it
+  // lives in an attribute, which the textContent path above cannot reach.
+  const EN_ALT = {};
+  [...document.querySelectorAll('[data-i18n-alt]')].forEach((n) => {
+    EN_ALT[n.getAttribute('data-i18n-alt')] = n.getAttribute('alt') || '';
+  });
+  return { slots, EN, EN_BODY, EN_ALT };
 }
 
 /** Swap the document into `lang`, falling back to English per-string. */
 export function applyLanguage(document, base, i18n, lang) {
-  const { slots, EN, EN_BODY } = base;
+  const { slots, EN, EN_BODY, EN_ALT = {} } = base;
   const rtl = RTL_LANGS.indexOf(lang) !== -1;
   document.documentElement.lang = lang;
   if (rtl) document.documentElement.setAttribute('dir', 'rtl');
@@ -319,6 +331,11 @@ export function applyLanguage(document, base, i18n, lang) {
     const t = lang !== 'en' && i18n[lang] && i18n[lang][key] != null ? i18n[lang][key] : EN_BODY[key];
     if (t != null) n.textContent = t;
     n.setAttribute('dir', rtl ? 'rtl' : 'ltr');
+  });
+  [...document.querySelectorAll('[data-i18n-alt]')].forEach((n) => {
+    const key = n.getAttribute('data-i18n-alt');
+    const t = lang !== 'en' && i18n[lang] && i18n[lang][key] != null ? i18n[lang][key] : EN_ALT[key];
+    if (t != null) n.setAttribute('alt', t);
   });
   return document;
 }

@@ -1,0 +1,54 @@
+{
+  "pages": [
+    {
+      "id": "home",
+      "name": "Overview",
+      "template": "builtin"
+    },
+    {
+      "id": "approach",
+      "name": "The approach",
+      "template": "builtin"
+    },
+    {
+      "id": "bjs",
+      "name": "Bhujal Jankaars",
+      "template": "builtin"
+    },
+    {
+      "id": "groundwater",
+      "name": "Groundwater",
+      "template": "builtin"
+    },
+    {
+      "id": "mywell",
+      "name": "MyWell app",
+      "template": "builtin"
+    },
+    {
+      "id": "media",
+      "name": "In the media",
+      "template": "builtin"
+    },
+    {
+      "id": "films",
+      "name": "Films",
+      "template": "builtin"
+    },
+    {
+      "id": "game",
+      "name": "Groundwater game",
+      "template": "builtin"
+    },
+    {
+      "id": "people",
+      "name": "People & partners",
+      "template": "builtin"
+    },
+    {
+      "id": "archive",
+      "name": "Image archive",
+      "template": "builtin"
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseHTML } from 'linkedom';
+import { renderPage, translatableStrings, isBuiltin } from '../src/templates.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, '_site');
@@ -19,12 +20,47 @@ const check = (cond, msg) => { if (!cond) failures.push(msg); };
 
 const probe = parseHTML(readFileSync(join(ROOT, 'index.html'), 'utf8')).document;
 const LANGS = [...probe.querySelectorAll('#lang-select option')].map((o) => o.value);
-const PAGES = [...probe.querySelectorAll('.nav-tab')].map((t) => t.getAttribute('data-tab'));
+
+// Same source of truth as the build: the registry decides what should exist.
+const readJSON = (rel) => {
+  try { return JSON.parse(readFileSync(join(ROOT, rel), 'utf8')); } catch { return null; }
+};
+const registry = readJSON('content/pages.json');
+const PAGES = (registry?.pages?.length
+  ? registry.pages
+  : [...probe.querySelectorAll('.nav-tab')].map((t) => ({ id: t.getAttribute('data-tab') }))
+)
+  .filter((p) => p && p.id && p.published !== false)
+  .map((p) => p.id);
 
 const pathFor = (lang, id) => {
   const slug = id === 'home' ? '' : id + '/';
   return join(OUT, lang === 'en' ? slug : join(lang, slug), 'index.html');
 };
+
+/* ---------- CMS pages: renderer and translator must agree on keys ---------- */
+// These are two independent code paths over the same data — the renderer tags
+// elements, the translator enumerates strings. If they drift, a page silently
+// stops being translatable, which nothing else here would catch.
+for (const page of registry?.pages || []) {
+  if (!page || !page.id || isBuiltin(page)) continue;
+  const { document } = parseHTML('<!doctype html><body></body>');
+  const section = renderPage(document, page, { index: 1, total: 1 });
+  const rendered = new Set(
+    [...section.querySelectorAll('[data-i18n], [data-i18n-alt]')].map(
+      (n) => n.getAttribute('data-i18n') || n.getAttribute('data-i18n-alt')
+    )
+  );
+  const declared = translatableStrings(page)
+    .map((s) => s.key)
+    .filter((k) => k.startsWith('page.'));
+  declared.forEach((k) =>
+    check(rendered.has(k), `page "${page.id}": translator declares ${k}, renderer never emits it`)
+  );
+  rendered.forEach((k) =>
+    check(declared.includes(k), `page "${page.id}": renderer emits ${k}, translator misses it`)
+  );
+}
 
 let checked = 0;
 const untranslated = [];

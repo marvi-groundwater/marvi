@@ -248,3 +248,154 @@ collections:
               - { label: "Category", name: "category", widget: "string", hint: "Groups the image under a filter tab, e.g. Overview" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Source URL (optional)", name: "source", widget: "string", required: false }
+
+  # ---------------------------------------------------------------------------
+  # Pages & navigation.
+  #
+  # This is the site's page registry: it decides which pages exist, in what
+  # order they appear in the menu, and what each one contains. Adding an entry
+  # here creates a real page at its own URL, in every language.
+  #
+  # "Built-in section" entries are the original nine sections plus the
+  # overview. Their layout is hand-built in the site's code, so only the menu
+  # name and position can be changed here — the other templates are for new
+  # pages. Deleting a built-in entry removes that section from the site.
+  # ---------------------------------------------------------------------------
+  - name: "pages"
+    label: "Pages & navigation"
+    files:
+      - file: "content/pages.json"
+        label: "Pages & menu order"
+        name: "pages"
+        fields:
+          - label: "Pages"
+            name: "pages"
+            widget: "list"
+            label_singular: "page"
+            summary: "{{fields.name}}"
+            typeKey: "template"
+            hint: "Drag to reorder the menu. Choose a template when adding a page."
+            types:
+              - label: "Built-in section"
+                name: "builtin"
+                summary: "{{fields.name}} (built-in)"
+                fields:
+                  - { label: "Menu name", name: "name", widget: "string" }
+                  - { label: "URL slug", name: "id", widget: "string", pattern: ['^[a-z0-9-]+$', "Lower-case letters, numbers and hyphens only"], hint: "Changing this changes the page address and breaks existing links." }
+                  - { label: "Show in menu", name: "published", widget: "boolean", default: true, required: false }
+
+              - label: "Editorial page — text-led, with photos"
+                name: "editorial"
+                summary: "{{fields.name}}"
+                fields: &pageFields
+                  - { label: "Menu name", name: "name", widget: "string", hint: "Short label shown in the left-hand menu." }
+                  - { label: "URL slug", name: "id", widget: "string", pattern: ['^[a-z0-9-]+$', "Lower-case letters, numbers and hyphens only"], hint: "The page address, e.g. water-quality" }
+                  - { label: "Show in menu", name: "published", widget: "boolean", default: true, required: false }
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string", required: false, hint: "Small line above the headline." }
+                  - { label: "Headline", name: "title", widget: "string" }
+                  - { label: "Intro line", name: "lede", widget: "text", required: false, hint: "One or two sentences. Also used as the page's Google description." }
+                  - { label: "Header photo", name: "cover", widget: "image", required: false, hint: "Large photo behind the headline. Also used when the page is shared." }
+                  - label: "Header photo — Focus"
+                    name: "coverFocus"
+                    widget: "select"
+                    default: "auto"
+                    required: false
+                    options: *focusOptions
+                  - label: "Content blocks"
+                    name: "blocks"
+                    widget: "list"
+                    label_singular: "block"
+                    required: false
+                    typeKey: "type"
+                    hint: "Add sections in any order. Drag to rearrange."
+                    types:
+                      - label: "Text"
+                        name: "prose"
+                        summary: "Text"
+                        fields:
+                          - { label: "Text", name: "text", widget: "text", hint: "Leave a blank line between paragraphs." }
+                          - { label: "Open with a large first paragraph", name: "lead", widget: "boolean", default: false, required: false }
+                      - label: "Sub-heading"
+                        name: "heading"
+                        summary: "Heading — {{fields.text}}"
+                        fields:
+                          - { label: "Heading", name: "text", widget: "string" }
+                      - label: "Photo"
+                        name: "image"
+                        summary: "Photo"
+                        fields:
+                          - { label: "Photo", name: "image", widget: "image" }
+                          - { label: "Description for screen readers", name: "alt", widget: "string", required: false }
+                          - { label: "Caption", name: "caption", widget: "string", required: false }
+                          - { label: "Focus", name: "focus", widget: "select", default: "auto", required: false, options: *focusOptions }
+                      - label: "Two photos side by side"
+                        name: "imagePair"
+                        summary: "Photo pair"
+                        fields:
+                          - { label: "Left photo", name: "imageA", widget: "image" }
+                          - { label: "Left description", name: "altA", widget: "string", required: false }
+                          - { label: "Right photo", name: "imageB", widget: "image" }
+                          - { label: "Right description", name: "altB", widget: "string", required: false }
+                      - label: "Pull quote"
+                        name: "quote"
+                        summary: "Quote"
+                        fields:
+                          - { label: "Quote", name: "text", widget: "text" }
+                          - { label: "Attribution", name: "attribution", widget: "string", required: false }
+                      - label: "Numbers"
+                        name: "stats"
+                        summary: "Numbers"
+                        fields:
+                          - label: "Figures"
+                            name: "items"
+                            widget: "list"
+                            summary: "{{fields.value}} — {{fields.label}}"
+                            fields:
+                              - { label: "Number", name: "value", widget: "string" }
+                              - { label: "Label", name: "label", widget: "string" }
+                      - label: "Video"
+                        name: "video"
+                        summary: "Video — {{fields.title}}"
+                        fields:
+                          - { label: "Video URL", name: "url", widget: "string", hint: "A YouTube link; the thumbnail is picked up automatically." }
+                          - { label: "Title", name: "title", widget: "string" }
+                          - { label: "Small label", name: "meta", widget: "string", required: false }
+                      - label: "Card grid"
+                        name: "cards"
+                        summary: "Cards"
+                        fields:
+                          - label: "Cards"
+                            name: "items"
+                            widget: "list"
+                            summary: "{{fields.title}}"
+                            fields:
+                              - { label: "Title", name: "title", widget: "string" }
+                              - { label: "Text", name: "text", widget: "text", required: false }
+                              - { label: "Background photo", name: "image", widget: "image", required: false }
+                      - label: "Numbered steps"
+                        name: "steps"
+                        summary: "Steps"
+                        fields:
+                          - label: "Steps"
+                            name: "items"
+                            widget: "list"
+                            summary: "{{fields.title}}"
+                            fields:
+                              - { label: "Title", name: "title", widget: "string" }
+                              - { label: "Text", name: "text", widget: "text", required: false }
+                      - label: "Embedded page"
+                        name: "embed"
+                        summary: "Embed"
+                        fields:
+                          - { label: "URL to embed", name: "url", widget: "string" }
+                          - { label: "Title", name: "title", widget: "string", required: false }
+
+              - label: "Feature page — cards and steps"
+                name: "feature"
+                summary: "{{fields.name}}"
+                fields: *pageFields
+
+              - label: "Gallery page — photo-led"
+                name: "gallery"
+                summary: "{{fields.name}}"
+                fields: *pageFields
