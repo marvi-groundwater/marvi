@@ -1,22 +1,29 @@
 name: Auto-translate content
 
-# When the site's English content changes (CMS edits to content/*.json, or
-# body edits in index.html), translate any new/changed string into every
-# language with GitHub Models and commit the result. Only the delta is
-# translated — existing translations are left untouched.
+# When the site's English content changes, translate any new/changed string
+# into every language and commit the result. Only the delta is translated —
+# existing translations are left untouched.
+#
+# Provider: the ANTHROPIC_API_KEY repo secret (Claude, claude-opus-5).
+# Without the secret the run is a clean no-op — the site falls back to
+# English for untranslated strings, nothing breaks.
+#
+# The translate commit itself triggers a second deploy carrying the new
+# translations; that is intentional (the first deploy ships the English edit
+# immediately rather than waiting on the model).
 
 on:
   push:
     branches: [main]
     paths:
-      - 'content/**.json'
+      - 'content/**'
       - 'index.html'
-      - '!content/i18n.json'   # the bot's own output — never re-trigger on it
-  workflow_dispatch: {}          # allow manual runs from the Actions tab
+      - 'src/templates.mjs'
+      - '!content/i18n.json'   # this job's own output — never re-trigger on it
+  workflow_dispatch: {}
 
 permissions:
   contents: write   # to commit updated translations
-  models: read      # to call GitHub Models (free AI)
 
 concurrency:
   group: auto-translate-${{ github.ref }}
@@ -31,10 +38,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
+
+      - run: npm ci
 
       - name: Translate new / changed strings
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node scripts/auto-translate.mjs
 
       - name: Commit updated translations

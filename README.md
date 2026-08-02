@@ -22,3 +22,34 @@ built site; edit the page's JSON (or the CMS) instead.
 Translation keys: strings translated under the old system keep their legacy
 `data-i18n` keys via each block's `i18n` map — do not strip those maps, they
 are what keep 13 languages alive while the translation provider is down.
+
+## Translation
+
+`scripts/auto-translate.mjs` translates new or changed strings into the 13
+target languages, keyed on the English they were translated from — only the
+delta is ever sent. Body-string keys are harvested from the rendered pages
+themselves, so the translator and the renderer cannot disagree.
+
+Provider (first match wins):
+
+- `ANTHROPIC_API_KEY` → Claude via the official SDK (`claude-opus-5`;
+  override with `TRANSLATE_MODEL`). In CI this comes from the repo secret of
+  the same name — Settings → Secrets and variables → Actions.
+- `MODELS_ENDPOINT` + `MODELS_TOKEN` + `MODELS_MODEL` → any OpenAI-compatible
+  chat endpoint.
+- Neither set → clean no-op; untranslated strings fall back to English.
+
+Test the whole pipeline without a key (local stub, scratch i18n copy):
+
+```
+node scripts/test-translate.mjs
+```
+
+## Deployment
+
+Push to `main` → `deploy.yml` builds, verifies (structure + migration
+parity), and publishes `_site/` to GitHub Pages. `translate.yml` runs on
+content changes; its commit triggers a second deploy carrying the new
+translations. Publishing takes a minute or two.
+
+Pages must be set to **Source: GitHub Actions** (not "deploy from a branch").

@@ -9,6 +9,7 @@
     "migrate": "node scripts/migrate.mjs"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
     "linkedom": "^0.18.5"
   }
 }

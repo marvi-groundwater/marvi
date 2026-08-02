@@ -1,0 +1,59 @@
+name: Build and deploy
+
+# Renders content/pages/*.json into _site/ (one real URL per page per
+# language), verifies the output, and publishes to GitHub Pages.
+#
+# Requires Pages to be configured with Source: GitHub Actions.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; the newest content wins.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # parity check reads pre-migration files from history
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Verify built output
+        run: npm run verify
+
+      - name: Migration parity check
+        run: node scripts/parity.mjs
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
