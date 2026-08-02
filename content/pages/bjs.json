@@ -1,35 +1,10 @@
 {
-  "menuName": "Bhujal Jankaars",
-  "slug": "bjs",
-  "order": 3,
-  "published": true,
-  "template": "standard",
-  "intro": {
-    "eyebrow": "Bhujal Jankaars · भूजल जानकार",
-    "title": "The village’s own groundwater champions.",
-    "lede": "“Groundwater informed”: local volunteers who connect careful observation with community knowledge and collective action.",
-    "eyebrowSize": 100,
-    "titleSize": 70,
-    "ledeSize": 100,
-    "textAlign": "left",
-    "textPosition": "bottom",
-    "textWidth": 100,
-    "textOffsetX": 0,
-    "textOffsetY": 0
-  },
   "heroImage": {
     "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg",
     "zoom": 100,
     "positionX": 50,
     "positionY": 53,
     "fit": "cover"
-  },
-  "menuImage": {
-    "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg",
-    "zoom": 100,
-    "positionX": 50,
-    "positionY": 50,
-    "fit": "auto"
   },
   "blocks": [
     {
@@ -78,5 +53,30 @@
         "right.paragraphs.0": "bjs.intro2"
       }
     }
-  ]
+  ],
+  "menuName": "Bhujal Jankaars",
+  "slug": "bjs",
+  "intro": {
+    "eyebrow": "Bhujal Jankaars · भूजल जानकार",
+    "eyebrowSize": 100,
+    "textPosition": "bottom",
+    "textOffsetX": 0,
+    "textAlign": "left",
+    "title": "The village’s own groundwater champions.",
+    "textOffsetY": 0,
+    "textWidth": 100,
+    "titleSize": 70,
+    "lede": "“Groundwater informed”: local volunteers who connect careful observation with community knowledge and collective action.",
+    "ledeSize": 100
+  },
+  "published": true,
+  "order": 3,
+  "template": "standard",
+  "menuImage": {
+    "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  }
 }
