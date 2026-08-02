@@ -28,6 +28,7 @@ const OUT = join(ROOT, '_site');
 const SITE_URL = 'https://' + readFileSync(join(ROOT, 'CNAME'), 'utf8').trim();
 
 const template = readFileSync(join(ROOT, 'index.html'), 'utf8');
+const probeStyles = parseHTML(template).document;
 const i18n = JSON.parse(readFileSync(join(ROOT, 'content/i18n.json'), 'utf8'));
 
 const PAGES = buildRegistry(ROOT);
@@ -278,6 +279,14 @@ for (const dir of ['assets', 'content', 'admin']) {
   if (existsSync(join(ROOT, dir))) cpSync(join(ROOT, dir), join(OUT, dir), { recursive: true });
 }
 cpSync(join(ROOT, 'src/app.mjs'), join(OUT, 'assets/app.mjs'));
+// The CMS preview renders entries with the very same renderer the site uses,
+// so publish it as a module the admin page can import, plus the site's CSS
+// lifted out of the template for the preview iframe to load.
+cpSync(join(ROOT, 'src/templates.mjs'), join(OUT, 'assets/templates.mjs'));
+write(
+  'assets/site.css',
+  absolutiseCss([...probeStyles.querySelectorAll('style')].map((n) => n.textContent).join('\n'))
+);
 cpSync(join(ROOT, 'CNAME'), join(OUT, 'CNAME'));
 
 const sitemap =

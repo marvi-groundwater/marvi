@@ -1,103 +1,116 @@
-(function () {
-  var pageMeta = {
-    home: 'Homepage',
-    approach: 'The approach',
-    bjs: 'Bhujal Jankaars',
-    groundwater: 'Groundwater',
-    mywell: 'MyWell app',
-    media: 'In the media',
-    films: 'Films',
-    game: 'Groundwater game',
-    people: 'People & partners',
-    archive: 'Image archive',
-    publications: 'Publications',
-    tools: 'Tools'
-  };
+/**
+ * Live preview for the CMS — renders the entry you are editing with the exact
+ * same renderer the published site uses.
+ *
+ * This is only possible because src/templates.mjs is isomorphic: it takes a
+ * `document` and touches no globals, so the build imports it under linkedom
+ * and this file imports it in the browser. There is one renderer, so the
+ * preview cannot drift from the real page — the failure mode of the previous
+ * preview, which drove a separate in-page runtime that no longer exists.
+ *
+ * Loaded as a module by admin/index.html. `window.h` is Decap's hyperscript
+ * (Decap 3 exposes `h`, not `React`).
+ */
 
-  var assetUrl = function (props, value) {
-    if (!value) return value;
-    var asset = props.getAsset(value);
-    return asset ? asset.toString() : value;
-  };
+import { renderPage } from '/assets/templates.mjs';
 
-  // Decap can represent a newly selected image as a blob-backed asset that is
-  // not yet available at its eventual repository path. Resolve every nested
-  // `image` field before sending the unsaved entry into the real site frame.
-  var resolveAssets = function (props, value, fieldName) {
-    if (Array.isArray(value)) {
-      return value.map(function (item) {
-        return resolveAssets(props, item);
-      });
+const { CMS, h } = window;
+
+/* ---------- styles ---------- */
+
+// The site's CSS, published by the build. Loading it verbatim is what makes
+// the preview look like the site rather than an approximation.
+CMS.registerPreviewStyle('/assets/site.css');
+
+// Preview-only corrections: the site's layout positions panels inside a
+// full-height column offset by the fixed sidebar, neither of which exists in
+// the preview iframe.
+CMS.registerPreviewStyle(
+  `
+  html, body { margin: 0; background: var(--paper, #f1eee7); }
+  .cms-preview-root { display: block; }
+  .cms-preview-root .panel { min-height: 0; animation: none; }
+  .cms-preview-root .content-wrap { width: min(1180px, calc(100% - 48px)); }
+  /* Reveal animations never trigger without the site's IntersectionObserver. */
+  .cms-preview-root .reveal { opacity: 1 !important; transform: none !important; }
+  .cms-preview-root .motion-item { opacity: 1 !important; transform: none !important; }
+  .cms-preview-empty {
+    padding: 48px; font: 400 .95rem/1.6 system-ui, sans-serif; color: #6d746f;
+  }
+  `,
+  { raw: true }
+);
+
+/* ---------- entry -> page object ---------- */
+
+/**
+ * A freshly picked image is a blob-backed asset that does not exist at its
+ * eventual repository path yet, so every nested `image` value has to be
+ * resolved through getAsset before rendering.
+ */
+const resolveAssets = (getAsset, value, fieldName) => {
+  if (Array.isArray(value)) return value.map((item) => resolveAssets(getAsset, item));
+  if (!value || typeof value !== 'object') {
+    if (fieldName === 'image' && typeof value === 'string' && value) {
+      const asset = getAsset(value);
+      return asset ? asset.toString() : value;
     }
-    if (!value || typeof value !== 'object') {
-      return fieldName === 'image' && typeof value === 'string'
-        ? assetUrl(props, value)
-        : value;
-    }
-    return Object.keys(value).reduce(function (copy, key) {
-      copy[key] = resolveAssets(props, value[key], key);
-      return copy;
-    }, {});
+    return value;
+  }
+  return Object.fromEntries(
+    Object.entries(value).map(([key, val]) => [key, resolveAssets(getAsset, val, key)])
+  );
+};
+
+const toPage = (entry, getAsset) => {
+  const raw = entry.getIn(['data']);
+  const data = raw && typeof raw.toJS === 'function' ? raw.toJS() : raw || {};
+  const page = resolveAssets(getAsset, data);
+  return {
+    ...page,
+    // The renderer needs these; a half-typed entry may not have them yet.
+    slug: page.slug || 'preview',
+    menuName: page.menuName || 'Untitled page',
+    intro: page.intro || {},
+    blocks: Array.isArray(page.blocks) ? page.blocks : []
   };
+};
 
-  var createPagePreview = function (key) {
-    return createClass({
-      componentDidMount: function () {
-        var self = this;
-        this.handlePreviewReady = function (event) {
-          if (
-            event.origin === window.location.origin &&
-            self.previewFrame &&
-            event.source === self.previewFrame.contentWindow &&
-            event.data &&
-            event.data.type === 'marvi:cms-preview-ready'
-          ) {
-            self.sendPreviewData();
-          }
-        };
-        window.addEventListener('message', this.handlePreviewReady);
-      },
+/* ---------- preview component ---------- */
 
-      componentWillUnmount: function () {
-        if (this.handlePreviewReady) {
-          window.removeEventListener('message', this.handlePreviewReady);
-        }
-      },
-
-      sendPreviewData: function () {
-        if (!this.previewFrame || !this.previewFrame.contentWindow) return;
-        var data = this.props.entry.get('data').toJS();
-        this.previewFrame.contentWindow.postMessage({
-          type: 'marvi:cms-preview',
-          key: key,
-          data: resolveAssets(this.props, data)
-        }, window.location.origin);
-      },
-
-      componentDidUpdate: function () {
-        this.sendPreviewData();
-      },
-
-      render: function () {
-        var self = this;
-        return h('main', { className: 'preview-live-shell' },
-          h('iframe', {
-            className: 'preview-live-frame',
-            src: '../?cms-preview=1#' + key,
-            title: pageMeta[key] + ' — live website preview',
-            ref: function (frame) {
-              self.previewFrame = frame;
-            },
-            onLoad: function () {
-              self.sendPreviewData();
-            }
-          }));
-      }
+const PagePreview = ({ entry, getAsset }) => {
+  let node;
+  try {
+    const page = toPage(entry, getAsset);
+    // A detached document keeps rendering isolated from the preview DOM.
+    const doc = document.implementation.createHTMLDocument('preview');
+    node = renderPage(doc, page, {
+      index: Number(page.order) || 1,
+      total: Number(page.order) || 1,
+      // Links are inert in a preview; keep them harmless.
+      urlFor: () => '#'
     });
-  };
+  } catch (err) {
+    // A partly-filled entry should show a message, not a blank pane.
+    node = null;
+    console.warn('[preview] render failed:', err);
+  }
 
-  CMS.registerPreviewStyle('preview.css');
-  Object.keys(pageMeta).forEach(function (key) {
-    CMS.registerPreviewTemplate(key, createPagePreview(key));
+  return h('div', {
+    className: 'cms-preview-root',
+    ref: (el) => {
+      if (!el) return;
+      el.textContent = '';
+      if (node) {
+        el.appendChild(el.ownerDocument.importNode(node, true));
+      } else {
+        const msg = el.ownerDocument.createElement('p');
+        msg.className = 'cms-preview-empty';
+        msg.textContent = 'Preview unavailable — fill in the page title to start.';
+        el.appendChild(msg);
+      }
+    }
   });
-})();
+};
+
+CMS.registerPreviewTemplate('pages', PagePreview);

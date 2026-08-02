@@ -39,8 +39,6 @@ collections:
     sortable_fields:
       - "order"
       - "menuName"
-    editor:
-      preview: false
     fields:
       - { label: "Menu name", name: "menuName", widget: "string", hint: "Shown in the site's left-hand menu." }
       - { label: "Page address", name: "slug", widget: "string", pattern: ['^[a-z0-9-]+$', "Lower-case letters, numbers and hyphens only"], hint: "The web address, e.g. groundwater → /groundwater/. Changing it breaks existing links." }
