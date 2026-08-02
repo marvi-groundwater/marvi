@@ -1,4 +1,9 @@
 {
+  "menuName": "Groundwater",
+  "slug": "groundwater",
+  "order": 4,
+  "published": true,
+  "template": "standard",
   "intro": {
     "eyebrow": "Groundwater, demystified",
     "title": "An invisible resource with visible consequences.",
@@ -12,12 +17,95 @@
     "textOffsetX": 0,
     "textOffsetY": 0
   },
-  "heroImage": { "image": "/assets/marvi-originals/005-home.jpg", "zoom": 100, "positionX": 50, "positionY": 61, "fit": "cover" },
-  "menuImage": { "image": "/assets/marvi-originals/003-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-  "images": {
-    "ribbon1": { "image": "/assets/marvi-originals/003-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    "ribbon2": { "image": "/assets/marvi-originals/010-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    "ribbon3": { "image": "/assets/marvi-originals/034-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  "heroImage": {
+    "image": "/assets/marvi-originals/005-home.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 61,
+    "fit": "cover"
   },
-  "sections": []
+  "menuImage": {
+    "image": "/assets/marvi-originals/003-home.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  },
+  "blocks": [
+    {
+      "type": "photoRibbon",
+      "items": [
+        {
+          "photo": {
+            "alt": "Village groundwater recharge structure",
+            "image": "/assets/marvi-originals/003-home.jpg",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          }
+        },
+        {
+          "photo": {
+            "alt": "A covered community water and recharge structure",
+            "image": "/assets/marvi-originals/010-home.jpg",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          }
+        },
+        {
+          "photo": {
+            "alt": "Researchers measuring groundwater in the field",
+            "image": "/assets/marvi-originals/034-about-marvi.jpg",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          }
+        }
+      ]
+    },
+    {
+      "type": "banner",
+      "eyebrow": "Then / now",
+      "accent": "#88b3b8",
+      "title": "From 10–15 metres in the 1960s to 30–40 metres today.",
+      "lede": "In some places, farmers drill beyond 100 metres chasing a falling watertable. Recharge helps, but sustainable use also requires understanding demand.",
+      "i18n": {
+        "eyebrow": "groundwater.dark.eyebrow",
+        "title": "groundwater.dark.title",
+        "lede": "groundwater.dark.lede"
+      }
+    },
+    {
+      "type": "cards",
+      "items": [
+        {
+          "number": "G / 01",
+          "title": "The aquifer is shared",
+          "text": "Water pumped from one well can affect neighbours drawing from the same underground store."
+        },
+        {
+          "number": "G / 02",
+          "title": "Rainfall is not recharge",
+          "text": "Only part of rain reaches groundwater; soils, geology, land use and structures shape the journey."
+        },
+        {
+          "number": "G / 03",
+          "title": "Trends need time",
+          "text": "A single reading is a snapshot. Repeated measurements reveal depletion, recovery and seasonal rhythm."
+        }
+      ],
+      "i18n": {
+        "items.0.title": "groundwater.card1.title",
+        "items.0.text": "groundwater.card1.desc",
+        "items.1.title": "groundwater.card2.title",
+        "items.1.text": "groundwater.card2.desc",
+        "items.2.title": "groundwater.card3.title",
+        "items.2.text": "groundwater.card3.desc"
+      }
+    }
+  ]
 }

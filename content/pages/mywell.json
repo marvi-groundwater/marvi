@@ -1,4 +1,9 @@
 {
+  "menuName": "MyWell app",
+  "slug": "mywell",
+  "order": 5,
+  "published": true,
+  "template": "standard",
   "intro": {
     "eyebrow": "The MyWell app",
     "title": "Groundwater, brought to the surface.",
@@ -12,12 +17,119 @@
     "textOffsetX": 0,
     "textOffsetY": 0
   },
-  "heroImage": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "zoom": 100, "positionX": 50, "positionY": 52, "fit": "cover" },
-  "menuImage": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-  "images": {
-    "main": { "image": "/assets/marvi-originals/mywell-app-record.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    "strip1": { "image": "/assets/marvi-originals/mywell-app-login.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    "strip2": { "image": "/assets/marvi-originals/mywell-app-register.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  "heroImage": {
+    "image": "/assets/marvi-originals/079-about-mywell-app.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 52,
+    "fit": "cover"
   },
-  "sections": []
+  "menuImage": {
+    "image": "/assets/marvi-originals/079-about-mywell-app.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  },
+  "blocks": [
+    {
+      "type": "split",
+      "left": {
+        "kind": "prose",
+        "logo": {
+          "image": "assets/marvi-originals/mywell-app-icon.png",
+          "alt": "MyWell for Groundwater app icon"
+        },
+        "lead": "MyWell is now a modern, rebuilt app — turning local observations into clear, visual information for village, regional and wider water management.",
+        "paragraphs": [
+          "Bhujal Jankaars and community members record groundwater levels, rainfall, water quality and check-dam readings against a station, import data from sensors, browse a shared map, and follow current status and long-term trends."
+        ],
+        "actions": [
+          {
+            "label": "Watch MyWell stories",
+            "page": "films",
+            "primary": true
+          },
+          {
+            "label": "Try the learning game",
+            "page": "game",
+            "primary": false
+          }
+        ]
+      },
+      "right": {
+        "kind": "image",
+        "look": "app-shot",
+        "photo": {
+          "alt": "MyWell screen for importing and recording water-quality readings",
+          "image": "/assets/marvi-originals/mywell-app-record.png",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto"
+        }
+      },
+      "i18n": {
+        "left.lead": "mywell.intro",
+        "left.paragraphs.0": "mywell.desc"
+      }
+    },
+    {
+      "type": "imagePair",
+      "look": "screens",
+      "items": [
+        {
+          "photo": {
+            "alt": "MyWell sign-in screen",
+            "image": "/assets/marvi-originals/mywell-app-login.png",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          }
+        },
+        {
+          "photo": {
+            "alt": "MyWell account registration screen",
+            "image": "/assets/marvi-originals/mywell-app-register.png",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          }
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Sign in",
+          "text": "Create an account or sign in to record and manage observations."
+        },
+        {
+          "title": "Record a reading",
+          "text": "Log a groundwater level, rainfall, water quality or check-dam reading against a station."
+        },
+        {
+          "title": "Import & connect",
+          "text": "Bring in water-quality data (pH, EC, TDS) from a file, or connect a YINMIK Bluetooth pen for live readings."
+        },
+        {
+          "title": "Map & trends",
+          "text": "Browse the station map and plot readings over time to see recharge, depletion and seasonal change."
+        }
+      ],
+      "i18n": {
+        "items.0.title": "mywell.step1.title",
+        "items.0.text": "mywell.step1.desc",
+        "items.1.title": "mywell.step2.title",
+        "items.1.text": "mywell.step2.desc",
+        "items.2.title": "mywell.step3.title",
+        "items.2.text": "mywell.step3.desc",
+        "items.3.title": "mywell.step4.title",
+        "items.3.text": "mywell.step4.desc"
+      }
+    }
+  ]
 }

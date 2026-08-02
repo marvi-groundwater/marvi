@@ -1,4 +1,9 @@
 {
+  "menuName": "Groundwater game",
+  "slug": "game",
+  "order": 8,
+  "published": true,
+  "template": "standard",
   "intro": {
     "eyebrow": "The MARVI groundwater game",
     "title": "Share a well. Survive the year.",
@@ -12,10 +17,59 @@
     "textOffsetX": 0,
     "textOffsetY": 0
   },
-  "heroImage": { "image": "/assets/marvi-originals/002-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "cover" },
-  "menuImage": { "image": "/assets/mywell-game.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-  "images": {
-    "game": { "image": "/assets/mywell-game.png", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  "heroImage": {
+    "image": "/assets/marvi-originals/002-home.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "cover"
   },
-  "sections": []
+  "menuImage": {
+    "image": "/assets/mywell-game.png",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  },
+  "blocks": [
+    {
+      "type": "framedShot",
+      "photo": {
+        "alt": "MARVI groundwater game with a shared village well and crop-watering decisions",
+        "image": "/assets/mywell-game.png",
+        "zoom": 100,
+        "positionX": 50,
+        "positionY": 50,
+        "fit": "auto"
+      }
+    },
+    {
+      "type": "cards",
+      "items": [
+        {
+          "number": "PLAY / 01",
+          "title": "One shared well",
+          "text": "Every player’s choices affect everyone else drawing from the same groundwater store."
+        },
+        {
+          "number": "PLAY / 02",
+          "title": "Choose the crop",
+          "text": "Balance high-, moderate- and low-water crops across repeated watering turns."
+        },
+        {
+          "number": "PLAY / 03",
+          "title": "Watch the watertable",
+          "text": "Start after the monsoon and see whether the village can make its water last five years."
+        }
+      ],
+      "i18n": {
+        "items.0.title": "game.card1.title",
+        "items.0.text": "game.card1.desc",
+        "items.1.title": "game.card2.title",
+        "items.1.text": "game.card2.desc",
+        "items.2.title": "game.card3.title",
+        "items.2.text": "game.card3.desc"
+      }
+    }
+  ]
 }

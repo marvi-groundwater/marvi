@@ -1,4 +1,9 @@
 {
+  "menuName": "Bhujal Jankaars",
+  "slug": "bjs",
+  "order": 3,
+  "published": true,
+  "template": "standard",
   "intro": {
     "eyebrow": "Bhujal Jankaars · भूजल जानकार",
     "title": "The village’s own groundwater champions.",
@@ -12,7 +17,66 @@
     "textOffsetX": 0,
     "textOffsetY": 0
   },
-  "heroImage": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "zoom": 100, "positionX": 50, "positionY": 53, "fit": "cover" },
-  "menuImage": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-  "sections": []
+  "heroImage": {
+    "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 53,
+    "fit": "cover"
+  },
+  "menuImage": {
+    "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  },
+  "blocks": [
+    {
+      "type": "split",
+      "left": {
+        "kind": "dataPanel",
+        "photo": {
+          "image": "assets/marvi-originals/022-about-marvi.jpg",
+          "alt": "A Bhujal Jankaar measuring a village well"
+        },
+        "stat": "35",
+        "caption": "Bhujal Jankaars — 25 Rajasthan · 10 Gujarat"
+      },
+      "right": {
+        "kind": "prose",
+        "lead": "A Bhujal Jankaar makes groundwater science legible—well by well, season by season, village by village.",
+        "paragraphs": [
+          "These trained volunteers measure wells, rainfall, water quality and check dams. They interpret local patterns, explain them in the community’s own language and help farmers see that groundwater is both limited and shared."
+        ],
+        "features": [
+          {
+            "number": "01",
+            "title": "Measure consistently",
+            "text": "Build a trustworthy local record through simple, repeated observations."
+          },
+          {
+            "number": "02",
+            "title": "Interpret locally",
+            "text": "Connect readings with crops, rainfall, pumping and village experience."
+          },
+          {
+            "number": "03",
+            "title": "Communicate openly",
+            "text": "Take groundwater information into schools, meetings and farm decisions."
+          },
+          {
+            "number": "04",
+            "title": "Support cooperation",
+            "text": "Help communities discuss recharge, demand and fair use together."
+          }
+        ]
+      },
+      "i18n": {
+        "left.caption": "bjs.data.caption",
+        "right.lead": "bjs.intro1",
+        "right.paragraphs.0": "bjs.intro2"
+      }
+    }
+  ]
 }
