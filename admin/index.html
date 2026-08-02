@@ -7,7 +7,8 @@
   </head>
   <body>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script src="../layout-model.js"></script>
-    <script src="preview.js"></script>
+    <!-- preview.js/preview.css targeted the old in-page runtime (cms-preview
+         iframe bridge), which the static build removed. Previews are disabled
+         in config.yml until a preview for the block renderer exists. -->
   </body>
 </html>

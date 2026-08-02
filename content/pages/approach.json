@@ -1,4 +1,9 @@
 {
+  "menuName": "The approach",
+  "slug": "approach",
+  "order": 2,
+  "published": true,
+  "template": "standard",
   "intro": {
     "eyebrow": "The MARVI approach",
     "title": "Science becomes useful when it becomes local.",
@@ -12,12 +17,130 @@
     "textOffsetX": 0,
     "textOffsetY": 0
   },
-  "heroImage": { "image": "/assets/marvi-originals/008-home.jpg", "zoom": 100, "positionX": 50, "positionY": 54, "fit": "cover" },
-  "menuImage": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-  "images": {
-    "editorial1": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    "editorial2": { "image": "/assets/marvi-originals/032-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    "dataPanel": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  "heroImage": {
+    "image": "/assets/marvi-originals/008-home.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 54,
+    "fit": "cover"
   },
-  "sections": []
+  "menuImage": {
+    "image": "/assets/marvi-originals/022-about-marvi.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  },
+  "blocks": [
+    {
+      "type": "split",
+      "left": {
+        "kind": "prose",
+        "lead": "The aim is to improve irrigation-water security and rural livelihoods by making the invisible visible."
+      },
+      "right": {
+        "kind": "prose",
+        "paragraphs": [
+          "Groundwater is often managed one well at a time, even though every bore draws from a connected aquifer. MARVI creates a shared picture through participatory monitoring, aquifer-recharge assessment and village dialogue.",
+          "The project works across hydrology, hydrogeology, agronomy, economics and social science. The result is not a report left on a shelf, but knowledge a community can use."
+        ]
+      },
+      "i18n": {
+        "left.lead": "approach.aim",
+        "right.paragraphs.0": "approach.shared",
+        "right.paragraphs.1": "approach.cross"
+      }
+    },
+    {
+      "type": "cards",
+      "items": [
+        {
+          "number": "A / 01",
+          "title": "Participatory monitoring",
+          "text": "A groundwater-monitoring programme operated and understood by the village itself."
+        },
+        {
+          "number": "A / 02",
+          "title": "Recharge that can be measured",
+          "text": "Assess rainwater-harvesting structures and understand what genuinely reaches the aquifer."
+        },
+        {
+          "number": "A / 03",
+          "title": "Decisions made together",
+          "text": "Turn readings into conversations about crops, pumping, sharing and long-term water security."
+        }
+      ],
+      "i18n": {
+        "items.0.title": "approach.card1.title",
+        "items.0.text": "approach.card1.desc",
+        "items.1.title": "approach.card2.title",
+        "items.1.text": "approach.card2.desc",
+        "items.2.title": "approach.card3.title",
+        "items.2.text": "approach.card3.desc"
+      }
+    },
+    {
+      "type": "imagePair",
+      "look": "editorial",
+      "items": [
+        {
+          "photo": {
+            "alt": "A Bhujal Jankaar standing beside a monitored well",
+            "image": "/assets/marvi-originals/022-about-marvi.jpg",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          },
+          "caption": "Monitoring a dug well · Village fieldwork"
+        },
+        {
+          "photo": {
+            "alt": "Community members and researchers discussing a groundwater map",
+            "image": "/assets/marvi-originals/032-about-marvi.jpg",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          },
+          "caption": "Ideas mapped together"
+        }
+      ],
+      "i18n": {
+        "items.0.caption": "approach.caption1",
+        "items.1.caption": "approach.caption2"
+      }
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Observe",
+          "text": "Measure groundwater levels, rainfall, water quality and recharge structures with simple field tools."
+        },
+        {
+          "title": "Make visible",
+          "text": "Upload observations to MyWell and turn repeated measurements into understandable trends."
+        },
+        {
+          "title": "Discuss",
+          "text": "Share findings in the local language with farmers, schools and community institutions."
+        },
+        {
+          "title": "Act",
+          "text": "Plan water use, recharge and cooperation with a clearer understanding of the shared aquifer."
+        }
+      ],
+      "i18n": {
+        "items.0.title": "approach.step1.title",
+        "items.0.text": "approach.step1.desc",
+        "items.1.title": "approach.step2.title",
+        "items.1.text": "approach.step2.desc",
+        "items.2.title": "approach.step3.title",
+        "items.2.text": "approach.step3.desc",
+        "items.3.title": "approach.step4.title",
+        "items.3.text": "approach.step4.desc"
+      }
+    }
+  ]
 }

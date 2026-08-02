@@ -9,427 +9,410 @@ local_backend: true
 media_folder: "assets/marvi-originals"
 public_folder: "/assets/marvi-originals"
 
+# ---------------------------------------------------------------------------
+# One "Pages" collection. Every page on the site — the original sections and
+# anything you create — is a file in content/pages/, editable, deletable and
+# reorderable here. "Menu order" controls the sidebar; lower numbers sit
+# higher. Sort by → Menu order shows the running order.
+#
+# A page is a header (title, intro, photos) plus content blocks you can add
+# and drag to reorder. Different kinds of content are different BLOCK types,
+# each showing only its own fields.
+#
+# Fields marked widget: hidden carry data the site needs but editors never
+# touch — most importantly each block's `i18n` map, which links strings to
+# their existing translations in 13 languages. Removing a hidden field from
+# this file would make the CMS silently delete that data on save.
+# ---------------------------------------------------------------------------
+
 collections:
   - name: "pages"
     label: "Pages"
-    files:
-      - file: "content/pages/home.json"
-        label: "01 · Homepage"
-        name: "home"
+    label_singular: "page"
+    folder: "content/pages"
+    extension: "json"
+    format: "json"
+    create: true
+    identifier_field: "menuName"
+    slug: "{{fields.slug}}"
+    summary: "{{fields.order}} · {{fields.menuName}}"
+    sortable_fields:
+      - "order"
+      - "menuName"
+    editor:
+      preview: false
+    fields:
+      - { label: "Menu name", name: "menuName", widget: "string", hint: "Shown in the site's left-hand menu." }
+      - { label: "Page address", name: "slug", widget: "string", pattern: ['^[a-z0-9-]+$', "Lower-case letters, numbers and hyphens only"], hint: "The web address, e.g. groundwater → /groundwater/. Changing it breaks existing links." }
+      - { label: "Menu order", name: "order", widget: "number", value_type: "int", min: 1, default: 99, hint: "Lower numbers appear higher in the menu." }
+      - { label: "Show on the site", name: "published", widget: "boolean", default: true, required: false }
+      - { label: "Template", name: "template", widget: "hidden", default: "standard" }
+
+      - label: "Title & introduction"
+        name: "intro"
+        widget: "object"
+        collapsed: false
+        fields: &introFields
+          - { label: "Eyebrow", name: "eyebrow", widget: "string", required: false }
+          - { label: "Title", name: "title", widget: "text", hint: "Line break = where the title wraps to a new line." }
+          - { label: "Introduction", name: "lede", widget: "text", hint: "One or two sentences. Also the page's Google description and its preview when shared." }
+          - { label: "Eyebrow Text Size (%)", name: "eyebrowSize", widget: "number", default: 100, value_type: "int", min: 0, max: 200, step: 5, required: false }
+          - { label: "Title Size (%)", name: "titleSize", widget: "number", default: 70, value_type: "int", min: 0, max: 200, step: 5, required: false }
+          - { label: "Intro Text Size (%)", name: "ledeSize", widget: "number", default: 100, value_type: "int", min: 0, max: 200, step: 5, required: false }
+          - { label: "Text Alignment", name: "textAlign", widget: "select", default: "left", required: false, options: ["left", "center", "right"] }
+          - { label: "Text Position", name: "textPosition", widget: "select", default: "bottom", required: false, options: ["top", "middle", "bottom"] }
+          - { label: "Text Block Width (%)", name: "textWidth", widget: "number", default: 100, value_type: "int", min: 30, max: 100, step: 5, required: false }
+          - { label: "Text Offset X (%)", name: "textOffsetX", widget: "number", default: 0, value_type: "int", min: -30, max: 30, step: 1, required: false }
+          - { label: "Text Offset Y (%)", name: "textOffsetY", widget: "number", default: 0, value_type: "int", min: -30, max: 30, step: 1, required: false }
+
+      - label: "Header photo"
+        name: "heroImage"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields: &photoFields
+          - { label: "Photo", name: "image", widget: "image", required: false }
+          - { label: "Description for screen readers", name: "alt", widget: "string", required: false }
+          - { label: "Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5, required: false }
+          - { label: "Focus X (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
+          - { label: "Focus Y (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
+          - { label: "Fit", name: "fit", widget: "select", default: "auto", required: false, options: ["auto", "cover", "contain"] }
+
+      - label: "Menu photo"
+        name: "menuImage"
+        widget: "object"
+        collapsed: true
+        required: false
+        hint: "Shown on the mobile menu card and when the page is shared. Falls back to the header photo."
+        fields: *photoFields
+
+      - label: "Homepage hero (home page only)"
+        name: "hero"
+        widget: "object"
+        collapsed: true
+        required: false
+        hint: "Only the home page uses this — the big opening screen's small texts and buttons."
         fields:
-          - label: "Title & introduction"
-            name: "intro"
-            widget: "object"
-            collapsed: false
-            fields: &introFields
-              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
-              - { label: "Title", name: "title", widget: "text", hint: "Line break = where the title wraps to a new line." }
-              - { label: "Introduction", name: "lede", widget: "text" }
-              - &eyebrowSizeField
-                label: "Eyebrow Text Size (%)"
-                name: "eyebrowSize"
-                widget: "number"
-                default: 100
-                value_type: "int"
-                min: 0
-                max: 200
-                step: 5
-                hint: "100% is the current design. Use 0% to hide it, or up to 200% for twice the size."
-              - &titleSizeField
-                label: "Title Size (%)"
-                name: "titleSize"
-                widget: "number"
-                default: 70
-                value_type: "int"
-                min: 0
-                max: 200
-                step: 5
-                hint: "70% is the default. Use 100% for the original responsive title size."
-              - &ledeSizeField
-                label: "Intro Text Size (%)"
-                name: "ledeSize"
-                widget: "number"
-                default: 100
-                value_type: "int"
-                min: 0
-                max: 200
-                step: 5
-                hint: "100% is the current responsive intro size."
-              - &textAlignField
-                label: "Text Alignment"
-                name: "textAlign"
-                widget: "select"
-                default: "left"
-                hint: "Moves the whole text block horizontally."
-                options: &textAlignOptions
-                  - { label: "Left", value: "left" }
-                  - { label: "Centre", value: "center" }
-                  - { label: "Right", value: "right" }
-              - &textPositionField
-                label: "Text Position"
-                name: "textPosition"
-                widget: "select"
-                default: "bottom"
-                hint: "Moves the whole text block vertically over the image."
-                options: &textPositionOptions
-                  - { label: "Top", value: "top" }
-                  - { label: "Middle", value: "middle" }
-                  - { label: "Bottom (recommended)", value: "bottom" }
-              - &textWidthField
-                label: "Text Block Width (%)"
-                name: "textWidth"
-                widget: "number"
-                default: 100
-                value_type: "int"
-                min: 30
-                max: 100
-                step: 5
-                hint: "100% uses the normal page width. Reduce this to make the title and introduction wrap sooner."
-              - &textOffsetXField
-                label: "Text Horizontal Shift (%)"
-                name: "textOffsetX"
-                widget: "number"
-                default: 0
-                value_type: "int"
-                min: -100
-                max: 100
-                step: 5
-                hint: "0% is the designed position. Negative moves left; positive moves right."
-              - &textOffsetYField
-                label: "Text Vertical Shift (%)"
-                name: "textOffsetY"
-                widget: "number"
-                default: 0
-                value_type: "int"
-                min: -100
-                max: 100
-                step: 5
-                hint: "0% is the designed position. Negative moves up; positive moves down."
-          - &heroImageField
-            label: "Hero image"
-            name: "heroImage"
-            widget: "object"
-            collapsed: false
-            fields: &photoFields
-              - { label: "Photo", name: "image", widget: "image" }
-              - label: "Photo Zoom (%)"
-                name: "zoom"
-                widget: "number"
-                default: 100
-                value_type: "int"
-                min: 50
-                max: 200
-                step: 5
-                hint: "100% is normal. Increase to crop closer; reduce to show more of the photo."
-              - label: "Photo Horizontal Position (%)"
-                name: "positionX"
-                widget: "number"
-                default: 50
-                value_type: "int"
-                min: 0
-                max: 100
-                step: 1
-                hint: "0% keeps the left side; 50% centres; 100% keeps the right side."
-              - label: "Photo Vertical Position (%)"
-                name: "positionY"
-                widget: "number"
-                default: 50
-                value_type: "int"
-                min: 0
-                max: 100
-                step: 1
-                hint: "0% keeps the top; 50% centres; 100% keeps the bottom."
-              - label: "Fit"
-                name: "fit"
-                widget: "select"
-                default: "auto"
-                hint: "Fill crops to the slot; Show whole never crops."
-                options: &fitOptions
-                  - { label: "Auto (recommended)", value: "auto" }
-                  - { label: "Fill (crop to slot)", value: "cover" }
-                  - { label: "Show whole photo", value: "contain" }
-          - &menuImageField
-            label: "Menu image"
-            name: "menuImage"
-            widget: "object"
-            collapsed: true
-            fields: *photoFields
-          - { label: "Primary Button Label", name: "primaryButtonLabel", widget: "string" }
-          - { label: "Secondary Button Label", name: "secondaryButtonLabel", widget: "string" }
-          - label: "Story-card images"
-            name: "images"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "The method", name: "storyApproach", widget: "object", collapsed: true, fields: *photoFields }
-              - { label: "The people", name: "storyBjs", widget: "object", collapsed: true, fields: *photoFields }
-              - { label: "The platform", name: "storyMywell", widget: "object", collapsed: true, fields: *photoFields }
-          - &sectionsField
-            label: "Add page sections"
-            name: "sections"
+          - { label: "Corner label", name: "label", widget: "text", required: false }
+          - { label: "Bottom-right caption", name: "caption", widget: "text", required: false }
+          - { label: "Image area description (screen readers)", name: "stageAlt", widget: "string", required: false }
+          - { label: "Photo description (screen readers)", name: "imageAlt", widget: "string", required: false }
+          - label: "Buttons"
+            name: "actions"
             widget: "list"
-            collapsed: false
             required: false
-            summary: "{{fields.heading}}"
-            hint: "Add and reorder content below the page's existing sections."
-            types:
-              - label: "Text section"
-                name: "text"
-                widget: "object"
-                fields:
-                  - { label: "Small label (optional)", name: "eyebrow", widget: "string", required: false }
-                  - { label: "Heading", name: "heading", widget: "string" }
-                  - { label: "Text", name: "body", widget: "text", hint: "Use a blank line between paragraphs." }
-                  - { label: "Text alignment", name: "align", widget: "select", default: "left", options: ["left", "center", "right"] }
-              - label: "Image + text section"
-                name: "imageText"
-                widget: "object"
-                fields:
-                  - { label: "Small label (optional)", name: "eyebrow", widget: "string", required: false }
-                  - { label: "Heading", name: "heading", widget: "string" }
-                  - { label: "Text", name: "body", widget: "text" }
-                  - { label: "Photo", name: "photo", widget: "object", collapsed: false, fields: *photoFields }
-                  - { label: "Photo side", name: "photoSide", widget: "select", default: "left", options: ["left", "right"] }
-              - label: "Image gallery"
-                name: "gallery"
-                widget: "object"
-                fields:
-                  - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
-                  - { label: "Photos", name: "photos", widget: "list", fields: *photoFields }
-              - label: "Callout / quote"
-                name: "callout"
-                widget: "object"
-                fields:
-                  - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
-                  - { label: "Callout text", name: "body", widget: "text" }
-                  - { label: "Style", name: "tone", widget: "select", default: "blue", options: ["blue", "green", "copper"] }
-              - label: "Button link"
-                name: "button"
-                widget: "object"
-                fields:
-                  - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
-                  - { label: "Button label", name: "label", widget: "string" }
-                  - { label: "Link URL", name: "url", widget: "string" }
+            summary: "{{fields.label}}"
+            fields: &actionFields
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Goes to page (address)", name: "page", widget: "string", hint: "A page address from this site, e.g. approach" }
+              - { label: "Filled style", name: "primary", widget: "boolean", default: false, required: false }
+          - { label: "i18n", name: "i18n", widget: "hidden", required: false }
 
-      - file: "content/pages/approach.json"
-        label: "02 · The approach"
-        name: "approach"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Page images"
-            name: "images"
+      - label: "Content blocks"
+        name: "blocks"
+        widget: "list"
+        label_singular: "block"
+        required: false
+        typeKey: "type"
+        summary: "{{fields.type}}"
+        hint: "The page's content, top to bottom. Add blocks and drag to rearrange."
+        types:
+          # ------------------------------------------------ generic blocks --
+          - label: "Text"
+            name: "text"
             widget: "object"
-            collapsed: true
             fields:
-              - { label: "Editorial photo 1", name: "editorial1", widget: "object", collapsed: true, fields: *photoFields }
-              - { label: "Editorial photo 2", name: "editorial2", widget: "object", collapsed: true, fields: *photoFields }
-              - { label: "Data panel photo", name: "dataPanel", widget: "object", collapsed: true, fields: *photoFields }
-          - *sectionsField
-
-      - file: "content/pages/bjs.json"
-        label: "03 · Bhujal Jankaars"
-        name: "bjs"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - *sectionsField
-
-      - file: "content/pages/groundwater.json"
-        label: "04 · Groundwater"
-        name: "groundwater"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Ribbon images"
-            name: "images"
+              - { label: "Small label (optional)", name: "eyebrow", widget: "string", required: false }
+              - { label: "Heading", name: "heading", widget: "string", required: false }
+              - { label: "Text", name: "body", widget: "text", hint: "Use a blank line between paragraphs." }
+              - { label: "Text alignment", name: "align", widget: "select", default: "left", required: false, options: ["left", "center", "right"] }
+          - label: "Image + text"
+            name: "imageText"
             widget: "object"
-            collapsed: true
             fields:
-              - { label: "Ribbon photo 1", name: "ribbon1", widget: "object", collapsed: true, fields: *photoFields }
-              - { label: "Ribbon photo 2", name: "ribbon2", widget: "object", collapsed: true, fields: *photoFields }
-              - { label: "Ribbon photo 3", name: "ribbon3", widget: "object", collapsed: true, fields: *photoFields }
-          - *sectionsField
-
-      - file: "content/pages/mywell.json"
-        label: "05 · MyWell app"
-        name: "mywell"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "App screenshots"
-            name: "images"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Main screenshot", name: "main", widget: "object", collapsed: true, fields: *photoFields }
-              - { label: "Strip screenshot 1", name: "strip1", widget: "object", collapsed: true, fields: *photoFields }
-              - { label: "Strip screenshot 2", name: "strip2", widget: "object", collapsed: true, fields: *photoFields }
-          - *sectionsField
-
-      - file: "content/pages/media.json"
-        label: "06 · In the media"
-        name: "media"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Media stories"
-            name: "items"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - { label: "Label (source · date)", name: "meta", widget: "string", hint: "e.g. ACIAR · 17 Sep 2024" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Link URL", name: "url", widget: "string" }
-          - *sectionsField
-
-      - file: "content/pages/films.json"
-        label: "07 · Films"
-        name: "films"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Videos"
-            name: "items"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - { label: "Label (category · source)", name: "meta", widget: "string", hint: "e.g. Documentary · Deutsche Welle" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "YouTube URL", name: "url", widget: "string", hint: "Paste the full YouTube link — the thumbnail is generated automatically." }
-          - *sectionsField
-
-      - file: "content/pages/game.json"
-        label: "08 · Groundwater game"
-        name: "game"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Game image"
-            name: "images"
-            widget: "object"
-            collapsed: true
-            fields:
-              - { label: "Screenshot", name: "game", widget: "object", collapsed: true, fields: *photoFields }
-          - *sectionsField
-
-      - file: "content/pages/people.json"
-        label: "09 · People & partners"
-        name: "people"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Partners"
-            name: "partners"
-            widget: "list"
-            summary: "{{fields.name}}"
-            fields:
-              - { label: "Label (place · role)", name: "meta", widget: "string", hint: "e.g. Australia · Lead partner" }
-              - { label: "Name", name: "name", widget: "string" }
-              - { label: "Partner website URL", name: "url", widget: "string", hint: "The whole partner card is clickable and opens this website." }
-          - label: "Portraits"
-            name: "portraits"
-            widget: "list"
-            summary: "{{fields.name}} · {{fields.affiliation}}"
-            hint: "Hovering or focusing a portrait reveals these details; clicking opens the profile URL."
-            fields:
-              - { label: "Name", name: "name", widget: "string" }
-              - { label: "Title / role", name: "title", widget: "string" }
-              - { label: "Affiliation", name: "affiliation", widget: "string" }
-              - { label: "Profile URL", name: "url", widget: "string", hint: "Clicking the portrait opens this profile or organisation page." }
-              - { label: "Photo", name: "image", widget: "image" }
-              - { label: "Photo Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5 }
-              - { label: "Photo Horizontal Position (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1 }
-              - { label: "Photo Vertical Position (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1 }
-              - { label: "Fit", name: "fit", widget: "select", default: "auto", options: *fitOptions }
-          - *sectionsField
-
-      - file: "content/pages/archive.json"
-        label: "10 · Image archive"
-        name: "archive"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Archive images"
-            name: "items"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - { label: "Photo", name: "image", widget: "image" }
-              - { label: "Photo Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5 }
-              - { label: "Photo Horizontal Position (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1 }
-              - { label: "Photo Vertical Position (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1 }
-              - { label: "Fit", name: "fit", widget: "select", default: "auto", options: *fitOptions }
-              - { label: "Category", name: "category", widget: "string", hint: "Groups the image under a filter tab, e.g. Overview" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Source URL (optional)", name: "source", widget: "string", required: false }
-          - *sectionsField
-
-      - file: "content/pages/publications.json"
-        label: "11 · Publications"
-        name: "publications"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Publications"
-            name: "items"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - { label: "Kind", name: "kind", widget: "string", hint: "Groups the publication under a filter tab, e.g. Book or Brochure" }
-              - { label: "Label (kind · languages)", name: "meta", widget: "string", hint: "e.g. Book · English, Hindi, Gujarati" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - label: "Download links"
-                name: "editions"
-                widget: "list"
-                summary: "{{fields.label}}"
-                hint: "One link per language edition — the card shows a button for each."
-                fields:
-                  - { label: "Language label", name: "label", widget: "string", hint: "e.g. English, हिन्दी, ગુજરાતી" }
-                  - { label: "Link URL", name: "url", widget: "string", hint: "A Google Drive share link or any other public file URL." }
-          - *sectionsField
-
-      - file: "content/pages/tools.json"
-        label: "12 · Tools"
-        name: "tools"
-        fields:
-          - { label: "Title & introduction", name: "intro", widget: "object", collapsed: false, fields: *introFields }
-          - *heroImageField
-          - *menuImageField
-          - label: "Tools"
-            name: "items"
-            widget: "list"
-            summary: "{{fields.name}}"
-            fields:
-              - { label: "Name", name: "name", widget: "string" }
-              - { label: "Label (kind · what it does)", name: "meta", widget: "string", hint: "e.g. App · Record, map and compare" }
-              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Small label (optional)", name: "eyebrow", widget: "string", required: false }
+              - { label: "Heading", name: "heading", widget: "string", required: false }
+              - { label: "Text", name: "body", widget: "text" }
               - { label: "Photo", name: "photo", widget: "object", collapsed: false, fields: *photoFields }
-              - { label: "Button label", name: "linkLabel", widget: "string", hint: "e.g. Explore MyWell" }
-              - label: "Button opens this page"
-                name: "target"
-                widget: "select"
-                default: "mywell"
-                hint: "Which section of this website the button opens. Ignored when an external link is set below."
-                options:
-                  - { label: "MyWell app", value: "mywell" }
-                  - { label: "Groundwater game", value: "game" }
-                  - { label: "The approach", value: "approach" }
-                  - { label: "Bhujal Jankaars", value: "bjs" }
-                  - { label: "Groundwater", value: "groundwater" }
-                  - { label: "Films", value: "films" }
-                  - { label: "Publications", value: "publications" }
-              - { label: "External link (optional)", name: "url", widget: "string", required: false, hint: "Set this to send the button to another website instead of a page above." }
-          - *sectionsField
+              - { label: "Photo side", name: "photoSide", widget: "select", default: "left", required: false, options: ["left", "right"] }
+          - label: "Image gallery"
+            name: "gallery"
+            widget: "object"
+            fields:
+              - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
+              - { label: "Photos", name: "photos", widget: "list", fields: *photoFields }
+          - label: "Callout / quote"
+            name: "callout"
+            widget: "object"
+            fields:
+              - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
+              - { label: "Callout text", name: "body", widget: "text" }
+              - { label: "Style", name: "tone", widget: "select", default: "blue", required: false, options: ["blue", "green", "copper"] }
+          - label: "Button link"
+            name: "button"
+            widget: "object"
+            fields:
+              - { label: "Heading (optional)", name: "heading", widget: "string", required: false }
+              - { label: "Button label", name: "label", widget: "string" }
+              - { label: "Link URL", name: "url", widget: "string" }
+          - label: "Video"
+            name: "video"
+            widget: "object"
+            fields:
+              - { label: "Video URL", name: "url", widget: "string", pattern: ['^https?://\S+$', "Must be a full web address starting with https://"], hint: "A YouTube link; the thumbnail is picked up automatically." }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Small label", name: "meta", widget: "string", required: false }
+          - label: "Embedded page"
+            name: "embed"
+            widget: "object"
+            fields:
+              - { label: "URL to embed", name: "url", widget: "string", pattern: ['^https?://\S+$', "Must be a full web address starting with https://"] }
+              - { label: "Title", name: "title", widget: "string", required: false }
+
+          # -------------------------------------------- editorial layouts --
+          - label: "Two-column section"
+            name: "split"
+            widget: "object"
+            fields:
+              - label: "Left column"
+                name: "left"
+                widget: "object"
+                collapsed: false
+                fields: &splitColumn
+                  - { label: "Column type", name: "kind", widget: "select", default: "prose", options: [{ label: "Text", value: "prose" }, { label: "Photo", value: "image" }, { label: "Photo with number overlay", value: "dataPanel" }] }
+                  - { label: "Opening line (large)", name: "lead", widget: "text", required: false }
+                  - { label: "Paragraphs", name: "paragraphs", widget: "list", required: false, field: { label: "Paragraph", name: "paragraph", widget: "text" } }
+                  - label: "Numbered points"
+                    name: "features"
+                    widget: "list"
+                    required: false
+                    summary: "{{fields.title}}"
+                    fields:
+                      - { label: "Number", name: "number", widget: "string", required: false, hint: "Blank = automatic (01, 02…)" }
+                      - { label: "Title", name: "title", widget: "string" }
+                      - { label: "Text", name: "text", widget: "text", required: false }
+                  - { label: "Buttons", name: "actions", widget: "list", required: false, summary: "{{fields.label}}", fields: *actionFields }
+                  - { label: "Small logo above the text", name: "logo", widget: "object", collapsed: true, required: false, fields: [{ label: "Image", name: "image", widget: "image", required: false }, { label: "Description", name: "alt", widget: "string", required: false }] }
+                  - { label: "Photo", name: "photo", widget: "object", collapsed: true, required: false, fields: *photoFields }
+                  - { label: "Overlay number", name: "stat", widget: "string", required: false, hint: "Photo-with-number only." }
+                  - { label: "Overlay caption", name: "caption", widget: "string", required: false, hint: "Photo-with-number only." }
+                  - { label: "look", name: "look", widget: "hidden", required: false }
+              - label: "Right column"
+                name: "right"
+                widget: "object"
+                collapsed: false
+                fields: *splitColumn
+              - { label: "i18n", name: "i18n", widget: "hidden", required: false }
+          - label: "Card grid"
+            name: "cards"
+            widget: "object"
+            fields:
+              - label: "Cards"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Corner label", name: "number", widget: "string", required: false, hint: "e.g. A / 01. Blank = automatic." }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Text", name: "text", widget: "text", required: false }
+              - { label: "i18n", name: "i18n", widget: "hidden", required: false }
+          - label: "Photo pair"
+            name: "imagePair"
+            widget: "object"
+            fields:
+              - { label: "Style", name: "look", widget: "select", default: "editorial", required: false, options: [{ label: "Editorial (with captions)", value: "editorial" }, { label: "App screens", value: "screens" }] }
+              - label: "Photos"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Photo", name: "photo", widget: "object", collapsed: false, fields: *photoFields }
+                  - { label: "Caption", name: "caption", widget: "string", required: false }
+              - { label: "i18n", name: "i18n", widget: "hidden", required: false }
+          - label: "Photo ribbon (3 across)"
+            name: "photoRibbon"
+            widget: "object"
+            fields:
+              - label: "Photos"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Photo", name: "photo", widget: "object", collapsed: false, fields: *photoFields }
+          - label: "Dark banner"
+            name: "banner"
+            widget: "object"
+            fields:
+              - { label: "Small label", name: "eyebrow", widget: "string", required: false }
+              - { label: "Heading", name: "title", widget: "string" }
+              - { label: "Text", name: "lede", widget: "text", required: false }
+              - { label: "Label colour", name: "accent", widget: "string", required: false, hint: "Optional CSS colour, e.g. #88b3b8" }
+              - { label: "i18n", name: "i18n", widget: "hidden", required: false }
+          - label: "Statement with numbers"
+            name: "statement"
+            widget: "object"
+            fields:
+              - { label: "Small label", name: "label", widget: "string", required: false }
+              - { label: "Statement", name: "quote", widget: "text" }
+              - label: "Numbers"
+                name: "metrics"
+                widget: "list"
+                summary: "{{fields.value}} — {{fields.label}}"
+                fields:
+                  - { label: "Number", name: "value", widget: "string" }
+                  - { label: "Label", name: "label", widget: "string" }
+              - { label: "i18n", name: "i18n", widget: "hidden", required: false }
+          - label: "Story cards (with heading)"
+            name: "storyCards"
+            widget: "object"
+            fields:
+              - { label: "Small label", name: "eyebrow", widget: "string", required: false }
+              - { label: "Heading", name: "title", widget: "string" }
+              - { label: "Text", name: "lede", widget: "text", required: false }
+              - label: "Cards"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Goes to page (address)", name: "page", widget: "string" }
+                  - { label: "Small label", name: "label", widget: "string", required: false }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Photo", name: "photo", widget: "object", collapsed: true, fields: *photoFields }
+              - { label: "i18n", name: "i18n", widget: "hidden", required: false }
+          - label: "Numbered steps"
+            name: "steps"
+            widget: "object"
+            fields:
+              - label: "Steps"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Text", name: "text", widget: "text", required: false }
+              - { label: "i18n", name: "i18n", widget: "hidden", required: false }
+          - label: "Framed screenshot"
+            name: "framedShot"
+            widget: "object"
+            fields:
+              - { label: "Screenshot", name: "photo", widget: "object", collapsed: false, fields: *photoFields }
+
+          # ------------------------------------------------- list layouts --
+          - label: "Media stories (searchable)"
+            name: "mediaStories"
+            widget: "object"
+            fields:
+              - label: "Stories"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Source · date", name: "meta", widget: "string", required: false }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "description", widget: "text", required: false }
+                  - { label: "Link", name: "url", widget: "string" }
+          - label: "Film grid"
+            name: "filmGrid"
+            widget: "object"
+            fields:
+              - label: "Films"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Small label", name: "meta", widget: "string", required: false }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "YouTube link", name: "url", widget: "string" }
+          - label: "Photo archive (filters + lightbox)"
+            name: "photoArchive"
+            widget: "object"
+            fields:
+              - label: "Images"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Photo", name: "image", widget: "image" }
+                  - { label: "Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5, required: false }
+                  - { label: "Focus X (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
+                  - { label: "Focus Y (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
+                  - { label: "Fit", name: "fit", widget: "select", default: "auto", required: false, options: ["auto", "cover", "contain"] }
+                  - { label: "Category", name: "category", widget: "string", hint: "Groups the image under a filter button." }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Source (optional)", name: "source", widget: "string", required: false }
+          - label: "Publication list (filters)"
+            name: "publicationList"
+            widget: "object"
+            fields:
+              - label: "Publications"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Kind", name: "kind", widget: "string", hint: "e.g. Brochure or Book — becomes a filter button." }
+                  - { label: "Small label", name: "meta", widget: "string", required: false }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "description", widget: "text", required: false }
+                  - label: "Editions"
+                    name: "editions"
+                    widget: "list"
+                    summary: "{{fields.label}}"
+                    fields:
+                      - { label: "Language / label", name: "label", widget: "string" }
+                      - { label: "Download link", name: "url", widget: "string" }
+          - label: "Tool cards"
+            name: "toolList"
+            widget: "object"
+            fields:
+              - label: "Tools"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "Small label", name: "meta", widget: "string", required: false }
+                  - { label: "Description", name: "description", widget: "text", required: false }
+                  - { label: "Screenshot", name: "photo", widget: "object", collapsed: true, required: false, fields: *photoFields }
+                  - { label: "Button label", name: "linkLabel", widget: "string", required: false }
+                  - { label: "Opens page (address)", name: "target", widget: "string", required: false, hint: "A page on this site, e.g. mywell. Leave empty when using an external link." }
+                  - { label: "External link", name: "url", widget: "string", required: false, hint: "Wins over the page address if both are set." }
+          - label: "Partner list"
+            name: "partnerList"
+            widget: "object"
+            fields:
+              - label: "Partners"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - { label: "Small label", name: "meta", widget: "string", required: false, hint: "e.g. Australia · Lead partner" }
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "Website", name: "url", widget: "string", required: false }
+          - label: "Portrait band"
+            name: "portraitBand"
+            widget: "object"
+            fields:
+              - label: "People"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "Role", name: "title", widget: "string", required: false }
+                  - { label: "Affiliation", name: "affiliation", widget: "string", required: false }
+                  - { label: "Profile link", name: "url", widget: "string", required: false }
+                  - { label: "Photo", name: "image", widget: "image" }
+                  - { label: "Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5, required: false }
+                  - { label: "Focus X (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
+                  - { label: "Focus Y (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
+                  - { label: "Fit", name: "fit", widget: "select", default: "auto", required: false, options: ["auto", "cover", "contain"] }
+          - label: "Source note"
+            name: "sourceNote"
+            widget: "object"
+            fields:
+              - label: "Parts"
+                name: "parts"
+                widget: "list"
+                hint: "Text pieces and links, joined in order into one small note."
+                fields:
+                  - { label: "Text", name: "text", widget: "string", required: false }
+                  - { label: "Link", name: "link", widget: "object", collapsed: true, required: false, fields: [{ label: "Label", name: "label", widget: "string", required: false }, { label: "URL", name: "url", widget: "string", required: false }, { label: "Downloads a file", name: "download", widget: "boolean", default: false, required: false }, { label: "Opens in a new tab", name: "external", widget: "boolean", default: false, required: false }] }
+              - { label: "style", name: "style", widget: "hidden", required: false }

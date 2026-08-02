@@ -1,4 +1,9 @@
 {
+  "menuName": "Overview",
+  "slug": "home",
+  "order": 1,
+  "published": true,
+  "template": "home",
   "intro": {
     "eyebrow": "Managing Aquifer Recharge & Sustaining Groundwater Use",
     "title": "Water beneath us.\nKnowledge between us.",
@@ -12,14 +17,119 @@
     "textOffsetX": 0,
     "textOffsetY": 0
   },
-  "heroImage": { "image": "/assets/marvi-originals/012-home.jpg", "zoom": 100, "positionX": 52, "positionY": 47, "fit": "cover" },
-  "menuImage": { "image": "/assets/marvi-originals/012-home.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-  "primaryButtonLabel": "Explore the approach",
-  "secondaryButtonLabel": "Discover MyWell",
-  "images": {
-    "storyApproach": { "image": "/assets/marvi-originals/022-about-marvi.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    "storyBjs": { "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" },
-    "storyMywell": { "image": "/assets/marvi-originals/079-about-mywell-app.jpg", "zoom": 100, "positionX": 50, "positionY": 50, "fit": "auto" }
+  "heroImage": {
+    "image": "/assets/marvi-originals/012-home.jpg",
+    "zoom": 100,
+    "positionX": 52,
+    "positionY": 47,
+    "fit": "cover"
   },
-  "sections": []
+  "menuImage": {
+    "image": "/assets/marvi-originals/012-home.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  },
+  "hero": {
+    "label": "Field note / India\nCommunity + science",
+    "caption": "A shared resource becomes visible through shared observation.",
+    "stageAlt": "MARVI team members and farmers standing in a field",
+    "imageAlt": "MARVI researchers and community members standing together in a green field",
+    "actions": [
+      {
+        "label": "Explore the approach",
+        "page": "approach",
+        "primary": true
+      },
+      {
+        "label": "Discover MyWell",
+        "page": "mywell",
+        "primary": false
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "statement",
+      "label": "The central question",
+      "quote": "How can a village understand an invisible shared resource—and decide its future together?",
+      "metrics": [
+        {
+          "value": "35",
+          "label": "Bhujal Jankaars trained in Rajasthan and Gujarat"
+        },
+        {
+          "value": "2012",
+          "label": "The MARVI field journey began"
+        },
+        {
+          "value": "1",
+          "label": "Shared aquifer connecting every local decision"
+        }
+      ],
+      "i18n": {
+        "label": "home.central",
+        "quote": "home.question",
+        "metrics.0.label": "home.metric.bjs",
+        "metrics.1.label": "home.metric.started",
+        "metrics.2.label": "home.metric.aquifer"
+      }
+    },
+    {
+      "type": "storyCards",
+      "eyebrow": "Inside MARVI",
+      "title": "A living practice, not a static study.",
+      "lede": "Follow the work from village observation to shared groundwater decisions.",
+      "items": [
+        {
+          "page": "approach",
+          "label": "01 · The method",
+          "title": "Science becomes useful when it becomes local.",
+          "photo": {
+            "alt": "A groundwater monitor taking a measurement beside a village well",
+            "image": "/assets/marvi-originals/022-about-marvi.jpg",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          }
+        },
+        {
+          "page": "bjs",
+          "label": "02 · The people",
+          "title": "Meet the village groundwater champions.",
+          "photo": {
+            "alt": "Bhujal Jankaars taking part in field training",
+            "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          }
+        },
+        {
+          "page": "mywell",
+          "label": "03 · The platform",
+          "title": "See local knowledge take shape in MyWell.",
+          "photo": {
+            "alt": "A community member recording a MyWell field observation",
+            "image": "/assets/marvi-originals/079-about-mywell-app.jpg",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "fit": "auto"
+          }
+        }
+      ],
+      "i18n": {
+        "eyebrow": "home.explore.eyebrow",
+        "title": "home.explore.title",
+        "lede": "home.explore.lede",
+        "items.0.label": "home.story1.label",
+        "items.1.label": "home.story2.label",
+        "items.2.label": "home.story3.label"
+      }
+    }
+  ]
 }
