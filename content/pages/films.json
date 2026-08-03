@@ -1,35 +1,10 @@
 {
-  "menuName": "Films",
-  "slug": "films",
-  "order": 7,
-  "published": true,
-  "template": "standard",
-  "intro": {
-    "eyebrow": "Films & field recordings",
-    "title": "See the people behind the measurements.",
-    "lede": "A curated starting point from the new MARVI video archive—introductions, field stories, training and technical talks.",
-    "eyebrowSize": 100,
-    "titleSize": 70,
-    "ledeSize": 100,
-    "textAlign": "left",
-    "textPosition": "bottom",
-    "textWidth": 100,
-    "textOffsetX": 0,
-    "textOffsetY": 0
-  },
   "heroImage": {
     "image": "/assets/marvi-originals/007-home.jpg",
     "zoom": 100,
     "positionX": 50,
     "positionY": 46,
     "fit": "cover"
-  },
-  "menuImage": {
-    "image": "/assets/marvi-originals/034-about-marvi.jpg",
-    "zoom": 100,
-    "positionX": 50,
-    "positionY": 50,
-    "fit": "auto"
   },
   "blocks": [
     {
@@ -93,5 +68,30 @@
         }
       ]
     }
-  ]
+  ],
+  "menuName": "Videos",
+  "slug": "videos",
+  "intro": {
+    "eyebrow": "Films & field recordings",
+    "eyebrowSize": 100,
+    "textPosition": "bottom",
+    "textOffsetX": 0,
+    "textAlign": "left",
+    "title": "See the people behind the measurements.",
+    "textOffsetY": 0,
+    "textWidth": 100,
+    "titleSize": 70,
+    "lede": "A curated starting point from the new MARVI video archive—introductions, field stories, training and technical talks.",
+    "ledeSize": 100
+  },
+  "published": true,
+  "order": 7,
+  "template": "standard",
+  "menuImage": {
+    "image": "/assets/marvi-originals/034-about-marvi.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  }
 }
