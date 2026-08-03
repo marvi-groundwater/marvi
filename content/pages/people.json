@@ -1,35 +1,10 @@
 {
-  "menuName": "People & partners",
-  "slug": "people",
-  "order": 9,
-  "published": true,
-  "template": "standard",
-  "intro": {
-    "eyebrow": "People & partners",
-    "eyebrowSize": 100,
-    "textPosition": "bottom",
-    "textOffsetX": 0,
-    "textAlign": "left",
-    "title": "A transdisciplinary project, built across borders.",
-    "textOffsetY": 0,
-    "textWidth": 100,
-    "titleSize": 70,
-    "lede": "Researchers, practitioners, institutions and village volunteers in India and Australia working as one team.",
-    "ledeSize": 100
-  },
   "heroImage": {
     "image": "/assets/marvi-originals/039-about-marvi.jpg",
     "zoom": 100,
     "positionX": 50,
     "positionY": 57,
     "fit": "cover"
-  },
-  "menuImage": {
-    "image": "/assets/marvi-originals/041-our-people.jpg",
-    "zoom": 100,
-    "positionX": 50,
-    "positionY": 50,
-    "fit": "auto"
   },
   "blocks": [
     {
@@ -199,5 +174,30 @@
       "body": "This is a test",
       "heading": "Test heading"
     }
-  ]
+  ],
+  "menuName": "People",
+  "slug": "people",
+  "intro": {
+    "eyebrow": "People & partners",
+    "eyebrowSize": 100,
+    "textPosition": "bottom",
+    "textOffsetX": 0,
+    "textAlign": "left",
+    "title": "A transdisciplinary project, built across borders.",
+    "textOffsetY": 0,
+    "textWidth": 100,
+    "titleSize": 70,
+    "lede": "Researchers, practitioners and village volunteers in India and Australia working as one team.",
+    "ledeSize": 100
+  },
+  "published": true,
+  "order": 9,
+  "template": "standard",
+  "menuImage": {
+    "image": "/assets/marvi-originals/041-our-people.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  }
 }
