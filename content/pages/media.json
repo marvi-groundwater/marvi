@@ -1,35 +1,10 @@
 {
-  "menuName": "In the media",
-  "slug": "media",
-  "order": 6,
-  "published": true,
-  "template": "standard",
-  "intro": {
-    "eyebrow": "MARVI in the media",
-    "title": "Stories from the field, the lab and the village.",
-    "lede": "Selected journalism and project coverage from the new MARVI media archive.",
-    "eyebrowSize": 100,
-    "titleSize": 70,
-    "ledeSize": 100,
-    "textAlign": "left",
-    "textPosition": "bottom",
-    "textWidth": 100,
-    "textOffsetX": 0,
-    "textOffsetY": 0
-  },
   "heroImage": {
     "image": "/assets/marvi-originals/020-welcome-to-marvi.jpg",
     "zoom": 100,
     "positionX": 50,
     "positionY": 48,
     "fit": "cover"
-  },
-  "menuImage": {
-    "image": "/assets/marvi-originals/032-about-marvi.jpg",
-    "zoom": 100,
-    "positionX": 50,
-    "positionY": 50,
-    "fit": "auto"
   },
   "blocks": [
     {
@@ -125,5 +100,30 @@
         }
       ]
     }
-  ]
+  ],
+  "menuName": "MARVI in the news",
+  "slug": "news",
+  "intro": {
+    "eyebrow": "MARVI in the media",
+    "eyebrowSize": 100,
+    "textPosition": "bottom",
+    "textOffsetX": 0,
+    "textAlign": "left",
+    "title": "Stories from the field, the lab and the village.",
+    "textOffsetY": 0,
+    "textWidth": 100,
+    "titleSize": 70,
+    "lede": "Selected journalism and project coverage from the new MARVI media archive.",
+    "ledeSize": 100
+  },
+  "published": true,
+  "order": 6,
+  "template": "standard",
+  "menuImage": {
+    "image": "/assets/marvi-originals/032-about-marvi.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  }
 }
