@@ -1,35 +1,10 @@
 {
-  "menuName": "The approach",
-  "slug": "approach",
-  "order": 2,
-  "published": true,
-  "template": "standard",
-  "intro": {
-    "eyebrow": "The MARVI approach",
-    "title": "Science becomes useful when it becomes local.",
-    "lede": "MARVI brings technical knowledge, community experience and practical monitoring together at village level.",
-    "eyebrowSize": 100,
-    "titleSize": 70,
-    "ledeSize": 100,
-    "textAlign": "left",
-    "textPosition": "bottom",
-    "textWidth": 100,
-    "textOffsetX": 0,
-    "textOffsetY": 0
-  },
   "heroImage": {
     "image": "/assets/marvi-originals/008-home.jpg",
     "zoom": 100,
     "positionX": 50,
     "positionY": 54,
     "fit": "cover"
-  },
-  "menuImage": {
-    "image": "/assets/marvi-originals/022-about-marvi.jpg",
-    "zoom": 100,
-    "positionX": 50,
-    "positionY": 50,
-    "fit": "auto"
   },
   "blocks": [
     {
@@ -142,5 +117,30 @@
         "items.3.text": "approach.step4.desc"
       }
     }
-  ]
+  ],
+  "menuName": "The MARVI approach",
+  "slug": "approach",
+  "intro": {
+    "eyebrow": "The MARVI approach",
+    "eyebrowSize": 100,
+    "textPosition": "bottom",
+    "textOffsetX": 0,
+    "textAlign": "left",
+    "title": "Science becomes useful when it becomes local.",
+    "textOffsetY": 0,
+    "textWidth": 100,
+    "titleSize": 70,
+    "lede": "MARVI brings technical knowledge, community experience and practical monitoring together at village level.",
+    "ledeSize": 100
+  },
+  "published": true,
+  "order": 2,
+  "template": "standard",
+  "menuImage": {
+    "image": "/assets/marvi-originals/022-about-marvi.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  }
 }
