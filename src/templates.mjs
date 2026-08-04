@@ -44,7 +44,16 @@ const clamp = (value, min, max, fallback) => {
   const n = Number(value);
   return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : fallback;
 };
-export const photoLayout = (data = {}) => {
+
+/* An object field the editor has not filled in arrives as null, and a default
+ * parameter does not catch null — only undefined. Every renderer below takes
+ * its optional objects through this, so a half-filled entry renders a partial
+ * page instead of throwing. That is what the CMS preview shows you while you
+ * type, and the build reads the same data, so it protects both. */
+const opt = (value) => (value == null ? {} : value);
+
+export const photoLayout = (entry) => {
+  const data = opt(entry);
   const zoom = clamp(data.zoom, 50, 200, 100);
   return {
     x: clamp(data.positionX, 0, 100, 50),
@@ -53,14 +62,18 @@ export const photoLayout = (data = {}) => {
     fit: data.fit && data.fit !== 'auto' ? data.fit : 'cover'
   };
 };
-export const textLayout = (data = {}) => ({
-  width: clamp(data.textWidth, 30, 100, 100),
-  offsetX: clamp(data.textOffsetX, -30, 30, 0),
-  offsetY: clamp(data.textOffsetY, -30, 30, 0)
-});
+export const textLayout = (entry) => {
+  const data = opt(entry);
+  return {
+    width: clamp(data.textWidth, 30, 100, 100),
+    offsetX: clamp(data.textOffsetX, -30, 30, 0),
+    offsetY: clamp(data.textOffsetY, -30, 30, 0)
+  };
+};
 
 /** Photo entry ({image, zoom, positionX, positionY, fit, alt}) → <img>. */
-const photo = (document, entry = {}, { alt, lazy = true, className } = {}) => {
+const photo = (document, raw, { alt, lazy = true, className } = {}) => {
+  const entry = opt(raw);
   const img = el(document, 'img', { class: className });
   if (entry.image) img.src = entry.image;
   img.alt = alt ?? entry.alt ?? '';
@@ -73,7 +86,8 @@ const photo = (document, entry = {}, { alt, lazy = true, className } = {}) => {
 };
 
 /** The intro sizing/placement controls, applied to a head root at build time. */
-const applyTextControls = (root, intro = {}) => {
+const applyTextControls = (root, raw) => {
+  const intro = opt(raw);
   const scale = (sel, value) => {
     const node = root.querySelector(sel);
     if (node) node.setAttribute('data-cms-text-scale', String(clamp(value, 0, 200, 100)));
@@ -94,7 +108,8 @@ const applyTextControls = (root, intro = {}) => {
 };
 
 /** The page-head cover photo custom properties (mirror of applyHeroLayout). */
-const applyCoverControls = (root, entry = {}) => {
+const applyCoverControls = (root, raw) => {
+  const entry = opt(raw);
   if (!entry.image) return;
   const layout = photoLayout(entry);
   root.style.setProperty('--cover', `url("${String(entry.image).replaceAll('"', '%22')}")`);
@@ -150,7 +165,8 @@ const BRAND_TONES = {
 };
 
 /** → { shape, svg }. Unknown values fall back rather than rendering nothing. */
-export const brandMark = (brand = {}) => {
+export const brandMark = (raw) => {
+  const brand = opt(raw);
   const shape = BRAND_SHAPES.includes(brand.shape) ? brand.shape : 'circle';
   const tone = BRAND_TONES[brand.tone] || BRAND_TONES.water;
   // The water table, mounded under the middle — highest where the recharge is,
@@ -292,7 +308,8 @@ const proseColumn = (document, col, ctx, side) => {
   return wrap;
 };
 
-const splitColumn = (document, col = {}, ctx, side) => {
+const splitColumn = (document, raw, ctx, side) => {
+  const col = opt(raw);
   if (col.kind === 'dataPanel') {
     const wrap = el(document, 'div', { class: 'image-data-panel reveal' });
     wrap.appendChild(photo(document, col.photo));

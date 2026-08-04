@@ -7,6 +7,25 @@
     <title>MARVI — Content Admin</title>
   </head>
   <body>
+    <!-- Open on the light theme, so the editor matches the site it edits
+         instead of following whatever the operating system prefers. This only
+         ever fills in a value that is absent: the moment an editor chooses a
+         theme under Settings → Appearance, their choice is stored here and
+         wins from then on. Must run before the CMS boots. -->
+    <script>
+      try {
+        const KEY = 'sveltia-cms.prefs';
+        const prefs = JSON.parse(localStorage.getItem(KEY) || '{}');
+        if (!prefs.theme) {
+          prefs.theme = 'light';
+          localStorage.setItem(KEY, JSON.stringify(prefs));
+        }
+      } catch {
+        /* Storage blocked (private window, strict settings) — the CMS opens on
+           Auto, which is the behaviour we had anyway. */
+      }
+    </script>
+
     <!-- Sveltia CMS, vendored rather than fetched from a CDN: nothing here is
          loaded from a third party, and the editor cannot change underfoot
          without someone choosing to replace this file.

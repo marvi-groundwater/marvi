@@ -113,27 +113,19 @@ const PagePreview = ({ entry, getAsset }) => {
   });
 };
 
-/* Custom preview templates are OFF by default under Sveltia CMS.
+/* The preview pane renders the page with the site's OWN renderer, so what an
+ * editor sees while typing is what the build will publish — the two cannot
+ * drift, because there is only one of them.
  *
- * Sveltia accepts registerPreviewTemplate and, as measured on this exact
- * bundle in a sibling repository, never calls the component — and the act of
- * registering one REPLACES the working built-in preview with a blank
- * rectangle. Registering unconditionally would therefore trade a working
- * preview for an empty pane.
+ * Sveltia resolves a preview template by `fileName ?? collectionName`. This is
+ * a FOLDER collection, so there is no file name and the key is "pages", which
+ * is why the component is called. It is NOT called for files collections, so
+ * "site" deliberately has no custom template and uses the built-in preview —
+ * still wearing the site's stylesheet, via registerPreviewStyle above.
  *
- * It may nonetheless work here: Sveltia looks the template up by
- * `fileName ?? collectionName`, and this is a folder collection ("pages"),
- * where the sibling's failing cases were files collections. That is untested.
- *
- * To test, open /admin/?customPreview=1 and edit a page:
- *   - the page renders with the site's own styling  -> it works, make it
- *     unconditional again
- *   - an empty white rectangle                      -> it does not, leave this
- *     as it is and use the built-in preview
- *
- * registerPreviewStyle above is unaffected and does work, so the built-in
- * preview is still styled like the real site either way.
+ * Measured on this bundle: renders the real page and redraws on every
+ * keystroke. If a future Sveltia stops calling it, the symptom is an empty
+ * white pane rather than an error — delete this line and the built-in preview
+ * comes straight back.
  */
-if (new URLSearchParams(window.location.search).has('customPreview')) {
-  CMS.registerPreviewTemplate('pages', PagePreview);
-}
+CMS.registerPreviewTemplate('pages', PagePreview);
