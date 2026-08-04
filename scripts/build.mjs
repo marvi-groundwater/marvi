@@ -20,7 +20,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseHTML } from 'linkedom';
 import { captureEnglish, applyLanguage } from '../src/hydrate.mjs';
-import { renderPage } from '../src/templates.mjs';
+import { renderPage, brandMark } from '../src/templates.mjs';
 import { buildRegistry, urlFor } from '../src/registry.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -30,6 +30,11 @@ const SITE_URL = 'https://' + readFileSync(join(ROOT, 'CNAME'), 'utf8').trim();
 const template = readFileSync(join(ROOT, 'index.html'), 'utf8');
 const probeStyles = parseHTML(template).document;
 const i18n = JSON.parse(readFileSync(join(ROOT, 'content/i18n.json'), 'utf8'));
+// Site-wide chrome (currently just the brand badge). Absent or half-filled is
+// fine — every reader of it falls back rather than failing the build.
+const SITE = existsSync(join(ROOT, 'content/site.json'))
+  ? JSON.parse(readFileSync(join(ROOT, 'content/site.json'), 'utf8'))
+  : {};
 
 const PAGES = buildRegistry(ROOT);
 const SECTION_IDS = PAGES.slice(1).map((p) => p.slug); // all but home, nav order
@@ -46,6 +51,14 @@ function composeDocument() {
   // existed to serve the old inline runtime.
   document.querySelectorAll('[data-panel]').forEach((n) => n.remove());
   document.querySelectorAll('script').forEach((n) => n.remove());
+
+  // Draw the brand badge from content/site.json.
+  const mark = document.querySelector('.brand-mark');
+  if (mark) {
+    const { shape, svg } = brandMark(SITE.brand);
+    mark.setAttribute('data-shape', shape);
+    mark.innerHTML = svg;
+  }
 
   // Rebuild the sidebar nav from the registry.
   const nav = document.querySelector('.side-nav');

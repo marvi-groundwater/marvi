@@ -50,11 +50,40 @@ buttons switch `data-view` on `#publication-sections`. **Both views are the
 same markup restyled** — nothing is re-rendered, so filtering, counting and
 searching cannot disagree between them.
 
+Sections are `<details>` and rest closed (`startCollapsed`, default on), so the
+page opens as a contents list. Closed is a rendering state, not a filter: the
+entries stay in the DOM, which is what lets the search reach them and what
+keeps `parity.mjs` able to see every title. A search opens the sections holding
+matches — it would look broken otherwise — and picking a single kind opens that
+one. Returning to All resets to the resting state.
+
 Chips match on `data-filter` / `data-section` — never on the button's text,
 which is translated into 13 languages. The search *placeholder* is the one
 string here that stays English on translated pages: `data-i18n` moves
 textContent, and there is no placeholder equivalent (the media search has the
 same gap).
+
+## The brand badge
+
+`content/site.json` holds `brand: { shape, tone }`, and `brandMark()` in
+`src/templates.mjs` draws the badge from them at build time — an SVG, not an
+uploaded image, so it stays sharp at every size and in the site's own colours.
+
+The drawing is a section through the ground: the land surface, the water table
+mounded under the middle, and the well descending through the crest. Two things
+about it are load-bearing rather than decorative:
+
+- **The land-surface line.** Without it a filled mound reads as a hill against
+  a sky and the mark becomes a generic sunrise logo. With it, everything below
+  is underground.
+- **The well is a shaft, not a staked marker.** A stem standing above the
+  ground with a ball on top reads as a map pin. It was one, briefly.
+
+The drawing fills the badge and is clipped by it, so the water finds its level
+in whatever silhouette holds it. That is why `shape` is safe to expose in the
+CMS: every option is the same mark in a different vessel. Sizing belongs to the
+`.brand-mark` box alone, so a smaller screen changes two numbers rather than
+re-placing the artwork by hand.
 
 ## Translation
 

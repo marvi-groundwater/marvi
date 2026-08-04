@@ -109,6 +109,53 @@ const ytId = (url) => {
   return m ? m[1] : '';
 };
 
+/* ---------- brand mark ---------- */
+
+/**
+ * The sidebar badge, drawn as a section through the ground.
+ *
+ * Inside the badge is a water table with a recharge mound under the middle,
+ * the aquifer filling below it, and a hairline well dropping through the
+ * crest — a check dam upstream raising the table under a village well is what
+ * the project does, and it is the same curve its own figures solve.
+ *
+ * The drawing fills the badge and is clipped by it, so water finds its level
+ * in whatever silhouette contains it. That is what makes the shape safe to
+ * hand to an editor: every option below is the same mark in a different
+ * vessel, not a different mark.
+ */
+export const BRAND_SHAPES = ['circle', 'rounded', 'squircle', 'wellhead'];
+
+const BRAND_TONES = {
+  // Palette values only, so no combination can fall outside the site's colours.
+  water: { body: 'rgba(120,174,180,.5)', line: '#a8d6da', well: '#b66b43' },
+  copper: { body: 'rgba(182,107,67,.48)', line: '#dda57e', well: '#9fd0d4' },
+  chalk: { body: 'rgba(255,255,255,.24)', line: 'rgba(255,255,255,.85)', well: '#b66b43' }
+};
+
+/** → { shape, svg }. Unknown values fall back rather than rendering nothing. */
+export const brandMark = (brand = {}) => {
+  const shape = BRAND_SHAPES.includes(brand.shape) ? brand.shape : 'circle';
+  const tone = BRAND_TONES[brand.tone] || BRAND_TONES.water;
+  // The water table, mounded under the middle — highest where the recharge is,
+  // tapering to nothing at the boundaries.
+  const table = 'M0 27C8 27 12 20 20 20s12 7 20 7';
+  const svg =
+    '<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">' +
+    // The land surface. One line, and it is the line that does the most work:
+    // without it a filled mound reads as a hill against a sky, and the mark
+    // becomes a sunrise logo. With it, everything below is underground.
+    `<path d="M0 11.5h40" stroke="rgba(255,255,255,.32)" stroke-width="1.2"/>` +
+    `<path d="${table}V40H0Z" fill="${tone.body}"/>` +
+    `<path d="${table}" fill="none" stroke="${tone.line}" stroke-width="1.7"/>` +
+    // The well: down from the surface, through the crest, into the water. A
+    // shaft, not a staked marker — a stem standing above ground with a ball on
+    // top reads as a map pin, which is the one thing this must not be.
+    `<path d="M20 11.5V26" stroke="${tone.well}" stroke-width="2.2" stroke-linecap="round"/>` +
+    '</svg>';
+  return { shape, svg };
+};
+
 /* A stable id for a publication section or an archive category: it keys the
  * filter buttons and the translation entries, so it must not change when the
  * heading is retitled — and, crucially, it is what the runtime matches on, so

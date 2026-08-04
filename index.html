@@ -99,25 +99,26 @@
       text-align: left;
       text-decoration: none;
     }
+    /* The badge is a section through the ground: the flat resting water table,
+       the lens of water a check dam adds above it, and the well at its crest.
+       The drawing fills the badge and is clipped by it, so the water finds its
+       level in whatever silhouette holds it — which is why the shape is safe to
+       set in the CMS. Sizing belongs to the box alone; the SVG scales, so a
+       smaller screen changes two numbers instead of re-placing the artwork. */
     .brand-mark {
       position: relative;
+      display: block;   /* owns its size rather than inheriting a flex parent's */
       width: 39px;
       height: 39px;
       flex: 0 0 39px;
+      overflow: hidden;
       border: 1px solid rgba(255,255,255,.55);
       border-radius: 50%;
     }
-    .brand-mark::before {
-      content: "";
-      position: absolute;
-      left: 14px;
-      top: 8px;
-      width: 10px;
-      height: 17px;
-      background: #78aeb4;
-      border-radius: 60% 40% 64% 36% / 70% 42% 58% 30%;
-      transform: rotate(45deg);
-    }
+    .brand-mark svg { display: block; width: 100%; height: 100%; }
+    .brand-mark[data-shape="rounded"] { border-radius: 11px; }
+    .brand-mark[data-shape="squircle"] { border-radius: 34%; }
+    .brand-mark[data-shape="wellhead"] { border-radius: 50% 50% 14% 14%; }
     .brand-word { font-size: 1.1rem; font-weight: 700; letter-spacing: .18em; }
     .brand-note { display: block; color: #aab5b1; font: .62rem/1.4 var(--mono); letter-spacing: .08em; }
 
@@ -850,7 +851,6 @@
       }
       .brand { margin-bottom: 32px; }
       .brand-mark { width: 34px; height: 34px; flex-basis: 34px; }
-      .brand-mark::before { left: 12px; top: 7px; width: 9px; height: 15px; }
       .brand-word { font-size: .95rem; }
       .brand-note { font-size: .54rem; }
       .nav-label { margin-bottom: 8px; }
@@ -1071,7 +1071,6 @@
       }
       .sidebar .brand { margin-bottom: 25px; }
       .sidebar .brand-mark { width: 34px; height: 34px; flex-basis: 34px; }
-      .sidebar .brand-mark::before { left: 12px; top: 7px; width: 9px; height: 15px; }
       .sidebar .nav-label { margin-bottom: 11px; }
       .side-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
       .nav-tab {

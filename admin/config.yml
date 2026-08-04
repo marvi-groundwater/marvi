@@ -26,6 +26,45 @@ public_folder: "/assets/marvi-originals"
 # ---------------------------------------------------------------------------
 
 collections:
+  # ---------------------------------------------------------------------------
+  # Site-wide chrome — the things that sit outside any one page. The brand badge
+  # is drawn from these two settings rather than being an uploaded image, which
+  # is what keeps it sharp at every size and in the site's own colours. Every
+  # combination below is the same mark in a different vessel, so none of them
+  # can land outside the design.
+  # ---------------------------------------------------------------------------
+  - name: "site"
+    label: "Site-wide"
+    files:
+      - name: "brandmark"
+        label: "Brand badge"
+        file: "content/site.json"
+        fields:
+          - label: "Brand badge"
+            name: "brand"
+            widget: "object"
+            collapsed: false
+            fields:
+              - label: "Shape"
+                name: "shape"
+                widget: "select"
+                default: "circle"
+                hint: "The silhouette the water sits in. The drawing adapts to all four."
+                options:
+                  - { label: "Circle", value: "circle" }
+                  - { label: "Rounded square", value: "rounded" }
+                  - { label: "Squircle", value: "squircle" }
+                  - { label: "Well head (arched top)", value: "wellhead" }
+              - label: "Colour"
+                name: "tone"
+                widget: "select"
+                default: "water"
+                hint: "Drawn from the site palette, so any pairing with a shape still fits."
+                options:
+                  - { label: "Water (blue-green)", value: "water" }
+                  - { label: "Copper", value: "copper" }
+                  - { label: "Chalk (white)", value: "chalk" }
+
   - name: "pages"
     label: "Pages"
     label_singular: "page"
