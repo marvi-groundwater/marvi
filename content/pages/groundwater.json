@@ -74,12 +74,12 @@
         }
       ],
       "i18n": {
-        "items.0.title": "groundwater.card1.title",
-        "items.0.text": "groundwater.card1.desc",
-        "items.1.title": "groundwater.card2.title",
-        "items.1.text": "groundwater.card2.desc",
-        "items.2.title": "groundwater.card3.title",
-        "items.2.text": "groundwater.card3.desc"
+        "items__0__title": "groundwater.card1.title",
+        "items__0__text": "groundwater.card1.desc",
+        "items__1__title": "groundwater.card2.title",
+        "items__1__text": "groundwater.card2.desc",
+        "items__2__title": "groundwater.card3.title",
+        "items__2__text": "groundwater.card3.desc"
       }
     }
   ],

@@ -70,8 +70,8 @@
         }
       },
       "i18n": {
-        "left.lead": "mywell.intro",
-        "left.paragraphs.0": "mywell.desc"
+        "left__lead": "mywell.intro",
+        "left__paragraphs__0": "mywell.desc"
       }
     },
     {
@@ -121,14 +121,14 @@
         }
       ],
       "i18n": {
-        "items.0.title": "mywell.step1.title",
-        "items.0.text": "mywell.step1.desc",
-        "items.1.title": "mywell.step2.title",
-        "items.1.text": "mywell.step2.desc",
-        "items.2.title": "mywell.step3.title",
-        "items.2.text": "mywell.step3.desc",
-        "items.3.title": "mywell.step4.title",
-        "items.3.text": "mywell.step4.desc"
+        "items__0__title": "mywell.step1.title",
+        "items__0__text": "mywell.step1.desc",
+        "items__1__title": "mywell.step2.title",
+        "items__1__text": "mywell.step2.desc",
+        "items__2__title": "mywell.step3.title",
+        "items__2__text": "mywell.step3.desc",
+        "items__3__title": "mywell.step4.title",
+        "items__3__text": "mywell.step4.desc"
       }
     }
   ]

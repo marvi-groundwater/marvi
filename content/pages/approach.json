@@ -21,9 +21,9 @@
         ]
       },
       "i18n": {
-        "left.lead": "approach.aim",
-        "right.paragraphs.0": "approach.shared",
-        "right.paragraphs.1": "approach.cross"
+        "left__lead": "approach.aim",
+        "right__paragraphs__0": "approach.shared",
+        "right__paragraphs__1": "approach.cross"
       }
     },
     {
@@ -46,12 +46,12 @@
         }
       ],
       "i18n": {
-        "items.0.title": "approach.card1.title",
-        "items.0.text": "approach.card1.desc",
-        "items.1.title": "approach.card2.title",
-        "items.1.text": "approach.card2.desc",
-        "items.2.title": "approach.card3.title",
-        "items.2.text": "approach.card3.desc"
+        "items__0__title": "approach.card1.title",
+        "items__0__text": "approach.card1.desc",
+        "items__1__title": "approach.card2.title",
+        "items__1__text": "approach.card2.desc",
+        "items__2__title": "approach.card3.title",
+        "items__2__text": "approach.card3.desc"
       }
     },
     {
@@ -82,8 +82,8 @@
         }
       ],
       "i18n": {
-        "items.0.caption": "approach.caption1",
-        "items.1.caption": "approach.caption2"
+        "items__0__caption": "approach.caption1",
+        "items__1__caption": "approach.caption2"
       }
     },
     {
@@ -107,14 +107,14 @@
         }
       ],
       "i18n": {
-        "items.0.title": "approach.step1.title",
-        "items.0.text": "approach.step1.desc",
-        "items.1.title": "approach.step2.title",
-        "items.1.text": "approach.step2.desc",
-        "items.2.title": "approach.step3.title",
-        "items.2.text": "approach.step3.desc",
-        "items.3.title": "approach.step4.title",
-        "items.3.text": "approach.step4.desc"
+        "items__0__title": "approach.step1.title",
+        "items__0__text": "approach.step1.desc",
+        "items__1__title": "approach.step2.title",
+        "items__1__text": "approach.step2.desc",
+        "items__2__title": "approach.step3.title",
+        "items__2__text": "approach.step3.desc",
+        "items__3__title": "approach.step4.title",
+        "items__3__text": "approach.step4.desc"
       }
     }
   ],

@@ -71,9 +71,9 @@
       "i18n": {
         "label": "home.central",
         "quote": "home.question",
-        "metrics.0.label": "home.metric.bjs",
-        "metrics.1.label": "home.metric.started",
-        "metrics.2.label": "home.metric.aquifer"
+        "metrics__0__label": "home.metric.bjs",
+        "metrics__1__label": "home.metric.started",
+        "metrics__2__label": "home.metric.aquifer"
       }
     },
     {
@@ -126,9 +126,9 @@
         "eyebrow": "home.explore.eyebrow",
         "title": "home.explore.title",
         "lede": "home.explore.lede",
-        "items.0.label": "home.story1.label",
-        "items.1.label": "home.story2.label",
-        "items.2.label": "home.story3.label"
+        "items__0__label": "home.story1.label",
+        "items__1__label": "home.story2.label",
+        "items__2__label": "home.story3.label"
       }
     }
   ]

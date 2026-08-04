@@ -48,9 +48,9 @@
         ]
       },
       "i18n": {
-        "left.caption": "bjs.data.caption",
-        "right.lead": "bjs.intro1",
-        "right.paragraphs.0": "bjs.intro2"
+        "left__caption": "bjs.data.caption",
+        "right__lead": "bjs.intro1",
+        "right__paragraphs__0": "bjs.intro2"
       }
     }
   ],

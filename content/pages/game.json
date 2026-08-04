@@ -63,12 +63,12 @@
         }
       ],
       "i18n": {
-        "items.0.title": "game.card1.title",
-        "items.0.text": "game.card1.desc",
-        "items.1.title": "game.card2.title",
-        "items.1.text": "game.card2.desc",
-        "items.2.title": "game.card3.title",
-        "items.2.text": "game.card3.desc"
+        "items__0__title": "game.card1.title",
+        "items__0__text": "game.card1.desc",
+        "items__1__title": "game.card2.title",
+        "items__1__text": "game.card2.desc",
+        "items__2__title": "game.card3.title",
+        "items__2__text": "game.card3.desc"
       }
     }
   ]

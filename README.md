@@ -23,6 +23,16 @@ Translation keys: strings translated under the old system keep their legacy
 `data-i18n` keys via each block's `i18n` map — do not strip those maps, they
 are what keep 13 languages alive while the translation provider is down.
 
+**Those map keys use `__` where the field path has a dot** — `right__paragraphs__0`,
+not `right.paragraphs.0`. Call sites still pass the dotted path; `i18nKey()` in
+`src/templates.mjs` escapes it on the way in. This is not cosmetic. A CMS that
+holds draft content flattened by `.` — Sveltia does — unflattens
+`{"right.paragraphs.0": k}` into `{right: {paragraphs: [k]}}` on save, after
+which the lookup returns `undefined` and the string silently loses its curated
+translation in all 13 languages. A key with no dot is a fixed point of that
+round trip. Keep it that way: if you add an `i18n` entry by hand, escape the
+dots.
+
 ## Publication sections
 
 The `publicationList` block holds ONE flat `items[]`; the headed sections on

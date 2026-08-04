@@ -109,6 +109,22 @@ const ytId = (url) => {
   return m ? m[1] : '';
 };
 
+/**
+ * Look up a legacy translation key inside a block's `i18n` map.
+ *
+ * The map is addressed by the string path of the field inside the block —
+ * "right.paragraphs.0" — but it is STORED with "__" where those dots would be,
+ * and that is deliberate. A CMS that holds draft content flattened by "." (as
+ * Sveltia does) unflattens {"right.paragraphs.0": k} into
+ * {right: {paragraphs: [k]}} when it saves, after which this lookup returns
+ * undefined and the string silently loses its curated translation in all 13
+ * languages. Keys without dots survive that round trip untouched.
+ *
+ * Keep the "." form in call sites and in the generated fallback key: only the
+ * stored map is escaped.
+ */
+const i18nKey = (path) => String(path).replaceAll('.', '__');
+
 /* ---------- brand mark ---------- */
 
 /**
@@ -908,7 +924,7 @@ const standardHead = (document, page, { index, total }) => {
 const homeHero = (document, page, ctx) => {
   const hero = page.hero || {};
   const intro = page.intro || {};
-  const t = (path) => hero.i18n?.[path];
+  const t = (path) => hero.i18n?.[i18nKey(path)];
 
   const wrap = el(document, 'div', { class: 'home-hero' });
   const copy = el(document, 'div', { class: 'hero-copy' });
@@ -952,7 +968,8 @@ export function renderPage(document, page, ctx) {
 
   const blockCtx = (block, i) => ({
     urlFor: ctx.urlFor,
-    t: (path) => block.i18n?.[path] || `page.${page.slug}.b${i}.${path}`
+    // The generated fallback keeps the dotted path: it is a key, not a lookup.
+    t: (path) => block.i18n?.[i18nKey(path)] || `page.${page.slug}.b${i}.${path}`
   });
 
   const core = [];
