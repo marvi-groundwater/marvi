@@ -210,6 +210,10 @@ function setupPublications() {
   const noMatch = document.getElementById('publication-empty');
   const views = document.getElementById('publication-views');
   let kind = 'all';
+  // Whatever the build authored is the resting state to return to.
+  const restingOpen = new Map(
+    [...list.querySelectorAll('.pub-section')].map((g) => [g, g.open])
+  );
 
   const apply = () => {
     const query = search ? search.value.trim().toLowerCase() : '';
@@ -253,6 +257,15 @@ function setupPublications() {
         group.hidden = false;
         if (emptyLine) emptyLine.hidden = false;
       }
+
+      // Sections rest collapsed. A search has to open the ones holding matches
+      // or it would look broken; picking a single kind opens that one, since
+      // asking for it is asking to see it. Returning to All resets to rest,
+      // which also discards any manual toggling — predictable, and the same
+      // "recompute from state" rule the rest of this function follows.
+      if (searching) group.open = visible > 0;
+      else if (kind !== 'all') group.open = kindOK;
+      else group.open = restingOpen.get(group) ?? false;
     });
 
     if (noMatch) noMatch.hidden = shown > 0 || !searching;

@@ -560,10 +560,16 @@ const BLOCKS = {
     const wrap = el(document, 'div', { class: 'pub-sections' });
     wrap.id = 'publication-sections';
     wrap.setAttribute('data-view', view);
+    // <details> rather than a button + aria-expanded: it collapses without
+    // JavaScript, is keyboard- and screen-reader-operable for free, and keeps
+    // the entries in the DOM while closed — which is what lets the search find
+    // them, and what keeps scripts/parity.mjs able to see every title.
+    const startOpen = block.startCollapsed === false;
     sections.forEach((section) => {
-      const group = el(document, 'section', { class: 'pub-section' });
+      const group = el(document, 'details', { class: 'pub-section' });
       group.setAttribute('data-section', section.key);
-      const head = el(document, 'div', { class: 'pub-section-head' });
+      if (startOpen) group.setAttribute('open', '');
+      const head = el(document, 'summary', { class: 'pub-section-head' });
       head.appendChild(
         el(document, 'h2', {
           class: 'pub-section-title',

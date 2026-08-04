@@ -466,13 +466,43 @@
     .view-btn:hover { color: var(--ink); }
     .view-btn[aria-pressed="true"] { border-color: var(--ink); color: var(--white); background: var(--ink); }
 
-    .pub-sections { display: flex; flex-direction: column; gap: 52px; }
+    /* Sections rest closed, so the page opens as a short contents list: one
+       hairline row per kind with its count. Each row is a details/summary
+       disclosure, which carries the keyboard and screen-reader behaviour on
+       its own. */
+    .pub-sections { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+    .pub-section { border-bottom: 1px solid var(--line); }
     .pub-section[hidden] { display: none; }
-    .pub-section-head { display: flex; align-items: baseline; gap: 11px; margin-bottom: 15px; }
-    .pub-section-title { margin: 0; font-size: 1.55rem; line-height: 1.15; letter-spacing: -.02em; }
+    .pub-section[open] { padding-bottom: 34px; }
+    .pub-section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 11px;
+      margin: 0;
+      padding: 18px 0;
+      list-style: none;
+      cursor: pointer;
+    }
+    .pub-section-head::-webkit-details-marker { display: none; }
+    .pub-section-head::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      margin-left: auto;
+      align-self: center;
+      border-right: 1.5px solid var(--muted);
+      border-bottom: 1.5px solid var(--muted);
+      transform: translateY(-2px) rotate(45deg);
+      transition: transform .25s, border-color .25s;
+    }
+    .pub-section[open] > .pub-section-head::after { transform: translateY(1px) rotate(-135deg); }
+    .pub-section-head:hover .pub-section-title { color: var(--blue); }
+    .pub-section-head:hover::after { border-color: var(--blue); }
+    .pub-section-head:focus-visible { outline: 3px solid var(--copper); outline-offset: 3px; }
+    .pub-section-title { margin: 0; font-size: 1.55rem; line-height: 1.15; letter-spacing: -.02em; transition: color .25s; }
     .pub-section-count { color: var(--muted); font: .58rem var(--mono); letter-spacing: .09em; white-space: nowrap; }
-    .pub-section-note { max-width: 62ch; margin: -4px 0 17px; color: var(--muted); font-size: .82rem; }
-    .pub-section-empty { max-width: 64ch; margin: 0; padding: 6px 0 4px; color: var(--muted); font-size: .88rem; }
+    .pub-section-note { max-width: 62ch; margin: 0 0 17px; color: var(--muted); font-size: .82rem; }
+    .pub-section-empty { max-width: 64ch; margin: 0; padding: 0 0 4px; color: var(--muted); font-size: .88rem; }
     .pub-section-empty[hidden], .pub-empty[hidden] { display: none; }
     .pub-empty { padding: 40px 0; color: var(--muted); font: .68rem var(--mono); letter-spacing: .16em; text-transform: uppercase; }
 
@@ -988,7 +1018,7 @@
       .media-card { min-height: 330px; padding: 28px; border: 0; border-radius: 3px; background: #faf9f4; }
       .media-card:nth-child(4n + 2), .media-card:nth-child(4n + 3) { background: #dfe1d8; }
       .media-card h3 { max-width: 540px; font-family: var(--sans); font-size: 1.45rem; font-weight: 600; letter-spacing: -.035em; }
-      .pub-sections { gap: 60px; }
+      .pub-section[open] { padding-bottom: 42px; }
       .pub-section-title { font-family: var(--sans); font-size: 1.7rem; font-weight: 600; letter-spacing: -.04em; }
       .pub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; border: 0; }
       .pub-card { min-height: 330px; padding: 28px; border: 0; border-radius: 3px; background: #faf9f4; }
@@ -1245,7 +1275,7 @@
       .media-card:nth-child(even) { background: #dfe1d8; }
       .media-card h3, .people-card h3 { font-family: var(--sans); font-weight: 600; letter-spacing: -.03em; }
       .people-card { min-height: 175px; }
-      .pub-sections { gap: 42px; }
+      .pub-section[open] { padding-bottom: 30px; }
       .pub-section-title { font-family: var(--sans); font-size: 1.4rem; font-weight: 600; letter-spacing: -.03em; }
       /* No room for a right-hand column: the edition links drop below the copy. */
       .pub-sections[data-view="list"] .pub-card { grid-template-columns: minmax(0, 1fr); gap: 4px 0; padding: 19px 0; }

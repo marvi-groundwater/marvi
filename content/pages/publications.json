@@ -37,6 +37,7 @@
       "allLabel": "All",
       "otherLabel": "Other outputs",
       "defaultView": "list",
+      "startCollapsed": true,
       "listLabel": "List",
       "cardsLabel": "Cards",
       "searchLabel": "Search",

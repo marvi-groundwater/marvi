@@ -361,6 +361,7 @@ collections:
               - { label: "\"Show everything\" chip", name: "allLabel", widget: "string", required: false, default: "All" }
               - { label: "Catch-all section heading", name: "otherLabel", widget: "string", required: false, default: "Other outputs", hint: "Where a publication goes when its Kind has no section above." }
               - { label: "Default layout", name: "defaultView", widget: "select", required: false, default: "list", options: [{ label: "List (compact rows)", value: "list" }, { label: "Cards (large tiles)", value: "cards" }], hint: "How the page opens. Readers can switch with the List / Cards buttons." }
+              - { label: "Start sections closed", name: "startCollapsed", widget: "boolean", required: false, default: true, hint: "On, the page opens as a list of section headings that readers click to open. Searching opens the sections holding matches either way." }
               - { label: "\"List\" button", name: "listLabel", widget: "string", required: false, default: "List" }
               - { label: "\"Cards\" button", name: "cardsLabel", widget: "string", required: false, default: "Cards" }
               - { label: "Search label", name: "searchLabel", widget: "string", required: false, default: "Search" }
