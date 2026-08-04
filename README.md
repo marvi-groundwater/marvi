@@ -23,6 +23,39 @@ Translation keys: strings translated under the old system keep their legacy
 `data-i18n` keys via each block's `i18n` map — do not strip those maps, they
 are what keep 13 languages alive while the translation provider is down.
 
+## Publication sections
+
+The `publicationList` block holds ONE flat `items[]`; the headed sections on
+the page are derived from each entry's `kind`, laid out in the order of
+`sections[]` (`{ kind, title, note, empty }`). The grouping is computed, never
+stored, which is what guarantees every publication appears exactly once — an
+entry cannot be filed under two headings, and one whose `kind` matches no
+section falls into the `otherLabel` catch-all rather than disappearing. An
+editor is free to introduce a new kind; `scripts/parity.mjs` fails the deploy
+if any publication ever stops appearing.
+
+A section listed in `sections[]` stays on the page while it is empty: its chip
+reads 0 and it shows its `empty` line. An empty section advertises that the
+kind exists and can be filled, which a missing one cannot. The generated
+catch-all is the exception — it appears only once something lands in it.
+
+The chip filter and the search **intersect** rather than replace one another,
+so picking a kind and then typing narrows within that kind. Both are
+recomputed from the two pieces of state on every change rather than toggled
+incrementally, which removes the class of bug where the visible list disagrees
+with the controls above it.
+
+`defaultView` (`list` | `cards`) decides how the page opens; the List/Cards
+buttons switch `data-view` on `#publication-sections`. **Both views are the
+same markup restyled** — nothing is re-rendered, so filtering, counting and
+searching cannot disagree between them.
+
+Chips match on `data-filter` / `data-section` — never on the button's text,
+which is translated into 13 languages. The search *placeholder* is the one
+string here that stays English on translated pages: `data-i18n` moves
+textContent, and there is no placeholder equivalent (the media search has the
+same gap).
+
 ## Translation
 
 `scripts/auto-translate.mjs` translates new or changed strings into the 13

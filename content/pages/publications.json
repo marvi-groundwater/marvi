@@ -7,7 +7,7 @@
   "intro": {
     "eyebrow": "MARVI publications",
     "title": "Read the work, in your own language.",
-    "lede": "Brochures and books from the project — free to download in English, Hindi and Gujarati.",
+    "lede": "Brochures and books from the project — free to download in English, Hindi and Gujarati. Grouped by kind; filter or search to narrow the list.",
     "eyebrowSize": 100,
     "titleSize": 70,
     "ledeSize": 100,
@@ -34,6 +34,46 @@
   "blocks": [
     {
       "type": "publicationList",
+      "allLabel": "All",
+      "otherLabel": "Other outputs",
+      "defaultView": "list",
+      "listLabel": "List",
+      "cardsLabel": "Cards",
+      "searchLabel": "Search",
+      "searchPlaceholder": "groundwater, water literacy, Gujarati…",
+      "emptyMessage": "No publication matches that",
+      "sections": [
+        {
+          "kind": "Book",
+          "title": "Books",
+          "note": "Full-length books, free to download.",
+          "empty": "No books listed yet."
+        },
+        {
+          "kind": "Brochure",
+          "title": "Brochures",
+          "note": "Short introductions to the project and its tools.",
+          "empty": "No brochures listed yet."
+        },
+        {
+          "kind": "Journal article",
+          "title": "Journal articles",
+          "note": "Peer-reviewed papers from the MARVI project.",
+          "empty": "No journal articles listed yet. Add one in the CMS — set its Kind to Journal article — and this section fills itself."
+        },
+        {
+          "kind": "Conference paper",
+          "title": "Conference papers",
+          "note": "Papers and presentations given at conferences and workshops.",
+          "empty": "No conference papers listed yet. Add one in the CMS — set its Kind to Conference paper — and this section fills itself."
+        },
+        {
+          "kind": "Thesis",
+          "title": "Theses",
+          "note": "Doctoral and masters research carried out within the project.",
+          "empty": "No theses listed yet. Add one in the CMS — set its Kind to Thesis — and this section fills itself."
+        }
+      ],
       "items": [
         {
           "kind": "Brochure",

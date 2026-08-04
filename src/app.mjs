@@ -133,17 +133,22 @@ function showReveals(root) {
 /* Grids, filter buttons and counts are prerendered by the build; this only
  * wires behaviour onto them. */
 
-function wireFilters({ filterWrap, grid, itemSel, categoryAttr, count, noun }) {
+/* `allKey` is the value that means "show everything". Publications have their
+ * own driver (setupPublications) because they also carry a search and a layout
+ * switch; this stays the simple one-axis filter the image archive needs. */
+function wireFilters({ filterWrap, grid, itemSel, categoryAttr, count, noun, allKey = 'All' }) {
   if (!filterWrap || !grid) return;
-  filterWrap.querySelectorAll('.archive-filter').forEach((filter) => {
+  const buttons = [...filterWrap.querySelectorAll('.archive-filter')];
+  buttons.forEach((filter) => {
     filter.addEventListener('click', () => {
-      const category = filter.textContent.trim();
-      filterWrap
-        .querySelectorAll('.archive-filter')
-        .forEach((b) => b.setAttribute('aria-pressed', String(b === filter)));
+      // Prefer the data attribute: button labels are translated into 13
+      // languages, so matching on what the button says stops working the
+      // moment the page is not in English.
+      const category = filter.getAttribute('data-filter') ?? filter.textContent.trim();
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === filter)));
       let visible = 0;
       grid.querySelectorAll(itemSel).forEach((item) => {
-        const match = category === 'All' || item.getAttribute(categoryAttr) === category;
+        const match = category === allKey || item.getAttribute(categoryAttr) === category;
         item.hidden = !match;
         if (match) visible++;
       });
@@ -178,15 +183,109 @@ function setupArchive() {
   });
 }
 
+/* Every token must appear somewhere in the entry, so "book hindi" narrows
+ * rather than widens; word order and which field matched do not matter. */
+const matchesQuery = (haystack, query) =>
+  query.split(/\s+/).every((token) => haystack.includes(token));
+
+/**
+ * Publications: a chip row that filters by kind, a text search, and a
+ * list/cards layout switch.
+ *
+ * The chips and the search INTERSECT rather than replace one another, so
+ * choosing a kind and then typing narrows within that kind instead of silently
+ * discarding it. Everything is recomputed from the two pieces of state on every
+ * change rather than toggled incrementally: with two inputs that is cheap, and
+ * it removes the whole class of bug where the visible list disagrees with the
+ * controls above it.
+ */
 function setupPublications() {
-  wireFilters({
-    filterWrap: document.getElementById('publication-filters'),
-    grid: document.getElementById('publication-grid'),
-    itemSel: '.pub-card',
-    categoryAttr: 'data-kind',
-    count: document.getElementById('publication-count'),
-    noun: ['publication', 'publications']
+  const list = document.getElementById('publication-sections');
+  const filters = document.getElementById('publication-filters');
+  if (!list || !filters) return;
+  const search = document.getElementById('publication-search');
+  const count = document.getElementById('publication-count');
+  const noMatch = document.getElementById('publication-empty');
+  const views = document.getElementById('publication-views');
+  let kind = 'all';
+
+  const apply = () => {
+    const query = search ? search.value.trim().toLowerCase() : '';
+    const searching = query.length > 0;
+    let shown = 0;
+    let scope = 0;
+
+    list.querySelectorAll('.pub-section').forEach((group) => {
+      const kindOK = kind === 'all' || kind === group.getAttribute('data-section');
+      const cards = [...group.querySelectorAll('.pub-card')];
+      if (kindOK) scope += cards.length;
+
+      let visible = 0;
+      cards.forEach((card) => {
+        const hit =
+          kindOK && (!searching || matchesQuery(card.getAttribute('data-search') || '', query));
+        card.hidden = !hit;
+        if (hit) visible++;
+      });
+      shown += visible;
+
+      const countNode = group.querySelector('[data-role="count"]');
+      if (countNode) {
+        const total = countNode.getAttribute('data-total') || String(cards.length);
+        countNode.textContent = searching && kindOK ? `${visible} of ${total}` : total;
+      }
+
+      const emptyLine = group.querySelector('.pub-section-empty');
+      if (!kindOK) {
+        // Filtered out by kind — not a result of zero, so say nothing.
+        group.hidden = true;
+      } else if (visible > 0) {
+        group.hidden = false;
+        if (emptyLine) emptyLine.hidden = true;
+      } else if (searching) {
+        // Repeating "no theses yet" under every query would be noise; the
+        // page-level line covers a search that matches nothing.
+        group.hidden = true;
+      } else {
+        // Genuinely empty kind, nothing narrowing the view: show it and say so.
+        group.hidden = false;
+        if (emptyLine) emptyLine.hidden = false;
+      }
+    });
+
+    if (noMatch) noMatch.hidden = shown > 0 || !searching;
+    if (count) {
+      count.textContent = searching
+        ? `${shown} of ${scope}`
+        : `${scope} ${scope === 1 ? 'publication' : 'publications'}`;
+    }
+  };
+
+  filters.addEventListener('click', (event) => {
+    const chip = event.target.closest('[data-filter]');
+    if (!chip) return;
+    kind = chip.getAttribute('data-filter');
+    filters
+      .querySelectorAll('[data-filter]')
+      .forEach((b) => b.setAttribute('aria-pressed', String(b === chip)));
+    apply();
   });
+  if (search) search.addEventListener('input', apply);
+
+  // The layout switch is a state on one set of markup, not a second rendering,
+  // so filtering and counting behave identically in both views.
+  if (views) {
+    views.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-view]');
+      if (!button) return;
+      list.setAttribute('data-view', button.getAttribute('data-view'));
+      views
+        .querySelectorAll('[data-view]')
+        .forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+    });
+  }
+
+  apply();
 }
 
 function setupLightbox() {

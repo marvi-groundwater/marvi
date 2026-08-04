@@ -109,6 +109,74 @@ const ytId = (url) => {
   return m ? m[1] : '';
 };
 
+/* A stable id for a publication section or an archive category: it keys the
+ * filter buttons and the translation entries, so it must not change when the
+ * heading is retitled — and, crucially, it is what the runtime matches on, so
+ * it must survive translation into 13 languages that the label does not. */
+const stableKey = (kind) =>
+  String(kind || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'other';
+
+/**
+ * Group a flat publication list into the page's sections.
+ *
+ * Publications are stored as one list with a `kind` on each entry; the sections
+ * are the groups of that kind, laid out in the order of `block.sections`.
+ * Deriving the grouping instead of storing it is what makes the page show every
+ * publication exactly once — an entry cannot be filed under two headings, and
+ * one whose kind names no section falls into the trailing catch-all rather than
+ * disappearing. That matters: an editor is free to type a new kind, and
+ * scripts/parity.mjs fails the deploy if any publication stops appearing.
+ *
+ * A configured section stays on the page when it is empty, showing its own
+ * "nothing here yet" line and a chip reading 0 — an empty section advertises
+ * that the kind exists and can be filled, which a missing one cannot.
+ */
+const publicationSections = (block, items) => {
+  const configured =
+    Array.isArray(block.sections) && block.sections.length
+      ? block.sections
+      : // No section list: fall back to the kinds actually present, first seen first.
+        [...new Set(items.map((i) => i.kind).filter(Boolean))].map((kind) => ({ kind }));
+
+  const byKind = new Map();
+  const order = [];
+  configured.forEach((entry) => {
+    if (!entry || !entry.kind || byKind.has(entry.kind)) return;
+    const section = {
+      key: stableKey(entry.kind),
+      label: entry.title || entry.kind,
+      note: entry.note || '',
+      empty: entry.empty || '',
+      configured: true,
+      items: []
+    };
+    byKind.set(entry.kind, section);
+    order.push(section);
+  });
+
+  // The catch-all. If a section for kind "Other" was configured, unmatched
+  // entries merge into it rather than creating a second one.
+  let other = order.find((s) => s.key === 'other');
+  items.forEach((item) => {
+    const section = byKind.get(item.kind);
+    if (section) return section.items.push(item);
+    if (!other) {
+      other = { key: 'other', label: block.otherLabel || 'Other', note: '', empty: '', items: [] };
+      order.push(other);
+    }
+    other.items.push(item);
+  });
+
+  // A configured section stays on the page when it is empty: it advertises
+  // that the kind exists and can be filled, and its chip shows a 0. The
+  // catch-all is generated rather than configured, so it only ever appears
+  // once something has actually landed in it.
+  return order.filter((section) => section.items.length || section.configured);
+};
+
 /* ---------- block renderers ---------- */
 /* Each takes (document, block, ctx) where ctx = { urlFor(pageId), t(path) }.
  * t(path) resolves the data-i18n key: legacy (block.i18n) or generated. */
@@ -410,50 +478,159 @@ const BLOCKS = {
     return frag;
   },
 
-  publicationList(document, block) {
+  publicationList(document, block, ctx) {
     const frag = el(document, 'div', { class: 'publications-wrap' });
     const items = block.items || [];
-    const tools = el(document, 'div', { class: 'archive-tools' });
+    const sections = publicationSections(block, items);
+
+    // Chips carry their count, so the shape of the collection is legible
+    // before anything is clicked — including the kinds sitting at zero.
+    const filters = el(document, 'div', { class: 'chip-filter' });
+    filters.id = 'publication-filters';
+    filters.setAttribute('role', 'group');
+    filters.setAttribute('aria-label', 'Filter publications by kind');
+    const addChip = (key, label, n, i18nKey) => {
+      const chip = el(document, 'button', { class: 'chip-btn' });
+      chip.setAttribute('type', 'button');
+      // The runtime matches on this attribute, never on the label — labels are
+      // translated into 13 languages and would stop matching data-section.
+      chip.setAttribute('data-filter', key);
+      chip.setAttribute('data-count', String(n));
+      chip.setAttribute('aria-pressed', String(key === 'all'));
+      chip.appendChild(el(document, 'span', { text: label, key: i18nKey }));
+      chip.appendChild(el(document, 'b', { text: String(n) }));
+      filters.appendChild(chip);
+    };
+    addChip('all', block.allLabel || 'All', items.length, ctx.t('allLabel'));
+    sections.forEach((s) => addChip(s.key, s.label, s.items.length, ctx.t(`sections.${s.key}.title`)));
+    frag.appendChild(filters);
+
+    // Search and the chips intersect rather than replace one another, so
+    // picking a kind and then typing narrows within that kind.
+    const bar = el(document, 'label', { class: 'filter-bar' });
+    bar.appendChild(
+      el(document, 'span', { class: 'filter-label', text: block.searchLabel || 'Search', key: ctx.t('searchLabel') })
+    );
+    const search = el(document, 'input', { class: 'search' });
+    search.id = 'publication-search';
+    search.setAttribute('type', 'search');
+    search.setAttribute('placeholder', block.searchPlaceholder || 'groundwater, water literacy, Hindi…');
+    search.setAttribute('aria-label', 'Search publications');
+    bar.appendChild(search);
     const count = el(document, 'span', {
       class: 'filter-label',
       text: `${items.length} ${items.length === 1 ? 'publication' : 'publications'}`
     });
     count.id = 'publication-count';
-    tools.appendChild(count);
-    const filters = el(document, 'div', { class: 'archive-filters' });
-    filters.id = 'publication-filters';
-    filters.setAttribute('aria-label', 'Filter publications by kind');
-    ['All', ...new Set(items.map((i) => i.kind).filter(Boolean))].forEach((kind) => {
-      const filter = el(document, 'button', { class: 'archive-filter', text: kind });
-      filter.setAttribute('type', 'button');
-      filter.setAttribute('aria-pressed', String(kind === 'All'));
-      filters.appendChild(filter);
-    });
-    tools.appendChild(filters);
-    frag.appendChild(tools);
+    // The count is the whole announcement when a chip is pressed or a query
+    // typed; putting the live region here rather than on the list keeps it short.
+    count.setAttribute('aria-live', 'polite');
+    bar.appendChild(count);
+    frag.appendChild(bar);
 
-    const grid = el(document, 'div', { class: 'pub-grid' });
-    grid.id = 'publication-grid';
-    items.forEach((item) => {
-      const card = el(document, 'article', { class: 'pub-card' });
-      if (item.kind) card.setAttribute('data-kind', item.kind);
-      card.appendChild(el(document, 'span', { class: 'meta', text: item.meta }));
-      card.appendChild(el(document, 'h3', { text: item.title }));
-      if (item.description) card.appendChild(el(document, 'p', { text: item.description }));
-      const links = el(document, 'span', { class: 'pub-links' });
-      (item.editions || []).forEach((edition) => {
-        if (!edition || !edition.url) return;
-        const link = el(document, 'a', { text: (edition.label || 'Download') + ' ↗' });
-        link.href = edition.url;
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener');
-        link.setAttribute('aria-label', [item.title, edition.label].filter(Boolean).join(' — '));
-        links.appendChild(link);
-      });
-      if (links.childNodes.length) card.appendChild(links);
-      grid.appendChild(card);
+    // The list/cards choice is a CSS state on one set of markup, not a second
+    // rendering — so filtering, counting and searching cannot disagree between
+    // the two views.
+    const view = block.defaultView === 'cards' ? 'cards' : 'list';
+    const views = el(document, 'div', { class: 'view-toggle' });
+    views.id = 'publication-views';
+    views.setAttribute('role', 'group');
+    views.setAttribute('aria-label', 'Change the layout');
+    [['list', block.listLabel || 'List'], ['cards', block.cardsLabel || 'Cards']].forEach(([key, label]) => {
+      const button = el(document, 'button', { class: 'view-btn', text: label, key: ctx.t(`views.${key}`) });
+      button.setAttribute('type', 'button');
+      button.setAttribute('data-view', key);
+      button.setAttribute('aria-pressed', String(key === view));
+      views.appendChild(button);
     });
-    frag.appendChild(grid);
+    bar.appendChild(views);
+
+    const wrap = el(document, 'div', { class: 'pub-sections' });
+    wrap.id = 'publication-sections';
+    wrap.setAttribute('data-view', view);
+    sections.forEach((section) => {
+      const group = el(document, 'section', { class: 'pub-section' });
+      group.setAttribute('data-section', section.key);
+      const head = el(document, 'div', { class: 'pub-section-head' });
+      head.appendChild(
+        el(document, 'h2', {
+          class: 'pub-section-title',
+          text: section.label,
+          key: ctx.t(`sections.${section.key}.title`)
+        })
+      );
+      // A bare number, so it never needs translating. The runtime rewrites it
+      // to "2 of 4" while a search is narrowing the section.
+      const sectionCount = el(document, 'span', {
+        class: 'pub-section-count',
+        text: String(section.items.length)
+      });
+      sectionCount.setAttribute('data-role', 'count');
+      sectionCount.setAttribute('data-total', String(section.items.length));
+      head.appendChild(sectionCount);
+      group.appendChild(head);
+      if (section.note) {
+        group.appendChild(
+          el(document, 'p', {
+            class: 'pub-section-note',
+            text: section.note,
+            key: ctx.t(`sections.${section.key}.note`)
+          })
+        );
+      }
+      // Shown only when the kind is genuinely empty and nothing is narrowing
+      // the view — under a search it would read as a second, different problem.
+      const emptyLine = el(document, 'p', {
+        class: 'pub-section-empty',
+        text: section.empty || `Nothing listed under ${section.label.toLowerCase()} yet.`,
+        key: ctx.t(`sections.${section.key}.empty`)
+      });
+      if (section.items.length) emptyLine.hidden = true;
+      group.appendChild(emptyLine);
+
+      const grid = el(document, 'div', { class: 'pub-grid' });
+      section.items.forEach((item) => {
+        const card = el(document, 'article', { class: 'pub-card' });
+        if (item.kind) card.setAttribute('data-kind', item.kind);
+        card.setAttribute('data-section', section.key);
+        card.setAttribute(
+          'data-search',
+          [item.kind, item.meta, item.title, item.description, ...(item.editions || []).map((e) => e && e.label)]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase()
+        );
+        card.appendChild(el(document, 'span', { class: 'meta', text: item.meta }));
+        card.appendChild(el(document, 'h3', { text: item.title }));
+        if (item.description) card.appendChild(el(document, 'p', { text: item.description }));
+        const links = el(document, 'span', { class: 'pub-links' });
+        (item.editions || []).forEach((edition) => {
+          if (!edition || !edition.url) return;
+          const link = el(document, 'a', { text: (edition.label || 'Download') + ' ↗' });
+          link.href = edition.url;
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener');
+          link.setAttribute('aria-label', [item.title, edition.label].filter(Boolean).join(' — '));
+          links.appendChild(link);
+        });
+        if (links.childNodes.length) card.appendChild(links);
+        grid.appendChild(card);
+      });
+      group.appendChild(grid);
+      wrap.appendChild(group);
+    });
+    frag.appendChild(wrap);
+
+    // Belongs to the search alone: a kind that is simply empty already says so
+    // in its own section, and showing both reads as two problems, not one fact.
+    const noMatch = el(document, 'p', {
+      class: 'pub-empty',
+      text: block.emptyMessage || 'No publication matches that',
+      key: ctx.t('emptyMessage')
+    });
+    noMatch.id = 'publication-empty';
+    noMatch.hidden = true;
+    frag.appendChild(noMatch);
     return frag;
   },
 

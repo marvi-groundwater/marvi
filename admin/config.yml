@@ -336,16 +336,42 @@ collections:
                   - { label: "Category", name: "category", widget: "string", hint: "Groups the image under a filter button." }
                   - { label: "Title", name: "title", widget: "string" }
                   - { label: "Source (optional)", name: "source", widget: "string", required: false }
-          - label: "Publication list (filters)"
+          # Publications are ONE list; the headed sections on the page are built
+          # from each entry's Kind. Reorder or retitle sections below. A section
+          # you set up here stays on the page even while it is empty — its chip
+          # reads 0 and it shows its "nothing yet" line — so a kind can be
+          # announced before there is anything to put in it. A publication whose
+          # Kind matches no section drops into the catch-all rather than vanishing.
+          - label: "Publication list (sections + filters)"
             name: "publicationList"
             widget: "object"
             fields:
+              - label: "Sections, in page order"
+                name: "sections"
+                widget: "list"
+                required: false
+                label_singular: "section"
+                summary: "{{fields.title}}"
+                hint: "Drag to reorder. A section stays visible while empty, showing its 'nothing yet' line. Leave this list empty to fall back to one section per kind, in the order the publications appear."
+                fields:
+                  - { label: "Kind", name: "kind", widget: "select", options: &publicationKinds ["Journal article", "Conference paper", "Thesis", "Book", "Brochure", "Report", "Other"], hint: "Collects every publication with this Kind." }
+                  - { label: "Heading", name: "title", widget: "string", hint: "Shown above the section and on its filter chip." }
+                  - { label: "Note under the heading", name: "note", widget: "text", required: false }
+                  - { label: "Line shown while empty", name: "empty", widget: "text", required: false, hint: "Appears only while the section has nothing in it. Leave blank for a generic line." }
+              - { label: "\"Show everything\" chip", name: "allLabel", widget: "string", required: false, default: "All" }
+              - { label: "Catch-all section heading", name: "otherLabel", widget: "string", required: false, default: "Other outputs", hint: "Where a publication goes when its Kind has no section above." }
+              - { label: "Default layout", name: "defaultView", widget: "select", required: false, default: "list", options: [{ label: "List (compact rows)", value: "list" }, { label: "Cards (large tiles)", value: "cards" }], hint: "How the page opens. Readers can switch with the List / Cards buttons." }
+              - { label: "\"List\" button", name: "listLabel", widget: "string", required: false, default: "List" }
+              - { label: "\"Cards\" button", name: "cardsLabel", widget: "string", required: false, default: "Cards" }
+              - { label: "Search label", name: "searchLabel", widget: "string", required: false, default: "Search" }
+              - { label: "Search placeholder", name: "searchPlaceholder", widget: "string", required: false, hint: "Grey hint text inside the search box. Stays English on translated pages." }
+              - { label: "\"Nothing matches\" line", name: "emptyMessage", widget: "string", required: false, default: "No publication matches that", hint: "Shown when a search matches nothing anywhere." }
               - label: "Publications"
                 name: "items"
                 widget: "list"
-                summary: "{{fields.title}}"
+                summary: "{{fields.kind}} · {{fields.title}}"
                 fields:
-                  - { label: "Kind", name: "kind", widget: "string", hint: "e.g. Brochure or Book — becomes a filter button." }
+                  - { label: "Kind", name: "kind", widget: "select", options: *publicationKinds, hint: "Decides which section this appears under." }
                   - { label: "Small label", name: "meta", widget: "string", required: false }
                   - { label: "Title", name: "title", widget: "string" }
                   - { label: "Description", name: "description", widget: "text", required: false }
