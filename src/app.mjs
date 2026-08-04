@@ -163,12 +163,14 @@ function setupArchive() {
     filterWrap: document.getElementById('archive-filters'),
     grid,
     itemSel: '.gallery-item',
-    categoryAttr: 'data-category',
+    categoryAttr: 'data-category-key',
     count: document.getElementById('gallery-count'),
-    noun: ['archived image', 'archived images']
+    noun: ['archived image', 'archived images'],
+    allKey: 'all'
   });
   // The old runtime appended pixel dimensions to each label once the image
-  // loaded; keep that touch.
+  // loaded; keep that touch. This reads data-category, not the key beside it:
+  // the caption is for a reader, so it wants the label, not the slug.
   grid?.querySelectorAll('.gallery-item img').forEach((image) => {
     const label = image.parentElement.querySelector('span');
     const annotate = () => {

@@ -436,7 +436,7 @@ const BLOCKS = {
     return grid;
   },
 
-  photoArchive(document, block) {
+  photoArchive(document, block, ctx) {
     const frag = el(document, 'div', { class: 'photo-archive-wrap' });
     const items = block.items || [];
     const tools = el(document, 'div', { class: 'archive-tools' });
@@ -449,11 +449,18 @@ const BLOCKS = {
     const filters = el(document, 'div', { class: 'archive-filters' });
     filters.id = 'archive-filters';
     filters.setAttribute('aria-label', 'Filter the image archive');
-    ['All', ...new Set(items.map((i) => i.category).filter(Boolean))].forEach((category) => {
-      const filter = el(document, 'button', { class: 'archive-filter', text: category });
+    const addFilter = (key, label, i18nKey) => {
+      const filter = el(document, 'button', { class: 'archive-filter', text: label, key: i18nKey });
       filter.setAttribute('type', 'button');
-      filter.setAttribute('aria-pressed', String(category === 'All'));
+      // The runtime matches on this attribute, never on the label — labels are
+      // translated into 13 languages and would stop matching data-category-key.
+      filter.setAttribute('data-filter', key);
+      filter.setAttribute('aria-pressed', String(key === 'all'));
       filters.appendChild(filter);
+    };
+    addFilter('all', block.allLabel || 'All', ctx.t('allLabel'));
+    [...new Set(items.map((i) => i.category).filter(Boolean))].forEach((category) => {
+      addFilter(stableKey(category), category, ctx.t(`categories.${stableKey(category)}`));
     });
     tools.appendChild(filters);
     frag.appendChild(tools);
@@ -464,7 +471,12 @@ const BLOCKS = {
     items.forEach((item, index) => {
       const button = el(document, 'button', { class: 'gallery-item' });
       button.setAttribute('type', 'button');
+      // data-category stays the human label: app.mjs writes it into the visible
+      // caption alongside the pixel dimensions. Matching uses the key beside it,
+      // derived from the same string by the same function as the buttons above,
+      // so the two sides cannot drift apart.
       button.setAttribute('data-category', item.category || '');
+      button.setAttribute('data-category-key', item.category ? stableKey(item.category) : '');
       button.setAttribute('data-index', String(index));
       button.setAttribute('data-title', item.title || '');
       button.setAttribute('aria-label', 'Open ' + (item.title || 'image'));
