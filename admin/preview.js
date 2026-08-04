@@ -113,4 +113,27 @@ const PagePreview = ({ entry, getAsset }) => {
   });
 };
 
-CMS.registerPreviewTemplate('pages', PagePreview);
+/* Custom preview templates are OFF by default under Sveltia CMS.
+ *
+ * Sveltia accepts registerPreviewTemplate and, as measured on this exact
+ * bundle in a sibling repository, never calls the component — and the act of
+ * registering one REPLACES the working built-in preview with a blank
+ * rectangle. Registering unconditionally would therefore trade a working
+ * preview for an empty pane.
+ *
+ * It may nonetheless work here: Sveltia looks the template up by
+ * `fileName ?? collectionName`, and this is a folder collection ("pages"),
+ * where the sibling's failing cases were files collections. That is untested.
+ *
+ * To test, open /admin/?customPreview=1 and edit a page:
+ *   - the page renders with the site's own styling  -> it works, make it
+ *     unconditional again
+ *   - an empty white rectangle                      -> it does not, leave this
+ *     as it is and use the built-in preview
+ *
+ * registerPreviewStyle above is unaffected and does work, so the built-in
+ * preview is still styled like the real site either way.
+ */
+if (new URLSearchParams(window.location.search).has('customPreview')) {
+  CMS.registerPreviewTemplate('pages', PagePreview);
+}

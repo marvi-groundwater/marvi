@@ -117,6 +117,37 @@ Test the whole pipeline without a key (local stub, scratch i18n copy):
 node scripts/test-translate.mjs
 ```
 
+## The CMS
+
+Sveltia CMS, vendored at `admin/sveltia-cms.js` rather than loaded from a CDN —
+the build copies `admin/` into `_site/`, so it publishes with the site and
+cannot change underfoot. It reads the same `admin/config.yml` Decap did.
+
+**Signing in.** Editors need write access to this repository, then a GitHub
+fine-grained personal access token — github.com/settings/personal-access-tokens,
+scoped to this repository only, **Contents: read and write** — pasted into
+"Sign In Using Access Token". There is no OAuth app and no server in the flow,
+which is why there is no longer a Cloudflare Worker. GitHub caps these tokens
+at about a year; when one expires the CMS simply stops saving with no warning,
+and the fix is a new token.
+
+`auth_methods: [token]` in the config is load-bearing. Remove it and Sveltia
+falls back to Netlify's hosted OAuth client, which cannot work here.
+
+**Editing locally** is "Work with Local Repository" (Chromium only, on
+localhost — `npm run serve`, then http://127.0.0.1:8912/admin/). Pick the
+**repository root**, not `_site/`, or you will edit files the next build
+overwrites. `local_backend` / `decap-server` no longer applies; Sveltia ignores
+it by design.
+
+**The editor preview** is Sveltia's built-in one, styled with the site's own
+CSS via `registerPreviewStyle` in `admin/preview.js`. The custom template that
+rendered entries through `src/templates.mjs` is registered only behind
+`/admin/?customPreview=1`, because Sveltia has been measured to accept such a
+registration and never call it — and registering one replaces the working
+built-in preview with a blank pane. If it ever does render, make it
+unconditional again.
+
 ## Deployment
 
 Push to `main` → `deploy.yml` builds, verifies (structure + migration

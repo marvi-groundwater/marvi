@@ -1,10 +1,26 @@
+# Sveltia CMS. Editors sign in with a GitHub fine-grained personal access
+# token (Contents: read/write, this repository only). There is no OAuth app and
+# no server anywhere in the flow, which is why the Cloudflare Worker that used
+# to sit at sveltia-cms-auth.marvi-groundwater.workers.dev is no longer needed.
+#
+# auth_methods is not decoration. With neither base_url nor auth_methods,
+# Sveltia falls back to Netlify's hosted OAuth client, which cannot work for a
+# site published on GitHub Pages — pinning it to [token] removes that path.
+#
+# GitHub caps fine-grained tokens at about a year. When one expires the CMS
+# simply stops saving, with no warning: issue a new one at
+# github.com/settings/personal-access-tokens and sign in again.
+#
+# local_backend / decap-server is deliberately absent — Sveltia ignores it and
+# replaces it with "Work with Local Repository" (Chromium, on localhost).
 backend:
   name: github
   repo: marvi-groundwater/marvi
   branch: main
-  base_url: https://sveltia-cms-auth.marvi-groundwater.workers.dev
+  auth_methods: [token]
 
-local_backend: true
+site_url: https://testpage.marvi.org.in
+display_url: https://testpage.marvi.org.in
 
 media_folder: "assets/marvi-originals"
 public_folder: "/assets/marvi-originals"

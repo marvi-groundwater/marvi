@@ -1,14 +1,25 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
     <title>MARVI — Content Admin</title>
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <!-- Live preview: renders entries with the site's own renderer
-         (/assets/templates.mjs), so it cannot drift from the real page. -->
+    <!-- Sveltia CMS, vendored rather than fetched from a CDN: nothing here is
+         loaded from a third party, and the editor cannot change underfoot
+         without someone choosing to replace this file.
+
+         This MUST be a classic script. Sveltia only auto-initialises when
+         document.currentScript is set, and that is always null for a module —
+         with type="module" it loads happily and then silently never mounts. -->
+    <script src="sveltia-cms.js"></script>
+
+    <!-- Preview styling, and (optionally) the site's own renderer.
+         Loaded as a module because it imports /assets/templates.mjs; module
+         scripts are deferred, so window.CMS already exists by the time it
+         runs. See the comments in preview.js for what is and is not active. -->
     <script type="module" src="preview.js"></script>
   </body>
 </html>
