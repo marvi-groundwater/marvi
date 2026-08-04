@@ -18,14 +18,14 @@
     "textOffsetY": 0
   },
   "heroImage": {
-    "image": "/assets/marvi-originals/013-home.jpg",
+    "image": "/assets/marvi-originals/024-about-marvi.jpg",
     "zoom": 100,
     "positionX": 50,
-    "positionY": 55,
+    "positionY": 52,
     "fit": "cover"
   },
   "menuImage": {
-    "image": "/assets/marvi-originals/013-home.jpg",
+    "image": "/assets/marvi-originals/024-about-marvi.jpg",
     "zoom": 100,
     "positionX": 50,
     "positionY": 50,
