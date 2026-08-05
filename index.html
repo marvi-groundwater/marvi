@@ -600,6 +600,7 @@
     .people-directory .filter-bar > #people-count { margin-left: auto; }
     .sort-field { display: flex; align-items: center; gap: 9px; }
     .sort-field select {
+      max-width: min(300px, 82vw);
       padding: 8px 10px;
       border: 1px solid var(--line);
       color: var(--ink);
@@ -609,6 +610,20 @@
       cursor: pointer;
     }
     .sort-field select:focus { border-color: var(--blue); outline: 0; }
+    .reveal-row { display: flex; justify-content: center; margin: 4px 0 30px; }
+    .reveal-all {
+      padding: 11px 26px;
+      border: 1px solid var(--line);
+      background: none;
+      color: var(--ink);
+      cursor: pointer;
+      font: 500 .68rem var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: border-color .2s, background-color .2s, color .2s;
+    }
+    .reveal-all:hover { border-color: var(--ink); }
+    .reveal-all:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
 
     .portrait-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-bottom: 26px; background: var(--line); }
     .portrait-card {

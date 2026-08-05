@@ -372,38 +372,80 @@ function setupMediaSearch() {
  */
 function setupPeople() {
   const band = document.getElementById('people-band');
-  const filters = document.getElementById('people-filters');
-  if (!band || !filters) return;
-  const search = document.getElementById('people-search');
   const sort = document.getElementById('people-sort');
+  if (!band || !sort) return;
+  const search = document.getElementById('people-search');
+  const aff = document.getElementById('people-aff');
   const count = document.getElementById('people-count');
   const empty = document.getElementById('people-empty');
+  const reveal = document.getElementById('people-reveal');
   const cards = [...band.children];
-  let affiliation = 'all';
+  let open = false;
+
+  // Shuffled on load so nobody is permanently first; the order holds for the
+  // visit and reshuffles on the next one. Picking any other sort replaces it.
+  const shuffled = cards.slice();
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
 
   const sortKey = (card, mode) =>
     mode === 'affiliation'
       ? (card.dataset.aff || '') + ' ' + (card.dataset.name || '')
       : card.dataset.name || '';
 
+  // "One row" is whatever the grid actually fits on its first line, so it is
+  // read back from layout rather than assumed, and remeasured on resize.
+  // Both this and the preview cut below walk the live DOM order — walking the
+  // authored array would keep the same authored-first faces in the preview no
+  // matter how the band is shuffled or sorted.
+  const firstRowCount = () => {
+    const visible = [...band.children].filter((c) => !c.hidden);
+    if (!visible.length) return 0;
+    const top = visible[0].offsetTop;
+    return visible.filter((c) => c.offsetTop === top).length || visible.length;
+  };
+
   const apply = () => {
     const query = search ? search.value.trim().toLowerCase() : '';
-    const mode = sort ? sort.value : 'featured';
+    const mode = sort.value;
     const ordered =
-      mode === 'featured'
-        ? cards
-        : cards.slice().sort((a, b) => sortKey(a, mode).localeCompare(sortKey(b, mode)));
+      mode === 'shuffle'
+        ? shuffled
+        : mode === 'featured'
+          ? cards
+          : cards.slice().sort((a, b) => sortKey(a, mode).localeCompare(sortKey(b, mode)));
     ordered.forEach((card) => band.appendChild(card));
 
     let shown = 0;
     cards.forEach((card) => {
       const hit =
-        (affiliation === 'all' || card.dataset.aff === affiliation) &&
+        (!aff || !aff.value || card.dataset.aff === aff.value) &&
         (!query || matchesQuery(card.dataset.search || '', query));
       card.hidden = !hit;
       if (hit) shown++;
     });
 
+    let previewed = shown;
+    if (!open) {
+      const perRow = firstRowCount();
+      let seen = 0;
+      [...band.children].forEach((card) => {
+        if (card.hidden) return;
+        seen++;
+        if (seen > perRow) card.hidden = true;
+      });
+      previewed = Math.min(perRow, shown);
+    }
+
+    if (reveal) {
+      reveal.hidden = shown <= previewed && !open;
+      reveal.textContent = open
+        ? 'Show fewer'
+        : `Show all ${shown} ${shown === 1 ? 'person' : 'people'}`;
+      reveal.setAttribute('aria-expanded', String(open));
+    }
     if (empty) empty.hidden = shown > 0;
     if (count) {
       count.textContent =
@@ -413,17 +455,16 @@ function setupPeople() {
     }
   };
 
-  filters.addEventListener('click', (event) => {
-    const chip = event.target.closest('[data-filter]');
-    if (!chip) return;
-    affiliation = chip.getAttribute('data-filter');
-    filters
-      .querySelectorAll('[data-filter]')
-      .forEach((b) => b.setAttribute('aria-pressed', String(b === chip)));
-    apply();
-  });
+  if (reveal) reveal.addEventListener('click', () => { open = !open; apply(); });
   if (search) search.addEventListener('input', apply);
-  if (sort) sort.addEventListener('change', apply);
+  if (aff) aff.addEventListener('change', apply);
+  sort.addEventListener('change', apply);
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(apply, 150);
+  });
 
   apply();
 }

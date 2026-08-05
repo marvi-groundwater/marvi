@@ -827,30 +827,6 @@ const BLOCKS = {
     // JavaScript sees the full band in its authored order.
     const wrap = el(document, 'div', { class: 'people-directory' });
 
-    const chips = el(document, 'div', { class: 'chip-filter' });
-    chips.id = 'people-filters';
-    chips.setAttribute('role', 'group');
-    chips.setAttribute('aria-label', 'Filter people by affiliation');
-    const addChip = (key, label, n, i18nKey) => {
-      const chip = el(document, 'button', { class: 'chip-btn' });
-      chip.setAttribute('type', 'button');
-      chip.setAttribute('data-filter', key);
-      chip.setAttribute('data-count', String(n));
-      chip.setAttribute('aria-pressed', String(key === 'all'));
-      chip.appendChild(el(document, 'span', { text: label, key: i18nKey }));
-      chip.appendChild(el(document, 'b', { text: String(n) }));
-      chips.appendChild(chip);
-    };
-    addChip('all', 'All', items.length, ctx.t('ui.all'));
-    const affiliations = new Map();
-    items.forEach((item) => {
-      if (item.affiliation) {
-        affiliations.set(item.affiliation, (affiliations.get(item.affiliation) || 0) + 1);
-      }
-    });
-    affiliations.forEach((n, name) => addChip(name, name, n));
-    wrap.appendChild(chips);
-
     const bar = el(document, 'div', { class: 'filter-bar' });
     const searchLabel = el(document, 'label', { class: 'filter-label', text: 'Search', key: ctx.t('ui.search') });
     searchLabel.setAttribute('for', 'people-search');
@@ -862,6 +838,31 @@ const BLOCKS = {
     search.setAttribute('aria-label', 'Search people');
     bar.appendChild(search);
 
+    // Ten-plus organisations is too many for chips without the filter bar
+    // outweighing the directory, so affiliation is a select (the AIWC rule).
+    const affiliations = new Map();
+    items.forEach((item) => {
+      if (item.affiliation) {
+        affiliations.set(item.affiliation, (affiliations.get(item.affiliation) || 0) + 1);
+      }
+    });
+    const affField = el(document, 'div', { class: 'sort-field' });
+    const aff = el(document, 'select');
+    aff.id = 'people-aff';
+    aff.setAttribute('aria-label', 'Filter by affiliation');
+    const allOption = el(document, 'option', { text: `All affiliations (${affiliations.size})` });
+    allOption.value = '';
+    aff.appendChild(allOption);
+    [...affiliations.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .forEach(([name, n]) => {
+        const option = el(document, 'option', { text: `${name} (${n})` });
+        option.value = name;
+        aff.appendChild(option);
+      });
+    affField.appendChild(aff);
+    bar.appendChild(affField);
+
     const sortField = el(document, 'div', { class: 'sort-field' });
     const sortLabel = el(document, 'label', { class: 'filter-label', text: 'Sort', key: ctx.t('ui.sort') });
     sortLabel.setAttribute('for', 'people-sort');
@@ -869,6 +870,7 @@ const BLOCKS = {
     const sort = el(document, 'select');
     sort.id = 'people-sort';
     [
+      ['shuffle', 'Shuffled', ctx.t('ui.sortShuffled')],
       ['featured', 'Featured', ctx.t('ui.sortFeatured')],
       ['name', 'Name A–Z', ctx.t('ui.sortName')],
       ['affiliation', 'Affiliation', ctx.t('ui.sortAffiliation')]
@@ -890,6 +892,20 @@ const BLOCKS = {
     wrap.appendChild(bar);
 
     wrap.appendChild(band);
+
+    // A long band opens one row deep with the button that reveals the rest.
+    // Rendered here rather than injected, so a reader without JavaScript sees
+    // the full list and no button — app.mjs is what collapses the band.
+    const revealRow = el(document, 'div', { class: 'reveal-row' });
+    const reveal = el(document, 'button', {
+      class: 'reveal-all',
+      text: `Show all ${items.length} people`
+    });
+    reveal.id = 'people-reveal';
+    reveal.setAttribute('type', 'button');
+    reveal.setAttribute('hidden', '');
+    revealRow.appendChild(reveal);
+    wrap.appendChild(revealRow);
 
     const empty = el(document, 'p', {
       class: 'filter-label',
