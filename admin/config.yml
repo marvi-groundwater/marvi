@@ -458,6 +458,11 @@ collections:
             name: "partnerList"
             widget: "object"
             fields:
+              - label: "Tab label"
+                name: "tabLabel"
+                widget: "string"
+                required: false
+                hint: "Adjacent blocks with tab labels fold into one tabbed group."
               - label: "Partners"
                 name: "items"
                 widget: "list"
@@ -470,6 +475,11 @@ collections:
             name: "portraitBand"
             widget: "object"
             fields:
+              - label: "Tab label"
+                name: "tabLabel"
+                widget: "string"
+                required: false
+                hint: "Adjacent blocks with tab labels fold into one tabbed group."
               - label: "Filter & sort controls"
                 name: "filters"
                 widget: "boolean"

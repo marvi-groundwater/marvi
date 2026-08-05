@@ -428,6 +428,39 @@ function setupPeople() {
   apply();
 }
 
+/**
+ * Tabbed block groups (people / partner organisations). The build stacks
+ * every panel visible; this collapses each group to its first tab. Roving
+ * arrow keys per the tablist pattern — focus follows selection.
+ */
+function setupBlockTabs() {
+  document.querySelectorAll('.block-tabs').forEach((group) => {
+    const tabs = [...group.querySelectorAll('[role="tab"]')];
+    const panels = [...group.querySelectorAll(':scope > [role="tabpanel"]')];
+    if (tabs.length < 2) return;
+    const select = (index) => {
+      tabs.forEach((tab, j) => {
+        tab.setAttribute('aria-selected', String(j === index));
+        tab.tabIndex = j === index ? 0 : -1;
+      });
+      panels.forEach((panel, j) => {
+        panel.hidden = j !== index;
+      });
+    };
+    tabs.forEach((tab, j) => tab.addEventListener('click', () => select(j)));
+    group.querySelector('[role="tablist"]').addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      const current = tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true');
+      const next = (current + step + tabs.length) % tabs.length;
+      select(next);
+      tabs[next].focus();
+      event.preventDefault();
+    });
+    select(0);
+  });
+}
+
 /* ---------- chrome ---------- */
 
 function setupMenu() {
@@ -485,6 +518,7 @@ if (!redirectLegacyHash()) {
   setupArchive();
   setupPublications();
   setupPeople();
+  setupBlockTabs();
   setupLightbox();
   showReveals(document);
 }

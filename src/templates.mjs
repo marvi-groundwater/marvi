@@ -1082,14 +1082,18 @@ export function renderPage(document, page, ctx) {
   (page.blocks || []).forEach((block, i) => {
     const render = BLOCKS[block?.type];
     if (!render) return;
-    const node = render(document, block, blockCtx(block, i));
+    const ctxI = blockCtx(block, i);
+    const node = render(document, block, ctxI);
     if (!node) return;
-    (FLEX_TYPES.has(block.type) ? flex : core).push(node);
+    FLEX_TYPES.has(block.type)
+      ? flex.push(node)
+      : core.push({ node, tab: block.tabLabel || null, key: ctxI.t('tabLabel'), i });
   });
+  const coreNodes = groupTabs(document, core, page.slug);
 
   if (page.template === 'home') {
     section.appendChild(homeHero(document, page, ctx));
-    core.forEach((n) => section.appendChild(n));
+    coreNodes.forEach((n) => section.appendChild(n));
     if (flex.length) section.appendChild(flexWrap(document, flex));
     return section;
   }
@@ -1097,12 +1101,60 @@ export function renderPage(document, page, ctx) {
   const wrap = el(document, 'div', { class: 'content-wrap' });
   wrap.appendChild(standardHead(document, page, ctx));
   const body = el(document, 'div', { class: 'section-body' });
-  core.forEach((n) => body.appendChild(n));
+  coreNodes.forEach((n) => body.appendChild(n));
   wrap.appendChild(body);
   if (flex.length) wrap.appendChild(flexWrap(document, flex));
   section.appendChild(wrap);
   return section;
 }
+
+/**
+ * Fold each consecutive run of blocks carrying a `tabLabel` into one tabbed
+ * group: a tablist followed by one panel per block. Panels arrive visible and
+ * stacked — app.mjs is what collapses them to the selected tab, so a reader
+ * without JavaScript still gets every block in authored order. A run of one
+ * labelled block gets no tab chrome; a label with nothing to switch to is
+ * just noise.
+ */
+const groupTabs = (document, entries, slug) => {
+  const out = [];
+  for (let k = 0; k < entries.length; k++) {
+    if (!entries[k].tab) {
+      out.push(entries[k].node);
+      continue;
+    }
+    const run = [];
+    while (k < entries.length && entries[k].tab) run.push(entries[k++]);
+    k--;
+    if (run.length < 2) {
+      out.push(run[0].node);
+      continue;
+    }
+    const group = el(document, 'div', { class: 'block-tabs' });
+    const bar = el(document, 'div', { class: 'tab-bar' });
+    bar.setAttribute('role', 'tablist');
+    group.appendChild(bar);
+    run.forEach((entry, j) => {
+      const id = `blocktab-${slug}-${entry.i}`;
+      const tab = el(document, 'button', { class: 'tab-btn', text: entry.tab, key: entry.key });
+      tab.id = id + '-tab';
+      tab.setAttribute('type', 'button');
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', String(j === 0));
+      tab.setAttribute('aria-controls', id);
+      bar.appendChild(tab);
+      const panel = el(document, 'div', { class: 'tab-panel' });
+      panel.id = id;
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', id + '-tab');
+      panel.setAttribute('tabindex', '0');
+      panel.appendChild(entry.node);
+      group.appendChild(panel);
+    });
+    out.push(group);
+  }
+  return out;
+};
 
 const flexWrap = (document, nodes) => {
   const wrap = el(document, 'div', { class: 'cms-sections' });

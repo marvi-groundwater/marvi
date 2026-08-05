@@ -9,6 +9,7 @@
   "blocks": [
     {
       "type": "portraitBand",
+      "tabLabel": "People",
       "items": [
         {
           "name": "Basant Maheshwari",
@@ -88,16 +89,6 @@
           "image": "/assets/marvi-originals/067-our-people.png"
         },
         {
-          "name": "Alan Ng",
-          "positionX": 50,
-          "positionY": 50,
-          "affiliation": "MARVI",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Website & digital platforms",
-          "image": "/assets/marvi-originals/alan-ng.jpg"
-        },
-        {
           "name": "L. S. Iyer",
           "positionX": 50,
           "url": "https://www.marvi.org.in/our-people",
@@ -107,11 +98,22 @@
           "zoom": 100,
           "title": "MARVI contributor",
           "image": "/assets/marvi-originals/lsiyer.jpg"
+        },
+        {
+          "name": "Alan Ng",
+          "positionX": 50,
+          "positionY": 50,
+          "affiliation": "MARVI",
+          "fit": "auto",
+          "zoom": 100,
+          "title": "Research Fellow – Data Science",
+          "image": "/assets/marvi-originals/alan-ng.jpg"
         }
       ]
     },
     {
       "type": "partnerList",
+      "tabLabel": "Partner organisations",
       "items": [
         {
           "meta": "Australia · Lead partner",
@@ -185,7 +187,7 @@
       "heading": "Test heading"
     }
   ],
-  "menuName": "People",
+  "menuName": "People & Partners",
   "slug": "people",
   "intro": {
     "eyebrow": "People & partners",

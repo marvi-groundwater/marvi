@@ -571,6 +571,27 @@
     .tool-copy p { color: var(--muted); font-size: .84rem; }
     .tool-copy .button { align-self: flex-start; margin-top: auto; }
 
+    /* Tabbed block groups: an underline tablist over stacked panels. Panels
+       ship visible (no-JS fallback); app.mjs collapses to the selected tab. */
+    .block-tabs .tab-bar { display: flex; gap: 28px; margin-bottom: 30px; border-bottom: 1px solid var(--line); }
+    .tab-btn {
+      padding: 0 2px 13px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      font: 500 .74rem var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .2s, border-color .2s;
+    }
+    .tab-btn:hover { color: var(--ink); }
+    .tab-btn[aria-selected="true"] { color: var(--ink); border-color: var(--copper); }
+    .tab-btn:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+    .tab-panel:focus-visible { outline: 0; }
+
     /* The people bar carries chips, the field, the sort and a count, so the
        field takes the slack — same rule as the publications bar. */
     .people-directory .chip-filter { margin-bottom: 10px; }
