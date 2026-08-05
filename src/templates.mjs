@@ -784,10 +784,11 @@ const BLOCKS = {
     return grid;
   },
 
-  portraitBand(document, block) {
+  portraitBand(document, block, ctx) {
+    const items = (block.items || []).filter((item) => item && item.image);
     const band = el(document, 'div', { class: 'portrait-band' });
-    (block.items || []).forEach((item) => {
-      if (!item || !item.image) return;
+    band.id = 'people-band';
+    items.forEach((item) => {
       const card = el(document, item.url ? 'a' : 'article', { class: 'portrait-card' });
       if (item.url) {
         card.href = item.url;
@@ -796,6 +797,14 @@ const BLOCKS = {
       }
       const details = [item.name, item.title, item.affiliation].filter(Boolean).join(', ');
       card.setAttribute('aria-label', details + (item.url ? ' — open profile' : ''));
+      // The runtime filters and sorts on these, never on rendered text —
+      // labels are translated per language and would stop matching.
+      card.setAttribute('data-name', (item.name || '').toLowerCase());
+      card.setAttribute('data-aff', item.affiliation || '');
+      card.setAttribute(
+        'data-search',
+        [item.name, item.title, item.affiliation].filter(Boolean).join(' ').toLowerCase()
+      );
       card.appendChild(
         photo(document, item, { alt: item.name ? 'Portrait of ' + item.name : 'MARVI team member portrait' })
       );
@@ -806,7 +815,86 @@ const BLOCKS = {
       card.appendChild(info);
       band.appendChild(card);
     });
-    return band;
+    if (block.filters === false || items.length < 2) return band;
+
+    // Filter + sort controls, same shape as the publications bar. Everything
+    // below only ever reorders or hides the cards above — a reader without
+    // JavaScript sees the full band in its authored order.
+    const wrap = el(document, 'div', { class: 'people-directory' });
+
+    const chips = el(document, 'div', { class: 'chip-filter' });
+    chips.id = 'people-filters';
+    chips.setAttribute('role', 'group');
+    chips.setAttribute('aria-label', 'Filter people by affiliation');
+    const addChip = (key, label, n, i18nKey) => {
+      const chip = el(document, 'button', { class: 'chip-btn' });
+      chip.setAttribute('type', 'button');
+      chip.setAttribute('data-filter', key);
+      chip.setAttribute('data-count', String(n));
+      chip.setAttribute('aria-pressed', String(key === 'all'));
+      chip.appendChild(el(document, 'span', { text: label, key: i18nKey }));
+      chip.appendChild(el(document, 'b', { text: String(n) }));
+      chips.appendChild(chip);
+    };
+    addChip('all', 'All', items.length, ctx.t('ui.all'));
+    const affiliations = new Map();
+    items.forEach((item) => {
+      if (item.affiliation) {
+        affiliations.set(item.affiliation, (affiliations.get(item.affiliation) || 0) + 1);
+      }
+    });
+    affiliations.forEach((n, name) => addChip(name, name, n));
+    wrap.appendChild(chips);
+
+    const bar = el(document, 'div', { class: 'filter-bar' });
+    const searchLabel = el(document, 'label', { class: 'filter-label', text: 'Search', key: ctx.t('ui.search') });
+    searchLabel.setAttribute('for', 'people-search');
+    bar.appendChild(searchLabel);
+    const search = el(document, 'input', { class: 'search' });
+    search.id = 'people-search';
+    search.setAttribute('type', 'search');
+    search.setAttribute('placeholder', 'name, role or organisation…');
+    search.setAttribute('aria-label', 'Search people');
+    bar.appendChild(search);
+
+    const sortField = el(document, 'div', { class: 'sort-field' });
+    const sortLabel = el(document, 'label', { class: 'filter-label', text: 'Sort', key: ctx.t('ui.sort') });
+    sortLabel.setAttribute('for', 'people-sort');
+    sortField.appendChild(sortLabel);
+    const sort = el(document, 'select');
+    sort.id = 'people-sort';
+    [
+      ['featured', 'Featured', ctx.t('ui.sortFeatured')],
+      ['name', 'Name A–Z', ctx.t('ui.sortName')],
+      ['affiliation', 'Affiliation', ctx.t('ui.sortAffiliation')]
+    ].forEach(([value, text, i18nKey]) => {
+      const option = el(document, 'option', { text, key: i18nKey });
+      option.value = value;
+      sort.appendChild(option);
+    });
+    sortField.appendChild(sort);
+    bar.appendChild(sortField);
+
+    const count = el(document, 'span', {
+      class: 'filter-label',
+      text: `${items.length} ${items.length === 1 ? 'person' : 'people'}`
+    });
+    count.id = 'people-count';
+    count.setAttribute('aria-live', 'polite');
+    bar.appendChild(count);
+    wrap.appendChild(bar);
+
+    wrap.appendChild(band);
+
+    const empty = el(document, 'p', {
+      class: 'filter-label',
+      text: 'No people match that filter.',
+      key: ctx.t('ui.empty')
+    });
+    empty.id = 'people-empty';
+    empty.setAttribute('hidden', '');
+    wrap.appendChild(empty);
+    return wrap;
   },
 
   sourceNote(document, block) {

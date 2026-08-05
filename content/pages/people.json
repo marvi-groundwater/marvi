@@ -88,6 +88,16 @@
           "image": "/assets/marvi-originals/067-our-people.png"
         },
         {
+          "name": "Alan Ng",
+          "positionX": 50,
+          "positionY": 50,
+          "affiliation": "MARVI",
+          "fit": "auto",
+          "zoom": 100,
+          "title": "Website & digital platforms",
+          "image": "/assets/marvi-originals/alan-ng.jpg"
+        },
+        {
           "name": "L. S. Iyer",
           "positionX": 50,
           "url": "https://www.marvi.org.in/our-people",

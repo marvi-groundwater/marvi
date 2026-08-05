@@ -571,6 +571,24 @@
     .tool-copy p { color: var(--muted); font-size: .84rem; }
     .tool-copy .button { align-self: flex-start; margin-top: auto; }
 
+    /* The people bar carries chips, the field, the sort and a count, so the
+       field takes the slack — same rule as the publications bar. */
+    .people-directory .chip-filter { margin-bottom: 10px; }
+    .people-directory .filter-bar { flex-wrap: wrap; justify-content: flex-start; margin-bottom: 22px; }
+    .people-directory .filter-bar .search { flex: 1 1 200px; width: auto; }
+    .people-directory .filter-bar > #people-count { margin-left: auto; }
+    .sort-field { display: flex; align-items: center; gap: 9px; }
+    .sort-field select {
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: transparent;
+      font: .74rem var(--mono);
+      letter-spacing: .03em;
+      cursor: pointer;
+    }
+    .sort-field select:focus { border-color: var(--blue); outline: 0; }
+
     .portrait-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-bottom: 26px; background: var(--line); }
     .portrait-card {
       position: relative;

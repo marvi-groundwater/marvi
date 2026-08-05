@@ -470,6 +470,12 @@ collections:
             name: "portraitBand"
             widget: "object"
             fields:
+              - label: "Filter & sort controls"
+                name: "filters"
+                widget: "boolean"
+                default: true
+                required: false
+                hint: "Show the affiliation chips, search and sort bar above the portraits."
               - label: "People"
                 name: "items"
                 widget: "list"

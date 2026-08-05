@@ -362,6 +362,72 @@ function setupMediaSearch() {
   });
 }
 
+/**
+ * People: affiliation chips, a text search and a sort order over the portrait
+ * band — the AIWC directory pattern, sized down for a single band. Chips and
+ * search intersect (publications rule); sorting reorders the live cards in
+ * place, and "featured" restores the authored order captured at load. The
+ * markup arrives complete and ordered from the build, so without JavaScript
+ * the full band simply stands as authored.
+ */
+function setupPeople() {
+  const band = document.getElementById('people-band');
+  const filters = document.getElementById('people-filters');
+  if (!band || !filters) return;
+  const search = document.getElementById('people-search');
+  const sort = document.getElementById('people-sort');
+  const count = document.getElementById('people-count');
+  const empty = document.getElementById('people-empty');
+  const cards = [...band.children];
+  let affiliation = 'all';
+
+  const sortKey = (card, mode) =>
+    mode === 'affiliation'
+      ? (card.dataset.aff || '') + ' ' + (card.dataset.name || '')
+      : card.dataset.name || '';
+
+  const apply = () => {
+    const query = search ? search.value.trim().toLowerCase() : '';
+    const mode = sort ? sort.value : 'featured';
+    const ordered =
+      mode === 'featured'
+        ? cards
+        : cards.slice().sort((a, b) => sortKey(a, mode).localeCompare(sortKey(b, mode)));
+    ordered.forEach((card) => band.appendChild(card));
+
+    let shown = 0;
+    cards.forEach((card) => {
+      const hit =
+        (affiliation === 'all' || card.dataset.aff === affiliation) &&
+        (!query || matchesQuery(card.dataset.search || '', query));
+      card.hidden = !hit;
+      if (hit) shown++;
+    });
+
+    if (empty) empty.hidden = shown > 0;
+    if (count) {
+      count.textContent =
+        shown === cards.length
+          ? `${cards.length} ${cards.length === 1 ? 'person' : 'people'}`
+          : `${shown} of ${cards.length}`;
+    }
+  };
+
+  filters.addEventListener('click', (event) => {
+    const chip = event.target.closest('[data-filter]');
+    if (!chip) return;
+    affiliation = chip.getAttribute('data-filter');
+    filters
+      .querySelectorAll('[data-filter]')
+      .forEach((b) => b.setAttribute('aria-pressed', String(b === chip)));
+    apply();
+  });
+  if (search) search.addEventListener('input', apply);
+  if (sort) sort.addEventListener('change', apply);
+
+  apply();
+}
+
 /* ---------- chrome ---------- */
 
 function setupMenu() {
@@ -418,6 +484,7 @@ if (!redirectLegacyHash()) {
   setupMediaSearch();
   setupArchive();
   setupPublications();
+  setupPeople();
   setupLightbox();
   showReveals(document);
 }
