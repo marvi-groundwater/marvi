@@ -798,8 +798,13 @@ const BLOCKS = {
       const details = [item.name, item.title, item.affiliation].filter(Boolean).join(', ');
       card.setAttribute('aria-label', details + (item.url ? ' — open profile' : ''));
       // The runtime filters and sorts on these, never on rendered text —
-      // labels are translated per language and would stop matching.
-      card.setAttribute('data-name', (item.name || '').toLowerCase());
+      // labels are translated per language and would stop matching. Honorifics
+      // are dropped from the sort key only — the card still shows the full
+      // name — or everyone with a doctorate would file under D.
+      card.setAttribute(
+        'data-name',
+        (item.name || '').toLowerCase().replace(/^((adj\.?\s+)?(a\/)?prof\.?|dr\.?|mr\.?|mrs\.?|ms\.?|miss)\s+/, '')
+      );
       card.setAttribute('data-aff', item.affiliation || '');
       card.setAttribute(
         'data-search',
