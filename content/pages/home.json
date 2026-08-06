@@ -8,7 +8,7 @@
     "eyebrow": "MARVI:  Managing Aquifer Recharge & Sustaining Groundwater Use through Village level intervention",
     "title": "Water beneath us.\nKnowledge between us.",
     "lede": "MARVI puts groundwater science in the hands of the people who depend on it—farmers, schools, researchers and communities working together for water that lasts!",
-    "eyebrowSize": 100,
+    "eyebrowSize": 80,
     "titleSize": 70,
     "ledeSize": 80,
     "textAlign": "left",
@@ -77,11 +77,11 @@
         }
       ],
       "i18n": {
-        "label": "home.central",
-        "quote": "home.question",
-        "metrics__0__label": "home.metric.bjs",
+        "metrics__2__label": "home.metric.aquifer",
         "metrics__1__label": "home.metric.started",
-        "metrics__2__label": "home.metric.aquifer"
+        "metrics__0__label": "home.metric.bjs",
+        "quote": "home.question",
+        "label": "home.central"
       }
     },
     {
@@ -131,12 +131,12 @@
       ],
       "lede": "Follow the work from village observation to shared groundwater decisions and cooperative groundwater management.",
       "i18n": {
-        "eyebrow": "home.explore.eyebrow",
-        "title": "home.explore.title",
-        "lede": "home.explore.lede",
-        "items__0__label": "home.story1.label",
+        "items__2__label": "home.story3.label",
         "items__1__label": "home.story2.label",
-        "items__2__label": "home.story3.label"
+        "items__0__label": "home.story1.label",
+        "lede": "home.explore.lede",
+        "title": "home.explore.title",
+        "eyebrow": "home.explore.eyebrow"
       }
     }
   ]
