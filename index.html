@@ -1390,6 +1390,9 @@
       background-position: var(--cms-photo-position, var(--cover-position, center));
       background-size: var(--cms-photo-fit, cover);
       transform: scale(var(--cms-photo-scale, 1));
+      /* Brightness rides on the pseudo-element carrying the photograph, so
+         dimming a bright header never touches the headline sitting over it. */
+      filter: brightness(var(--cms-photo-brightness, 100%));
     }
     .hero-copy-inner,
     .panel:not(#panel-home) .page-head > div {

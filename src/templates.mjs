@@ -59,6 +59,9 @@ export const photoLayout = (entry) => {
     x: clamp(data.positionX, 0, 100, 50),
     y: clamp(data.positionY, 0, 100, 50),
     scale: zoom / 100,
+    // 100 is "as shot" and emits nothing, so a photo nobody has adjusted
+    // carries no filter at all and its markup is unchanged.
+    brightness: clamp(data.brightness, 20, 200, 100),
     fit: data.fit && data.fit !== 'auto' ? data.fit : 'cover'
   };
 };
@@ -71,7 +74,7 @@ export const textLayout = (entry) => {
   };
 };
 
-/** Photo entry ({image, zoom, positionX, positionY, fit, alt}) → <img>. */
+/** Photo entry ({image, zoom, positionX, positionY, brightness, fit, alt}) → <img>. */
 const photo = (document, raw, { alt, lazy = true, className } = {}) => {
   const entry = opt(raw);
   const img = el(document, 'img', { class: className });
@@ -81,6 +84,7 @@ const photo = (document, raw, { alt, lazy = true, className } = {}) => {
   const layout = photoLayout(entry);
   if (layout.x !== 50 || layout.y !== 50) img.style.objectPosition = `${layout.x}% ${layout.y}%`;
   if (layout.scale !== 1) img.style.scale = String(layout.scale);
+  if (layout.brightness !== 100) img.style.filter = `brightness(${layout.brightness}%)`;
   if (entry.fit && entry.fit !== 'auto') img.style.objectFit = layout.fit;
   return img;
 };
@@ -115,6 +119,11 @@ const applyCoverControls = (root, raw) => {
   root.style.setProperty('--cover', `url("${String(entry.image).replaceAll('"', '%22')}")`);
   root.style.setProperty('--cms-photo-position', `${layout.x}% ${layout.y}%`);
   root.style.setProperty('--cms-photo-scale', String(layout.scale));
+  // The cover is painted on .page-head::before, so a filter here dims the
+  // photograph and leaves the headline sitting on top of it untouched.
+  if (layout.brightness !== 100) {
+    root.style.setProperty('--cms-photo-brightness', layout.brightness + '%');
+  }
   root.style.setProperty('--cms-photo-fit', layout.fit);
 };
 

@@ -129,6 +129,7 @@ collections:
           - { label: "Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5, required: false }
           - { label: "Focus X (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
           - { label: "Focus Y (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
+          - { label: "Brightness (%)", name: "brightness", widget: "number", default: 100, value_type: "int", min: 20, max: 200, step: 5, required: false, hint: "100 is the photo as taken. Below 100 darkens it — useful when white text sits over a bright header." }
           - { label: "Fit", name: "fit", widget: "select", default: "auto", required: false, options: ["auto", "cover", "contain"] }
 
       - label: "Menu photo"
@@ -387,6 +388,7 @@ collections:
                   - { label: "Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5, required: false }
                   - { label: "Focus X (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
                   - { label: "Focus Y (%)", name: "positionY", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }
+                  - { label: "Brightness (%)", name: "brightness", widget: "number", default: 100, value_type: "int", min: 20, max: 200, step: 5, required: false, hint: "100 is the photo as taken. Below 100 darkens it, above 100 lifts it." }
                   - { label: "Fit", name: "fit", widget: "select", default: "auto", required: false, options: ["auto", "cover", "contain"] }
                   - { label: "Category", name: "category", widget: "string", hint: "Groups the image under a filter button." }
                   - { label: "Title", name: "title", widget: "string" }
