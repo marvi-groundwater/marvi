@@ -41,8 +41,17 @@ jobs:
       - name: Verify built output
         run: npm run verify
 
-      - name: Migration parity check
-        run: node scripts/parity.mjs
+      # The migration parity check (scripts/parity.mjs) used to run here. It
+      # asserted that nothing the PRE-migration site displayed had gone missing
+      # — the right guard while migrating, and the wrong one once the CMS is in
+      # use, because it makes deleting or rewording any original sentence a
+      # build failure. It blocked three genuine edits (placeholder metrics being
+      # replaced with the project's real figures) and would have blocked every
+      # future one. The migration it guarded finished long ago and the check
+      # passed on every commit up to that point.
+      #
+      # Still useful by hand, to compare today's build against the old site:
+      #   node scripts/parity.mjs
 
       - uses: actions/upload-pages-artifact@v3
         with:
