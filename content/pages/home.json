@@ -56,24 +56,32 @@
       "quote": "How can a village understand an invisible shared resource—and decide its future together?",
       "metrics": [
         {
-          "value": "35",
-          "label": "Bhujal Jankaars trained in Rajasthan and Gujarat"
-        },
-        {
           "value": "2012",
           "label": "The MARVI field journey began"
         },
         {
-          "value": "1",
-          "label": "Shared aquifer connecting every local decision"
+          "value": "630",
+          "label": "Bhujal Jankaars trained"
+        },
+        {
+          "value": "105",
+          "label": "Number of female BJs trained"
+        },
+        {
+          "value": "505",
+          "label": "Number of male Bjs trained"
+        },
+        {
+          "value": "2908",
+          "label": "Number of wells monitored"
         }
       ],
       "i18n": {
-        "metrics__2__label": "home.metric.aquifer",
-        "metrics__1__label": "home.metric.started",
-        "metrics__0__label": "home.metric.bjs",
+        "label": "home.central",
         "quote": "home.question",
-        "label": "home.central"
+        "metrics__0__label": "home.metric.bjs",
+        "metrics__1__label": "home.metric.started",
+        "metrics__2__label": "home.metric.aquifer"
       }
     },
     {
@@ -123,12 +131,12 @@
       ],
       "lede": "Follow the work from village observation to shared groundwater decisions and cooperative groundwater management.",
       "i18n": {
-        "items__2__label": "home.story3.label",
-        "items__1__label": "home.story2.label",
-        "items__0__label": "home.story1.label",
-        "lede": "home.explore.lede",
+        "eyebrow": "home.explore.eyebrow",
         "title": "home.explore.title",
-        "eyebrow": "home.explore.eyebrow"
+        "lede": "home.explore.lede",
+        "items__0__label": "home.story1.label",
+        "items__1__label": "home.story2.label",
+        "items__2__label": "home.story3.label"
       }
     }
   ]
