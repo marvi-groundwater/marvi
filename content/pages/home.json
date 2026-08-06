@@ -5,12 +5,12 @@
   "published": true,
   "template": "home",
   "intro": {
-    "eyebrow": "Managing Aquifer Recharge & Sustaining Groundwater Use",
+    "eyebrow": "MARVI:  Managing Aquifer Recharge & Sustaining Groundwater Use through Village level intervention",
     "title": "Water beneath us.\nKnowledge between us.",
     "lede": "MARVI puts groundwater science in the hands of the people who depend on it—farmers, schools, researchers and communities working together for water that lasts!",
     "eyebrowSize": 100,
     "titleSize": 70,
-    "ledeSize": 100,
+    "ledeSize": 80,
     "textAlign": "left",
     "textPosition": "bottom",
     "textWidth": 100,
@@ -69,66 +69,66 @@
         }
       ],
       "i18n": {
-        "label": "home.central",
-        "quote": "home.question",
-        "metrics__0__label": "home.metric.bjs",
+        "metrics__2__label": "home.metric.aquifer",
         "metrics__1__label": "home.metric.started",
-        "metrics__2__label": "home.metric.aquifer"
+        "metrics__0__label": "home.metric.bjs",
+        "quote": "home.question",
+        "label": "home.central"
       }
     },
     {
       "type": "storyCards",
       "eyebrow": "Inside MARVI",
       "title": "A living practice, not a static study.",
-      "lede": "Follow the work from village observation to shared groundwater decisions.",
       "items": [
         {
-          "page": "approach",
-          "label": "01 · The method",
-          "title": "Science becomes useful when it becomes local.",
+          "title": "Science becomes useful when it becomes local and owned by people.",
           "photo": {
-            "alt": "A groundwater monitor taking a measurement beside a village well",
             "image": "/assets/marvi-originals/022-about-marvi.jpg",
+            "alt": "A Bhujal Jaankaar (BJ) (groundwater informed volunteer) taking a measurement beside a village well",
             "zoom": 100,
             "positionX": 50,
             "positionY": 50,
             "fit": "auto"
-          }
+          },
+          "page": "approach",
+          "label": "01 · The method"
         },
         {
-          "page": "bjs",
-          "label": "02 · The people",
           "title": "Meet the village groundwater champions.",
           "photo": {
-            "alt": "Bhujal Jankaars taking part in field training",
             "image": "/assets/marvi-originals/076-bhujal-jankaars-bjs.jpg",
+            "alt": "Bhujal Jankaars taking part in field training",
             "zoom": 100,
             "positionX": 50,
             "positionY": 50,
             "fit": "auto"
-          }
+          },
+          "page": "bjs",
+          "label": "02 · The people"
         },
         {
-          "page": "mywell",
-          "label": "03 · The platform",
           "title": "See local knowledge take shape in MyWell.",
           "photo": {
-            "alt": "A community member recording a MyWell field observation",
             "image": "/assets/marvi-originals/079-about-mywell-app.jpg",
+            "alt": "A BJ recording a MyWell field observation",
             "zoom": 100,
             "positionX": 50,
             "positionY": 50,
             "fit": "auto"
-          }
+          },
+          "page": "mywell",
+          "label": "03 · The platform"
         }
       ],
+      "lede": "Follow the work from village observation to shared groundwater decisions and cooperative groundwater management.",
       "i18n": {
-        "eyebrow": "home.explore.eyebrow",
-        "title": "home.explore.title",
-        "lede": "home.explore.lede",
-        "items__0__label": "home.story1.label",
+        "items__2__label": "home.story3.label",
         "items__1__label": "home.story2.label",
-        "items__2__label": "home.story3.label"
+        "items__0__label": "home.story1.label",
+        "lede": "home.explore.lede",
+        "title": "home.explore.title",
+        "eyebrow": "home.explore.eyebrow"
       }
     }
   ]
