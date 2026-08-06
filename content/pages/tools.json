@@ -36,9 +36,6 @@
       "type": "toolList",
       "items": [
         {
-          "name": "MyWell",
-          "meta": "App · Record, map and compare",
-          "description": "Bhujal Jankaars and community members record groundwater levels, rainfall, water quality and check-dam readings against a station, then browse the shared map and watch the trends build up over seasons.",
           "photo": {
             "image": "/assets/marvi-originals/mywell-app-record.png",
             "zoom": 100,
@@ -46,14 +43,14 @@
             "positionY": 50,
             "fit": "contain"
           },
+          "meta": "App · Record, map and compare",
+          "description": "Bhujal Jankaars and community members record groundwater levels, rainfall, water quality and check-dam readings against a station, then browse the shared map and watch the trends build up over seasons.",
+          "url": "",
+          "name": "MyWell-ver4",
           "linkLabel": "Explore MyWell",
-          "target": "mywell",
-          "url": ""
+          "target": "mywell"
         },
         {
-          "name": "MARVI Groundwater Game",
-          "meta": "Game · Learn by deciding together",
-          "description": "A whole village draws from one shared well. Choose crops, take watering turns and watch the watertable answer back — the fastest way to feel why groundwater cannot be managed one farm at a time.",
           "photo": {
             "image": "/assets/mywell-game.png",
             "zoom": 100,
@@ -61,9 +58,12 @@
             "positionY": 50,
             "fit": "contain"
           },
+          "meta": "Game · Learn by deciding together",
+          "description": "A whole village draws from one shared well. Choose crops, take watering turns and watch the watertable answer back — the fastest way to feel why groundwater cannot be managed one farm at a time.",
+          "url": "",
+          "name": "MARVI Groundwater Game",
           "linkLabel": "Try the game",
-          "target": "game",
-          "url": ""
+          "target": "game"
         }
       ]
     }
