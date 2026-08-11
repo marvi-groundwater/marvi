@@ -1013,24 +1013,25 @@ export const BLOCKS = {
     });
     if (block.filters === false || items.length < 2) return band;
 
-    // The id belongs to the band the runtime filters, and there can only be
-    // one — app.mjs finds it with getElementById. Now that a page can hold
-    // several portrait bands (collaborators, supporters, whatever comes next),
-    // stamping every one of them would leave getElementById silently driving
-    // whichever happened to be first in the document.
-    band.id = 'people-band';
-
     // Filter + sort controls, same shape as the publications bar. Everything
     // below only ever reorders or hides the cards above — a reader without
     // JavaScript sees the full band in its authored order.
+    //
+    // The controls are addressed by class inside their own .people-directory,
+    // and every id is suffixed with the block's uid. That is the difference
+    // between "the people page has a filter bar" and "any portrait band can
+    // have one": collaborators, supporters and whatever tab is added next each
+    // filter their own cards, because nothing here is page-wide any more.
+    band.classList.add('people-band');
     const wrap = el(document, 'div', { class: 'people-directory' });
 
     const bar = el(document, 'div', { class: 'filter-bar' });
     const searchLabel = el(document, 'label', { class: 'filter-label', text: 'Search', key: ctx.t('ui.search') });
-    searchLabel.setAttribute('for', 'people-search');
+    searchLabel.setAttribute('for', `people-search-${ctx.uid}`);
     bar.appendChild(searchLabel);
     const search = el(document, 'input', { class: 'search' });
-    search.id = 'people-search';
+    search.id = `people-search-${ctx.uid}`;
+    search.classList.add('people-search');
     search.setAttribute('type', 'search');
     search.setAttribute('placeholder', 'name, role or organisation…');
     search.setAttribute('aria-label', 'Search people');
@@ -1046,7 +1047,8 @@ export const BLOCKS = {
     });
     const affField = el(document, 'div', { class: 'sort-field' });
     const aff = el(document, 'select');
-    aff.id = 'people-aff';
+    aff.id = `people-aff-${ctx.uid}`;
+    aff.classList.add('people-aff');
     aff.setAttribute('aria-label', 'Filter by affiliation');
     const allOption = el(document, 'option', { text: `All affiliations (${affiliations.size})` });
     allOption.value = '';
@@ -1063,10 +1065,11 @@ export const BLOCKS = {
 
     const sortField = el(document, 'div', { class: 'sort-field' });
     const sortLabel = el(document, 'label', { class: 'filter-label', text: 'Sort', key: ctx.t('ui.sort') });
-    sortLabel.setAttribute('for', 'people-sort');
+    sortLabel.setAttribute('for', `people-sort-${ctx.uid}`);
     sortField.appendChild(sortLabel);
     const sort = el(document, 'select');
-    sort.id = 'people-sort';
+    sort.id = `people-sort-${ctx.uid}`;
+    sort.classList.add('people-sort');
     [
       ['shuffle', 'Shuffled', ctx.t('ui.sortShuffled')],
       ['featured', 'Featured', ctx.t('ui.sortFeatured')],
@@ -1084,7 +1087,8 @@ export const BLOCKS = {
       class: 'filter-label',
       text: `${items.length} ${items.length === 1 ? 'person' : 'people'}`
     });
-    count.id = 'people-count';
+    count.id = `people-count-${ctx.uid}`;
+    count.classList.add('people-count');
     count.setAttribute('aria-live', 'polite');
     bar.appendChild(count);
     wrap.appendChild(bar);
@@ -1099,7 +1103,8 @@ export const BLOCKS = {
       class: 'reveal-all',
       text: `Show all ${items.length} people`
     });
-    reveal.id = 'people-reveal';
+    reveal.id = `people-reveal-${ctx.uid}`;
+    reveal.classList.add('people-reveal');
     reveal.setAttribute('type', 'button');
     reveal.setAttribute('hidden', '');
     revealRow.appendChild(reveal);
@@ -1110,7 +1115,8 @@ export const BLOCKS = {
       text: 'No people match that filter.',
       key: ctx.t('ui.empty')
     });
-    empty.id = 'people-empty';
+    empty.id = `people-empty-${ctx.uid}`;
+    empty.classList.add('people-empty');
     empty.setAttribute('hidden', '');
     wrap.appendChild(empty);
     return wrap;
@@ -1292,6 +1298,10 @@ export function renderPage(document, page, ctx) {
 
   const blockCtx = (block, i) => ({
     urlFor: ctx.urlFor,
+    // Unique per block, so a block needing element ids (a label must point at
+    // its own control) can appear as many times on a page as the editor adds
+    // without any two instances colliding.
+    uid: `${page.slug}-b${i}`,
     // The generated fallback keeps the dotted path: it is a key, not a lookup.
     t: (path) => block.i18n?.[i18nKey(path)] || `page.${page.slug}.b${i}.${path}`
   });

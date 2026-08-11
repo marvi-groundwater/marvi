@@ -371,14 +371,25 @@ function setupMediaSearch() {
  * the full band simply stands as authored.
  */
 function setupPeople() {
-  const band = document.getElementById('people-band');
-  const sort = document.getElementById('people-sort');
+  document.querySelectorAll('.people-directory').forEach(setupPeopleDirectory);
+}
+
+/**
+ * One directory over one band. Everything is looked up inside `root`, so a
+ * page can carry as many of these as it has portrait bands — collaborators,
+ * supporters, anything added later — each filtering only its own cards. The
+ * previous version reached for page-wide ids, which quietly limited the whole
+ * feature to whichever band happened to come first.
+ */
+function setupPeopleDirectory(root) {
+  const band = root.querySelector('.people-band');
+  const sort = root.querySelector('.people-sort');
   if (!band || !sort) return;
-  const search = document.getElementById('people-search');
-  const aff = document.getElementById('people-aff');
-  const count = document.getElementById('people-count');
-  const empty = document.getElementById('people-empty');
-  const reveal = document.getElementById('people-reveal');
+  const search = root.querySelector('.people-search');
+  const aff = root.querySelector('.people-aff');
+  const count = root.querySelector('.people-count');
+  const empty = root.querySelector('.people-empty');
+  const reveal = root.querySelector('.people-reveal');
   const cards = [...band.children];
   let open = false;
 
