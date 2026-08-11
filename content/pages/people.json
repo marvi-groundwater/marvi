@@ -80,17 +80,7 @@
           "affiliation": "Western Sydney University"
         },
         {
-          "title": "Retired",
-          "url": "https://www.westernsydney.edu.au/",
-          "image": "/assets/marvi-originals/045-our-people.jpg",
-          "zoom": 100,
-          "positionX": 50,
-          "positionY": 50,
-          "fit": "auto",
-          "name": "Dr Harsharn Grewal",
-          "affiliation": "Western Sydney University"
-        },
-        {
+          "title": "",
           "url": "https://www.westernsydney.edu.au/",
           "image": "/assets/marvi-originals/046-our-people.jpg",
           "zoom": 100,
@@ -103,7 +93,7 @@
         {
           "title": "",
           "url": "https://www.csiro.au/",
-          "image": "/assets/marvi-originals/047-our-people.jpg",
+          "image": "/assets/marvi-originals/047-our-people.png",
           "zoom": 100,
           "positionX": 50,
           "positionY": 50,
@@ -123,6 +113,7 @@
           "affiliation": "CSIRO Land & Water"
         },
         {
+          "title": "",
           "url": "https://www.iwmi.cgiar.org/",
           "image": "/assets/marvi-originals/049-our-people.jpg",
           "zoom": 100,
@@ -177,6 +168,7 @@
           "affiliation": "Arid Communities and Technologies"
         },
         {
+          "title": "",
           "url": "https://www.dscindia.org/",
           "image": "/assets/marvi-originals/056-our-people.jpg",
           "zoom": 100,
@@ -231,6 +223,7 @@
           "affiliation": "Maharana Pratap University of Agriculture & Technology"
         },
         {
+          "title": "",
           "url": "https://www.mpuat.ac.in/",
           "image": "/assets/marvi-originals/062-our-people.png",
           "zoom": 100,
@@ -327,6 +320,17 @@
           "fit": "auto",
           "name": "Alan Ng",
           "affiliation": "Western Sydney University"
+        },
+        {
+          "title": "Collaborator",
+          "url": "",
+          "image": "/assets/marvi-originals/Fahim Khan.jpeg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Fahim Khan",
+          "affiliation": "Department of Management and Decision Sciences, Coastal Carolina University, USA"
         }
       ],
       "tabLabel": "People"
