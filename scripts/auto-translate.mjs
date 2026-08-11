@@ -19,7 +19,17 @@
  *    fallbacks are enabled so a safety-classifier decline is retried on
  *    another model inside the same call.
  *  - MODELS_ENDPOINT + MODELS_TOKEN → any OpenAI-compatible chat endpoint
- *    (MODELS_MODEL selects the model). Kept for provider portability.
+ *    (MODELS_MODEL selects the model). This was GitHub Models, which was
+ *    retired on 2026-07-30 and now answers 410; the hook is kept because the
+ *    same shape fits any other OpenAI-compatible provider.
+ *  - otherwise, if a `codex` binary is on PATH → the Codex CLI, run locally on
+ *    whatever subscription the machine is signed in with. No key to store and
+ *    no free tier to be retired. CI runners have no codex binary, so there it
+ *    simply reports what is untranslated — which is the point: translating is
+ *    a thing you do on a laptop and commit, not a live dependency of a deploy.
+ *    Set TRANSLATE_MODEL to pin a model if the default declines a batch.
+ *
+ * Run it by hand with:  node scripts/auto-translate.mjs
  *
  * No-op (exit 0, no file change) when nothing needs translating.
  * Fails soft on provider errors: the site keeps its existing translations —
@@ -27,8 +37,10 @@
  *
  * I18N_PATH overrides the output file (used by scripts/test-translate.mjs).
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { parseHTML } from 'linkedom';
 import { buildRegistry } from '../src/registry.mjs';
@@ -157,11 +169,58 @@ async function translateBatchOpenAICompatible(entries) {
   return parseJson(data.choices[0].message.content);
 }
 
+/**
+ * The Codex CLI, driven locally — no API key, no service to configure, and no
+ * free tier to be retired out from under us. It runs on whatever Codex
+ * subscription the machine is already signed in with, which makes it the
+ * provider for translating by hand on a laptop rather than in CI. The runner
+ * has no codex binary, so CI simply reports what is untranslated and moves on.
+ *
+ * --output-last-message is what makes this parseable: the agent's chatter goes
+ * to stdout, and only its final answer to the file we read.
+ */
+async function translateBatchCodex(entries) {
+  const strings = Object.fromEntries(entries.map((e) => [e.key, e.english]));
+  const out = join(tmpdir(), `marvi-translate-${process.pid}-${entries[0].key.replace(/\W/g, '')}.json`);
+  const result = spawnSync(
+    'codex',
+    [
+      'exec',
+      '--ephemeral',            // no session files for a mechanical batch
+      '--skip-git-repo-check',
+      '-s', 'read-only',        // it needs to answer, not to touch the repo
+      // Only pin a model when asked. Naming one that this CLI version does not
+      // know fails before the prompt is ever sent, and the names change; the
+      // signed-in default is the one guaranteed to exist. Set TRANSLATE_MODEL
+      // if a particular model declines the batch.
+      ...(process.env.TRANSLATE_MODEL ? ['-m', process.env.TRANSLATE_MODEL] : []),
+      '--output-last-message', out,
+      '-'
+    ],
+    {
+      input: SYSTEM_PROMPT + '\n\n' + userPrompt(strings),
+      encoding: 'utf8',
+      maxBuffer: 32 * 1024 * 1024
+    }
+  );
+  if (result.error) throw new Error(`codex could not be run: ${result.error.message}`);
+  if (!existsSync(out)) {
+    throw new Error(`codex wrote no answer (exit ${result.status}): ${(result.stderr || '').slice(0, 300)}`);
+  }
+  const text = readFileSync(out, 'utf8');
+  rmSync(out, { force: true });
+  return parseJson(text);
+}
+
+const codexAvailable = () => spawnSync('codex', ['--version'], { encoding: 'utf8' }).status === 0;
+
 const provider = process.env.ANTHROPIC_API_KEY
   ? { name: 'anthropic (' + (process.env.TRANSLATE_MODEL || 'claude-opus-5') + ')', run: translateBatchAnthropic }
   : process.env.MODELS_ENDPOINT && process.env.MODELS_TOKEN
     ? { name: 'openai-compatible (' + process.env.MODELS_MODEL + ')', run: translateBatchOpenAICompatible }
-    : null;
+    : codexAvailable()
+      ? { name: 'codex CLI (' + (process.env.TRANSLATE_MODEL || 'default model') + ')', run: translateBatchCodex }
+      : null;
 
 const chunk = (arr, n) => Array.from({ length: Math.ceil(arr.length / n) }, (_, i) => arr.slice(i * n, i * n + n));
 
