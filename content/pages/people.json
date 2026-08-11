@@ -383,6 +383,30 @@
           "name": "Professor Ramesh Sharda",
           "links": [],
           "affiliation": "Oklahoma State University, USA"
+        },
+        {
+          "title": "Researcher",
+          "url": "https://www.linkedin.com/in/manjeet-singh-28a1377b/",
+          "image": "/assets/marvi-originals/Manjeet Singh.jpeg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Manjeet Singh",
+          "links": [],
+          "affiliation": "Maharana Pratap University of Agriculture and Technology"
+        },
+        {
+          "title": "Researcher",
+          "url": "https://www.linkedin.com/in/mukand-babel-419a56169/",
+          "image": "/assets/marvi-originals/Mukand Babel.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Mukand Singh  Babel",
+          "links": [],
+          "affiliation": "Asian Institute of Technology"
         }
       ],
       "linkStyle": "auto"
