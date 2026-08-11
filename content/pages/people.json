@@ -331,6 +331,17 @@
           "fit": "auto",
           "name": "Dr Fahim Khan",
           "affiliation": "Department of Management and Decision Sciences, Coastal Carolina University, USA"
+        },
+        {
+          "title": "Collaborator",
+          "url": "",
+          "image": "/assets/marvi-originals/Ramesh Sharda.webp",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Professor Ramesh Sharda",
+          "affiliation": "The ConocoPhillips Chair and a Regents Professor of Management Science and Information Systems in the Spears School of Business at Oklahoma State University, USA"
         }
       ],
       "tabLabel": "People"
