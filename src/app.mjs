@@ -518,11 +518,74 @@ function setupBlockTabs() {
 function setupMenu() {
   const menuButton = document.querySelector('.menu-toggle');
   if (!menuButton) return;
-  menuButton.addEventListener('click', () => {
-    const open = document.body.classList.toggle('menu-open');
+  const setMenu = (open) => {
+    document.body.classList.toggle('menu-open', open);
     menuButton.setAttribute('aria-expanded', String(open));
     menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  };
+  menuButton.addEventListener('click', () => {
+    setMenu(!document.body.classList.contains('menu-open'));
   });
+  setupMenuSwipe(menuButton, setMenu);
+}
+
+/**
+ * Swipe right to open the menu, left to close it.
+ *
+ * Only where the menu button is actually on screen: on desktop the sidebar is
+ * always visible and there is nothing to swipe open.
+ *
+ * The guard that matters is the carousel. `.process` scrolls horizontally, and
+ * a finger dragging it must not also throw the menu open — so a gesture that
+ * begins inside anything still able to scroll horizontally is left to that
+ * element. The same rule covers any future scroller for free, because it asks
+ * the layout rather than naming a class.
+ *
+ * Listeners are passive: this reads the gesture and never prevents the
+ * browser's own scrolling, so it cannot make the page feel sticky.
+ */
+function setupMenuSwipe(menuButton, setMenu) {
+  const MIN_TRAVEL = 55;   // px before a drag counts as a swipe
+  const MAX_SLOPE = 0.6;   // vertical drift allowed, relative to horizontal
+  const MAX_TIME = 700;    // ms — a flick, not a slow drag with a rest in it
+  let startX = 0, startY = 0, startAt = 0, tracking = false;
+
+  const horizontallyScrollable = (node) => {
+    for (let el = node; el && el !== document.body; el = el.parentElement) {
+      const overflowX = getComputedStyle(el).overflowX;
+      if ((overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth + 2) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  document.addEventListener('touchstart', (event) => {
+    tracking = false;
+    if (event.touches.length !== 1) return;                       // a pinch
+    if (getComputedStyle(menuButton).display === 'none') return;   // desktop
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox && !lightbox.hidden) return;                      // viewing a photo
+    if (horizontallyScrollable(event.target)) return;              // the carousel owns it
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+    startAt = Date.now();
+    tracking = true;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (event) => {
+    if (!tracking) return;
+    tracking = false;
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    if (Date.now() - startAt > MAX_TIME) return;
+    if (Math.abs(dx) < MIN_TRAVEL) return;
+    if (Math.abs(dy) > Math.abs(dx) * MAX_SLOPE) return;           // mostly a scroll
+    const open = document.body.classList.contains('menu-open');
+    if (dx > 0 && !open) setMenu(true);
+    else if (dx < 0 && open) setMenu(false);
+  }, { passive: true });
 }
 
 // Each language is its own URL, so switching is a navigation rather than a
