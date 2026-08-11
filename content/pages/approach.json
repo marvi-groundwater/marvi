@@ -123,7 +123,8 @@
     },
     {
       "type": "steps",
-      "tabLabel": "",
+      "tabLabel": "The MARVI 4-S Strategy",
+      "visible": true,
       "items": [
         {
           "title": "Sense",
