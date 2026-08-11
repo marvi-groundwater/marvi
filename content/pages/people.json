@@ -413,13 +413,6 @@
         "title": "people.ack.title",
         "eyebrow": "people.ack.eyebrow"
       }
-    },
-    {
-      "type": "text",
-      "eyebrow": "Test",
-      "heading": "Test heading",
-      "body": "This is a test",
-      "align": "left"
     }
   ]
 }
