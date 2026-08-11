@@ -56,6 +56,14 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
+    /* The outbound arrow. It was the character ↗ (U+2197) until an iPhone
+       showed what that actually renders as: the text fonts here have no glyph
+       for it, so iOS fell through to Apple Color Emoji and every arrow became
+       a blue tile. `font-variant-emoji: text` does not help — the substitution
+       is missing-glyph fallback, not a presentation choice — so the arrow is
+       drawn now. Sized in em so it tracks whatever text it follows. */
+    .ext-arrow { display: inline-block; width: .78em; height: .78em; vertical-align: -.05em; }
+    .ext-arrow svg { display: block; width: 100%; height: 100%; }
     button, input { font: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
     a { color: inherit; }
@@ -1557,7 +1565,7 @@
       <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-publications" data-tab="publications"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">11</span><span class="nav-name">Publications</span><span class="nav-arrow">↗</span></button>
       <button class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-tools" data-tab="tools"><img class="nav-thumb" alt="" aria-hidden="true"><span class="nav-number">12</span><span class="nav-name">Tools</span><span class="nav-arrow">↗</span></button>
     </nav>
-    <div class="sidebar-foot">Rajasthan + Gujarat<br>India / Australia<br><a href="https://www.marvi.org.in/" target="_blank" rel="noopener">marvi.org.in ↗</a></div>
+    <div class="sidebar-foot">Rajasthan + Gujarat<br>India / Australia<br><a href="https://www.marvi.org.in/" target="_blank" rel="noopener">marvi.org.in <span class="ext-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.6 8.6 3.4"/><path d="M4.6 3.4h4v4"/></svg></span></a></div>
   </aside>
 
   <main id="content">
@@ -1785,7 +1793,7 @@
             <div class="archive-filters" id="archive-filters" aria-label="Filter the image archive"></div>
           </div>
           <div class="gallery-grid" id="gallery-grid" aria-live="polite"></div>
-          <p style="margin-top:35px;color:var(--muted);font-size:.78rem">Original source: <a href="https://www.marvi.org.in/" target="_blank" rel="noopener">marvi.org.in ↗</a> · Local source and dimensions are recorded in <a href="assets/marvi-originals/manifest.json">the image manifest</a>.</p>
+          <p style="margin-top:35px;color:var(--muted);font-size:.78rem">Original source: <a href="https://www.marvi.org.in/" target="_blank" rel="noopener">marvi.org.in <span class="ext-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.6 8.6 3.4"/><path d="M4.6 3.4h4v4"/></svg></span></a> · Local source and dimensions are recorded in <a href="assets/marvi-originals/manifest.json">the image manifest</a>.</p>
         </div>
       </div>
     </section>
@@ -1847,7 +1855,7 @@
     <span class="lightbox-caption" id="lightbox-caption"></span>
   </div>
 
-  <footer class="footer"><span>© 2026 MARVI Project</span><span>Groundwater knowledge · Community action</span><a href="https://www.marvi.org.in/" target="_blank" rel="noopener">Original MARVI site ↗</a></footer>
+  <footer class="footer"><span>© 2026 MARVI Project</span><span>Groundwater knowledge · Community action</span><a href="https://www.marvi.org.in/" target="_blank" rel="noopener">Original MARVI site <span class="ext-arrow" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.6 8.6 3.4"/><path d="M4.6 3.4h4v4"/></svg></span></a></footer>
 
   <script src="assets/marvi-originals/gallery.js"></script>
   <script src="layout-model.js"></script>

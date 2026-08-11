@@ -20,7 +20,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseHTML } from 'linkedom';
 import { captureEnglish, applyLanguage } from '../src/hydrate.mjs';
-import { renderPage, brandMark } from '../src/templates.mjs';
+import { renderPage, brandMark, arrowIcon } from '../src/templates.mjs';
 import { buildRegistry, urlFor } from '../src/registry.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -90,7 +90,7 @@ function composeDocument() {
     name.textContent = page.menuName;
     const arrow = document.createElement('span');
     arrow.className = 'nav-arrow';
-    arrow.textContent = '↗';
+    arrow.appendChild(arrowIcon(document));
     tab.append(thumb, number, name, arrow);
     nav.appendChild(tab);
   });
@@ -257,8 +257,36 @@ function buildPage(langHTML, lang, page) {
   meta('name', 'twitter:description', description);
   meta('name', 'twitter:image', social);
 
+  drawArrows(document);
   absolutise(document);
   return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+}
+
+/**
+ * Replace any literal ↗ still in the text with the drawn arrow.
+ *
+ * The renderers no longer emit that character, but content can still contain
+ * it — an editor types it, or it survives in an older page file — and on iOS
+ * it renders as a blue emoji tile. Doing it here, on the finished per-language
+ * document, catches content and translations alike without editing either.
+ */
+function drawArrows(document) {
+  const walker = document.createTreeWalker(document.body, 4 /* SHOW_TEXT */);
+  const hits = [];
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    const tag = node.parentNode?.tagName;
+    if (tag === 'STYLE' || tag === 'SCRIPT') continue;
+    if (node.nodeValue.includes('↗')) hits.push(node);
+  }
+  hits.forEach((node) => {
+    const parts = node.nodeValue.split('↗');
+    const frag = document.createDocumentFragment();
+    parts.forEach((part, i) => {
+      if (i > 0) frag.appendChild(arrowIcon(document));
+      if (part) frag.appendChild(document.createTextNode(part));
+    });
+    node.parentNode.replaceChild(frag, node);
+  });
 }
 
 /* ---------- run ---------- */

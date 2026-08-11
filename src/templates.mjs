@@ -112,6 +112,37 @@ const setHref = (node, raw) => {
   node.setAttribute('href', href);
 };
 
+/**
+ * The outbound arrow, drawn rather than typed.
+ *
+ * It used to be the character ↗ (U+2197), which also has an emoji form (↗️).
+ * The site's text fonts carry no glyph for it, so iOS and Android fell through
+ * to the colour emoji font and every arrow — most visibly on each nav card —
+ * rendered as a blue tile. Confirmed on an iPhone simulator, where
+ * `font-variant-emoji: text` did nothing: the substitution happens because the
+ * glyph is missing, not because a presentation was picked.
+ *
+ * An inline SVG has no font to fall back from, so it looks the same
+ * everywhere. It is aria-hidden — "opens in a new tab" is already carried by
+ * the link, and a decorative arrow read aloud is noise.
+ */
+export const arrowIcon = (document) => {
+  const span = el(document, 'span', { class: 'ext-arrow' });
+  span.setAttribute('aria-hidden', 'true');
+  span.innerHTML =
+    '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" ' +
+    'stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.6 8.6 3.4"/>' +
+    '<path d="M4.6 3.4h4v4"/></svg>';
+  return span;
+};
+
+/** Label plus the drawn arrow, replacing the old `label + ' ↗'` strings. */
+const labelWithArrow = (document, node, text) => {
+  node.textContent = text + ' ';
+  node.appendChild(arrowIcon(document));
+  return node;
+};
+
 /* ---------- link icons ---------- */
 
 /* The icon set an entry can draw on. Each value is the inside of a 24-box SVG,
@@ -429,7 +460,7 @@ const pageLink = (document, ctx, { label, page, primary, key }) => {
   a.setAttribute('href', ctx.urlFor(page));
   a.textContent = (label || '') + ' ';
   if (key) a.setAttribute('data-i18n', key);
-  a.appendChild(el(document, 'span', { text: '↗' }));
+  a.appendChild(arrowIcon(document));
   return a;
 };
 
@@ -591,7 +622,8 @@ export const BLOCKS = {
       const copy = el(document, 'span', { class: 'story-copy' });
       copy.appendChild(el(document, 'span', { class: 'meta', text: item.label, key: ctx.t(`items.${i}.label`) }));
       copy.appendChild(el(document, 'strong', { text: item.title, key: ctx.t(`items.${i}.title`) }));
-      const arrow = el(document, 'i', { text: '↗' });
+      const arrow = el(document, 'i');
+      arrow.appendChild(arrowIcon(document));
       arrow.setAttribute('aria-hidden', 'true');
       copy.appendChild(arrow);
       card.appendChild(copy);
@@ -650,7 +682,7 @@ export const BLOCKS = {
       a.appendChild(el(document, 'span', { class: 'meta', text: item.meta }));
       a.appendChild(el(document, 'h3', { text: item.title }));
       if (item.description) a.appendChild(el(document, 'p', { text: item.description }));
-      a.appendChild(el(document, 'span', { class: 'read', text: 'Read story ↗' }));
+      a.appendChild(labelWithArrow(document, el(document, 'span', { class: 'read' }), 'Read story'));
       grid.appendChild(a);
     });
     frag.appendChild(grid);
@@ -869,7 +901,7 @@ export const BLOCKS = {
         const links = el(document, 'span', { class: 'pub-links' });
         (item.editions || []).forEach((edition) => {
           if (!edition || !edition.url) return;
-          const link = el(document, 'a', { text: (edition.label || 'Download') + ' ↗' });
+          const link = labelWithArrow(document, el(document, 'a'), edition.label || 'Download');
           setHref(link, edition.url);
           link.setAttribute('target', '_blank');
           link.setAttribute('rel', 'noopener');
@@ -920,7 +952,7 @@ export const BLOCKS = {
         action.setAttribute('data-open', item.target || 'home');
         setHref(action, ctx.urlFor(item.target || 'home'));
       }
-      action.appendChild(el(document, 'span', { text: '↗' }));
+      action.appendChild(arrowIcon(document));
       copy.appendChild(action);
       card.appendChild(copy);
       grid.appendChild(card);
@@ -956,13 +988,14 @@ export const BLOCKS = {
       card.appendChild(el(document, 'span', { class: 'meta', text: item.meta }));
       const h3 = el(document, 'h3');
       if (item.url && !wholeCard) {
-        const a = el(document, 'a', { text: (item.name || '') + ' ↗' });
+        const a = labelWithArrow(document, el(document, 'a'), item.name || '');
         setHref(a, item.url);
         a.setAttribute('target', '_blank');
         a.setAttribute('rel', 'noopener');
         h3.appendChild(a);
       } else {
-        h3.textContent = (item.name || '') + (wholeCard ? ' ↗' : '');
+        h3.textContent = item.name || '';
+        if (wholeCard) h3.appendChild(arrowIcon(document));
       }
       card.appendChild(h3);
       const row = linkRow(document, links, item.name);
@@ -1223,7 +1256,7 @@ export const BLOCKS = {
   button(document, block) {
     const section = el(document, 'section', { class: 'cms-block cms-block-button' });
     if (block.heading) section.appendChild(el(document, 'h2', { text: block.heading }));
-    const link = el(document, 'a', { class: 'button primary', text: (block.label || 'Learn more') + ' ↗' });
+    const link = labelWithArrow(document, el(document, 'a', { class: 'button primary' }), block.label || 'Learn more');
     setHref(link, block.url || '#');
     section.appendChild(link);
     return section;
