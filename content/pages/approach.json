@@ -114,6 +114,18 @@
             "fit": "auto"
           },
           "caption": "Ideas mapped together"
+        },
+        {
+          "photo": {
+            "image": "/assets/marvi-originals/MARVI 4-S strategy illustration.png",
+            "alt": "The MARVI 4-S Strategy",
+            "zoom": 100,
+            "positionX": 50,
+            "positionY": 50,
+            "brightness": 100,
+            "fit": "auto"
+          },
+          "caption": ""
         }
       ],
       "i18n": {
