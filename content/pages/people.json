@@ -344,7 +344,7 @@
         },
         {
           "title": "Research Fellow – Data Science",
-          "url": "https://www.westernsydney.edu.au/",
+          "url": "www.linkedin.com/in/alan-n-182ab9210",
           "image": "/assets/marvi-originals/alan-ng.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -560,9 +560,9 @@
       "lede": "MARVI acknowledges the women and men of the Dharta and Meghraj watersheds whose observations, experience and leadership shaped the project.",
       "accent": "#88b3b8",
       "i18n": {
-        "lede": "people.ack.lede",
+        "eyebrow": "people.ack.eyebrow",
         "title": "people.ack.title",
-        "eyebrow": "people.ack.eyebrow"
+        "lede": "people.ack.lede"
       }
     }
   ]
