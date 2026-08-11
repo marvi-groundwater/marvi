@@ -543,6 +543,16 @@ collections:
             fields:
               - *tabField
               - *visibleField
+              - label: "How links open"
+                name: "linkStyle"
+                widget: "select"
+                default: "auto"
+                required: false
+                hint: "A card cannot both be a link and hold links — clicking would be ambiguous — so this picks which. Automatic uses the whole card until an entry has extra links, then switches to buttons."
+                options:
+                  - { label: "Automatic", value: "auto" }
+                  - { label: "Link buttons — small icons under the name", value: "buttons" }
+                  - { label: "Direct click — the whole card opens the main link", value: "card" }
               - label: "Show logos"
                 name: "logos"
                 widget: "boolean"
@@ -599,6 +609,16 @@ collections:
             fields:
               - *tabField
               - *visibleField
+              - label: "How links open"
+                name: "linkStyle"
+                widget: "select"
+                default: "auto"
+                required: false
+                hint: "A card cannot both be a link and hold links — clicking would be ambiguous — so this picks which. Automatic uses the whole card until an entry has extra links, then switches to buttons."
+                options:
+                  - { label: "Automatic", value: "auto" }
+                  - { label: "Link buttons — small icons under the name", value: "buttons" }
+                  - { label: "Direct click — the whole card opens the main link", value: "card" }
               - label: "Filter & sort controls"
                 name: "filters"
                 widget: "boolean"

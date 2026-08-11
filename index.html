@@ -690,6 +690,11 @@
     .portrait-card-info strong { display: block; margin-bottom: 5px; font-size: .88rem; line-height: 1.2; }
     .portrait-card-info span,
     .portrait-card-info small { display: block; color: rgba(255,255,255,.82); font: .55rem/1.45 var(--mono); letter-spacing: .04em; }
+    /* Under four cards there are unfilled columns, and the band's divider
+       background would show through them as a grey slab. Below that count the
+       cards draw their own edges and the band draws nothing. */
+    .portrait-band[data-sparse] { background: none; }
+    .portrait-band[data-sparse] .portrait-card { box-shadow: 0 0 0 1px var(--line); }
     .portrait-name-link { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.4); }
     .portrait-name-link:hover { border-bottom-color: var(--white); }
     /* The overlay is pointer-events: none so it never swallows a click meant

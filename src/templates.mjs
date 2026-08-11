@@ -136,8 +136,7 @@ const ICON_LABELS = {
  * Entries with no URL are dropped rather than rendered dead, so a half-filled
  * row in the CMS shows what it will actually publish.
  */
-const linkRow = (document, item, context) => {
-  const links = (opt(item).links || []).filter((link) => link && link.url);
+const linkRow = (document, links, context) => {
   if (!links.length) return null;
   const row = el(document, 'span', { class: 'card-links' });
   links.forEach((link) => {
@@ -164,6 +163,31 @@ const linkRow = (document, item, context) => {
   });
   return row;
 };
+
+/**
+ * How one entry offers its links.
+ *
+ * The two ways are mutually exclusive, and not by preference: an <a> inside an
+ * <a> is invalid HTML and browsers recover by breaking the inner one. So a card
+ * cannot both be a link and contain links, and something has to choose. That
+ * choice belongs to the editor, not to this function —
+ *
+ *   auto     the old behaviour: whole-card link until the entry has extra
+ *            links, then buttons. Nothing to decide until there is something
+ *            to decide.
+ *   buttons  always buttons; the name carries the main link.
+ *   card     always one big link; extra links are not rendered.
+ */
+const linkMode = (block, item) => {
+  const style = ['buttons', 'card'].includes(block.linkStyle) ? block.linkStyle : 'auto';
+  const links = style === 'card' ? [] : (opt(item).links || []).filter((link) => link && link.url);
+  const wholeCard = Boolean(item.url) && (style === 'card' || (style === 'auto' && !links.length));
+  return { links, wholeCard };
+};
+
+/* Stands in for a portrait nobody has uploaded yet. A neutral drawn figure and
+ * not a stock face: an entry with no photo must not borrow someone else's. */
+const PLACEHOLDER_PORTRAIT = '/assets/placeholder-portrait.svg';
 
 /** An organisation's logo, if it has one and the block is showing them. */
 const logoFrame = (document, item, show) => {
@@ -894,7 +918,13 @@ export const BLOCKS = {
     const items = (block.items || []).filter(Boolean);
     if (!items.length) grid.classList.add('is-empty');
     items.forEach((item) => {
-      const card = el(document, 'article', { class: 'people-card' });
+      const { links, wholeCard } = linkMode(block, item);
+      const card = el(document, wholeCard ? 'a' : 'article', { class: 'people-card' });
+      if (wholeCard) {
+        card.href = item.url;
+        card.setAttribute('target', '_blank');
+        card.setAttribute('rel', 'noopener');
+      }
       const logo = logoFrame(document, item, showLogos);
       if (logo) {
         card.classList.add('has-logo');
@@ -902,34 +932,38 @@ export const BLOCKS = {
       }
       card.appendChild(el(document, 'span', { class: 'meta', text: item.meta }));
       const h3 = el(document, 'h3');
-      if (item.url) {
+      if (item.url && !wholeCard) {
         const a = el(document, 'a', { text: (item.name || '') + ' ↗' });
         a.href = item.url;
         a.setAttribute('target', '_blank');
         a.setAttribute('rel', 'noopener');
         h3.appendChild(a);
       } else {
-        h3.textContent = item.name || '';
+        h3.textContent = (item.name || '') + (wholeCard ? ' ↗' : '');
       }
       card.appendChild(h3);
-      const links = linkRow(document, item, item.name);
-      if (links) card.appendChild(links);
+      const row = linkRow(document, links, item.name);
+      if (row) card.appendChild(row);
       grid.appendChild(card);
     });
     return grid;
   },
 
   portraitBand(document, block, ctx) {
-    const items = (block.items || []).filter((item) => item && item.image);
+    // Only genuinely empty entries are dropped. A person with no photo yet is
+    // still a person on the team: they get the placeholder figure and keep
+    // their name, role, links and place in the running order. Filtering them
+    // out — which is what this did — loses them silently, and a name missing
+    // from a team page is not a failure anyone notices in time.
+    const items = (block.items || []).filter((item) => item && (item.name || item.image));
     const band = el(document, 'div', { class: 'portrait-band' });
-    band.id = 'people-band';
+    // The band draws its dividers as a background showing through 1px gaps in
+    // a four-column grid. That is exactly right at 28 portraits and wrong at
+    // two: the columns nobody filled become a grey slab. Below four, the cards
+    // carry their own edges instead.
+    if (items.length < 4) band.setAttribute('data-sparse', '');
     items.forEach((item) => {
-      // A card with icon links cannot itself be a link — an <a> inside an <a>
-      // is invalid, and browsers recover from it by breaking the inner one.
-      // So the whole-card link is used only while it is the entry's one
-      // destination; the moment there are icons, the name carries it instead.
-      const links = (item.links || []).filter((link) => link && link.url);
-      const wholeCardLink = Boolean(item.url) && !links.length;
+      const { links, wholeCard: wholeCardLink } = linkMode(block, item);
       const card = el(document, wholeCardLink ? 'a' : 'article', { class: 'portrait-card' });
       if (wholeCardLink) {
         card.href = item.url;
@@ -952,7 +986,11 @@ export const BLOCKS = {
         [item.name, item.title, item.affiliation].filter(Boolean).join(' ').toLowerCase()
       );
       card.appendChild(
-        photo(document, item, { alt: item.name ? 'Portrait of ' + item.name : 'MARVI team member portrait' })
+        item.image
+          ? photo(document, item, { alt: item.name ? 'Portrait of ' + item.name : 'MARVI team member portrait' })
+          // The card's own aria-label already names the person, so the stand-in
+          // is decorative — announcing "no photo" would only add noise.
+          : photo(document, { image: PLACEHOLDER_PORTRAIT }, { alt: '' })
       );
       const info = el(document, 'span', { class: 'portrait-card-info' });
       const name = el(document, 'strong', { text: item.name || 'MARVI team member' });
@@ -968,12 +1006,19 @@ export const BLOCKS = {
       }
       if (item.title) info.appendChild(el(document, 'span', { text: item.title }));
       if (item.affiliation) info.appendChild(el(document, 'small', { text: item.affiliation }));
-      const linkIcons = linkRow(document, item, item.name);
+      const linkIcons = linkRow(document, links, item.name);
       if (linkIcons) info.appendChild(linkIcons);
       card.appendChild(info);
       band.appendChild(card);
     });
     if (block.filters === false || items.length < 2) return band;
+
+    // The id belongs to the band the runtime filters, and there can only be
+    // one — app.mjs finds it with getElementById. Now that a page can hold
+    // several portrait bands (collaborators, supporters, whatever comes next),
+    // stamping every one of them would leave getElementById silently driving
+    // whichever happened to be first in the document.
+    band.id = 'people-band';
 
     // Filter + sort controls, same shape as the publications bar. Everything
     // below only ever reorders or hides the cards above — a reader without

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 312 400" width="312" height="400" role="img" aria-label="Placeholder portrait">
+  <!-- A stand-in for a photo that has not been uploaded yet. Deliberately not
+       a real face: an example entry must not put a real person's picture
+       under a made-up name. Palette matches the site's paper/ink. -->
+  <rect width="312" height="400" fill="#2b332f"/>
+  <g fill="none" stroke="#7d8d87" stroke-width="9" stroke-linecap="round">
+    <circle cx="156" cy="163" r="46"/>
+    <path d="M74 316c14-52 44-78 82-78s68 26 82 78"/>
+  </g>
+  <text x="156" y="368" text-anchor="middle" fill="#7d8d87"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" letter-spacing="2.5">PHOTO</text>
+</svg>
