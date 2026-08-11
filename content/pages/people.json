@@ -393,11 +393,6 @@
           "meta": "The heart of MARVI",
           "url": "https://www.marvi.org.in/our-partners",
           "name": "Bhujal Jankaars, farmers, schools and village communities"
-        },
-        {
-          "meta": "Test",
-          "url": "https://www.marvi.org.in/our-partners",
-          "name": "Test parter"
         }
       ],
       "tabLabel": "Partner organisations"
@@ -409,9 +404,9 @@
       "lede": "MARVI acknowledges the women and men of the Dharta and Meghraj watersheds whose observations, experience and leadership shaped the project.",
       "accent": "#88b3b8",
       "i18n": {
-        "lede": "people.ack.lede",
+        "eyebrow": "people.ack.eyebrow",
         "title": "people.ack.title",
-        "eyebrow": "people.ack.eyebrow"
+        "lede": "people.ack.lede"
       }
     }
   ]
