@@ -561,6 +561,16 @@
             "alt": "AWP logo"
           },
           "links": []
+        },
+        {
+          "meta": "India - Project Funder - the Village Groundwater Cooperatives",
+          "url": "https://www.icicifoundation.org/home",
+          "name": "ICICI Foundatoin",
+          "logo": {
+            "image": "/assets/marvi-originals/ICICI_Foundation logo.png",
+            "alt": "ICICI foundation logo"
+          },
+          "links": []
         }
       ],
       "linkStyle": "auto",
