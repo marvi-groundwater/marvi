@@ -601,7 +601,12 @@ collections:
                           - { label: "Video", value: "video" }
                           - { label: "Map / location", value: "location" }
                           - { label: "Other link", value: "link" }
-                      - { label: "Link address", name: "url", widget: "string", hint: "Full address, e.g. https://www.linkedin.com/company/… — for email, mailto:name@example.org" }
+                      # Without the scheme a browser reads the value as a path
+                      # on this site, so the link 404s instead of leaving. The
+                      # build repairs it now, but it is better caught here,
+                      # while the person who knows the intended address is
+                      # still looking at the field.
+                      - { label: "Link address", name: "url", widget: "string", pattern: ['^(https?://|mailto:|tel:)\S+$', "Must start with https:// (or mailto: / tel:)"], hint: "Full address, e.g. https://www.linkedin.com/in/… — for email, mailto:name@example.org" }
                       - { label: "Label (tooltip)", name: "label", widget: "string", required: false, hint: "Blank uses the icon's own name." }
           - label: "Portrait band"
             name: "portraitBand"

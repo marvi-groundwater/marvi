@@ -89,6 +89,29 @@ const photo = (document, raw, { alt, lazy = true, className } = {}) => {
   return img;
 };
 
+/**
+ * Set an href from CMS data.
+ *
+ * An editor who pastes `www.linkedin.com/in/…` means a website. A browser
+ * reads a value with no scheme as a path relative to the current page, so that
+ * link lands on marvi.org.in/www.linkedin.com/… and 404s.
+ *
+ * Worse, it does so invisibly: assigning to the `.href` *property* lets the
+ * DOM resolve the value against the document, which rewrote it to
+ * `/www.linkedin.com/…` — leading slash and all. That reads as a perfectly
+ * ordinary root-relative path, which is exactly what the build's link check
+ * treats as valid, so a dead link shipped with every check green.
+ *
+ * So: give plainly-external addresses their scheme back, and write the
+ * attribute rather than the property, so what was authored is what ships and
+ * the checks see the real value.
+ */
+const setHref = (node, raw) => {
+  const value = String(raw ?? '').trim();
+  const href = !value || /^(https?:|mailto:|tel:|#|\/)/i.test(value) ? value : 'https://' + value;
+  node.setAttribute('href', href);
+};
+
 /* ---------- link icons ---------- */
 
 /* The icon set an entry can draw on. Each value is the inside of a 24-box SVG,
@@ -142,7 +165,7 @@ const linkRow = (document, links, context) => {
   links.forEach((link) => {
     const kind = ICON_SHAPES[link.icon] ? link.icon : 'link';
     const anchor = el(document, 'a', { class: 'card-link' });
-    anchor.href = link.url;
+    setHref(anchor, link.url);
     anchor.setAttribute('target', '_blank');
     anchor.setAttribute('rel', 'noopener');
     anchor.setAttribute('data-icon', kind);
@@ -617,7 +640,7 @@ export const BLOCKS = {
     grid.id = 'media-grid';
     (block.items || []).forEach((item) => {
       const a = el(document, 'a', { class: 'media-card' });
-      a.href = item.url || '#';
+      setHref(a, item.url || '#');
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener');
       a.setAttribute(
@@ -638,7 +661,7 @@ export const BLOCKS = {
     const grid = el(document, 'div', { class: 'video-grid' });
     (block.items || []).forEach((item) => {
       const a = el(document, 'a', { class: 'video-card' });
-      a.href = item.url || '#';
+      setHref(a, item.url || '#');
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener');
       const wrap = el(document, 'div', { class: 'video-image' });
@@ -847,7 +870,7 @@ export const BLOCKS = {
         (item.editions || []).forEach((edition) => {
           if (!edition || !edition.url) return;
           const link = el(document, 'a', { text: (edition.label || 'Download') + ' ↗' });
-          link.href = edition.url;
+          setHref(link, edition.url);
           link.setAttribute('target', '_blank');
           link.setAttribute('rel', 'noopener');
           link.setAttribute('aria-label', [item.title, edition.label].filter(Boolean).join(' — '));
@@ -890,12 +913,12 @@ export const BLOCKS = {
       const action = el(document, 'a', { class: 'button primary' });
       action.textContent = (item.linkLabel || 'Open') + ' ';
       if (item.url) {
-        action.href = item.url;
+        setHref(action, item.url);
         action.setAttribute('target', '_blank');
         action.setAttribute('rel', 'noopener');
       } else {
         action.setAttribute('data-open', item.target || 'home');
-        action.href = ctx.urlFor(item.target || 'home');
+        setHref(action, ctx.urlFor(item.target || 'home'));
       }
       action.appendChild(el(document, 'span', { text: '↗' }));
       copy.appendChild(action);
@@ -921,7 +944,7 @@ export const BLOCKS = {
       const { links, wholeCard } = linkMode(block, item);
       const card = el(document, wholeCard ? 'a' : 'article', { class: 'people-card' });
       if (wholeCard) {
-        card.href = item.url;
+        setHref(card, item.url);
         card.setAttribute('target', '_blank');
         card.setAttribute('rel', 'noopener');
       }
@@ -934,7 +957,7 @@ export const BLOCKS = {
       const h3 = el(document, 'h3');
       if (item.url && !wholeCard) {
         const a = el(document, 'a', { text: (item.name || '') + ' ↗' });
-        a.href = item.url;
+        setHref(a, item.url);
         a.setAttribute('target', '_blank');
         a.setAttribute('rel', 'noopener');
         h3.appendChild(a);
@@ -966,7 +989,7 @@ export const BLOCKS = {
       const { links, wholeCard: wholeCardLink } = linkMode(block, item);
       const card = el(document, wholeCardLink ? 'a' : 'article', { class: 'portrait-card' });
       if (wholeCardLink) {
-        card.href = item.url;
+        setHref(card, item.url);
         card.setAttribute('target', '_blank');
         card.setAttribute('rel', 'noopener');
       }
@@ -996,7 +1019,7 @@ export const BLOCKS = {
       const name = el(document, 'strong', { text: item.name || 'MARVI team member' });
       if (item.url && !wholeCardLink) {
         const anchor = el(document, 'a', { class: 'portrait-name-link' });
-        anchor.href = item.url;
+        setHref(anchor, item.url);
         anchor.setAttribute('target', '_blank');
         anchor.setAttribute('rel', 'noopener');
         anchor.appendChild(name);
@@ -1128,7 +1151,7 @@ export const BLOCKS = {
     (block.parts || []).forEach((part) => {
       if (part.link) {
         const a = el(document, 'a', { text: part.link.label });
-        a.href = part.link.url || '#';
+        setHref(a, part.link.url || '#');
         if (part.link.download) a.setAttribute('download', '');
         if (part.link.external) {
           a.setAttribute('target', '_blank');
@@ -1201,7 +1224,7 @@ export const BLOCKS = {
     const section = el(document, 'section', { class: 'cms-block cms-block-button' });
     if (block.heading) section.appendChild(el(document, 'h2', { text: block.heading }));
     const link = el(document, 'a', { class: 'button primary', text: (block.label || 'Learn more') + ' ↗' });
-    link.href = block.url || '#';
+    setHref(link, block.url || '#');
     section.appendChild(link);
     return section;
   }

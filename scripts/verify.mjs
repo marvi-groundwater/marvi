@@ -58,6 +58,17 @@ for (const lang of LANGS) {
       .map((n) => n.getAttribute('src') || n.getAttribute('href'))
       .filter((v) => v && !/^(https?:|data:|mailto:|tel:|#|\/)/.test(v));
     check(bad.length === 0, `${where}: relative paths: ${bad.slice(0, 3).join(', ')}`);
+
+    // A root-relative path that begins with a hostname is not a path — it is an
+    // external address that lost its scheme, and it will 404 on this site
+    // instead of reaching the site it names. The check above waves it through
+    // precisely because the leading slash makes it look well-formed, which is
+    // how a dead LinkedIn link once shipped with every check green.
+    const hostish = [...document.querySelectorAll('a[href]')]
+      .map((n) => n.getAttribute('href'))
+      .filter((v) => /^\/(www\.|[a-z0-9-]+\.(com|org|net|edu|gov|io|co|au|in)\b)/i.test(v || ''));
+    check(hostish.length === 0,
+      `${where}: href looks like a URL missing its scheme: ${hostish.slice(0, 3).join(', ')}`);
     const css = [...document.querySelectorAll('style')].map((s) => s.textContent).join('\n');
     const badCss = [...css.matchAll(/url\(\s*(['"]?)([^'")]+)\1\s*\)/g)]
       .map((m) => m[2]).filter((v) => !/^(https?:|data:|\/|#)/.test(v));
