@@ -34,6 +34,7 @@
   "blocks": [
     {
       "type": "portraitBand",
+      "tabLabel": "Collaborators",
       "items": [
         {
           "title": "Distinguished Professor",
@@ -44,14 +45,14 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Basant Maheshwari",
-          "affiliation": "Western Sydney University",
           "links": [
             {
               "icon": "linkedin",
               "url": "https://www.linkedin.com/in/professor-basant-maheshwari/",
               "label": "Basant Maheshwari on LinkedIn"
             }
-          ]
+          ],
+          "affiliation": "Western Sydney University"
         },
         {
           "title": "Associate Professor",
@@ -62,8 +63,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Maria Varua",
-          "affiliation": "Western Sydney University",
-          "links": []
+          "links": [],
+          "affiliation": "Western Sydney University"
         },
         {
           "title": "Adj. Assoc. Professor",
@@ -74,8 +75,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Roger Packham",
-          "affiliation": "Western Sydney University",
-          "links": []
+          "links": [],
+          "affiliation": "Western Sydney University"
         },
         {
           "title": "",
@@ -86,8 +87,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Dharma Hagare",
-          "affiliation": "Western Sydney University",
-          "links": []
+          "links": [],
+          "affiliation": "Western Sydney University"
         },
         {
           "title": "",
@@ -98,8 +99,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Michael Chew",
-          "affiliation": "Western Sydney University",
-          "links": []
+          "links": [],
+          "affiliation": "Western Sydney University"
         },
         {
           "title": "",
@@ -110,8 +111,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Peter Dillon",
-          "affiliation": "CSIRO Land & Water",
-          "links": []
+          "links": [],
+          "affiliation": "CSIRO Land & Water"
         },
         {
           "title": "",
@@ -122,8 +123,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Rai Kookana",
-          "affiliation": "CSIRO Land & Water",
-          "links": []
+          "links": [],
+          "affiliation": "CSIRO Land & Water"
         },
         {
           "title": "",
@@ -134,8 +135,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Tushaar Shah",
-          "affiliation": "International Water Management Institute",
-          "links": []
+          "links": [],
+          "affiliation": "International Water Management Institute"
         },
         {
           "title": "Researcher",
@@ -146,8 +147,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "S. Prathapar",
-          "affiliation": "",
-          "links": []
+          "links": [],
+          "affiliation": ""
         },
         {
           "title": "",
@@ -158,8 +159,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Pennan Chinnasamy",
-          "affiliation": "",
-          "links": []
+          "links": [],
+          "affiliation": ""
         },
         {
           "title": "",
@@ -170,8 +171,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Yogesh Jadeja",
-          "affiliation": "Arid Communities and Technologies",
-          "links": []
+          "links": [],
+          "affiliation": "Arid Communities and Technologies"
         },
         {
           "title": "",
@@ -182,8 +183,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Mr Jayanti Gorasiya",
-          "affiliation": "Arid Communities and Technologies",
-          "links": []
+          "links": [],
+          "affiliation": "Arid Communities and Technologies"
         },
         {
           "title": "",
@@ -194,8 +195,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Mr Mohan Sharma",
-          "affiliation": "Development Support Centre",
-          "links": []
+          "links": [],
+          "affiliation": "Development Support Centre"
         },
         {
           "title": "",
@@ -206,8 +207,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Mr Sachin Oza",
-          "affiliation": "Development Support Centre",
-          "links": []
+          "links": [],
+          "affiliation": "Development Support Centre"
         },
         {
           "title": "",
@@ -218,8 +219,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Mr Ketan Gohil",
-          "affiliation": "Development Support Centre",
-          "links": []
+          "links": [],
+          "affiliation": "Development Support Centre"
         },
         {
           "title": "Field partner",
@@ -230,8 +231,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Nandlal Menat",
-          "affiliation": "Development Support Centre",
-          "links": []
+          "links": [],
+          "affiliation": "Development Support Centre"
         },
         {
           "title": "",
@@ -242,8 +243,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr P.K. Singh",
-          "affiliation": "Maharana Pratap University of Agriculture & Technology",
-          "links": []
+          "links": [],
+          "affiliation": "Maharana Pratap University of Agriculture & Technology"
         },
         {
           "title": "",
@@ -254,8 +255,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr K.K. Yadav",
-          "affiliation": "Maharana Pratap University of Agriculture & Technology",
-          "links": []
+          "links": [],
+          "affiliation": "Maharana Pratap University of Agriculture & Technology"
         },
         {
           "title": "",
@@ -266,8 +267,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Praful Bhatnagar",
-          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra",
-          "links": []
+          "links": [],
+          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra"
         },
         {
           "title": "",
@@ -278,8 +279,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Mr Hasmukh Gehlot",
-          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra",
-          "links": []
+          "links": [],
+          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra"
         },
         {
           "title": "Field partner",
@@ -290,8 +291,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Prahlad Soni",
-          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra",
-          "links": []
+          "links": [],
+          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra"
         },
         {
           "title": "",
@@ -302,8 +303,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Anil Mehta",
-          "affiliation": "Vidya Bhawan Polytechnic College",
-          "links": []
+          "links": [],
+          "affiliation": "Vidya Bhawan Polytechnic College"
         },
         {
           "title": "",
@@ -314,8 +315,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Yogita Dashora",
-          "affiliation": "Vidya Bhawan Polytechnic College",
-          "links": []
+          "links": [],
+          "affiliation": "Vidya Bhawan Polytechnic College"
         },
         {
           "title": "",
@@ -326,8 +327,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr John Ward",
-          "affiliation": "Mekong Region Futures Institute",
-          "links": []
+          "links": [],
+          "affiliation": "Mekong Region Futures Institute"
         },
         {
           "title": "MARVI contributor",
@@ -338,8 +339,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "L. S. Iyer",
-          "affiliation": "MARVI",
-          "links": []
+          "links": [],
+          "affiliation": "MARVI"
         },
         {
           "title": "Research Fellow – Data Science",
@@ -349,9 +350,15 @@
           "positionX": 50,
           "positionY": 50,
           "fit": "auto",
-          "name": "Alan Ng",
-          "affiliation": "Western Sydney University",
-          "links": []
+          "name": "Dr. Alan Ng",
+          "links": [
+            {
+              "icon": "linkedin",
+              "url": "www.linkedin.com/in/alan-n-182ab9210",
+              "label": ""
+            }
+          ],
+          "affiliation": "Western Sydney University"
         },
         {
           "title": "Collaborator",
@@ -362,8 +369,8 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Dr Fahim Khan",
-          "affiliation": "Department of Management and Decision Sciences, Coastal Carolina University, USA",
-          "links": []
+          "links": [],
+          "affiliation": "Department of Management and Decision Sciences, Coastal Carolina University, USA"
         },
         {
           "title": "Collaborator",
@@ -374,11 +381,10 @@
           "positionY": 50,
           "fit": "auto",
           "name": "Professor Ramesh Sharda",
-          "affiliation": "The ConocoPhillips Chair and a Regents Professor of Management Science and Information Systems in the Spears School of Business at Oklahoma State University, USA",
-          "links": []
+          "links": [],
+          "affiliation": "The ConocoPhillips Chair and a Regents Professor of Management Science and Information Systems in the Spears School of Business at Oklahoma State University, USA"
         }
-      ],
-      "tabLabel": "Collaborators"
+      ]
     },
     {
       "type": "portraitBand",
@@ -386,34 +392,35 @@
       "visible": true,
       "items": [
         {
-          "name": "Example supporter",
           "title": "Replace or delete in the CMS",
-          "affiliation": "People & Partners → Supporters",
           "url": "",
-          "links": [],
           "image": "/assets/placeholder-portrait.svg",
           "zoom": 100,
           "positionX": 50,
           "positionY": 50,
-          "fit": "contain"
+          "fit": "contain",
+          "name": "Example supporter",
+          "links": [],
+          "affiliation": "People & Partners → Supporters"
         },
         {
-          "name": "Second example supporter",
           "title": "Add a photo, a profile link and LinkedIn",
-          "affiliation": "People & Partners → Supporters",
           "url": "",
-          "links": [],
           "image": "/assets/placeholder-portrait.svg",
           "zoom": 100,
           "positionX": 50,
           "positionY": 50,
-          "fit": "contain"
+          "fit": "contain",
+          "name": "Second example supporter",
+          "links": [],
+          "affiliation": "People & Partners → Supporters"
         }
       ],
       "filters": false
     },
     {
       "type": "partnerList",
+      "tabLabel": "Partner organisations",
       "items": [
         {
           "meta": "Australia · Lead partner",
@@ -519,19 +526,17 @@
           "name": "Bhujal Jankaars, farmers, schools and village communities"
         }
       ],
-      "tabLabel": "Partner organisations",
       "logos": true
     },
     {
       "type": "partnerList",
       "tabLabel": "Funders",
       "visible": true,
-      "logos": true,
       "items": [
         {
           "meta": "Australia · Project funder",
-          "name": "Australian Centre for International Agricultural Research",
           "url": "https://www.aciar.gov.au/",
+          "name": "Australian Centre for International Agricultural Research",
           "logo": {
             "image": "/assets/logos/aciar.png",
             "alt": "ACIAR logo"
@@ -544,7 +549,8 @@
             }
           ]
         }
-      ]
+      ],
+      "logos": true
     },
     {
       "type": "banner",
@@ -553,9 +559,9 @@
       "lede": "MARVI acknowledges the women and men of the Dharta and Meghraj watersheds whose observations, experience and leadership shaped the project.",
       "accent": "#88b3b8",
       "i18n": {
-        "eyebrow": "people.ack.eyebrow",
+        "lede": "people.ack.lede",
         "title": "people.ack.title",
-        "lede": "people.ack.lede"
+        "eyebrow": "people.ack.eyebrow"
       }
     }
   ]
