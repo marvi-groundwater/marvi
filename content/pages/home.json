@@ -9,7 +9,7 @@
     "title": "Water beneath us.\nKnowledge between us.",
     "lede": "MARVI puts groundwater science in the hands of the people who depend on it—farmers, schools, researchers and communities working together for water that lasts!",
     "eyebrowSize": 60,
-    "titleSize": 80,
+    "titleSize": 60,
     "ledeSize": 60,
     "textAlign": "left",
     "textPosition": "bottom",
@@ -52,6 +52,7 @@
   "blocks": [
     {
       "type": "statement",
+      "tabLabel": "",
       "label": "The central question",
       "quote": "How can a village understand an invisible shared resource—and decide its future together?",
       "metrics": [
@@ -77,11 +78,11 @@
         }
       ],
       "i18n": {
-        "metrics__2__label": "home.metric.aquifer",
-        "metrics__1__label": "home.metric.started",
-        "metrics__0__label": "home.metric.bjs",
+        "label": "home.central",
         "quote": "home.question",
-        "label": "home.central"
+        "metrics__0__label": "home.metric.bjs",
+        "metrics__1__label": "home.metric.started",
+        "metrics__2__label": "home.metric.aquifer"
       }
     },
     {
@@ -131,12 +132,12 @@
       ],
       "lede": "Follow the work from village observation to shared groundwater decisions and cooperative groundwater management.",
       "i18n": {
-        "items__2__label": "home.story3.label",
-        "items__1__label": "home.story2.label",
-        "items__0__label": "home.story1.label",
-        "lede": "home.explore.lede",
+        "eyebrow": "home.explore.eyebrow",
         "title": "home.explore.title",
-        "eyebrow": "home.explore.eyebrow"
+        "lede": "home.explore.lede",
+        "items__0__label": "home.story1.label",
+        "items__1__label": "home.story2.label",
+        "items__2__label": "home.story3.label"
       }
     }
   ]
