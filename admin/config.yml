@@ -457,6 +457,10 @@ collections:
                 widget: "list"
                 summary: "{{fields.title}}"
                 fields:
+                  # Hiding rather than deleting: the entry keeps its title,
+                  # category and crop, so putting an image back is one switch
+                  # rather than a re-upload and a re-crop.
+                  - { label: "Show in the archive", name: "visible", widget: "boolean", default: true, required: false, hint: "Off keeps the image on file but takes it off the page, and out of the count and the filters." }
                   - { label: "Photo", name: "image", widget: "image" }
                   - { label: "Zoom (%)", name: "zoom", widget: "number", default: 100, value_type: "int", min: 50, max: 200, step: 5, required: false }
                   - { label: "Focus X (%)", name: "positionX", widget: "number", default: 50, value_type: "int", min: 0, max: 100, step: 1, required: false }

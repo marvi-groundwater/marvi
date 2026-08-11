@@ -715,7 +715,11 @@ export const BLOCKS = {
 
   photoArchive(document, block, ctx) {
     const frag = el(document, 'div', { class: 'photo-archive-wrap' });
-    const items = block.items || [];
+    // Hidden images drop out here, before anything counts or categorises them,
+    // so the total, the category chips and the lightbox's next/previous all
+    // agree about what the archive contains. Filtering later would leave a
+    // chip that matches nothing and a count that overstates the gallery.
+    const items = (block.items || []).filter((item) => item && item.visible !== false);
     const tools = el(document, 'div', { class: 'archive-tools' });
     const count = el(document, 'span', {
       class: 'filter-label',
