@@ -355,7 +355,7 @@
             {
               "icon": "linkedin",
               "url": "www.linkedin.com/in/alan-n-182ab9210",
-              "label": "Alan Ng on LinkedIn"
+              "label": ""
             }
           ],
           "affiliation": "Western Sydney University"
@@ -560,9 +560,9 @@
       "lede": "MARVI acknowledges the women and men of the Dharta and Meghraj watersheds whose observations, experience and leadership shaped the project.",
       "accent": "#88b3b8",
       "i18n": {
-        "eyebrow": "people.ack.eyebrow",
+        "lede": "people.ack.lede",
         "title": "people.ack.title",
-        "lede": "people.ack.lede"
+        "eyebrow": "people.ack.eyebrow"
       }
     }
   ]
