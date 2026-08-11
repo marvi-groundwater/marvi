@@ -116,6 +116,11 @@
       border-radius: 50%;
     }
     .brand-mark svg { display: block; width: 100%; height: 100%; }
+    /* An uploaded badge image fills the same box the drawing does, so the
+       shape below still decides the silhouette. "contain" is for a logo that
+       must not be cropped — it letterboxes inside the badge instead. */
+    .brand-mark img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .brand-mark img[data-fit="contain"] { object-fit: contain; }
     .brand-mark[data-shape="rounded"] { border-radius: 11px; }
     .brand-mark[data-shape="squircle"] { border-radius: 34%; }
     .brand-mark[data-shape="wellhead"] { border-radius: 50% 50% 14% 14%; }
@@ -414,10 +419,37 @@
 
     .people-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
     .people-card { min-height: 180px; padding: 22px; display: block; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; }
+    .people-grid.is-empty { border: 0; min-height: 60px; }
     .people-card .meta { color: var(--copper); font-size: .58rem; }
     .people-card h3 { margin: 30px 0 0; font: 500 1.14rem/1.35 var(--serif); }
     .people-card[href] { cursor: pointer; }
     .people-card[href]:focus-visible { outline: 3px solid var(--copper); outline-offset: -3px; }
+    /* With a logo the card leads with the mark, so the name closes up under it
+       rather than sitting at the old fixed drop from the label. */
+    .people-card.has-logo h3 { margin-top: 16px; }
+    .org-logo { display: flex; align-items: center; min-height: 46px; margin-bottom: 16px; }
+    /* contain, never cover: a cropped logo is a damaged logo. The height cap is
+       what makes a 600px wordmark and an 85px square sit on one baseline. */
+    .org-logo img { max-height: 46px; max-width: 78%; width: auto; height: auto; object-fit: contain; }
+
+    /* Icon links. One rule set for organisation cards and portraits both —
+       only the colours differ, and those come from the surrounding card. */
+    .card-links { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; pointer-events: auto; }
+    .card-link {
+      width: 29px;
+      height: 29px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: inherit;
+      text-decoration: none;
+      transition: background .22s ease, color .22s ease, border-color .22s ease;
+    }
+    .card-link svg { width: 14px; height: 14px; }
+    .card-link:hover { background: var(--copper); border-color: var(--copper); color: var(--white); }
+    .card-link:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
 
     /* Publications reuse the bordered media grid, but a card holds several
        edition links (English / Hindi / Gujarati) so it is an <article>, not a
@@ -658,10 +690,20 @@
     .portrait-card-info strong { display: block; margin-bottom: 5px; font-size: .88rem; line-height: 1.2; }
     .portrait-card-info span,
     .portrait-card-info small { display: block; color: rgba(255,255,255,.82); font: .55rem/1.45 var(--mono); letter-spacing: .04em; }
+    .portrait-name-link { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.4); }
+    .portrait-name-link:hover { border-bottom-color: var(--white); }
+    /* The overlay is pointer-events: none so it never swallows a click meant
+       for the card; the links inside it have to opt back in explicitly. */
+    .portrait-card-info .card-links { gap: 6px; margin-top: 10px; }
+    .portrait-card-info .card-link { width: 26px; height: 26px; border-color: rgba(255,255,255,.42); }
+    .portrait-card-info .card-link svg { width: 12px; height: 12px; }
     .portrait-card:hover img,
     .portrait-card:focus-visible img { filter: grayscale(0); scale: 1.035; }
     .portrait-card:hover .portrait-card-info,
-    .portrait-card:focus-visible .portrait-card-info { opacity: 1; transform: none; }
+    .portrait-card:focus-visible .portrait-card-info,
+    /* focus-within, or tabbing to an icon link would move focus to something
+       the overlay is still hiding at opacity 0. */
+    .portrait-card:focus-within .portrait-card-info { opacity: 1; transform: none; }
     .portrait-card:focus-visible { outline: 3px solid var(--copper); outline-offset: -3px; }
 
     @media (hover: none), (max-width: 800px) {

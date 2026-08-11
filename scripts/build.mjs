@@ -52,13 +52,21 @@ function composeDocument() {
   document.querySelectorAll('[data-panel]').forEach((n) => n.remove());
   document.querySelectorAll('script').forEach((n) => n.remove());
 
-  // Draw the brand badge from content/site.json.
+  // Draw the sidebar brand from content/site.json: the badge, and the two
+  // lines beside it. Each is only overwritten when the CMS has something to
+  // say, so an empty site.json leaves the template's own wording standing.
   const mark = document.querySelector('.brand-mark');
   if (mark) {
     const { shape, svg } = brandMark(SITE.brand);
     mark.setAttribute('data-shape', shape);
     mark.innerHTML = svg;
   }
+  const brandText = (selector, value) => {
+    const node = document.querySelector(selector);
+    if (node && value) node.textContent = value;
+  };
+  brandText('.brand-word', SITE.brand?.wordmark);
+  brandText('.brand-note', SITE.brand?.tagline);
 
   // Rebuild the sidebar nav from the registry.
   const nav = document.querySelector('.side-nav');

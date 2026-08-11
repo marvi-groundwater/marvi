@@ -4,11 +4,13 @@
  * across URLs, relative paths that only resolve at the root, missing files.
  */
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseHTML } from 'linkedom';
+import { load as parseYaml } from 'js-yaml';
 import { buildRegistry, urlFor } from '../src/registry.mjs';
+import { BLOCKS } from '../src/templates.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, '_site');
@@ -92,6 +94,70 @@ if (existsSync(join(OUT, 'sitemap.xml'))) {
   const locs = (readFileSync(join(OUT, 'sitemap.xml'), 'utf8').match(/<loc>/g) || []).length;
   check(locs === PAGES.length * LANGS.length, `sitemap lists ${locs} URLs, expected ${PAGES.length * LANGS.length}`);
 }
+
+/* ---------- the CMS can edit everything the site renders ----------
+ *
+ * Decap and Sveltia write back only the fields their config declares. So a key
+ * that lives in content/ but not in admin/config.yml is not merely uneditable:
+ * the next time anyone opens that page in the CMS and hits save, it is DROPPED,
+ * silently, along with whatever it was rendering. Adding a field to a renderer
+ * and forgetting the config is therefore a data-loss bug with a delay on it,
+ * and this is the check that refuses to let it ship.
+ */
+const config = parseYaml(readFileSync(join(ROOT, 'admin/config.yml'), 'utf8'));
+const collection = (name) => config.collections.find((c) => c.name === name);
+const byName = (fields) => new Map((fields || []).map((f) => [f.name, f]));
+
+/** Walk a value against the field that is supposed to describe it. */
+const auditValue = (value, field, where) => {
+  if (value == null || !field) return;
+  // Hidden fields are the escape hatch for machine-written data (each block's
+  // i18n map): declared, round-tripped, never shown. Their shape is ours.
+  if (field.widget === 'hidden') return;
+  if (field.widget === 'object') return auditFields(value, field.fields, where);
+  if (field.widget === 'list' && Array.isArray(value)) {
+    value.forEach((item, i) => {
+      if (!item || typeof item !== 'object') return;   // list of scalars
+      const at = `${where}[${i}]`;
+      if (field.types) {
+        const key = field.typeKey || 'type';
+        const type = field.types.find((t) => t.name === item[key]);
+        if (!type) return check(false, `${at}: no CMS block type "${item[key]}"`);
+        return auditFields(item, type.fields, `${at} (${item[key]})`, [key]);
+      }
+      auditFields(item, field.fields, at);
+    });
+  }
+};
+
+const auditFields = (value, fields, where, extra = []) => {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return;
+  const declared = byName(fields);
+  for (const key of Object.keys(value)) {
+    if (extra.includes(key)) continue;
+    const field = declared.get(key);
+    if (!field) { check(false, `${where}: "${key}" is not in admin/config.yml — the CMS would drop it on save`); continue; }
+    auditValue(value[key], field, `${where}.${key}`);
+  }
+};
+
+const pageFields = collection('pages').fields;
+for (const file of readdirSync(join(ROOT, 'content/pages')).filter((f) => f.endsWith('.json'))) {
+  auditFields(JSON.parse(readFileSync(join(ROOT, 'content/pages', file), 'utf8')), pageFields, file);
+}
+const siteFile = collection('site').files.find((f) => f.file === 'content/site.json');
+if (existsSync(join(ROOT, 'content/site.json'))) {
+  auditFields(JSON.parse(readFileSync(join(ROOT, 'content/site.json'), 'utf8')), siteFile.fields, 'site.json');
+}
+
+/* Every block type the renderer knows must also be offerable in the CMS —
+ * otherwise it is a block nobody can ever add. */
+const cmsTypes = new Set(byName(pageFields).get('blocks').types.map((t) => t.name));
+const renderable = Object.keys(BLOCKS);
+const unofferable = renderable.filter((t) => !cmsTypes.has(t));
+check(unofferable.length === 0, `renderer has block types the CMS cannot add: ${unofferable.join(', ')}`);
+const unrenderable = [...cmsTypes].filter((t) => !renderable.includes(t));
+check(unrenderable.length === 0, `CMS offers block types the renderer ignores: ${unrenderable.join(', ')}`);
 
 if (failures.length) {
   console.error(`\nFAILED ${failures.length} check(s):`);

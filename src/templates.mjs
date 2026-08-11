@@ -89,6 +89,91 @@ const photo = (document, raw, { alt, lazy = true, className } = {}) => {
   return img;
 };
 
+/* ---------- link icons ---------- */
+
+/* The icon set an entry can draw on. Each value is the inside of a 24-box SVG,
+ * stroked (or, for the two brand marks, filled) in currentColor — so the card
+ * decides the colour and nothing here does. `link` is the fallback: an unknown
+ * or blank icon name renders a generic chain rather than nothing, because a
+ * link the editor can see but the reader cannot is the worse failure. */
+const ICON_SHAPES = {
+  website:
+    '<circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2M12 3.4c2.4 2.7 2.4 14.5 0 17.2M12 3.4c-2.4 2.7-2.4 14.5 0 17.2"/>',
+  linkedin:
+    '<path d="M5 3.3a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8zM3.2 9.3h3.6V21H3.2zM9.4 9.3H13v1.7h.05c.5-.95 1.75-1.95 3.6-1.95 3.85 0 4.55 2.4 4.55 5.5V21h-3.8v-5.35c0-1.28-.02-2.92-1.8-2.92-1.8 0-2.07 1.38-2.07 2.82V21H9.4z"/>',
+  profile: '<circle cx="12" cy="8" r="3.8"/><path d="M4.6 20.6c1.2-3.9 4-5.9 7.4-5.9s6.2 2 7.4 5.9"/>',
+  email: '<rect x="3" y="5.4" width="18" height="13.2" rx="2.2"/><path d="m3.9 7 8.1 6 8.1-6"/>',
+  document: '<path d="M6.2 2.9h7.3L18.8 8v13.1H6.2z"/><path d="M13.3 3.1v5h5.3"/><path d="M9 12.6h7M9 16h5"/>',
+  publication: '<path d="M3.4 5.2h6.2c1.4 0 2.4.9 2.4 2v12c0-1.1-1-2-2.4-2H3.4zM20.6 5.2h-6.2c-1.4 0-2.4.9-2.4 2v12c0-1.1 1-2 2.4-2h6.2z"/>',
+  video: '<rect x="2.9" y="5" width="18.2" height="14" rx="2.6"/><path d="M10.1 9.2v5.6l4.7-2.8z"/>',
+  location: '<path d="M12 21.2c4-4.4 6-7.9 6-10.5a6 6 0 1 0-12 0c0 2.6 2 6.1 6 10.5z"/><circle cx="12" cy="10.6" r="2.3"/>',
+  link:
+    '<path d="M10.4 13.6a4.2 4.2 0 0 0 6 0l2.4-2.4a4.2 4.2 0 0 0-6-6l-1.4 1.4"/><path d="M13.6 10.4a4.2 4.2 0 0 0-6 0l-2.4 2.4a4.2 4.2 0 0 0 6 6l1.4-1.4"/>'
+};
+/* Brand marks are shapes, not line drawings — stroking them makes mush. */
+const FILLED_ICONS = new Set(['linkedin']);
+const ICON_LABELS = {
+  website: 'Website',
+  linkedin: 'LinkedIn',
+  profile: 'Profile',
+  email: 'Email',
+  document: 'Document',
+  publication: 'Publications',
+  video: 'Video',
+  location: 'Map',
+  link: 'Link'
+};
+
+/**
+ * The row of small round icon links under a name.
+ *
+ * This is deliberately separate from the entry's `url`: `url` is what the card
+ * itself opens, and every entry in `links` is an extra destination the reader
+ * can choose. That split is the whole point — an editor can send the card to a
+ * staff profile and still offer LinkedIn beside it, without either choice
+ * costing the other.
+ *
+ * Entries with no URL are dropped rather than rendered dead, so a half-filled
+ * row in the CMS shows what it will actually publish.
+ */
+const linkRow = (document, item, context) => {
+  const links = (opt(item).links || []).filter((link) => link && link.url);
+  if (!links.length) return null;
+  const row = el(document, 'span', { class: 'card-links' });
+  links.forEach((link) => {
+    const kind = ICON_SHAPES[link.icon] ? link.icon : 'link';
+    const anchor = el(document, 'a', { class: 'card-link' });
+    anchor.href = link.url;
+    anchor.setAttribute('target', '_blank');
+    anchor.setAttribute('rel', 'noopener');
+    anchor.setAttribute('data-icon', kind);
+    // The visible label is an icon, so the accessible name has to carry both
+    // what the link is and whose it is — "LinkedIn" alone, twenty-eight times
+    // down a screen reader's link list, identifies nothing. An editor-written
+    // label is taken as the whole name, though: it already says who, and
+    // appending the card's name to it only stutters.
+    const name = link.label || (context ? `${ICON_LABELS[kind]} — ${context}` : ICON_LABELS[kind]);
+    anchor.setAttribute('title', name);
+    anchor.setAttribute('aria-label', name);
+    const paint = FILLED_ICONS.has(kind)
+      ? 'fill="currentColor" stroke="none"'
+      : 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+    anchor.innerHTML =
+      `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" ${paint}>${ICON_SHAPES[kind]}</svg>`;
+    row.appendChild(anchor);
+  });
+  return row;
+};
+
+/** An organisation's logo, if it has one and the block is showing them. */
+const logoFrame = (document, item, show) => {
+  const logo = opt(item.logo);
+  if (!show || !logo.image) return null;
+  const frame = el(document, 'span', { class: 'org-logo' });
+  frame.appendChild(photo(document, logo, { alt: logo.alt || (item.name ? item.name + ' logo' : '') }));
+  return frame;
+};
+
 /** The intro sizing/placement controls, applied to a head root at build time. */
 const applyTextControls = (root, raw) => {
   const intro = opt(raw);
@@ -173,10 +258,32 @@ const BRAND_TONES = {
   chalk: { body: 'rgba(255,255,255,.24)', line: 'rgba(255,255,255,.85)', well: '#b66b43' }
 };
 
-/** → { shape, svg }. Unknown values fall back rather than rendering nothing. */
+/* Attribute values are content, and content is written by editors. Anything
+ * interpolated into markup as a string goes through here first. */
+const attr = (value) =>
+  String(value ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/**
+ * → { shape, svg }. Unknown values fall back rather than rendering nothing.
+ *
+ * An uploaded image wins over the drawing. The drawing is still the default,
+ * and still the better answer at 34px — but "we have our own logo file" is not
+ * a case a fixed set of shapes and tones can ever cover, so the badge accepts
+ * one. The shape keeps applying either way: it is the frame, not the artwork.
+ */
 export const brandMark = (raw) => {
   const brand = opt(raw);
   const shape = BRAND_SHAPES.includes(brand.shape) ? brand.shape : 'circle';
+  if (brand.image) {
+    const fit = brand.fit === 'contain' ? 'contain' : 'cover';
+    // The badge sits inside a button labelled "MARVI home" and its span is
+    // aria-hidden, so the image is decorative: an alt here would be read out
+    // twice or, worse, fight the button's own name.
+    return {
+      shape,
+      svg: `<img src="${attr(brand.image)}" alt="" data-fit="${fit}" width="44" height="44">`
+    };
+  }
   const tone = BRAND_TONES[brand.tone] || BRAND_TONES.water;
   // The water table, mounded under the middle — highest where the recharge is,
   // tapering to nothing at the boundaries.
@@ -336,7 +443,9 @@ const splitColumn = (document, raw, ctx, side) => {
   return proseColumn(document, col, ctx, side);
 };
 
-const BLOCKS = {
+/* Exported so scripts/verify.mjs can assert that this set and the CMS's list
+ * of offerable blocks are the same set — neither may drift ahead of the other. */
+export const BLOCKS = {
   split(document, block, ctx) {
     const wrap = el(document, 'div', { class: 'split' });
     wrap.appendChild(splitColumn(document, block.left, ctx, 'left'));
@@ -772,10 +881,25 @@ const BLOCKS = {
     return grid;
   },
 
+  /* An organisation list. Nothing in here is specific to partners — the same
+   * block is the supporters list and the funders list, differing only in its
+   * tab label and its items. That is why the type is worth keeping general:
+   * a new category is a new block, not new code. */
   partnerList(document, block) {
+    const showLogos = block.logos !== false;
     const grid = el(document, 'div', { class: 'people-grid' });
-    (block.items || []).forEach((item) => {
+    // A group whose list is still empty keeps its tab — the tab is the promise
+    // that the category exists — but drops the grid's rules, which would
+    // otherwise draw a stray line across an empty panel.
+    const items = (block.items || []).filter(Boolean);
+    if (!items.length) grid.classList.add('is-empty');
+    items.forEach((item) => {
       const card = el(document, 'article', { class: 'people-card' });
+      const logo = logoFrame(document, item, showLogos);
+      if (logo) {
+        card.classList.add('has-logo');
+        card.appendChild(logo);
+      }
       card.appendChild(el(document, 'span', { class: 'meta', text: item.meta }));
       const h3 = el(document, 'h3');
       if (item.url) {
@@ -788,6 +912,8 @@ const BLOCKS = {
         h3.textContent = item.name || '';
       }
       card.appendChild(h3);
+      const links = linkRow(document, item, item.name);
+      if (links) card.appendChild(links);
       grid.appendChild(card);
     });
     return grid;
@@ -798,14 +924,20 @@ const BLOCKS = {
     const band = el(document, 'div', { class: 'portrait-band' });
     band.id = 'people-band';
     items.forEach((item) => {
-      const card = el(document, item.url ? 'a' : 'article', { class: 'portrait-card' });
-      if (item.url) {
+      // A card with icon links cannot itself be a link — an <a> inside an <a>
+      // is invalid, and browsers recover from it by breaking the inner one.
+      // So the whole-card link is used only while it is the entry's one
+      // destination; the moment there are icons, the name carries it instead.
+      const links = (item.links || []).filter((link) => link && link.url);
+      const wholeCardLink = Boolean(item.url) && !links.length;
+      const card = el(document, wholeCardLink ? 'a' : 'article', { class: 'portrait-card' });
+      if (wholeCardLink) {
         card.href = item.url;
         card.setAttribute('target', '_blank');
         card.setAttribute('rel', 'noopener');
       }
       const details = [item.name, item.title, item.affiliation].filter(Boolean).join(', ');
-      card.setAttribute('aria-label', details + (item.url ? ' — open profile' : ''));
+      card.setAttribute('aria-label', details + (wholeCardLink ? ' — open profile' : ''));
       // The runtime filters and sorts on these, never on rendered text —
       // labels are translated per language and would stop matching. Honorifics
       // are dropped from the sort key only — the card still shows the full
@@ -823,9 +955,21 @@ const BLOCKS = {
         photo(document, item, { alt: item.name ? 'Portrait of ' + item.name : 'MARVI team member portrait' })
       );
       const info = el(document, 'span', { class: 'portrait-card-info' });
-      info.appendChild(el(document, 'strong', { text: item.name || 'MARVI team member' }));
+      const name = el(document, 'strong', { text: item.name || 'MARVI team member' });
+      if (item.url && !wholeCardLink) {
+        const anchor = el(document, 'a', { class: 'portrait-name-link' });
+        anchor.href = item.url;
+        anchor.setAttribute('target', '_blank');
+        anchor.setAttribute('rel', 'noopener');
+        anchor.appendChild(name);
+        info.appendChild(anchor);
+      } else {
+        info.appendChild(name);
+      }
       if (item.title) info.appendChild(el(document, 'span', { text: item.title }));
       if (item.affiliation) info.appendChild(el(document, 'small', { text: item.affiliation }));
+      const linkIcons = linkRow(document, item, item.name);
+      if (linkIcons) info.appendChild(linkIcons);
       card.appendChild(info);
       band.appendChild(card);
     });
@@ -1111,11 +1255,17 @@ export function renderPage(document, page, ctx) {
   const flex = [];
   (page.blocks || []).forEach((block, i) => {
     const render = BLOCKS[block?.type];
-    if (!render) return;
+    // `visible: false` is a draft switch: the block keeps its place, its
+    // content and its translations, and simply does not ship. Without it the
+    // only way to hold a half-written section back is to delete it.
+    if (!render || block.visible === false) return;
     const ctxI = blockCtx(block, i);
     const node = render(document, block, ctxI);
     if (!node) return;
-    FLEX_TYPES.has(block.type)
+    // The generic CMS blocks normally collect below the page body. A tab label
+    // overrides that and pulls the block into the strip where it was authored,
+    // so any block type can become a tab.
+    FLEX_TYPES.has(block.type) && !block.tabLabel
       ? flex.push(node)
       : core.push({ node, tab: block.tabLabel || null, key: ctxI.t('tabLabel'), i });
   });

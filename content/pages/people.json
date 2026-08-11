@@ -344,7 +344,35 @@
           "affiliation": "The ConocoPhillips Chair and a Regents Professor of Management Science and Information Systems in the Spears School of Business at Oklahoma State University, USA"
         }
       ],
-      "tabLabel": "People"
+      "tabLabel": "Collaborators"
+    },
+    {
+      "type": "partnerList",
+      "tabLabel": "Supporters",
+      "visible": true,
+      "logos": true,
+      "items": [
+        {
+          "meta": "Example entry · People & Partners → Supporters",
+          "name": "Example supporter — replace in the CMS",
+          "url": "",
+          "logo": {
+            "image": "",
+            "alt": ""
+          },
+          "links": []
+        },
+        {
+          "meta": "Example entry · add a logo, a link and LinkedIn",
+          "name": "Second example supporter",
+          "url": "",
+          "logo": {
+            "image": "",
+            "alt": ""
+          },
+          "links": []
+        }
+      ]
     },
     {
       "type": "partnerList",
@@ -352,42 +380,100 @@
         {
           "meta": "Australia · Lead partner",
           "url": "https://www.westernsydney.edu.au/",
-          "name": "Western Sydney University"
+          "name": "Western Sydney University",
+          "logo": {
+            "image": "/assets/logos/wsu.png",
+            "alt": "Western Sydney University logo"
+          },
+          "links": [
+            {
+              "icon": "linkedin",
+              "url": "https://www.linkedin.com/school/western-sydney-university/",
+              "label": "Western Sydney University on LinkedIn"
+            }
+          ]
         },
         {
           "meta": "Australia · Research",
           "url": "https://www.csiro.au/",
-          "name": "CSIRO Land & Water"
+          "name": "CSIRO Land & Water",
+          "logo": {
+            "image": "/assets/logos/csiro.png",
+            "alt": "CSIRO Land & Water logo"
+          },
+          "links": [
+            {
+              "icon": "linkedin",
+              "url": "https://www.linkedin.com/company/csiro",
+              "label": "CSIRO Land & Water on LinkedIn"
+            }
+          ]
         },
         {
           "meta": "Sri Lanka · Research",
-          "url": "https://www.iwmi.cgiar.org/",
-          "name": "International Water Management Institute"
+          "url": "https://www.iwmi.org/",
+          "name": "International Water Management Institute",
+          "logo": {
+            "image": "/assets/logos/iwmi.png",
+            "alt": "International Water Management Institute logo"
+          },
+          "links": [
+            {
+              "icon": "linkedin",
+              "url": "https://www.linkedin.com/company/iwmi",
+              "label": "International Water Management Institute on LinkedIn"
+            }
+          ]
         },
         {
           "meta": "Bhuj, India · Field partner",
           "url": "https://act-india.org/",
-          "name": "Arid Communities and Technologies"
+          "name": "Arid Communities and Technologies",
+          "logo": {
+            "image": "/assets/logos/act.png",
+            "alt": "Arid Communities and Technologies logo"
+          },
+          "links": []
         },
         {
           "meta": "Ahmedabad, India · Field partner",
           "url": "https://www.dscindia.org/",
-          "name": "Development Support Centre"
+          "name": "Development Support Centre",
+          "logo": {
+            "image": "/assets/logos/dsc.png",
+            "alt": "Development Support Centre logo"
+          },
+          "links": []
         },
         {
           "meta": "Udaipur, India · University",
           "url": "https://www.mpuat.ac.in/",
-          "name": "Maharana Pratap University of Agriculture & Technology"
+          "name": "Maharana Pratap University of Agriculture & Technology",
+          "logo": {
+            "image": "/assets/logos/mpuat.png",
+            "alt": "Maharana Pratap University of Agriculture & Technology logo"
+          },
+          "links": []
         },
         {
           "meta": "Udaipur, India · Education",
-          "url": "https://vidyabhawan.org/",
-          "name": "Vidya Bhawan Krishi Vigyan Kendra"
+          "url": "https://vidyabhawan.in/vidya-bhawan-krishi-vigyan-kendra/",
+          "name": "Vidya Bhawan Krishi Vigyan Kendra",
+          "logo": {
+            "image": "/assets/logos/vidyabhawan.png",
+            "alt": "Vidya Bhawan Krishi Vigyan Kendra logo"
+          },
+          "links": []
         },
         {
           "meta": "Laos · Regional futures",
           "url": "https://www.merfi.org/",
-          "name": "Mekong Region Futures Institute"
+          "name": "Mekong Region Futures Institute",
+          "logo": {
+            "image": "/assets/logos/merfi.png",
+            "alt": "Mekong Region Futures Institute logo"
+          },
+          "links": []
         },
         {
           "meta": "The heart of MARVI",
@@ -395,7 +481,32 @@
           "name": "Bhujal Jankaars, farmers, schools and village communities"
         }
       ],
-      "tabLabel": "Partner organisations"
+      "tabLabel": "Partner organisations",
+      "logos": true
+    },
+    {
+      "type": "partnerList",
+      "tabLabel": "Funders",
+      "visible": true,
+      "logos": true,
+      "items": [
+        {
+          "meta": "Australia · Project funder",
+          "name": "Australian Centre for International Agricultural Research",
+          "url": "https://www.aciar.gov.au/",
+          "logo": {
+            "image": "/assets/logos/aciar.png",
+            "alt": "ACIAR logo"
+          },
+          "links": [
+            {
+              "icon": "linkedin",
+              "url": "https://www.linkedin.com/company/aciar",
+              "label": "ACIAR on LinkedIn"
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "banner",
