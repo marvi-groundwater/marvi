@@ -1,4 +1,22 @@
 {
+  "menuName": "People & Partners",
+  "slug": "people",
+  "order": 9,
+  "published": true,
+  "template": "standard",
+  "intro": {
+    "eyebrow": "People & partners",
+    "title": "A transdisciplinary project, built across borders.",
+    "lede": "Researchers, practitioners and village volunteers in India and Australia working as one team.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom",
+    "textWidth": 100,
+    "textOffsetX": 0,
+    "textOffsetY": 0
+  },
   "heroImage": {
     "image": "/assets/marvi-originals/039-about-marvi.jpg",
     "zoom": 100,
@@ -6,443 +24,387 @@
     "positionY": 57,
     "fit": "cover"
   },
-  "blocks": [
-    {
-      "type": "portraitBand",
-      "tabLabel": "People",
-      "items": [
-        {
-          "name": "Basant Maheshwari",
-          "positionX": 50,
-          "url": "https://www.westernsydney.edu.au/",
-          "positionY": 50,
-          "affiliation": "Western Sydney University",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Distinguished Professor",
-          "image": "/assets/marvi-originals/051-our-people.jpg"
-        },
-        {
-          "name": "Maria Varua",
-          "positionX": 50,
-          "url": "https://www.westernsydney.edu.au/",
-          "positionY": 50,
-          "affiliation": "Western Sydney University",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Associate Professor",
-          "image": "/assets/marvi-originals/042-our-people.jpg"
-        },
-        {
-          "name": "Roger Packham",
-          "positionX": 50,
-          "url": "https://www.westernsydney.edu.au/",
-          "positionY": 50,
-          "affiliation": "Western Sydney University",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Adj. Assoc. Professor",
-          "image": "/assets/marvi-originals/041-our-people.jpg"
-        },
-        {
-          "name": "Dr Dharma Hagare",
-          "image": "/assets/marvi-originals/050-our-people.jpg",
-          "affiliation": "Western Sydney University",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.westernsydney.edu.au/"
-        },
-        {
-          "name": "Dr Harsharn Grewal",
-          "image": "/assets/marvi-originals/045-our-people.jpg",
-          "affiliation": "Western Sydney University",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.westernsydney.edu.au/",
-          "title": "Retired"
-        },
-        {
-          "name": "Mrs Joycelyn Applebee",
-          "image": "/assets/marvi-originals/043-our-people.jpg",
-          "affiliation": "Western Sydney University",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.westernsydney.edu.au/"
-        },
-        {
-          "name": "Dr Michael Chew",
-          "image": "/assets/marvi-originals/046-our-people.jpg",
-          "affiliation": "Western Sydney University",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.westernsydney.edu.au/"
-        },
-        {
-          "name": "Lewis Daley",
-          "positionX": 50,
-          "url": "https://www.westernsydney.edu.au/",
-          "positionY": 50,
-          "affiliation": "Western Sydney University",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Project team member",
-          "image": "/assets/marvi-originals/048-our-people.jpg"
-        },
-        {
-          "name": "Dr Peter Dillon",
-          "image": "/assets/marvi-originals/047-our-people.jpg",
-          "affiliation": "CSIRO Land & Water",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.csiro.au/"
-        },
-        {
-          "name": "Dr Rai Kookana",
-          "image": "/assets/marvi-originals/070-our-people.jpg",
-          "affiliation": "CSIRO Land & Water",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.csiro.au/"
-        },
-        {
-          "name": "Dr Tushaar Shah",
-          "image": "/assets/marvi-originals/049-our-people.jpg",
-          "affiliation": "International Water Management Institute",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.iwmi.cgiar.org/"
-        },
-        {
-          "name": "S. Prathapar",
-          "positionX": 50,
-          "url": "https://www.iwmi.cgiar.org/",
-          "positionY": 50,
-          "affiliation": "International Water Management Institute",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Researcher",
-          "image": "/assets/marvi-originals/055-our-people.jpg"
-        },
-        {
-          "name": "Dr Pennan Chinnasamy",
-          "image": "/assets/marvi-originals/054-our-people.jpg",
-          "affiliation": "International Water Management Institute",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.iwmi.cgiar.org/"
-        },
-        {
-          "name": "Dr Yogesh Jadeja",
-          "image": "/assets/marvi-originals/052-our-people.jpg",
-          "affiliation": "Arid Communities and Technologies",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://act-india.org/"
-        },
-        {
-          "name": "Mr Jayanti Gorasiya",
-          "image": "/assets/marvi-originals/053-our-people.jpg",
-          "affiliation": "Arid Communities and Technologies",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://act-india.org/"
-        },
-        {
-          "name": "Mr Brijen Thakar",
-          "image": "/assets/marvi-originals/057-our-people.jpg",
-          "affiliation": "Arid Communities and Technologies",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://act-india.org/"
-        },
-        {
-          "name": "Mr Mohan Sharma",
-          "image": "/assets/marvi-originals/056-our-people.jpg",
-          "affiliation": "Development Support Centre",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.dscindia.org/"
-        },
-        {
-          "name": "Mr Sachin Oza",
-          "image": "/assets/marvi-originals/058-our-people.jpg",
-          "affiliation": "Development Support Centre",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.dscindia.org/"
-        },
-        {
-          "name": "Mr Ketan Gohil",
-          "image": "/assets/marvi-originals/059-our-people.jpg",
-          "affiliation": "Development Support Centre",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.dscindia.org/"
-        },
-        {
-          "name": "Nandlal Menat",
-          "positionX": 50,
-          "url": "https://www.dscindia.org/",
-          "positionY": 50,
-          "affiliation": "Development Support Centre",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Field partner",
-          "image": "/assets/marvi-originals/060-our-people.jpg"
-        },
-        {
-          "name": "Dr P.K. Singh",
-          "image": "/assets/marvi-originals/061-our-people.png",
-          "affiliation": "Maharana Pratap University of Agriculture & Technology",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.mpuat.ac.in/"
-        },
-        {
-          "name": "Dr Mahesh Kothari",
-          "image": "/assets/marvi-originals/063-our-people.png",
-          "affiliation": "Maharana Pratap University of Agriculture & Technology",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.mpuat.ac.in/"
-        },
-        {
-          "name": "Dr K.K. Yadav",
-          "image": "/assets/marvi-originals/062-our-people.png",
-          "affiliation": "Maharana Pratap University of Agriculture & Technology",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.mpuat.ac.in/"
-        },
-        {
-          "name": "Dr Ramesh Purohit",
-          "image": "/assets/marvi-originals/071-our-people.jpg",
-          "affiliation": "Maharana Pratap University of Agriculture & Technology",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.mpuat.ac.in/",
-          "title": "Retired"
-        },
-        {
-          "name": "Dr Praful Bhatnagar",
-          "image": "/assets/marvi-originals/064-our-people.png",
-          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://vidyabhawan.org/"
-        },
-        {
-          "name": "Mr Hasmukh Gehlot",
-          "image": "/assets/marvi-originals/065-our-people.jpg",
-          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://vidyabhawan.org/"
-        },
-        {
-          "name": "Prahlad Soni",
-          "positionX": 50,
-          "url": "https://vidyabhawan.org/",
-          "positionY": 50,
-          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Field partner",
-          "image": "/assets/marvi-originals/067-our-people.png"
-        },
-        {
-          "name": "Dr Anil Mehta",
-          "image": "/assets/marvi-originals/066-our-people.jpg",
-          "affiliation": "Vidya Bhawan Polytechnic College",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://vidyabhawan.org/"
-        },
-        {
-          "name": "Dr Yogita Dashora",
-          "image": "/assets/marvi-originals/069-our-people.jpg",
-          "affiliation": "Vidya Bhawan Polytechnic College",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://vidyabhawan.org/"
-        },
-        {
-          "name": "Dr John Ward",
-          "image": "/assets/marvi-originals/068-our-people.jpg",
-          "affiliation": "Mekong Region Futures Institute",
-          "positionX": 50,
-          "positionY": 50,
-          "zoom": 100,
-          "fit": "auto",
-          "url": "https://www.merfi.org/"
-        },
-        {
-          "name": "L. S. Iyer",
-          "positionX": 50,
-          "url": "https://www.marvi.org.in/our-people",
-          "positionY": 50,
-          "affiliation": "MARVI",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "MARVI contributor",
-          "image": "/assets/marvi-originals/lsiyer.jpg"
-        },
-        {
-          "name": "Alan Ng",
-          "positionX": 50,
-          "positionY": 50,
-          "affiliation": "Western Sydney University",
-          "url": "https://www.westernsydney.edu.au/",
-          "fit": "auto",
-          "zoom": 100,
-          "title": "Research Fellow – Data Science",
-          "image": "/assets/marvi-originals/alan-ng.jpg"
-        }
-      ]
-    },
-    {
-      "type": "partnerList",
-      "tabLabel": "Partner organisations",
-      "items": [
-        {
-          "meta": "Australia · Lead partner",
-          "name": "Western Sydney University",
-          "url": "https://www.westernsydney.edu.au/"
-        },
-        {
-          "meta": "Australia · Research",
-          "name": "CSIRO Land & Water",
-          "url": "https://www.csiro.au/"
-        },
-        {
-          "meta": "Sri Lanka · Research",
-          "name": "International Water Management Institute",
-          "url": "https://www.iwmi.cgiar.org/"
-        },
-        {
-          "meta": "Bhuj, India · Field partner",
-          "name": "Arid Communities and Technologies",
-          "url": "https://act-india.org/"
-        },
-        {
-          "meta": "Ahmedabad, India · Field partner",
-          "name": "Development Support Centre",
-          "url": "https://www.dscindia.org/"
-        },
-        {
-          "meta": "Udaipur, India · University",
-          "name": "Maharana Pratap University of Agriculture & Technology",
-          "url": "https://www.mpuat.ac.in/"
-        },
-        {
-          "meta": "Udaipur, India · Education",
-          "name": "Vidya Bhawan Krishi Vigyan Kendra",
-          "url": "https://vidyabhawan.org/"
-        },
-        {
-          "meta": "Laos · Regional futures",
-          "name": "Mekong Region Futures Institute",
-          "url": "https://www.merfi.org/"
-        },
-        {
-          "meta": "The heart of MARVI",
-          "name": "Bhujal Jankaars, farmers, schools and village communities",
-          "url": "https://www.marvi.org.in/our-partners"
-        },
-        {
-          "meta": "Test",
-          "name": "Test parter",
-          "url": "https://www.marvi.org.in/our-partners"
-        }
-      ]
-    },
-    {
-      "type": "banner",
-      "eyebrow": "Acknowledgement",
-      "accent": "#88b3b8",
-      "title": "Knowledge grows through participation.",
-      "lede": "MARVI acknowledges the women and men of the Dharta and Meghraj watersheds whose observations, experience and leadership shaped the project.",
-      "i18n": {
-        "eyebrow": "people.ack.eyebrow",
-        "title": "people.ack.title",
-        "lede": "people.ack.lede"
-      }
-    },
-    {
-      "type": "text",
-      "align": "left",
-      "eyebrow": "Test",
-      "body": "This is a test",
-      "heading": "Test heading"
-    }
-  ],
-  "menuName": "People & Partners",
-  "slug": "people",
-  "intro": {
-    "eyebrow": "People & partners",
-    "eyebrowSize": 100,
-    "textPosition": "bottom",
-    "textOffsetX": 0,
-    "textAlign": "left",
-    "title": "A transdisciplinary project, built across borders.",
-    "textOffsetY": 0,
-    "textWidth": 100,
-    "titleSize": 70,
-    "lede": "Researchers, practitioners and village volunteers in India and Australia working as one team.",
-    "ledeSize": 100
-  },
-  "published": true,
-  "order": 9,
-  "template": "standard",
   "menuImage": {
     "image": "/assets/marvi-originals/041-our-people.jpg",
     "zoom": 100,
     "positionX": 50,
     "positionY": 50,
     "fit": "auto"
-  }
+  },
+  "blocks": [
+    {
+      "type": "portraitBand",
+      "items": [
+        {
+          "title": "Distinguished Professor",
+          "url": "https://www.westernsydney.edu.au/",
+          "image": "/assets/marvi-originals/051-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Basant Maheshwari",
+          "affiliation": "Western Sydney University"
+        },
+        {
+          "title": "Associate Professor",
+          "url": "https://www.westernsydney.edu.au/",
+          "image": "/assets/marvi-originals/042-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Maria Varua",
+          "affiliation": "Western Sydney University"
+        },
+        {
+          "title": "Adj. Assoc. Professor",
+          "url": "https://www.westernsydney.edu.au/",
+          "image": "/assets/marvi-originals/041-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Roger Packham",
+          "affiliation": "Western Sydney University"
+        },
+        {
+          "title": "",
+          "url": "https://www.westernsydney.edu.au/",
+          "image": "/assets/marvi-originals/050-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Dharma Hagare",
+          "affiliation": "Western Sydney University"
+        },
+        {
+          "title": "Retired",
+          "url": "https://www.westernsydney.edu.au/",
+          "image": "/assets/marvi-originals/045-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Harsharn Grewal",
+          "affiliation": "Western Sydney University"
+        },
+        {
+          "url": "https://www.westernsydney.edu.au/",
+          "image": "/assets/marvi-originals/046-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Michael Chew",
+          "affiliation": "Western Sydney University"
+        },
+        {
+          "title": "",
+          "url": "https://www.csiro.au/",
+          "image": "/assets/marvi-originals/047-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Peter Dillon",
+          "affiliation": "CSIRO Land & Water"
+        },
+        {
+          "title": "",
+          "url": "https://www.csiro.au/",
+          "image": "/assets/marvi-originals/070-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Rai Kookana",
+          "affiliation": "CSIRO Land & Water"
+        },
+        {
+          "url": "https://www.iwmi.cgiar.org/",
+          "image": "/assets/marvi-originals/049-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Tushaar Shah",
+          "affiliation": "International Water Management Institute"
+        },
+        {
+          "title": "Researcher",
+          "url": "",
+          "image": "/assets/marvi-originals/055-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "S. Prathapar",
+          "affiliation": ""
+        },
+        {
+          "title": "",
+          "url": "",
+          "image": "/assets/marvi-originals/054-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Pennan Chinnasamy",
+          "affiliation": ""
+        },
+        {
+          "title": "",
+          "url": "https://act-india.org/",
+          "image": "/assets/marvi-originals/052-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Yogesh Jadeja",
+          "affiliation": "Arid Communities and Technologies"
+        },
+        {
+          "title": "",
+          "url": "https://act-india.org/",
+          "image": "/assets/marvi-originals/053-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Mr Jayanti Gorasiya",
+          "affiliation": "Arid Communities and Technologies"
+        },
+        {
+          "url": "https://www.dscindia.org/",
+          "image": "/assets/marvi-originals/056-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Mr Mohan Sharma",
+          "affiliation": "Development Support Centre"
+        },
+        {
+          "title": "",
+          "url": "https://www.dscindia.org/",
+          "image": "/assets/marvi-originals/058-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Mr Sachin Oza",
+          "affiliation": "Development Support Centre"
+        },
+        {
+          "title": "",
+          "url": "https://www.dscindia.org/",
+          "image": "/assets/marvi-originals/059-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Mr Ketan Gohil",
+          "affiliation": "Development Support Centre"
+        },
+        {
+          "title": "Field partner",
+          "url": "https://www.dscindia.org/",
+          "image": "/assets/marvi-originals/060-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Nandlal Menat",
+          "affiliation": "Development Support Centre"
+        },
+        {
+          "title": "",
+          "url": "https://www.mpuat.ac.in/",
+          "image": "/assets/marvi-originals/061-our-people.png",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr P.K. Singh",
+          "affiliation": "Maharana Pratap University of Agriculture & Technology"
+        },
+        {
+          "url": "https://www.mpuat.ac.in/",
+          "image": "/assets/marvi-originals/062-our-people.png",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr K.K. Yadav",
+          "affiliation": "Maharana Pratap University of Agriculture & Technology"
+        },
+        {
+          "title": "",
+          "url": "https://vidyabhawan.org/",
+          "image": "/assets/marvi-originals/064-our-people.png",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Praful Bhatnagar",
+          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra"
+        },
+        {
+          "title": "",
+          "url": "https://vidyabhawan.org/",
+          "image": "/assets/marvi-originals/065-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Mr Hasmukh Gehlot",
+          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra"
+        },
+        {
+          "title": "Field partner",
+          "url": "https://vidyabhawan.org/",
+          "image": "/assets/marvi-originals/067-our-people.png",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Prahlad Soni",
+          "affiliation": "Vidya Bhawan Krishi Vigyan Kendra"
+        },
+        {
+          "title": "",
+          "url": "https://vidyabhawan.org/",
+          "image": "/assets/marvi-originals/066-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Anil Mehta",
+          "affiliation": "Vidya Bhawan Polytechnic College"
+        },
+        {
+          "title": "",
+          "url": "https://vidyabhawan.org/",
+          "image": "/assets/marvi-originals/069-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr Yogita Dashora",
+          "affiliation": "Vidya Bhawan Polytechnic College"
+        },
+        {
+          "title": "",
+          "url": "https://www.merfi.org/",
+          "image": "/assets/marvi-originals/068-our-people.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Dr John Ward",
+          "affiliation": "Mekong Region Futures Institute"
+        },
+        {
+          "title": "MARVI contributor",
+          "url": "https://www.marvi.org.in/our-people",
+          "image": "/assets/marvi-originals/lsiyer.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "L. S. Iyer",
+          "affiliation": "MARVI"
+        },
+        {
+          "title": "Research Fellow – Data Science",
+          "url": "https://www.westernsydney.edu.au/",
+          "image": "/assets/marvi-originals/alan-ng.jpg",
+          "zoom": 100,
+          "positionX": 50,
+          "positionY": 50,
+          "fit": "auto",
+          "name": "Alan Ng",
+          "affiliation": "Western Sydney University"
+        }
+      ],
+      "tabLabel": "People"
+    },
+    {
+      "type": "partnerList",
+      "items": [
+        {
+          "meta": "Australia · Lead partner",
+          "url": "https://www.westernsydney.edu.au/",
+          "name": "Western Sydney University"
+        },
+        {
+          "meta": "Australia · Research",
+          "url": "https://www.csiro.au/",
+          "name": "CSIRO Land & Water"
+        },
+        {
+          "meta": "Sri Lanka · Research",
+          "url": "https://www.iwmi.cgiar.org/",
+          "name": "International Water Management Institute"
+        },
+        {
+          "meta": "Bhuj, India · Field partner",
+          "url": "https://act-india.org/",
+          "name": "Arid Communities and Technologies"
+        },
+        {
+          "meta": "Ahmedabad, India · Field partner",
+          "url": "https://www.dscindia.org/",
+          "name": "Development Support Centre"
+        },
+        {
+          "meta": "Udaipur, India · University",
+          "url": "https://www.mpuat.ac.in/",
+          "name": "Maharana Pratap University of Agriculture & Technology"
+        },
+        {
+          "meta": "Udaipur, India · Education",
+          "url": "https://vidyabhawan.org/",
+          "name": "Vidya Bhawan Krishi Vigyan Kendra"
+        },
+        {
+          "meta": "Laos · Regional futures",
+          "url": "https://www.merfi.org/",
+          "name": "Mekong Region Futures Institute"
+        },
+        {
+          "meta": "The heart of MARVI",
+          "url": "https://www.marvi.org.in/our-partners",
+          "name": "Bhujal Jankaars, farmers, schools and village communities"
+        },
+        {
+          "meta": "Test",
+          "url": "https://www.marvi.org.in/our-partners",
+          "name": "Test parter"
+        }
+      ],
+      "tabLabel": "Partner organisations"
+    },
+    {
+      "type": "banner",
+      "eyebrow": "Acknowledgement",
+      "title": "Knowledge grows through participation.",
+      "lede": "MARVI acknowledges the women and men of the Dharta and Meghraj watersheds whose observations, experience and leadership shaped the project.",
+      "accent": "#88b3b8",
+      "i18n": {
+        "lede": "people.ack.lede",
+        "title": "people.ack.title",
+        "eyebrow": "people.ack.eyebrow"
+      }
+    },
+    {
+      "type": "text",
+      "eyebrow": "Test",
+      "heading": "Test heading",
+      "body": "This is a test",
+      "align": "left"
+    }
+  ]
 }
