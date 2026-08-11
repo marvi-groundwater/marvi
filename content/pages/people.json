@@ -38,7 +38,7 @@
       "items": [
         {
           "title": "Distinguished Professor",
-          "url": "https://www.westernsydney.edu.au/",
+          "url": "https://researchers.westernsydney.edu.au/en/persons/basant-maheshwari",
           "image": "/assets/marvi-originals/051-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -56,7 +56,7 @@
         },
         {
           "title": "Associate Professor",
-          "url": "https://www.westernsydney.edu.au/",
+          "url": "",
           "image": "/assets/marvi-originals/042-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -68,7 +68,7 @@
         },
         {
           "title": "Adj. Assoc. Professor",
-          "url": "https://www.westernsydney.edu.au/",
+          "url": "",
           "image": "/assets/marvi-originals/041-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -80,7 +80,7 @@
         },
         {
           "title": "",
-          "url": "https://www.westernsydney.edu.au/",
+          "url": "https://researchers.westernsydney.edu.au/en/persons/dharma-hagare/",
           "image": "/assets/marvi-originals/050-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -92,7 +92,7 @@
         },
         {
           "title": "",
-          "url": "https://www.westernsydney.edu.au/",
+          "url": "https://www.researchgate.net/profile/Michael-Chew",
           "image": "/assets/marvi-originals/046-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -104,7 +104,7 @@
         },
         {
           "title": "",
-          "url": "https://www.csiro.au/",
+          "url": "https://iah.org/about/awards/honorary-member-2018",
           "image": "/assets/marvi-originals/047-our-people.png",
           "zoom": 100,
           "positionX": 50,
@@ -112,11 +112,11 @@
           "fit": "auto",
           "name": "Dr Peter Dillon",
           "links": [],
-          "affiliation": "CSIRO Land & Water"
+          "affiliation": "Formerly CSIRO Land & Water"
         },
         {
           "title": "",
-          "url": "https://www.csiro.au/",
+          "url": "https://researchers.adelaide.edu.au/profile/rai.kookana",
           "image": "/assets/marvi-originals/070-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -124,11 +124,11 @@
           "fit": "auto",
           "name": "Dr Rai Kookana",
           "links": [],
-          "affiliation": "CSIRO Land & Water"
+          "affiliation": "Formerly CSIRO Land & Water"
         },
         {
           "title": "",
-          "url": "https://www.iwmi.org/",
+          "url": "https://www.iwmi.org/people/tushaar-shah/",
           "image": "/assets/marvi-originals/049-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -140,7 +140,7 @@
         },
         {
           "title": "Researcher",
-          "url": "",
+          "url": "https://www.linkedin.com/in/sanmugam-prathapar-3a73b847/",
           "image": "/assets/marvi-originals/055-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -148,11 +148,11 @@
           "fit": "auto",
           "name": "S. Prathapar",
           "links": [],
-          "affiliation": ""
+          "affiliation": "Formerly IWMI"
         },
         {
           "title": "",
-          "url": "",
+          "url": "https://www.linkedin.com/in/pennan-chinnasamy/",
           "image": "/assets/marvi-originals/054-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -160,7 +160,7 @@
           "fit": "auto",
           "name": "Dr Pennan Chinnasamy",
           "links": [],
-          "affiliation": ""
+          "affiliation": "Formerly IWMI"
         },
         {
           "title": "",
@@ -236,7 +236,7 @@
         },
         {
           "title": "",
-          "url": "https://www.mpuat.ac.in/",
+          "url": "https://www.linkedin.com/in/pradeep-singh-a79729113/",
           "image": "/assets/marvi-originals/061-our-people.png",
           "zoom": 100,
           "positionX": 50,
@@ -244,11 +244,11 @@
           "fit": "auto",
           "name": "Dr P.K. Singh",
           "links": [],
-          "affiliation": "Maharana Pratap University of Agriculture & Technology"
+          "affiliation": "Formerly Maharana Pratap University of Agriculture & Technology"
         },
         {
           "title": "",
-          "url": "https://www.mpuat.ac.in/",
+          "url": "https://www.linkedin.com/in/kamal-yadav-6770b151/",
           "image": "/assets/marvi-originals/062-our-people.png",
           "zoom": 100,
           "positionX": 50,
@@ -260,7 +260,7 @@
         },
         {
           "title": "",
-          "url": "https://vidyabhawan.in/vidya-bhawan-krishi-vigyan-kendra/",
+          "url": "https://udaipur.kvk2.in/staff-strength.php",
           "image": "/assets/marvi-originals/064-our-people.png",
           "zoom": 100,
           "positionX": 50,
@@ -272,7 +272,7 @@
         },
         {
           "title": "",
-          "url": "https://vidyabhawan.in/vidya-bhawan-krishi-vigyan-kendra/",
+          "url": "https://udaipur.kvk2.in/staff-strength.php",
           "image": "/assets/marvi-originals/065-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -284,7 +284,7 @@
         },
         {
           "title": "Field partner",
-          "url": "https://vidyabhawan.in/vidya-bhawan-krishi-vigyan-kendra/",
+          "url": "https://www.researchgate.net/profile/Prahlad-Soni",
           "image": "/assets/marvi-originals/067-our-people.png",
           "zoom": 100,
           "positionX": 50,
@@ -308,7 +308,7 @@
         },
         {
           "title": "",
-          "url": "https://vidyabhawan.in/vidya-bhawan-krishi-vigyan-kendra/",
+          "url": "https://www.linkedin.com/in/yogita-dashora-12423151/",
           "image": "/assets/marvi-originals/069-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -331,8 +331,8 @@
           "affiliation": "Mekong Region Futures Institute"
         },
         {
-          "title": "MARVI contributor",
-          "url": "https://www.marvi.org.in/our-people",
+          "title": "MARVI collaborator",
+          "url": "https://www.uncg.edu/employees/lakshmi-iyer/",
           "image": "/assets/marvi-originals/lsiyer.jpg",
           "zoom": 100,
           "positionX": 50,
@@ -354,7 +354,7 @@
           "links": [
             {
               "icon": "linkedin",
-              "url": "www.linkedin.com/in/alan-n-182ab9210",
+              "url": "https://www.linkedin.com/in/alan-n-182ab9210",
               "label": ""
             }
           ],
@@ -362,7 +362,7 @@
         },
         {
           "title": "Collaborator",
-          "url": "",
+          "url": "https://www.abdulkaderkhan.com/",
           "image": "/assets/marvi-originals/Fahim Khan.jpeg",
           "zoom": 100,
           "positionX": 50,
@@ -374,7 +374,7 @@
         },
         {
           "title": "Collaborator",
-          "url": "",
+          "url": "https://experts.okstate.edu/ramesh.sharda",
           "image": "/assets/marvi-originals/Ramesh Sharda.webp",
           "zoom": 100,
           "positionX": 50,
@@ -382,9 +382,10 @@
           "fit": "auto",
           "name": "Professor Ramesh Sharda",
           "links": [],
-          "affiliation": "The ConocoPhillips Chair and a Regents Professor of Management Science and Information Systems in the Spears School of Business at Oklahoma State University, USA"
+          "affiliation": "Oklahoma State University, USA"
         }
-      ]
+      ],
+      "linkStyle": "auto"
     },
     {
       "type": "portraitBand",
@@ -392,30 +393,31 @@
       "visible": true,
       "items": [
         {
-          "title": "Replace or delete in the CMS",
-          "url": "",
-          "image": "/assets/placeholder-portrait.svg",
+          "title": "Research",
+          "url": "https://www.researchgate.net/profile/Ramesh-Purohit",
+          "image": "/assets/marvi-originals/071-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
           "positionY": 50,
-          "fit": "contain",
-          "name": "Example supporter",
+          "fit": "auto",
+          "name": "Ramesh Purohit",
           "links": [],
           "affiliation": "People & Partners → Supporters"
         },
         {
-          "title": "Add a photo, a profile link and LinkedIn",
+          "title": "Training",
           "url": "",
-          "image": "/assets/placeholder-portrait.svg",
+          "image": "/assets/marvi-originals/057-our-people.jpg",
           "zoom": 100,
           "positionX": 50,
           "positionY": 50,
-          "fit": "contain",
-          "name": "Second example supporter",
+          "fit": "auto",
+          "name": "Brijen Thakar",
           "links": [],
           "affiliation": "People & Partners → Supporters"
         }
       ],
+      "linkStyle": "auto",
       "filters": false
     },
     {
@@ -526,6 +528,7 @@
           "name": "Bhujal Jankaars, farmers, schools and village communities"
         }
       ],
+      "linkStyle": "auto",
       "logos": true
     },
     {
@@ -538,7 +541,7 @@
           "url": "https://www.aciar.gov.au/",
           "name": "Australian Centre for International Agricultural Research",
           "logo": {
-            "image": "/assets/logos/aciar.png",
+            "image": "/assets/marvi-originals/019-home.jpg",
             "alt": "ACIAR logo"
           },
           "links": [
@@ -548,8 +551,19 @@
               "label": "ACIAR on LinkedIn"
             }
           ]
+        },
+        {
+          "meta": "",
+          "url": "",
+          "name": "Australian Water Partnership",
+          "logo": {
+            "image": "/assets/marvi-originals/018-home.png",
+            "alt": "AWP logo"
+          },
+          "links": []
         }
       ],
+      "linkStyle": "auto",
       "logos": true
     },
     {
@@ -560,9 +574,9 @@
       "lede": "MARVI acknowledges the women and men of the Dharta and Meghraj watersheds whose observations, experience and leadership shaped the project.",
       "accent": "#88b3b8",
       "i18n": {
-        "eyebrow": "people.ack.eyebrow",
+        "lede": "people.ack.lede",
         "title": "people.ack.title",
-        "lede": "people.ack.lede"
+        "eyebrow": "people.ack.eyebrow"
       }
     }
   ]
