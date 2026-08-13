@@ -320,12 +320,24 @@
        Past two, the row goes even and the composition becomes a strip. */
     .editorial-images { display: grid; grid-template-columns: 1.3fr .7fr; gap: 18px; margin-top: 22px; align-items: end; }
     .editorial-images[data-count="1"] { grid-template-columns: 1fr; }
-    .editorial-images[data-count="3"] { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+    /* align-items must be `start`, not `stretch`. Stretch makes the row decide
+       each tile's HEIGHT, and aspect-ratio then derives the width from it —
+       which left every tile narrower than its own column, floating in a gap.
+       With `start` the height is auto, so the tile takes the full column width
+       and aspect-ratio derives the height. Width leads, height follows. */
+    .editorial-images[data-count="3"] { grid-template-columns: repeat(3, 1fr); align-items: start; }
     .editorial-images:not([data-count="1"]):not([data-count="2"]):not([data-count="3"]) {
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      align-items: stretch;
+      align-items: start;
     }
-    .editorial-image { position: relative; overflow: hidden; background: #c9c5ba; }
+    /* width: 100% is load-bearing. A grid item carrying an aspect-ratio is not
+       stretched by justify-self, so these figures sized themselves from their
+       HEIGHT and came out ~14% narrower than their own columns — 502px inside
+       a 582px column — with the slack showing up as gaps far wider than the
+       18px the grid asks for. Setting the inline size explicitly makes width
+       lead and the aspect ratio derive the height, which is what the 1.3fr/.7fr
+       proportions were describing all along. */
+    .editorial-image { position: relative; width: 100%; overflow: hidden; background: #c9c5ba; }
     .editorial-image:first-child { aspect-ratio: 1.42; }
     .editorial-image:last-child { aspect-ratio: .82; margin-bottom: -38px; }
     /* The two slot shapes above are addressed by position, so a third image
