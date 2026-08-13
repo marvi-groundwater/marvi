@@ -547,7 +547,19 @@ export const BLOCKS = {
     const wrap = el(document, 'div', {
       class: block.look === 'screens' ? 'app-screen-strip' : 'editorial-images'
     });
-    (block.items || []).forEach((item, i) => {
+    // An entry whose photo was never uploaded has nothing to show — a caption
+    // is not a picture — and rendering it anyway produces an <img> with no
+    // source: the browser draws a broken-image box with the alt text in it.
+    // The index is kept from the original list so existing caption
+    // translations, which are keyed by position, do not shift.
+    const items = (block.items || [])
+      .map((item, i) => ({ item, i }))
+      .filter(({ item }) => item && (item.photo || {}).image);
+    // The editorial pair is two slots, deliberately unequal. Three or more
+    // would wrap into that asymmetry and look like a mistake, so past two the
+    // row becomes even — see .editorial-images[data-count].
+    wrap.setAttribute('data-count', String(items.length));
+    items.forEach(({ item, i }) => {
       const figure = el(document, 'figure', {
         class: block.look === 'screens' ? undefined : 'editorial-image'
       });

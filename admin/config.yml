@@ -323,7 +323,11 @@ collections:
                   - { label: "Title", name: "title", widget: "string" }
                   - { label: "Text", name: "text", widget: "text", required: false }
               - { label: "i18n", name: "i18n", widget: "hidden", required: false }
-          - label: "Photo pair"
+          # Two photos, in deliberately unequal slots — the wide one carries
+          # the picture, the narrow one answers it. That asymmetry only reads
+          # at two, so a third or more switches the row to even columns rather
+          # than wrapping into a lopsided grid.
+          - label: "Photo pair / row"
             name: "imagePair"
             widget: "object"
             fields:
@@ -333,6 +337,8 @@ collections:
               - label: "Photos"
                 name: "items"
                 widget: "list"
+                summary: "{{fields.caption}}"
+                hint: "Two photos sit in the unequal editorial pair. Three or more become an even row. An entry with no photo chosen is skipped — a caption on its own does not appear."
                 fields:
                   - { label: "Photo", name: "photo", widget: "object", collapsed: false, fields: *photoFields }
                   - { label: "Caption", name: "caption", widget: "string", required: false }

@@ -19,6 +19,12 @@ const SITE_URL = 'https://' + readFileSync(join(ROOT, 'CNAME'), 'utf8').trim();
 const failures = [];
 const check = (cond, msg) => { if (!cond) failures.push(msg); };
 
+/* Warnings are for content an editor left half-finished. They are printed but
+ * do not fail the build: a picture nobody uploaded yet is a page that is not
+ * ready, not a site that cannot ship, and blocking every deploy on one unsaved
+ * field would make the CMS feel like a minefield. */
+const warnings = [];
+
 const PAGES = buildRegistry(ROOT);
 const template = parseHTML(readFileSync(join(ROOT, 'index.html'), 'utf8')).document;
 const LANGS = [...template.querySelectorAll('#lang-select option')].map((o) => o.value);
@@ -152,9 +158,24 @@ const auditFields = (value, fields, where, extra = []) => {
   }
 };
 
+/* An `image` key that exists but is empty is the shape a CMS entry takes when
+ * someone filled in the caption and never uploaded the picture. The renderers
+ * skip those now, so nothing broken ships — but skipping in silence is how a
+ * page quietly loses content, so say it out loud. */
+const emptyImages = (value, where) => {
+  if (Array.isArray(value)) return value.forEach((v, i) => emptyImages(v, `${where}[${i}]`));
+  if (!value || typeof value !== 'object') return;
+  for (const [key, v] of Object.entries(value)) {
+    if (key === 'image' && v === '') warnings.push(`${where}.image is empty — nothing will render there`);
+    else emptyImages(v, `${where}.${key}`);
+  }
+};
+
 const pageFields = collection('pages').fields;
 for (const file of readdirSync(join(ROOT, 'content/pages')).filter((f) => f.endsWith('.json'))) {
-  auditFields(JSON.parse(readFileSync(join(ROOT, 'content/pages', file), 'utf8')), pageFields, file);
+  const data = JSON.parse(readFileSync(join(ROOT, 'content/pages', file), 'utf8'));
+  auditFields(data, pageFields, file);
+  emptyImages(data, file);
 }
 const siteFile = collection('site').files.find((f) => f.file === 'content/site.json');
 if (existsSync(join(ROOT, 'content/site.json'))) {
@@ -169,6 +190,11 @@ const unofferable = renderable.filter((t) => !cmsTypes.has(t));
 check(unofferable.length === 0, `renderer has block types the CMS cannot add: ${unofferable.join(', ')}`);
 const unrenderable = [...cmsTypes].filter((t) => !renderable.includes(t));
 check(unrenderable.length === 0, `CMS offers block types the renderer ignores: ${unrenderable.join(', ')}`);
+
+if (warnings.length) {
+  console.warn(`\n${warnings.length} warning(s) — the build still ships:`);
+  warnings.forEach((w) => console.warn('  ! ' + w));
+}
 
 if (failures.length) {
   console.error(`\nFAILED ${failures.length} check(s):`);
