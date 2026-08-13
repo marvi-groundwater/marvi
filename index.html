@@ -330,14 +330,15 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       align-items: start;
     }
-    /* width: 100% is load-bearing. A grid item carrying an aspect-ratio is not
-       stretched by justify-self, so these figures sized themselves from their
-       HEIGHT and came out ~14% narrower than their own columns — 502px inside
-       a 582px column — with the slack showing up as gaps far wider than the
-       18px the grid asks for. Setting the inline size explicitly makes width
-       lead and the aspect ratio derive the height, which is what the 1.3fr/.7fr
-       proportions were describing all along. */
-    .editorial-image { position: relative; width: 100%; overflow: hidden; background: #c9c5ba; }
+    /* Two resets, both load-bearing.
+       margin: browsers style <figure> as `1em 40px`, and this one was never
+       reset — so every image sat 40px inside its own column with 80px of the
+       column unused. That is what read as "the gaps are too wide".
+       width: a grid item carrying an aspect-ratio is not stretched by
+       justify-self (tested), so without an explicit inline size these figures
+       sized themselves from their height instead. Width leads, height follows
+       — which is what the 1.3fr/.7fr proportions were describing all along. */
+    .editorial-image { position: relative; width: 100%; margin: 0; overflow: hidden; background: #c9c5ba; }
     .editorial-image:first-child { aspect-ratio: 1.42; }
     .editorial-image:last-child { aspect-ratio: .82; margin-bottom: -38px; }
     /* The two slot shapes above are addressed by position, so a third image
