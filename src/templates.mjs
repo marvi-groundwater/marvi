@@ -74,11 +74,30 @@ export const textLayout = (entry) => {
   };
 };
 
-/** Photo entry ({image, zoom, positionX, positionY, brightness, fit, alt}) → <img>. */
-const photo = (document, raw, { alt, lazy = true, className } = {}) => {
+/* Stands in for a picture nobody has uploaded yet, in the blocks whose whole
+ * shape is a row or grid of images. Rendering the slot with this keeps the
+ * composition intact; dropping the slot silently re-flows everything around a
+ * hole the editor cannot see. */
+const PLACEHOLDER_IMAGE = '/assets/placeholder-image.svg';
+
+/**
+ * Photo entry ({image, zoom, positionX, positionY, brightness, fit, alt}) → <img>.
+ *
+ * `placeholder: true` substitutes the stand-in when no image is set. It is
+ * opt-in rather than automatic: an optional photo elsewhere — a column that is
+ * text this time, a card with no art — should render nothing at all, not a
+ * grey box announcing an absence nobody intended.
+ */
+const photo = (document, raw, { alt, lazy = true, className, placeholder = false } = {}) => {
   const entry = opt(raw);
   const img = el(document, 'img', { class: className });
   if (entry.image) img.src = entry.image;
+  else if (placeholder) {
+    img.src = PLACEHOLDER_IMAGE;
+    // The layout crops photos to fill their slot; cropping a glyph would just
+    // hide it, so the class switches this one to fit-inside.
+    img.classList.add('is-placeholder');
+  }
   img.alt = alt ?? entry.alt ?? '';
   if (lazy) img.setAttribute('loading', 'lazy');
   const layout = photoLayout(entry);
@@ -547,23 +566,22 @@ export const BLOCKS = {
     const wrap = el(document, 'div', {
       class: block.look === 'screens' ? 'app-screen-strip' : 'editorial-images'
     });
-    // An entry whose photo was never uploaded has nothing to show — a caption
-    // is not a picture — and rendering it anyway produces an <img> with no
-    // source: the browser draws a broken-image box with the alt text in it.
-    // The index is kept from the original list so existing caption
-    // translations, which are keyed by position, do not shift.
-    const items = (block.items || [])
-      .map((item, i) => ({ item, i }))
-      .filter(({ item }) => item && (item.photo || {}).image);
+    // An entry whose photo was never uploaded keeps its slot and shows the
+    // stand-in. Rendering it raw produced an <img> with no source — a broken
+    // image box with the alt text in it — and dropping it instead re-flowed
+    // the row around a gap the editor could not see. The slot is the honest
+    // middle: the composition holds, and the empty one is obvious.
+    const items = block.items || [];
     // The editorial pair is two slots, deliberately unequal. Three or more
     // would wrap into that asymmetry and look like a mistake, so past two the
     // row becomes even — see .editorial-images[data-count].
     wrap.setAttribute('data-count', String(items.length));
-    items.forEach(({ item, i }) => {
+    items.forEach((item, i) => {
+      if (!item) return;
       const figure = el(document, 'figure', {
         class: block.look === 'screens' ? undefined : 'editorial-image'
       });
-      figure.appendChild(photo(document, item.photo));
+      figure.appendChild(photo(document, item.photo, { placeholder: true }));
       if (item.caption) {
         figure.appendChild(
           el(document, 'figcaption', { class: 'image-note', text: item.caption, key: ctx.t(`items.${i}.caption`) })
@@ -574,11 +592,15 @@ export const BLOCKS = {
     return wrap;
   },
 
+  // Three staggered slots of fixed height and unequal width. A missing photo
+  // here does not shrink the ribbon, it shifts every following image into the
+  // wrong slot — so the slot is kept and filled with the stand-in.
   photoRibbon(document, block) {
     const wrap = el(document, 'div', { class: 'photo-ribbon' });
     (block.items || []).forEach((item) => {
+      if (!item) return;
       const figure = el(document, 'figure');
-      figure.appendChild(photo(document, item.photo));
+      figure.appendChild(photo(document, item.photo, { placeholder: true }));
       wrap.appendChild(figure);
     });
     return wrap;
@@ -1254,7 +1276,7 @@ export const BLOCKS = {
     const gallery = el(document, 'div', { class: 'cms-block-gallery' });
     (block.photos || []).forEach((entry) => {
       const figure = el(document, 'figure');
-      figure.appendChild(photo(document, entry, { alt: '' }));
+      figure.appendChild(photo(document, entry, { alt: '', placeholder: true }));
       gallery.appendChild(figure);
     });
     section.appendChild(gallery);

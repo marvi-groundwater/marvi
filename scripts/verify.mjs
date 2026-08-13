@@ -159,14 +159,15 @@ const auditFields = (value, fields, where, extra = []) => {
 };
 
 /* An `image` key that exists but is empty is the shape a CMS entry takes when
- * someone filled in the caption and never uploaded the picture. The renderers
- * skip those now, so nothing broken ships — but skipping in silence is how a
- * page quietly loses content, so say it out loud. */
+ * someone filled in the caption and never uploaded the picture. The image
+ * blocks show a stand-in so the row keeps its shape, which is better than a
+ * broken box and better than a silent gap — but a stand-in on the live site is
+ * still something nobody meant to publish, so name it. */
 const emptyImages = (value, where) => {
   if (Array.isArray(value)) return value.forEach((v, i) => emptyImages(v, `${where}[${i}]`));
   if (!value || typeof value !== 'object') return;
   for (const [key, v] of Object.entries(value)) {
-    if (key === 'image' && v === '') warnings.push(`${where}.image is empty — nothing will render there`);
+    if (key === 'image' && v === '') warnings.push(`${where}.image is empty — a placeholder is showing in its place`);
     else emptyImages(v, `${where}.${key}`);
   }
 };

@@ -328,6 +328,14 @@
     .editorial-image { position: relative; overflow: hidden; background: #c9c5ba; }
     .editorial-image:first-child { aspect-ratio: 1.42; }
     .editorial-image:last-child { aspect-ratio: .82; margin-bottom: -38px; }
+    /* The two slot shapes above are addressed by position, so a third image
+       would land between them with no aspect ratio at all. In an even row
+       every slot takes the same shape and the drop on the last one is undone. */
+    .editorial-images:not([data-count="2"]) .editorial-image { aspect-ratio: 1.25; margin-bottom: 0; }
+    /* A picture that has not been uploaded shows the stand-in. Photos are
+       cropped to fill their slot; cropping a glyph would hide it, so this one
+       sits inside instead. */
+    img.is-placeholder { object-fit: contain !important; padding: 12%; filter: none !important; background: #ddd9cf; }
     .editorial-image img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72); transition: transform 1s cubic-bezier(.2,.75,.25,1), filter .5s ease; }
     .editorial-image:hover img { transform: scale(1.035); filter: saturate(1); }
     .image-note { position: absolute; inset: auto 0 0; padding: 25px 19px 15px; color: var(--white); background: linear-gradient(transparent, rgb(var(--scrim-rgb) / var(--scrim-deep))); font: .58rem/1.45 var(--mono); letter-spacing: .08em; text-transform: uppercase; }

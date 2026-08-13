@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 100" width="160" height="100" role="img" aria-label="Placeholder image">
+  <!-- Stands in for a picture that has not been uploaded yet, so a row of
+       images keeps its shape instead of losing a slot. Deliberately quiet:
+       it should read as "nothing here yet", never as content. Palette is the
+       site's own paper/muted pair. -->
+  <rect width="160" height="100" fill="#ddd9cf"/>
+  <g fill="none" stroke="#9aa39d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="46" y="32" width="68" height="46" rx="4"/>
+    <circle cx="64" cy="47" r="5"/>
+    <path d="M49 71l16-15 12 11 9-8 21 19"/>
+  </g>
+</svg>
