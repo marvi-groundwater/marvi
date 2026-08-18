@@ -52,9 +52,9 @@
         "caption": ""
       },
       "i18n": {
-        "right__paragraphs__1": "approach.cross",
+        "left__lead": "approach.aim",
         "right__paragraphs__0": "approach.shared",
-        "left__lead": "approach.aim"
+        "right__paragraphs__1": "approach.cross"
       }
     },
     {
@@ -78,12 +78,12 @@
         }
       ],
       "i18n": {
-        "items__2__text": "approach.card3.desc",
-        "items__2__title": "approach.card3.title",
-        "items__1__text": "approach.card2.desc",
-        "items__1__title": "approach.card2.title",
+        "items__0__title": "approach.card1.title",
         "items__0__text": "approach.card1.desc",
-        "items__0__title": "approach.card1.title"
+        "items__1__title": "approach.card2.title",
+        "items__1__text": "approach.card2.desc",
+        "items__2__title": "approach.card3.title",
+        "items__2__text": "approach.card3.desc"
       }
     },
     {
@@ -117,7 +117,7 @@
         },
         {
           "photo": {
-            "image": "",
+            "image": "/assets/marvi-originals/MARVI 4-S strategy illustration.png",
             "alt": "The MARVI 4-S Strategy",
             "zoom": 100,
             "positionX": 50,
@@ -129,8 +129,8 @@
         }
       ],
       "i18n": {
-        "items__1__caption": "approach.caption2",
-        "items__0__caption": "approach.caption1"
+        "items__0__caption": "approach.caption1",
+        "items__1__caption": "approach.caption2"
       }
     },
     {
@@ -156,14 +156,14 @@
         }
       ],
       "i18n": {
-        "items__3__text": "approach.step4.desc",
-        "items__3__title": "approach.step4.title",
-        "items__2__text": "approach.step3.desc",
-        "items__2__title": "approach.step3.title",
-        "items__1__text": "approach.step2.desc",
-        "items__1__title": "approach.step2.title",
+        "items__0__title": "approach.step1.title",
         "items__0__text": "approach.step1.desc",
-        "items__0__title": "approach.step1.title"
+        "items__1__title": "approach.step2.title",
+        "items__1__text": "approach.step2.desc",
+        "items__2__title": "approach.step3.title",
+        "items__2__text": "approach.step3.desc",
+        "items__3__title": "approach.step4.title",
+        "items__3__text": "approach.step4.desc"
       }
     }
   ]
