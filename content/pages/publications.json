@@ -34,15 +34,121 @@
   "blocks": [
     {
       "type": "publicationList",
-      "allLabel": "All",
-      "otherLabel": "Other outputs",
-      "defaultView": "list",
-      "startCollapsed": true,
-      "listLabel": "List",
-      "cardsLabel": "Cards",
-      "searchLabel": "Search",
-      "searchPlaceholder": "groundwater, water literacy, Gujarati…",
-      "emptyMessage": "No publication matches that",
+      "tabLabel": "",
+      "items": [
+        {
+          "title": "MARVI - An Introduction",
+          "meta": "Brochure · English",
+          "description": "A short introduction to the MARVI approach: what the project does, where it works and how villages take part.",
+          "kind": "Brochure",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://drive.google.com/file/d/1Qb6h6tiYg2RCMFRw-4XruBokpEzafn2w/view?usp=sharing"
+            }
+          ]
+        },
+        {
+          "title": "Bhujal Jaankaar",
+          "meta": "Brochure · English",
+          "description": "Who the Bhujal Jankaars are, how they are trained and what they measure in their own villages.",
+          "kind": "Brochure",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://drive.google.com/file/d/1xcExvmC7-1beBcnrXzhXQrkANwbWgBFn/view?usp=sharing"
+            }
+          ]
+        },
+        {
+          "title": "MyWell app",
+          "meta": "Brochure · English",
+          "description": "A quick guide to the MyWell app — recording groundwater, rainfall, water quality and check-dam readings.",
+          "kind": "Brochure",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://drive.google.com/file/d/1egfeHG48ptMvZ5LMlezxgbnrJn1HcRmb/view?usp=sharing"
+            }
+          ]
+        },
+        {
+          "title": "MARVI – An Innovative Approach for Village Level Groundwater Management",
+          "meta": "Book · English, Hindi, Gujarati",
+          "description": "The main MARVI book: the approach, the methods and what village-level groundwater management looks like in practice.",
+          "kind": "Book",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://drive.google.com/file/d/1O_Od4h-F5Lz7WUJEmdBJgOsz5zZ7F-Vj/view?usp=sharing"
+            },
+            {
+              "label": "Hindi",
+              "url": "https://drive.google.com/file/d/1fnZIoFNqqnVWg_urlkHimHCG5puyGYOt/view?usp=sharing"
+            },
+            {
+              "label": "Gujarati",
+              "url": "https://drive.google.com/file/d/10r-uA2u2zMGnI39UEhc28hnoWSFUbft1/view?usp=sharing"
+            }
+          ]
+        },
+        {
+          "title": "Our Groundwater: A Resource Book for Water Literacy",
+          "meta": "Book · English, Hindi, Gujarati",
+          "description": "A resource book for water literacy — written for villages, schools and anyone learning how groundwater behaves.",
+          "kind": "Book",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://drive.google.com/file/d/1nYHhpX5tZbhSeGjgcceQpK0HNPcB2igT/view?usp=sharing"
+            },
+            {
+              "label": "Hindi",
+              "url": "https://drive.google.com/file/d/1tI730K_G6WQ1q0i-VPE8NOMV74p1cE0l/view?usp=sharing"
+            },
+            {
+              "label": "Gujarati",
+              "url": "https://drive.google.com/file/d/1cBRcOMTUlrH3K41G9tbFHqllud609FNg/view?usp=sharing"
+            }
+          ]
+        },
+        {
+          "title": "Groundwater Stories: Villagers share their Voices",
+          "meta": "Book · English, Hindi, Gujarati",
+          "description": "Villagers describe their own wells, seasons and water decisions in their own words.",
+          "kind": "Book",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://drive.google.com/file/d/1C738YIMDHXhTZxv4saUrYz4CwH2KQVwZ/view?usp=sharing"
+            },
+            {
+              "label": "Hindi",
+              "url": "https://drive.google.com/file/d/1PoLt2UnPr6jevhktuz2HA-6rCHE-eGFt/view?usp=sharing"
+            },
+            {
+              "label": "Gujarati",
+              "url": "https://drive.google.com/file/d/1QKfnN5cdM6iyZNleP_0N1t2fQsjyBfSM/view?usp=sharing"
+            }
+          ]
+        },
+        {
+          "title": "Jaldoot (Water Messenger)",
+          "meta": "Book · English, Hindi",
+          "description": "Jaldoot — the water messenger — carries groundwater knowledge into everyday village life.",
+          "kind": "Book",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://drive.google.com/file/d/1agckHORZgdSQ_LSLMEU3BJ8uV8GpjNhm/view?usp=sharing"
+            },
+            {
+              "label": "Hindi",
+              "url": "https://drive.google.com/file/d/1SNe6P5iNBQWKIbds0R6uer1QOTx_ur1N/view?usp=drive_link"
+            }
+          ]
+        }
+      ],
       "sections": [
         {
           "kind": "Book",
@@ -75,129 +181,25 @@
           "empty": "No theses listed yet. Add one in the CMS — set its Kind to Thesis — and this section fills itself."
         }
       ],
-      "items": [
-        {
-          "kind": "Brochure",
-          "meta": "Brochure · English",
-          "title": "MARVI - An Introduction",
-          "description": "A short introduction to the MARVI approach: what the project does, where it works and how villages take part.",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://drive.google.com/file/d/1Qb6h6tiYg2RCMFRw-4XruBokpEzafn2w/view?usp=sharing"
-            }
-          ]
-        },
-        {
-          "kind": "Brochure",
-          "meta": "Brochure · English",
-          "title": "Bhujal Jaankaar",
-          "description": "Who the Bhujal Jankaars are, how they are trained and what they measure in their own villages.",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://drive.google.com/file/d/1xcExvmC7-1beBcnrXzhXQrkANwbWgBFn/view?usp=sharing"
-            }
-          ]
-        },
-        {
-          "kind": "Brochure",
-          "meta": "Brochure · English",
-          "title": "MyWell app",
-          "description": "A quick guide to the MyWell app — recording groundwater, rainfall, water quality and check-dam readings.",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://drive.google.com/file/d/1sk-Sl9UC36lDybfF4XVe7bWo7Vs7sBnY/view?usp=sharing"
-            }
-          ]
-        },
-        {
-          "kind": "Book",
-          "meta": "Book · English, Hindi, Gujarati",
-          "title": "MARVI – An Innovative Approach for Village Level Groundwater Management",
-          "description": "The main MARVI book: the approach, the methods and what village-level groundwater management looks like in practice.",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://drive.google.com/file/d/1O_Od4h-F5Lz7WUJEmdBJgOsz5zZ7F-Vj/view?usp=sharing"
-            },
-            {
-              "label": "Hindi",
-              "url": "https://drive.google.com/file/d/1fnZIoFNqqnVWg_urlkHimHCG5puyGYOt/view?usp=sharing"
-            },
-            {
-              "label": "Gujarati",
-              "url": "https://drive.google.com/file/d/10r-uA2u2zMGnI39UEhc28hnoWSFUbft1/view?usp=sharing"
-            }
-          ]
-        },
-        {
-          "kind": "Book",
-          "meta": "Book · English, Hindi, Gujarati",
-          "title": "Our Groundwater: A Resource Book for Water Literacy",
-          "description": "A resource book for water literacy — written for villages, schools and anyone learning how groundwater behaves.",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://drive.google.com/file/d/1nYHhpX5tZbhSeGjgcceQpK0HNPcB2igT/view?usp=sharing"
-            },
-            {
-              "label": "Hindi",
-              "url": "https://drive.google.com/file/d/1tI730K_G6WQ1q0i-VPE8NOMV74p1cE0l/view?usp=sharing"
-            },
-            {
-              "label": "Gujarati",
-              "url": "https://drive.google.com/file/d/1cBRcOMTUlrH3K41G9tbFHqllud609FNg/view?usp=sharing"
-            }
-          ]
-        },
-        {
-          "kind": "Book",
-          "meta": "Book · English, Hindi, Gujarati",
-          "title": "Groundwater Stories: Villagers share their Voices",
-          "description": "Villagers describe their own wells, seasons and water decisions in their own words.",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://drive.google.com/file/d/1C738YIMDHXhTZxv4saUrYz4CwH2KQVwZ/view?usp=sharing"
-            },
-            {
-              "label": "Hindi",
-              "url": "https://drive.google.com/file/d/1PoLt2UnPr6jevhktuz2HA-6rCHE-eGFt/view?usp=sharing"
-            },
-            {
-              "label": "Gujarati",
-              "url": "https://drive.google.com/file/d/1QKfnN5cdM6iyZNleP_0N1t2fQsjyBfSM/view?usp=sharing"
-            }
-          ]
-        },
-        {
-          "kind": "Book",
-          "meta": "Book · English, Hindi",
-          "title": "Jaldoot (Water Messenger)",
-          "description": "Jaldoot — the water messenger — carries groundwater knowledge into everyday village life.",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://drive.google.com/file/d/1agckHORZgdSQ_LSLMEU3BJ8uV8GpjNhm/view?usp=sharing"
-            },
-            {
-              "label": "Hindi",
-              "url": "https://drive.google.com/file/d/1SNe6P5iNBQWKIbds0R6uer1QOTx_ur1N/view?usp=drive_link"
-            }
-          ]
-        }
-      ]
+      "allLabel": "All",
+      "otherLabel": "Other outputs",
+      "defaultView": "list",
+      "startCollapsed": true,
+      "listLabel": "List",
+      "cardsLabel": "Cards",
+      "searchLabel": "Search",
+      "searchPlaceholder": "groundwater, water literacy, Gujarati…",
+      "emptyMessage": "No publication matches that"
     },
     {
       "type": "sourceNote",
-      "style": "margin-top:35px;color:var(--muted);font-size:.78rem",
+      "tabLabel": "",
       "parts": [
         {
-          "text": "Every file opens on Google Drive. Original source: "
+          "text": "Every file opens on Google Drive. Original source:"
         },
         {
+          "text": "",
           "link": {
             "label": "the MARVI publications page ↗",
             "url": "https://www.marvi.org.in/marvi-publications",
@@ -207,7 +209,8 @@
         {
           "text": "."
         }
-      ]
+      ],
+      "style": "margin-top:35px;color:var(--muted);font-size:.78rem"
     }
   ]
 }
