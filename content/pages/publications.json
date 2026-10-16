@@ -7,7 +7,7 @@
   "intro": {
     "eyebrow": "MARVI publications",
     "title": "Read the work, in your own language.",
-    "lede": "Brochures and books from the project — free to download in English, Hindi and Gujarati. Grouped by kind; filter or search to narrow the list.",
+    "lede": "Books, brochures and the project’s research — journal articles, book chapters, conference papers and theses. Grouped by kind; filter or search to narrow the list.",
     "eyebrowSize": 100,
     "titleSize": 70,
     "ledeSize": 100,
@@ -150,14 +150,434 @@
           ]
         },
         {
-          "title": "The Role of Transdisciplinary Approach and Community Participation in Village Scale Groundwater Management: Insights from Gujarat and Rajasthan, India.",
-          "meta": "",
-          "description": "Maheshwari, B., Varua, M., Ward, J., Packham, R., Chinnasamy, P., Dashora, Y., Dave, S., Soni, P., Dillon, P., Purohit, R., Hakimuddin, Shah, T., Oza, S., Singh, P., Prathapar, S., Patel, A., Jadeja, Y., Thaker, B., Kookana, R., Grewal, H., Yadav, K., Mittal, H., Chew, M. and Rao, P., 2014. The Role of Transdisciplinary Approach and Community Participation in Village Scale Groundwater Management: Insights from Gujarat and Rajasthan, India.",
+          "title": "Evaluating the effectiveness of village groundwater cooperatives for groundwater commons in Gujarat and Rajasthan using Ostrom’s design principles",
+          "meta": "2026 · Journal article",
+          "description": "Gajurel, S., Maheshwari, B., Hagare, D., Ward, J. and Singh, P.K. (2026) 'Evaluating the effectiveness of village groundwater cooperatives for groundwater commons in Gujarat and Rajasthan using Ostrom’s design principles', Sustainability, 18(3), article 1561. https://doi.org/10.3390/su18031561",
           "kind": "Journal article",
           "editions": [
             {
-              "label": "English",
+              "label": "Full text",
+              "url": "https://www.mdpi.com/2071-1050/18/3/1561"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.3390/su18031561"
+            }
+          ]
+        },
+        {
+          "title": "Farm-scale recharge pits for improving local groundwater availability: Insights from a hardrock watershed in Rajasthan, India",
+          "meta": "2026 · Journal article",
+          "description": "Soni, P., Maheshwari, B., Dashora, Y., Dillon, P. and Singh, P.K. (2026) 'Farm-scale recharge pits for improving local groundwater availability: Insights from a hardrock watershed in Rajasthan, India', World Water Policy, 12(3), article e70094. https://doi.org/10.1002/wwp2.70094",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://onlinelibrary.wiley.com/doi/10.1002/wwp2.70094"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.1002/wwp2.70094"
+            }
+          ]
+        },
+        {
+          "title": "Evolving research on groundwater governance and collective action for water security: A global bibliometric analysis",
+          "meta": "2024 · Journal article",
+          "description": "Gajurel, S., Maheshwari, B., Hagare, D., Ward, J. and Singh, P.K. (2024) 'Evolving research on groundwater governance and collective action for water security: A global bibliometric analysis', Groundwater for Sustainable Development, 26, article 101224. https://doi.org/10.1016/j.gsd.2024.101224",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://www.sciencedirect.com/science/article/pii/S2352801X24001474"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.1016/j.gsd.2024.101224"
+            }
+          ]
+        },
+        {
+          "title": "Applying citizen science and design science for groundwater management",
+          "meta": "2024 · Conference paper",
+          "description": "Khan, A.K., Iyer, L., Maheshwari, B. and Sharda, R. (2024) 'Applying citizen science and design science for groundwater management', in Proceedings of the 2024 Pre-ICIS SIGDSA Symposium, paper 11. Association for Information Systems.",
+          "kind": "Conference paper",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://aisel.aisnet.org/sigdsa2024/11/"
+            }
+          ]
+        },
+        {
+          "title": "Managing the invisible under changing climate: A participatory approach for sustaining groundwater use",
+          "meta": "2023 · Book chapter",
+          "description": "Maheshwari, B. (2023) 'Managing the invisible under changing climate: A participatory approach for sustaining groundwater use', in H. Ojha, N. Schofield and J. Camkin (eds), Climate Risks to Water Security: Framing Effective Response in Asia and the Pacific. Springer, Cham, pp. 61–87. https://doi.org/10.1007/978-3-031-16648-8_4",
+          "kind": "Book chapter",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1007/978-3-031-16648-8_4"
+            }
+          ]
+        },
+        {
+          "title": "Hydrologic and cost–benefit analysis of multiple check dams in catchments of ephemeral streams, Rajasthan, India",
+          "meta": "2022 · Journal article",
+          "description": "Dashora, Y., Cresswell, D., Dillon, P., Maheshwari, B., Clark, R., Soni, P. and Singh, P.K. (2022) 'Hydrologic and cost–benefit analysis of multiple check dams in catchments of ephemeral streams, Rajasthan, India', Water, 14(15), article 2378. https://doi.org/10.3390/w14152378",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://www.mdpi.com/2073-4441/14/15/2378"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.3390/w14152378"
+            }
+          ]
+        },
+        {
+          "title": "A design dashboard for managing groundwater use and sustaining aquifer recharge through village-level interventions",
+          "meta": "2022 · Conference paper",
+          "description": "Christofalos, A., Iyer, L. and Maheshwari, B. (2022) 'A design dashboard for managing groundwater use and sustaining aquifer recharge through village-level interventions', in SAIS 2022 Proceedings, paper 34. Association for Information Systems.",
+          "kind": "Conference paper",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://aisel.aisnet.org/sais2022/34/"
+            }
+          ]
+        },
+        {
+          "title": "Case study 4: Recharge structures in ephemeral streams in Dharta watershed, Rajasthan, India",
+          "meta": "2021 · Book chapter",
+          "description": "Dashora, Y., Dillon, P., Maheshwari, B., Soni, P., Mittal, H.K., Dashora, R., Singh, P.K., Purohit, R.C. and Katara, P. (2021) 'Case study 4: Recharge structures in ephemeral streams in Dharta watershed, Rajasthan, India', in Y. Zheng, A. Ross, K.G. Villholth and P. Dillon (eds), Managing Aquifer Recharge: A Showcase for Resilience and Sustainability, p. 113 onward.",
+          "kind": "Book chapter",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://www.iges.or.jp/en/publication_documents/pub/bookchapter/en/11833/379962eng.pdf"
+            }
+          ]
+        },
+        {
+          "title": "Predicting groundwater fluctuations in Badgaon of the Dharta watershed in India: A study of machine learning algorithms and hard rock watersheds",
+          "meta": "2021 · Conference paper",
+          "description": "Stocker, M., Iyer, L.S. and Maheshwari, B. (2021) 'Predicting groundwater fluctuations in Badgaon of the Dharta watershed in India: A study of machine learning algorithms and hard rock watersheds', in Proceedings of the 8th Annual Conference of the Appalachian Research in Business Symposium, Eastern Kentucky University, pp. 89–95.",
+          "kind": "Conference paper",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://calendar.etsu.edu/cbat/documents/arbs_2021_proceedings_0.pdf"
+            }
+          ]
+        },
+        {
+          "title": "Managed aquifer recharge at a farm level: Evaluating the performance of direct well recharge structures",
+          "meta": "2020 · Journal article",
+          "description": "Soni, P., Dashora, Y., Maheshwari, B., Dillon, P., Singh, P. and Kumar, A. (2020) 'Managed aquifer recharge at a farm level: Evaluating the performance of direct well recharge structures', Water, 12(4), article 1069. https://doi.org/10.3390/w12041069",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://www.mdpi.com/2073-4441/12/4/1069/pdf"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.3390/w12041069"
+            }
+          ]
+        },
+        {
+          "title": "Participatory groundwater management: Making the invisible resource visible and giving ownership of its sustainability to villagers",
+          "meta": "2020 · Book chapter",
+          "description": "Maheshwari, B. (2020) 'Participatory groundwater management: Making the invisible resource visible and giving ownership of its sustainability to villagers', in E.W. Christen (ed.), Success Stories in Agricultural Water Management Research for Development, ACIAR Technical Report No. 92. ACIAR, Canberra, pp. 27–34.",
+          "kind": "Book chapter",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://www.aciar.gov.au/sites/default/files/2020-09/TR92-Water.pdf"
+            }
+          ]
+        },
+        {
+          "title": "Predicting groundwater fluctuations in hard rock watersheds: An application of data visualizations and machine learning algorithms",
+          "meta": "2020 · Conference paper",
+          "description": "Stocker, M., Iyer, L., Maheshwari, B. and Sharda, R. (2020) 'Predicting groundwater fluctuations in hard rock watersheds: An application of data visualizations and machine learning algorithms', in Proceedings of the 2020 Pre-ICIS SIGDSA Symposium, paper 6 (abstract only). Association for Information Systems.",
+          "kind": "Conference paper",
+          "editions": [
+            {
+              "label": "Abstract",
+              "url": "https://aisel.aisnet.org/sigdsa2020/6/"
+            }
+          ]
+        },
+        {
+          "title": "Hydrologic and cost benefit analysis at local scale of streambed recharge structures in Rajasthan (India) and their value for securing irrigation water supplies",
+          "meta": "2019 · Journal article",
+          "description": "Dashora, Y., Dillon, P., Maheshwari, B., Soni, P., Mittal, H.K., Dashora, R., Singh, P.K., Purohit, R.C. and Katara, P. (2019) 'Hydrologic and cost benefit analysis at local scale of streambed recharge structures in Rajasthan (India) and their value for securing irrigation water supplies', Hydrogeology Journal, 27, pp. 1889–1909. https://doi.org/10.1007/s10040-019-01951-y",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://link.springer.com/article/10.1007/s10040-019-01951-y"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.1007/s10040-019-01951-y"
+            }
+          ]
+        },
+        {
+          "title": "Photovoice for understanding groundwater management issues and challenges of villagers in Rajasthan, India",
+          "meta": "2019 · Journal article",
+          "description": "Chew, M., Maheshwari, B. and Somerville, M. (2019) 'Photovoice for understanding groundwater management issues and challenges of villagers in Rajasthan, India', Groundwater for Sustainable Development, 8, pp. 134–143. https://doi.org/10.1016/j.gsd.2018.10.002",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1016/j.gsd.2018.10.002"
+            }
+          ]
+        },
+        {
+          "title": "Communicating groundwater management: Making the invisible resource visible and giving ownership for its sustainability to villagers in India",
+          "meta": "2019 · Conference paper",
+          "description": "Maheshwari, B., Ward, J., Sriskandarajah, N. and Packham, R. (2019) 'Communicating groundwater management: Making the invisible resource visible and giving ownership for its sustainability to villagers in India', in 15th Biennial Conference on Communication and Environment, University of British Columbia, Vancouver, 17–21 June.",
+          "kind": "Conference paper",
+          "editions": [
+            {
+              "label": "ResearchGate",
+              "url": "https://www.researchgate.net/publication/363888501_Communicating_Groundwater_Management_Making_the_invisible_resource_visible_and_giving_ownership_for_its_sustainability_to_villagers_in_India"
+            }
+          ]
+        },
+        {
+          "title": "A simple method using farmers’ measurements applied to estimate check dam recharge in Rajasthan, India",
+          "meta": "2018 · Journal article",
+          "description": "Dashora, Y., Dillon, P., Maheshwari, B., Soni, P., Dashora, R., Davande, S., Purohit, R.C. and Mittal, H.K. (2018) 'A simple method using farmers’ measurements applied to estimate check dam recharge in Rajasthan, India', Sustainable Water Resources Management, 4(2), pp. 301–316. https://doi.org/10.1007/s40899-017-0185-5",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1007/s40899-017-0185-5"
+            }
+          ]
+        },
+        {
+          "title": "Adaptation of standardised precipitation index for understanding watertable fluctuations and groundwater resilience in hard-rock areas of India",
+          "meta": "2018 · Journal article",
+          "description": "Chinnasamy, P., Maheshwari, B. and Prathapar, S.A. (2018) 'Adaptation of standardised precipitation index for understanding watertable fluctuations and groundwater resilience in hard-rock areas of India', Environmental Earth Sciences, 77(15), article 562. https://doi.org/10.1007/s12665-018-7734-6",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://hdl.handle.net/10568/97169"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.1007/s12665-018-7734-6"
+            }
+          ]
+        },
+        {
+          "title": "Estimation of specific yield using water table fluctuations and cropped area in a hardrock aquifer system of Rajasthan, India",
+          "meta": "2018 · Journal article",
+          "description": "Chinnasamy, P., Maheshwari, B., Dillon, P., Purohit, R.C., Dashora, Y., Soni, P. and Dashora, R. (2018) 'Estimation of specific yield using water table fluctuations and cropped area in a hardrock aquifer system of Rajasthan, India', Agricultural Water Management, 202, pp. 146–155. https://doi.org/10.1016/j.agwat.2018.02.016",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1016/j.agwat.2018.02.016"
+            }
+          ]
+        },
+        {
+          "title": "Groundwater management and gender inequalities: The case of two watersheds in rural India",
+          "meta": "2018 · Journal article",
+          "description": "Varua, M.E., Ward, J., Maheshwari, B., Dave, S. and Kookana, R. (2018) 'Groundwater management and gender inequalities: The case of two watersheds in rural India', Groundwater for Sustainable Development, 6, pp. 93–100. https://doi.org/10.1016/j.gsd.2017.11.007",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1016/j.gsd.2017.11.007"
+            }
+          ]
+        },
+        {
+          "title": "Managing aquifer recharge and sustaining groundwater use: Developing a capacity building program for creating local groundwater champions",
+          "meta": "2018 · Journal article",
+          "description": "Jadeja, Y., Maheshwari, B., Packham, R., Bohra, H., Purohit, R., Thaker, B., Dillon, P., Oza, S., Dave, S., Soni, P., Dashora, Y., Dashora, R., Shah, T., Gorsiya, J., Katara, P., Ward, J., Kookana, R., Singh, P.K., Chinnasamy, P., Goradiya, V., Prathapar, S., Varua, M. and Chew, M. (2018) 'Managing aquifer recharge and sustaining groundwater use: Developing a capacity building program for creating local groundwater champions', Sustainable Water Resources Management, 4(2), pp. 317–329. https://doi.org/10.1007/s40899-018-0228-6",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1007/s40899-018-0228-6"
+            }
+          ]
+        },
+        {
+          "title": "Groundwater conservation attitudes, behaviour and water management: The case of farmers in rural India",
+          "meta": "2017 · Conference paper",
+          "description": "Varua, M.E., Maheshwari, B., Ward, J. and Dave, S. (2017) 'Groundwater conservation attitudes, behaviour and water management: The case of farmers in rural India', WIT Transactions on Ecology and the Environment, 220, pp. 141–150. https://doi.org/10.2495/WRM170141",
+          "kind": "Conference paper",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://www.witpress.com/elibrary/wit-transactions-on-ecology-and-the-environment/220/36262"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.2495/WRM170141"
+            }
+          ]
+        },
+        {
+          "title": "Assisting community management of groundwater: Irrigator attitudes in two watersheds in Rajasthan and Gujarat, India",
+          "meta": "2016 · Journal article",
+          "description": "Varua, M.E., Ward, J., Maheshwari, B., Oza, S., Purohit, R., Hakimuddin, O. and Chinnasamy, P. (2016) 'Assisting community management of groundwater: Irrigator attitudes in two watersheds in Rajasthan and Gujarat, India', Journal of Hydrology, 537, pp. 171–186. https://doi.org/10.1016/j.jhydrol.2016.02.003",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1016/j.jhydrol.2016.02.003"
+            }
+          ]
+        },
+        {
+          "title": "Exploring the relationship between subjective wellbeing and groundwater attitudes and practices of farmers in rural India",
+          "meta": "2016 · Journal article",
+          "description": "Ward, J., Varua, M.E., Maheshwari, B., Oza, S., Purohit, R., Hakimuddin, O. and Dave, S. (2016) 'Exploring the relationship between subjective wellbeing and groundwater attitudes and practices of farmers in rural India', Journal of Hydrology, 540, pp. 1–16. https://doi.org/10.1016/j.jhydrol.2016.05.037",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1016/j.jhydrol.2016.05.037"
+            }
+          ]
+        },
+        {
+          "title": "Groundwater scarcity impact on inclusiveness and women empowerment: Insights from school absenteeism of female students in two watersheds in India",
+          "meta": "2016 · Journal article",
+          "description": "Kookana, R.S., Maheshwari, B., Dillon, P., Dave, S.H., Soni, P., Bohra, H., Dashora, Y., Purohit, R.C., Ward, J., Oza, S., Katara, P., Yadav, K.K., Varua, M.E., Grewal, H.S., Packham, R., Jodha, A.S. and Patel, A. (2016) 'Groundwater scarcity impact on inclusiveness and women empowerment: Insights from school absenteeism of female students in two watersheds in India', International Journal of Inclusive Education, 20(11), pp. 1155–1171. https://doi.org/10.1080/13603116.2016.1155664",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1080/13603116.2016.1155664"
+            }
+          ]
+        },
+        {
+          "title": "Harnessing community capacity to coordinate and integrate natural and behavioural science perspectives: A groundwater management case study from rural India",
+          "meta": "2016 · Book chapter",
+          "description": "Maheshwari, B., Ward, J., Varua, M.E., Purohit, R.C., Hakimuddin Ognawala, Oza, S., Jadeja, Y. and Packham, R. (2016) 'Harnessing community capacity to coordinate and integrate natural and behavioural science perspectives: A groundwater management case study from rural India', in M.F. Rola-Rubzen and J. Burgess (eds), Human Development and Capacity Building: Asia Pacific Trends, Challenges and Prospects. Routledge, London, pp. 200–216.",
+          "kind": "Book chapter",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://www.routledge.com/Human-Development-and-Capacity-Building-Asia-Pacific-trends-challenge/Burgess-Rola-Rubzen/p/book/9781138843707"
+            }
+          ]
+        },
+        {
+          "title": "Performance and impacts of managed aquifer recharge interventions for agricultural water security: A framework for evaluation",
+          "meta": "2015 · Journal article",
+          "description": "Prathapar, S., Dhar, S., Rao, G.T. and Maheshwari, B. (2015) 'Performance and impacts of managed aquifer recharge interventions for agricultural water security: A framework for evaluation', Agricultural Water Management, 159, pp. 165–175. https://doi.org/10.1016/j.agwat.2015.06.009",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1016/j.agwat.2015.06.009"
+            }
+          ]
+        },
+        {
+          "title": "Understanding groundwater storage changes and recharge in Rajasthan, India through remote sensing",
+          "meta": "2015 · Journal article",
+          "description": "Chinnasamy, P., Maheshwari, B. and Prathapar, S. (2015) 'Understanding groundwater storage changes and recharge in Rajasthan, India through remote sensing', Water, 7(10), pp. 5547–5565. https://doi.org/10.3390/w7105547",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://www.mdpi.com/2073-4441/7/10/5547"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.3390/w7105547"
+            }
+          ]
+        },
+        {
+          "title": "Understanding farmers’ groundwater attitudes for better groundwater management",
+          "meta": "2015 · Book chapter",
+          "description": "Varua, M.E., Ward, J. and Maheshwari, B. (2015) 'Understanding farmers’ groundwater attitudes for better groundwater management', in WIT Transactions on the Built Environment, 168, pp. 477–487. https://doi.org/10.2495/SD150421",
+          "kind": "Book chapter",
+          "editions": [
+            {
+              "label": "Full text",
+              "url": "https://www.witpress.com/elibrary/wit-transactions-on-the-built-environment/168/34788"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.2495/SD150421"
+            }
+          ]
+        },
+        {
+          "title": "Participatory groundwater management at village level in India: Empowering communities with science for effective decision making",
+          "meta": "2015 · Conference paper",
+          "description": "Jadeja, Y., Maheshwari, B., Packham, R., Hakimuddin, Purohit, R., Thaker, B., Goradiya, V., Oza, S., Dave, S., Soni, P., Dashora, Y., Dashora, R., Shah, T., Gorsiya, J., Katara, P., Ward, J., Kookana, R., Dillon, P., Prathapar, S., Chinnasamy, P. and Varua, M. (2015) 'Participatory groundwater management at village level in India: Empowering communities with science for effective decision making', in Australian Groundwater Conference 2015, Canberra, 3–5 November, conference paper.",
+          "kind": "Conference paper",
+          "editions": [
+            {
+              "label": "ResearchGate",
+              "url": "https://www.researchgate.net/publication/284166467_Participatory_Groundwater_Management_at_Village_Level_in_India_-_Empowering_Communities_with_Science_for_Effective_Decision_Making"
+            }
+          ]
+        },
+        {
+          "title": "The role of transdisciplinary approach and community participation in village scale groundwater management: Insights from Gujarat and Rajasthan, India",
+          "meta": "2014 · Journal article",
+          "description": "Maheshwari, B., Varua, M., Ward, J., Packham, R., Chinnasamy, P., Dashora, Y., Dave, S., Soni, P., Dillon, P., Purohit, R., Hakimuddin, Shah, T., Oza, S., Singh, P., Prathapar, S., Patel, A., Jadeja, Y., Thaker, B., Kookana, R., Grewal, H., Yadav, K., Mittal, H., Chew, M. and Rao, P. (2014) 'The role of transdisciplinary approach and community participation in village scale groundwater management: Insights from Gujarat and Rajasthan, India', Water, 6(11), pp. 3386–3408. https://doi.org/10.3390/w6113386",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "Full text",
               "url": "https://www.mdpi.com/2073-4441/6/11/3386"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.3390/w6113386"
+            }
+          ]
+        },
+        {
+          "title": "Understanding the role of groundwater in the lives of rural women in India",
+          "meta": "2022 · Journal article · Related research",
+          "description": "Swaraj, A. and Maheshwari, B. (2022) 'Understanding the role of groundwater in the lives of rural women in India', World Water Policy, 8(2), pp. 116–131. https://doi.org/10.1002/wwp2.12085",
+          "kind": "Related groundwater publication",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://onlinelibrary.wiley.com/doi/10.1002/wwp2.12085"
+            },
+            {
+              "label": "DOI",
+              "url": "https://doi.org/10.1002/wwp2.12085"
+            }
+          ]
+        },
+        {
+          "title": "Groundwater in Australia: Understanding the challenges of its sustainable use",
+          "meta": "2021 · Book chapter · Related research",
+          "description": "Maheshwari, B. (2021) 'Groundwater in Australia: Understanding the challenges of its sustainable use', in A. Mukherjee, B.R. Scanlon, A. Aureli, S. Langan, H. Guo and A.A. McKenzie (eds), Global Groundwater: Source, Scarcity, Sustainability, Security, and Solutions. Elsevier, pp. 383–392. https://doi.org/10.1016/B978-0-12-818172-0.00028-1",
+          "kind": "Related groundwater publication",
+          "editions": [
+            {
+              "label": "Publisher page",
+              "url": "https://doi.org/10.1016/B978-0-12-818172-0.00028-1"
             }
           ]
         },
@@ -206,6 +626,12 @@
           "empty": "No journal articles listed yet. Add one in the CMS — set its Kind to Journal article — and this section fills itself."
         },
         {
+          "kind": "Book chapter",
+          "title": "Book chapters",
+          "note": "Chapters contributed to edited books.",
+          "empty": "No book chapters listed yet."
+        },
+        {
           "kind": "Conference paper",
           "title": "Conference papers",
           "note": "Papers and presentations given at conferences and workshops.",
@@ -216,6 +642,12 @@
           "title": "Theses",
           "note": "Doctoral and masters research carried out within the project.",
           "empty": "No theses listed yet. Add one in the CMS — set its Kind to Thesis — and this section fills itself."
+        },
+        {
+          "kind": "Related groundwater publication",
+          "title": "Related groundwater publications",
+          "note": "Closely related groundwater research by MARVI researchers, beyond the project itself.",
+          "empty": "Nothing listed here yet."
         }
       ],
       "allLabel": "All",
@@ -256,7 +688,7 @@
       "tabLabel": "",
       "parts": [
         {
-          "text": "Every file opens on Google Drive. Original source:"
+          "text": "Books and brochures open on Google Drive; papers link to their publishers. Original source:"
         },
         {
           "text": "",
