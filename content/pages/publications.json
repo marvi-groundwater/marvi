@@ -1,6 +1,7 @@
 {
   "menuName": "Publications",
   "slug": "publications",
+  "formerSlugs": [],
   "order": 11,
   "published": true,
   "template": "standard",
@@ -64,7 +65,7 @@
         {
           "title": "OurWater",
           "meta": "Brochure · English",
-          "description": "OurWater is a free, publicly accessible water-monitoring and learning platform developed through the MARVI approach to participatory groundwater management. Its foundation is groundwater, but the app now supports rainfall, surface water, water quality and water-storage systems.\n\nUsers register a monitoring station once, then add measurements over time. Stations appear on maps and their records can be reviewed as histories, charts and summaries, helping people see how local conditions are changing.",
+          "description": "OurWater (formerly MyWell) is a free, publicly accessible water-monitoring and learning platform developed through the MARVI approach to participatory groundwater management. Its foundation is groundwater, but the app now supports rainfall, surface water, water quality and water-storage systems.\n\nUsers register a monitoring station once, then add measurements over time. Stations appear on maps and their records can be reviewed as histories, charts and summaries, helping people see how local conditions are changing.",
           "kind": "Brochure",
           "editions": [
             {
