@@ -24,6 +24,7 @@
     "positionY": 52,
     "fit": "cover"
   },
+  "photoOverlay": null,
   "menuImage": {
     "image": "/assets/marvi-originals/024-about-marvi.jpg",
     "zoom": 100,
@@ -147,6 +148,18 @@
               "url": "https://drive.google.com/file/d/1SNe6P5iNBQWKIbds0R6uer1QOTx_ur1N/view?usp=drive_link"
             }
           ]
+        },
+        {
+          "title": "The Role of Transdisciplinary Approach and Community Participation in Village Scale Groundwater Management: Insights from Gujarat and Rajasthan, India.",
+          "meta": "",
+          "description": "Maheshwari, B., Varua, M., Ward, J., Packham, R., Chinnasamy, P., Dashora, Y., Dave, S., Soni, P., Dillon, P., Purohit, R., Hakimuddin, Shah, T., Oza, S., Singh, P., Prathapar, S., Patel, A., Jadeja, Y., Thaker, B., Kookana, R., Grewal, H., Yadav, K., Mittal, H., Chew, M. and Rao, P., 2014. The Role of Transdisciplinary Approach and Community Participation in Village Scale Groundwater Management: Insights from Gujarat and Rajasthan, India.",
+          "kind": "Journal article",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://www.mdpi.com/2073-4441/6/11/3386"
+            }
+          ]
         }
       ],
       "sections": [
@@ -191,27 +204,27 @@
       "searchPlaceholder": "groundwater, water literacy, Gujarati…",
       "emptyMessage": "No publication matches that",
       "i18n": {
-        "allLabel": "page.publications.b0.allLabel",
-        "sections__book__title": "page.publications.b0.sections.book.title",
-        "sections__brochure__title": "page.publications.b0.sections.brochure.title",
-        "sections__journal-article__title": "page.publications.b0.sections.journal-article.title",
-        "sections__conference-paper__title": "page.publications.b0.sections.conference-paper.title",
-        "sections__thesis__title": "page.publications.b0.sections.thesis.title",
-        "searchLabel": "page.publications.b0.searchLabel",
-        "views__list": "page.publications.b0.views.list",
-        "views__cards": "page.publications.b0.views.cards",
-        "sections__book__note": "page.publications.b0.sections.book.note",
-        "sections__book__empty": "page.publications.b0.sections.book.empty",
-        "sections__brochure__note": "page.publications.b0.sections.brochure.note",
-        "sections__brochure__empty": "page.publications.b0.sections.brochure.empty",
-        "sections__journal-article__note": "page.publications.b0.sections.journal-article.note",
-        "sections__journal-article__empty": "page.publications.b0.sections.journal-article.empty",
-        "sections__conference-paper__note": "page.publications.b0.sections.conference-paper.note",
-        "sections__conference-paper__empty": "page.publications.b0.sections.conference-paper.empty",
-        "sections__thesis__note": "page.publications.b0.sections.thesis.note",
-        "sections__thesis__empty": "page.publications.b0.sections.thesis.empty",
+        "tabLabel": "page.publications.b0.tabLabel",
         "emptyMessage": "page.publications.b0.emptyMessage",
-        "tabLabel": "page.publications.b0.tabLabel"
+        "sections__thesis__empty": "page.publications.b0.sections.thesis.empty",
+        "sections__thesis__note": "page.publications.b0.sections.thesis.note",
+        "sections__conference-paper__empty": "page.publications.b0.sections.conference-paper.empty",
+        "sections__conference-paper__note": "page.publications.b0.sections.conference-paper.note",
+        "sections__journal-article__empty": "page.publications.b0.sections.journal-article.empty",
+        "sections__journal-article__note": "page.publications.b0.sections.journal-article.note",
+        "sections__brochure__empty": "page.publications.b0.sections.brochure.empty",
+        "sections__brochure__note": "page.publications.b0.sections.brochure.note",
+        "sections__book__empty": "page.publications.b0.sections.book.empty",
+        "sections__book__note": "page.publications.b0.sections.book.note",
+        "views__cards": "page.publications.b0.views.cards",
+        "views__list": "page.publications.b0.views.list",
+        "searchLabel": "page.publications.b0.searchLabel",
+        "sections__thesis__title": "page.publications.b0.sections.thesis.title",
+        "sections__conference-paper__title": "page.publications.b0.sections.conference-paper.title",
+        "sections__journal-article__title": "page.publications.b0.sections.journal-article.title",
+        "sections__brochure__title": "page.publications.b0.sections.brochure.title",
+        "sections__book__title": "page.publications.b0.sections.book.title",
+        "allLabel": "page.publications.b0.allLabel"
       }
     },
     {
