@@ -160,6 +160,18 @@
               "url": "https://www.mdpi.com/2073-4441/6/11/3386"
             }
           ]
+        },
+        {
+          "title": "Evaluation the Effectiveness of the Managed Aquifer Recharge structures in Dharta watershed\tMs. Yogita Dashora",
+          "meta": "",
+          "description": "Student: Ms Yogita Dashora\nSupervisors: Dr H.K. Mittal, Professor Basant Maheshwari",
+          "kind": "Thesis",
+          "editions": [
+            {
+              "label": "English",
+              "url": "N.A."
+            }
+          ]
         }
       ],
       "sections": [
@@ -241,9 +253,6 @@
             "url": "https://www.marvi.org.in/marvi-publications",
             "external": true
           }
-        },
-        {
-          "text": "."
         }
       ],
       "style": "margin-top:35px;color:var(--muted);font-size:.78rem",
