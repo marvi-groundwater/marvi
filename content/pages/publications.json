@@ -583,33 +583,9 @@
           ]
         },
         {
-          "title": "Evaluation the Effectiveness of the Managed Aquifer Recharge structures in Dharta watershed",
-          "meta": "",
-          "description": "Student: Ms Yogita Dashora\nPhd Thesis\nYear: 2018\nSupervisors: Dr H.K. Mittal, Dr Ramesh Purohit and Professor Basant Maheshwari",
-          "kind": "Thesis",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://doi.org/10.1007/s40899-017-0185-5"
-            }
-          ]
-        },
-        {
-          "title": "Demand Management Strategies for Sustainable Groundwater Management in Dharta Watershed",
-          "meta": "",
-          "description": "Student: Ragini Dashora\nPhd Thesis\nYear: 2020\nSupervisors: Dr M.K. Kothari and Dr P.K. Singh",
-          "kind": "Thesis",
-          "editions": [
-            {
-              "label": "English",
-              "url": "https://doi.org/10.1016/j.agwat.2018.02.016"
-            }
-          ]
-        },
-        {
           "title": "Community-Led Groundwater Governance in Semi-Arid India: An Evaluation of Village Groundwater Cooperatives",
           "meta": "",
-          "description": "Student: Susmina Gajurel\nPhd Thesis\nYear 2026\nSupervisors: Distinguished Professor Basant Maheshwari, Assoc. Prof. Dharma Hagare, Dr John Wards and Prof. P.K. Singh",
+          "description": "Student: Susmina Gajurel; \nPhd Thesis; \nYear 2026; \nSupervisors: Distinguished Professor Basant Maheshwari, Assoc. Prof. Dharma Hagare, Dr John Wards and Prof. P.K. Singh",
           "kind": "Thesis",
           "editions": [
             {
@@ -619,9 +595,37 @@
           ]
         },
         {
+          "title": "Demand Management Strategies for Sustainable Groundwater Management in Dharta Watershed",
+          "meta": "",
+          "description": "Student: Ragini Dashora; \nPhd Thesis; \nYear: 2020; \nSupervisors: Dr M.K. Kothari and Dr P.K. Singh",
+          "kind": "Thesis",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://doi.org/10.1016/j.agwat.2018.02.016"
+            }
+          ]
+        },
+        {
+          "title": "Evaluation the Effectiveness of the Managed Aquifer Recharge structures in Dharta watershed",
+          "meta": "",
+          "description": "Student: Ms Yogita Dashora; \nPhd Thesis; \nYear: 2018; \nSupervisors: Dr H.K. Mittal, Dr Ramesh Purohit and Professor Basant Maheshwari",
+          "kind": "Thesis",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://doi.org/10.1007/s40899-017-0185-5"
+            },
+            {
+              "label": "English",
+              "url": "https://drive.google.com/file/d/1SjAdH0aMmunfuGEgfQemOtbHLhNS1fbY/view?usp=sharing"
+            }
+          ]
+        },
+        {
           "title": "Portraits of Water Participatory photography Rajasthan",
           "meta": "",
-          "description": "Studnet: Michael Chew\nMasgter thesis\nYear 2014\nSupervisours: Professor Margarete Sommerville and Distinguished Professor Basant Maheshwari",
+          "description": "Student: Michael Chew; \nMaster's thesis; \nYear 2014; \nSupervisors: Professor Margarete Sommerville and Distinguished Professor Basant Maheshwari",
           "kind": "Thesis",
           "editions": [
             {
@@ -633,7 +637,7 @@
         {
           "title": "Delineation of Potential Ground Water Recharge Zone using Remote Sensing & Geographical Information System in Dharta Watershed of Udaipur district, Rajasthan",
           "meta": "",
-          "description": "Student: Nikita Jain\nMaster thesis\nSupervisors: Professor P.K. Singh",
+          "description": "Student: Nikita Jain; \nMaster thesis; \nSupervisor: Professor P.K. Singh",
           "kind": "Thesis",
           "editions": [
             {
@@ -645,12 +649,24 @@
         {
           "title": "Planning and Designing of Water Harvesting System for the Dharta Watershed",
           "meta": "",
-          "description": "Student: Ravindra Singh\nMaster thesis\nYear: 2014\nSupervisor: Professor P.K. Singh",
+          "description": "Student: Ravindra Singh; \nMaster thesis; \nYear: 2014; \nSupervisor: Professor P.K. Singh",
           "kind": "Thesis",
           "editions": [
             {
               "label": "English",
               "url": "https://drive.google.com/file/d/1SY7zjTd1AQtUYSCp_exesiEI_QU4k_ou/view?usp=sharing"
+            }
+          ]
+        },
+        {
+          "title": "Understanding the Role of Groundwater in Wellbeing of Farmers from Semi-Arid Watershed Regions of India",
+          "meta": "",
+          "description": "Student: Seema Dave; \nMaster thesis; \nYear: 2019; \nSupervisors:   Distinguished Professor Basant Maheshwari, Asso. Prof. Maria Varua and Adj. Assoc. Prof. Roger Packham",
+          "kind": "Thesis",
+          "editions": [
+            {
+              "label": "English",
+              "url": "https://docs.google.com/document/d/1929A252nk12VoaVdZx7eNtcFnLz0mWI5/edit?usp=sharing&ouid=113212637426529450972&rtpof=true&sd=true"
             }
           ]
         }
