@@ -62,14 +62,14 @@
           ]
         },
         {
-          "title": "MyWell app",
+          "title": "OurWater",
           "meta": "Brochure · English",
-          "description": "A quick guide to the MyWell app — recording groundwater, rainfall, water quality and check-dam readings.",
+          "description": "OurWater is a free, publicly accessible water-monitoring and learning platform developed through the MARVI approach to participatory groundwater management. Its foundation is groundwater, but the app now supports rainfall, surface water, water quality and water-storage systems.\n\nUsers register a monitoring station once, then add measurements over time. Stations appear on maps and their records can be reviewed as histories, charts and summaries, helping people see how local conditions are changing.",
           "kind": "Brochure",
           "editions": [
             {
               "label": "English",
-              "url": "https://drive.google.com/file/d/1egfeHG48ptMvZ5LMlezxgbnrJn1HcRmb/view?usp=sharing"
+              "url": "https://drive.google.com/file/d/1X4sa2jPL-k70JJklWQvbSjCj-7U0yKyh/view?usp=sharing"
             }
           ]
         },
@@ -660,27 +660,27 @@
       "searchPlaceholder": "groundwater, water literacy, Gujarati…",
       "emptyMessage": "No publication matches that",
       "i18n": {
-        "tabLabel": "page.publications.b0.tabLabel",
-        "emptyMessage": "page.publications.b0.emptyMessage",
-        "sections__thesis__empty": "page.publications.b0.sections.thesis.empty",
-        "sections__thesis__note": "page.publications.b0.sections.thesis.note",
-        "sections__conference-paper__empty": "page.publications.b0.sections.conference-paper.empty",
-        "sections__conference-paper__note": "page.publications.b0.sections.conference-paper.note",
-        "sections__journal-article__empty": "page.publications.b0.sections.journal-article.empty",
-        "sections__journal-article__note": "page.publications.b0.sections.journal-article.note",
-        "sections__brochure__empty": "page.publications.b0.sections.brochure.empty",
-        "sections__brochure__note": "page.publications.b0.sections.brochure.note",
-        "sections__book__empty": "page.publications.b0.sections.book.empty",
-        "sections__book__note": "page.publications.b0.sections.book.note",
-        "views__cards": "page.publications.b0.views.cards",
-        "views__list": "page.publications.b0.views.list",
-        "searchLabel": "page.publications.b0.searchLabel",
-        "sections__thesis__title": "page.publications.b0.sections.thesis.title",
-        "sections__conference-paper__title": "page.publications.b0.sections.conference-paper.title",
-        "sections__journal-article__title": "page.publications.b0.sections.journal-article.title",
-        "sections__brochure__title": "page.publications.b0.sections.brochure.title",
+        "allLabel": "page.publications.b0.allLabel",
         "sections__book__title": "page.publications.b0.sections.book.title",
-        "allLabel": "page.publications.b0.allLabel"
+        "sections__brochure__title": "page.publications.b0.sections.brochure.title",
+        "sections__journal-article__title": "page.publications.b0.sections.journal-article.title",
+        "sections__conference-paper__title": "page.publications.b0.sections.conference-paper.title",
+        "sections__thesis__title": "page.publications.b0.sections.thesis.title",
+        "searchLabel": "page.publications.b0.searchLabel",
+        "views__list": "page.publications.b0.views.list",
+        "views__cards": "page.publications.b0.views.cards",
+        "sections__book__note": "page.publications.b0.sections.book.note",
+        "sections__book__empty": "page.publications.b0.sections.book.empty",
+        "sections__brochure__note": "page.publications.b0.sections.brochure.note",
+        "sections__brochure__empty": "page.publications.b0.sections.brochure.empty",
+        "sections__journal-article__note": "page.publications.b0.sections.journal-article.note",
+        "sections__journal-article__empty": "page.publications.b0.sections.journal-article.empty",
+        "sections__conference-paper__note": "page.publications.b0.sections.conference-paper.note",
+        "sections__conference-paper__empty": "page.publications.b0.sections.conference-paper.empty",
+        "sections__thesis__note": "page.publications.b0.sections.thesis.note",
+        "sections__thesis__empty": "page.publications.b0.sections.thesis.empty",
+        "emptyMessage": "page.publications.b0.emptyMessage",
+        "tabLabel": "page.publications.b0.tabLabel"
       }
     },
     {
