@@ -1,4 +1,22 @@
 {
+  "menuName": "MARVI in the news",
+  "slug": "news",
+  "order": 6,
+  "published": true,
+  "template": "standard",
+  "intro": {
+    "eyebrow": "MARVI in the media",
+    "title": "Stories from the field, the lab and the village.",
+    "lede": "Selected journalism and project coverage from the new MARVI media archive.",
+    "eyebrowSize": 100,
+    "titleSize": 70,
+    "ledeSize": 100,
+    "textAlign": "left",
+    "textPosition": "bottom",
+    "textWidth": 100,
+    "textOffsetX": 0,
+    "textOffsetY": 0
+  },
   "heroImage": {
     "image": "/assets/marvi-originals/020-welcome-to-marvi.jpg",
     "zoom": 100,
@@ -6,81 +24,96 @@
     "positionY": 48,
     "fit": "cover"
   },
+  "photoOverlay": null,
+  "menuImage": {
+    "image": "/assets/marvi-originals/032-about-marvi.jpg",
+    "zoom": 100,
+    "positionX": 50,
+    "positionY": 50,
+    "fit": "auto"
+  },
   "blocks": [
     {
       "type": "mediaStories",
+      "tabLabel": "",
       "items": [
         {
-          "meta": "The Brilliant · 02 Jul 2024",
           "title": "How a grassroots revolution is safeguarding groundwater, one well at a time",
-          "description": "A profile of Professor Basant Maheshwari and MARVI’s journey from rural India to a wider participatory model.",
-          "url": "https://thebrilliant.com/basant-maheshwari/"
+          "url": "https://thebrilliant.com/basant-maheshwari/",
+          "meta": "The Brilliant · 02 Jul 2024",
+          "description": "A profile of Professor Basant Maheshwari and MARVI’s journey from rural India to a wider participatory model."
         },
         {
-          "meta": "ACIAR · 17 Sep 2024",
           "title": "People power delivers groundwater solutions in India",
-          "description": "How Bhujal Jankaars, recharge, MyWell and community decisions became a practical approach.",
-          "url": "https://www.aciar.gov.au/media-search/blogs/people-power-delivers-groundwater-solutions-india"
+          "url": "https://www.aciar.gov.au/media-search/blogs/people-power-delivers-groundwater-solutions-india",
+          "meta": "ACIAR · 17 Sep 2024",
+          "description": "How Bhujal Jankaars, recharge, MyWell and community decisions became a practical approach."
         },
         {
-          "meta": "Eos · 16 Feb 2022",
           "title": "Satellite and on-the-ground data help monitor groundwater in India",
-          "description": "Village observations and satellite information combine to support more efficient water use.",
-          "url": "https://eos.org/articles/satellite-and-on-the-ground-data-help-monitor-groundwater-in-india"
+          "url": "https://eos.org/articles/satellite-and-on-the-ground-data-help-monitor-groundwater-in-india",
+          "meta": "Eos · 16 Feb 2022",
+          "description": "Village observations and satellite information combine to support more efficient water use."
         },
         {
-          "meta": "India Water Portal · 23 Feb 2021",
           "title": "Securing groundwater through village communities",
-          "description": "An introduction to participatory monitoring, recharge, cooperatives and the MARVI approach.",
-          "url": "https://www.indiawaterportal.org/groundwater/rainwater-harvesting/marvi-securing-groundwater-supplies-through-engaging-village-communities"
+          "url": "https://www.indiawaterportal.org/groundwater/rainwater-harvesting/marvi-securing-groundwater-supplies-through-engaging-village-communities",
+          "meta": "India Water Portal · 23 Feb 2021",
+          "description": "An introduction to participatory monitoring, recharge, cooperatives and the MARVI approach."
         },
         {
-          "meta": "Mongabay India · 29 Jun 2020",
           "title": "Bridging the gender gap through groundwater monitoring",
-          "description": "Women Bhujal Jankaars and the social barriers shaping participation in local water decisions.",
-          "url": "https://india.mongabay.com/2020/06/bridging-the-gender-gap-through-groundwater-monitoring-in-a-rajasthan-village/"
+          "url": "https://india.mongabay.com/2020/06/bridging-the-gender-gap-through-groundwater-monitoring-in-a-rajasthan-village/",
+          "meta": "Mongabay India · 29 Jun 2020",
+          "description": "Women Bhujal Jankaars and the social barriers shaping participation in local water decisions."
         },
         {
-          "meta": "Australian Water Partnership · 01 Nov 2022",
           "title": "People managing the invisible",
-          "description": "Farmers use measurements, recharge pits and MyWell to protect wells and inform local choices.",
-          "url": "https://waterpartnership.org.au/news-item/people-managing-the-invisible-participatory-groundwater-monitoring-in-india/"
+          "url": "https://waterpartnership.org.au/news-item/people-managing-the-invisible-participatory-groundwater-monitoring-in-india/",
+          "meta": "Australian Water Partnership · 01 Nov 2022",
+          "description": "Farmers use measurements, recharge pits and MyWell to protect wells and inform local choices."
         },
         {
-          "meta": "ACIAR · 21 May 2019",
           "title": "Revolutionary app reveals the resource underground",
-          "description": "MyWell helps communities record and view groundwater, rainfall, quality and check-dam levels.",
-          "url": "https://www.aciar.gov.au/media-search/news/revolutionary-app-reveals-resource-underground"
+          "url": "https://www.aciar.gov.au/media-search/news/revolutionary-app-reveals-resource-underground",
+          "meta": "ACIAR · 21 May 2019",
+          "description": "MyWell helps communities record and view groundwater, rainfall, quality and check-dam levels."
         },
         {
-          "meta": "ACIAR · 28 Aug 2019",
           "title": "App helps Indian farmers crowdsource water during drought",
-          "description": "Locally generated data helps communities monitor wells used for irrigation and drinking water.",
-          "url": "https://www.aciar.gov.au/media-search/news/aussie-app-helps-indian-farmers-crowdsource-water-during-drought"
+          "url": "https://www.aciar.gov.au/media-search/news/aussie-app-helps-indian-farmers-crowdsource-water-during-drought",
+          "meta": "ACIAR · 28 Aug 2019",
+          "description": "Locally generated data helps communities monitor wells used for irrigation and drinking water."
         },
         {
-          "meta": "ACIAR · Field story",
           "title": "Water management from the ground up",
-          "description": "The central role of trained village volunteers in measuring and communicating groundwater.",
-          "url": "https://www.aciar.gov.au/media-search/blogs/water-management-ground"
+          "url": "https://www.aciar.gov.au/media-search/blogs/water-management-ground",
+          "meta": "ACIAR · Field story",
+          "description": "The central role of trained village volunteers in measuring and communicating groundwater."
         },
         {
-          "meta": "Government of India · 14 Oct 2020",
           "title": "India–Australia cooperation for sustainable groundwater",
-          "description": "A memorandum supporting groundwater training, education, research and practical action.",
-          "url": "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-mou-between-india-and-australia-for-collaboration-in-capacity-building-research-and-development-and-making-impact-for-sustainable-groundwater-management/"
+          "url": "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-mou-between-india-and-australia-for-collaboration-in-capacity-building-research-and-development-and-making-impact-for-sustainable-groundwater-management/",
+          "meta": "Government of India · 14 Oct 2020",
+          "description": "A memorandum supporting groundwater training, education, research and practical action."
         },
         {
-          "meta": "Australian Water Partnership · 14 May 2024",
           "title": "A participatory framework for Southeast Asia",
-          "description": "How MARVI’s community monitoring and collaborative data model may transfer across the region.",
-          "url": "https://waterpartnership.org.au/news-item/marvi-a-promising-participatory-framework-for-sustainable-groundwater-management-in-southeast-asia/"
+          "url": "https://waterpartnership.org.au/news-item/marvi-a-promising-participatory-framework-for-sustainable-groundwater-management-in-southeast-asia/",
+          "meta": "Australian Water Partnership · 14 May 2024",
+          "description": "How MARVI’s community monitoring and collaborative data model may transfer across the region."
         },
         {
-          "meta": "India Water Portal · 16 May 2020",
           "title": "Developing a village groundwater-monitoring programme",
-          "description": "The MARVI approach, Bhujal Jankaars and resources in English, Hindi and Gujarati.",
-          "url": "https://www.indiawaterportal.org/governance-and-policy/governance/developing-effective-participatory-groundwater-monitoring-program-village-level"
+          "url": "https://www.indiawaterportal.org/governance-and-policy/governance/developing-effective-participatory-groundwater-monitoring-program-village-level",
+          "meta": "India Water Portal · 16 May 2020",
+          "description": "The MARVI approach, Bhujal Jankaars and resources in English, Hindi and Gujarati."
+        },
+        {
+          "title": "Measuring and Managing an Invisible Resource: Putting research in the hands of village communities leads to coordinated and lasting improvements in groundwater management.",
+          "url": "https://www.westernsydney.edu.au/future-makers/issue-five/measuring-and-managing-an-invisible-resource",
+          "meta": "December 2023",
+          "description": "In many regions of India and other countries, groundwater is the main water source for local communities, but years of overuse have critically dep­leted groundwater reserves, with dire implications for water and food security. There are no easy solutions, but as Distinguished Professor Basant Maheshwari’s team has shown, an alternative ‘transdisciplinary’ approach that brings together different disciplines and includes local villagers as research participants has opened a new pathway to solving this complex problem."
         }
       ],
       "i18n": {
@@ -89,12 +122,15 @@
     },
     {
       "type": "sourceNote",
-      "style": "margin-top:28px;color:var(--muted);font-size:.78rem",
+      "tabLabel": "",
+      "visible": false,
       "parts": [
         {
-          "text": "Archive source: "
+          "text": "Archive source:",
+          "link": null
         },
         {
+          "text": "",
           "link": {
             "label": "download the complete MARVI media document ↘",
             "url": "MARVI in the Media.docx",
@@ -102,34 +138,10 @@
           }
         }
       ],
+      "style": "margin-top:28px;color:var(--muted);font-size:.78rem",
       "i18n": {
         "tabLabel": "page.news.b1.tabLabel"
       }
     }
-  ],
-  "menuName": "MARVI in the news",
-  "slug": "news",
-  "intro": {
-    "eyebrow": "MARVI in the media",
-    "eyebrowSize": 100,
-    "textPosition": "bottom",
-    "textOffsetX": 0,
-    "textAlign": "left",
-    "title": "Stories from the field, the lab and the village.",
-    "textOffsetY": 0,
-    "textWidth": 100,
-    "titleSize": 70,
-    "lede": "Selected journalism and project coverage from the new MARVI media archive.",
-    "ledeSize": 100
-  },
-  "published": true,
-  "order": 6,
-  "template": "standard",
-  "menuImage": {
-    "image": "/assets/marvi-originals/032-about-marvi.jpg",
-    "zoom": 100,
-    "positionX": 50,
-    "positionY": 50,
-    "fit": "auto"
-  }
+  ]
 }
